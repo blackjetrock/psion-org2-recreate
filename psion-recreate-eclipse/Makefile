@@ -205,6 +205,54 @@ display.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/display.c.s
 .PHONY : display.c.s
 
+emulator.obj: emulator.c.obj
+.PHONY : emulator.obj
+
+# target to build an object file
+emulator.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/emulator.c.obj
+.PHONY : emulator.c.obj
+
+emulator.i: emulator.c.i
+.PHONY : emulator.i
+
+# target to preprocess a source file
+emulator.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/emulator.c.i
+.PHONY : emulator.c.i
+
+emulator.s: emulator.c.s
+.PHONY : emulator.s
+
+# target to generate assembly for a file
+emulator.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/emulator.c.s
+.PHONY : emulator.c.s
+
+font.obj: font.c.obj
+.PHONY : font.obj
+
+# target to build an object file
+font.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/font.c.obj
+.PHONY : font.c.obj
+
+font.i: font.c.i
+.PHONY : font.i
+
+# target to preprocess a source file
+font.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/font.c.i
+.PHONY : font.c.i
+
+font.s: font.c.s
+.PHONY : font.s
+
+# target to generate assembly for a file
+font.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/font.c.s
+.PHONY : font.c.s
+
 psion_recreate.obj: psion_recreate.c.obj
 .PHONY : psion_recreate.obj
 
@@ -1677,6 +1725,12 @@ help:
 	@echo "... display.obj"
 	@echo "... display.i"
 	@echo "... display.s"
+	@echo "... emulator.obj"
+	@echo "... emulator.i"
+	@echo "... emulator.s"
+	@echo "... font.obj"
+	@echo "... font.i"
+	@echo "... font.s"
 	@echo "... psion_recreate.obj"
 	@echo "... psion_recreate.i"
 	@echo "... psion_recreate.s"

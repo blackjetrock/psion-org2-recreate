@@ -1,6 +1,10 @@
 file(REMOVE_RECURSE
   "CMakeFiles/psion_recreate.dir/display.c.obj"
   "CMakeFiles/psion_recreate.dir/display.c.obj.d"
+  "CMakeFiles/psion_recreate.dir/emulator.c.obj"
+  "CMakeFiles/psion_recreate.dir/emulator.c.obj.d"
+  "CMakeFiles/psion_recreate.dir/font.c.obj"
+  "CMakeFiles/psion_recreate.dir/font.c.obj.d"
   "CMakeFiles/psion_recreate.dir/psion_recreate.c.obj"
   "CMakeFiles/psion_recreate.dir/psion_recreate.c.obj.d"
   "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.obj"

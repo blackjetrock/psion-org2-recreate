@@ -121,6 +121,8 @@ set(CMAKE_ASM_TARGET_INCLUDE_PATH
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/tree/downloaded_tools/pico/psion-recreate/display.c" "CMakeFiles/psion_recreate.dir/display.c.obj" "gcc" "CMakeFiles/psion_recreate.dir/display.c.obj.d"
+  "/tree/downloaded_tools/pico/psion-recreate/emulator.c" "CMakeFiles/psion_recreate.dir/emulator.c.obj" "gcc" "CMakeFiles/psion_recreate.dir/emulator.c.obj.d"
+  "/tree/downloaded_tools/pico/psion-recreate/font.c" "CMakeFiles/psion_recreate.dir/font.c.obj" "gcc" "CMakeFiles/psion_recreate.dir/font.c.obj.d"
   "/tree/downloaded_tools/pico/psion-recreate/psion_recreate.c" "CMakeFiles/psion_recreate.dir/psion_recreate.c.obj" "gcc" "CMakeFiles/psion_recreate.dir/psion_recreate.c.obj.d"
   "/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c" "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.obj" "gcc" "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.obj.d"
   "/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c" "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj" "gcc" "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj.d"

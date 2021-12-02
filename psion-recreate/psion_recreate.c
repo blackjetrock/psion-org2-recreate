@@ -4,6 +4,11 @@
 #include "pico/binary_info.h"
 
 ////////////////////////////////////////////////////////////////////////////////
+
+void initialise_oled(void);
+void clear_oled(void);
+
+////////////////////////////////////////////////////////////////////////////////
 //
 // GPIOs
 //
@@ -64,7 +69,6 @@ void write_595(const uint latchpin, int value)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void oledmain(void);
 
 int main() {
   const uint LED_PIN = PICO_DEFAULT_LED_PIN;
@@ -95,14 +99,16 @@ int main() {
   gpio_set_dir(PIN_SDAIN,     GPIO_IN);
   gpio_set_dir(PIN_SCLKOUT,   GPIO_OUT);
 
-
   // Set up and run OLED code
-  oledmain();
+  initialise_oled();
+
+  // Clear screen
+  clear_oled();
   
   bi_decl(bi_program_description("This is a test binary."));
   bi_decl(bi_1pin_with_name(LED_PIN, "On-board LED"));
   stdio_init_all();
-#if 1
+#if 0
   while (1) {
     gpio_put(LED_PIN, 0);
     sleep_ms(250);
@@ -124,10 +130,14 @@ int main() {
     gpio_pull_up(PICO_DEFAULT_I2C_SCL_PIN);
 #endif
 #endif
+
+    // Initialise emulator
+    initialise_emulator();
+    
     // Main loop
     while(1)
       {
-	
+	loop_emulator();	
       }
     
 }

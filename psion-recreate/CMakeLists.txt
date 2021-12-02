@@ -12,6 +12,8 @@ pico_sdk_init()
 add_executable(psion_recreate
 psion_recreate.c
 display.c
+font.c
+emulator.c
 )
 
 pico_enable_stdio_usb(psion_recreate 1)

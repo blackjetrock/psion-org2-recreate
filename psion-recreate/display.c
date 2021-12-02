@@ -19,6 +19,7 @@
 #define DEMO_DELAY       1000
 
 extern const uint PIN_LATCHOUT1;
+void printxy(int x, int y, char ch);
 
 ////////////////////////////////////////////////////////////////////////////////
 // Prototypes
@@ -59,7 +60,7 @@ void Delay(uint n);
 void Set_Page_Address(unsigned char add);
 void Set_Column_Address(unsigned char add);
 void Set_Contrast_Control_Register(unsigned char mod);
-void Initial(void);
+void initialise_oled(void);
 void Display_Chess(unsigned char value);
 void Display_Chinese(unsigned char ft[]);
 void Display_Chinese_Column(unsigned char ft[]);
@@ -70,18 +71,20 @@ void Stop(void);
 void Start(void);
 void Send_ACK(void);
 unsigned char ReceiveByte(void);
+void clear_oled(void);
 
+void printxy(int x, int y, char ch);
 
 uchar num[]={0x00,0xF8,0xFC,0x04,0x04,0xFC,0xF8,0x00,0x00,0x03,0x07,0x04,0x04,0x07,0x03,0x00,
-      0x00,0x00,0x08,0xFC,0xFC,0x00,0x00,0x00,0x00,0x00,0x04,0x07,0x07,0x04,0x00,0x00,  
-      0x00,0x18,0x1C,0x84,0xC4,0x7C,0x38,0x00,0x00,0x06,0x07,0x05,0x04,0x04,0x04,0x00,
-      0x00,0x08,0x0C,0x24,0x24,0xFC,0xD8,0x00,0x00,0x02,0x06,0x04,0x04,0x07,0x03,0x00,
-      0x80,0xE0,0x70,0x18,0xFC,0xFC,0x00,0x00,0x00,0x01,0x01,0x05,0x07,0x07,0x04,0x00,
-      0x00,0x7C,0x7C,0x24,0x24,0xE4,0xC4,0x00,0x00,0x03,0x07,0x04,0x04,0x07,0x03,0x00,
-      0x00,0xF0,0xF8,0x6C,0x24,0xEC,0xCC,0x00,0x00,0x03,0x07,0x04,0x04,0x07,0x03,0x00,
-      0x00,0x0C,0x0C,0xC4,0xFC,0x3C,0x04,0x00,0x00,0x00,0x00,0x07,0x07,0x00,0x00,0x00,
-      0x00,0x98,0xFC,0x64,0x64,0xFC,0x98,0x00,0x00,0x03,0x07,0x04,0x04,0x07,0x03,0x00,
-      0x00,0x78,0xFC,0x84,0xC4,0xFC,0xF8,0x00,0x00,0x06,0x06,0x04,0x06,0x03,0x01,0x00};
+	     0x00,0x00,0x08,0xFC,0xFC,0x00,0x00,0x00,0x00,0x00,0x04,0x07,0x07,0x04,0x00,0x00,  
+	     0x00,0x18,0x1C,0x84,0xC4,0x7C,0x38,0x00,0x00,0x06,0x07,0x05,0x04,0x04,0x04,0x00,
+	     0x00,0x08,0x0C,0x24,0x24,0xFC,0xD8,0x00,0x00,0x02,0x06,0x04,0x04,0x07,0x03,0x00,
+	     0x80,0xE0,0x70,0x18,0xFC,0xFC,0x00,0x00,0x00,0x01,0x01,0x05,0x07,0x07,0x04,0x00,
+	     0x00,0x7C,0x7C,0x24,0x24,0xE4,0xC4,0x00,0x00,0x03,0x07,0x04,0x04,0x07,0x03,0x00,
+	     0x00,0xF0,0xF8,0x6C,0x24,0xEC,0xCC,0x00,0x00,0x03,0x07,0x04,0x04,0x07,0x03,0x00,
+	     0x00,0x0C,0x0C,0xC4,0xFC,0x3C,0x04,0x00,0x00,0x00,0x00,0x07,0x07,0x00,0x00,0x00,
+	     0x00,0x98,0xFC,0x64,0x64,0xFC,0x98,0x00,0x00,0x03,0x07,0x04,0x04,0x07,0x03,0x00,
+	     0x00,0x78,0xFC,0x84,0xC4,0xFC,0xF8,0x00,0x00,0x06,0x06,0x04,0x06,0x03,0x01,0x00};
 
 
 
@@ -427,7 +430,8 @@ void Delay1(uint n)
 
 
 void Write_number(uchar *n,uchar k,uchar station_dot)
-{uchar i; 
+{
+  uchar i; 
   Start();
   SentByte(Write_Address);
   SentByte(0x40);
@@ -474,58 +478,58 @@ void adj_Contrast(void)
   if((key_add==0)||(key_dec==0))
     {  
       if (key_add==0) 
- {Contrast_level+=1;
-   Set_Contrast_Control_Register(Contrast_level); 
-   display_Contrast_level(Contrast_level);
-   Delay1(18000);
-   if(key_add==0)
-     {Delay1(18000);
-       if(key_add==0)   
-  {Delay1(18000);
-    if(key_add==0)
-      {Delay1(18000);
-        if(key_add==0)
+	{Contrast_level+=1;
+	  Set_Contrast_Control_Register(Contrast_level); 
+	  display_Contrast_level(Contrast_level);
+	  Delay1(18000);
+	  if(key_add==0)
+	    {Delay1(18000);
+	      if(key_add==0)   
+		{Delay1(18000);
+		  if(key_add==0)
+		    {Delay1(18000);
+		      if(key_add==0)
 
-   {while(key_add==0)
-       {Contrast_level+=1; 
-         Set_Contrast_Control_Register(Contrast_level); 
-         display_Contrast_level(Contrast_level);
-         Delay1(20000); 
-       }
-   }
-      }    
-  }      
-     }            
- }
+			{while(key_add==0)
+			    {Contrast_level+=1; 
+			      Set_Contrast_Control_Register(Contrast_level); 
+			      display_Contrast_level(Contrast_level);
+			      Delay1(20000); 
+			    }
+			}
+		    }    
+		}      
+	    }            
+	}
 
 
 
     
  
       if (key_dec==0) 
- {Contrast_level-=1; 
-   Set_Contrast_Control_Register(Contrast_level); 
-   display_Contrast_level(Contrast_level);
-   Delay1(18000);
-   if(key_dec==0)
-     {Delay1(18000);
-       if(key_dec==0)   
-  {Delay1(18000);
-    if(key_dec==0)
-      {Delay1(18000);
-        if(key_dec==0)
+	{Contrast_level-=1; 
+	  Set_Contrast_Control_Register(Contrast_level); 
+	  display_Contrast_level(Contrast_level);
+	  Delay1(18000);
+	  if(key_dec==0)
+	    {Delay1(18000);
+	      if(key_dec==0)   
+		{Delay1(18000);
+		  if(key_dec==0)
+		    {Delay1(18000);
+		      if(key_dec==0)
 
-   {while(key_dec==0)
-       {Contrast_level-=1; 
-         Set_Contrast_Control_Register(Contrast_level); 
-         display_Contrast_level(Contrast_level);
-         Delay1(20000); 
-       }
-   }
-      }    
-  }      
-     }            
- }
+			{while(key_dec==0)
+			    {Contrast_level-=1; 
+			      Set_Contrast_Control_Register(Contrast_level); 
+			      display_Contrast_level(Contrast_level);
+			      Delay1(20000); 
+			    }
+			}
+		    }    
+		}      
+	    }            
+	}
 
     }
 }
@@ -544,35 +548,35 @@ void Delay(uint d)
     }
 }
 
- void SDA0(void)
+void SDA0(void)
 {
   // Output 0 by driving low
   gpio_put(PIN_I2C_SDA, 0);
   gpio_set_dir(PIN_I2C_SDA, GPIO_OUT);
 }
 
- void SDA1(void)
+void SDA1(void)
 {
   // Output 1 by switching to input
   gpio_put(PIN_I2C_SDA, 1);
   gpio_set_dir(PIN_I2C_SDA, GPIO_OUT);
 }
 
- void SCL0(void)
+void SCL0(void)
 {
   // Output 0 by driving low
   gpio_put(PIN_I2C_SCL, 0);
   gpio_set_dir(PIN_I2C_SCL, GPIO_OUT);
 }
 
- void SCL1(void)
+void SCL1(void)
 {
   // Output 1 by switching to input
   gpio_put(PIN_I2C_SCL, 1);
   gpio_set_dir(PIN_I2C_SCL, GPIO_OUT);
 }
 
- int READSDA(void)
+int READSDA(void)
 {
   gpio_set_dir(PIN_I2C_SDA, GPIO_IN);
   return(gpio_get(PIN_I2C_SDA));
@@ -664,7 +668,7 @@ void SentByte(unsigned char Byte)
   SCL0();
   Check_Ack();
 #else
-   i2c_write_byte(Byte);
+  i2c_write_byte(Byte);
 #endif  
 }
 
@@ -680,11 +684,11 @@ unsigned char ReceiveByte(void)
       _nop_(); 
       if (READSDA()==1)
 	{
-	rudata|=0x01;
+	  rudata|=0x01;
 	}
       else
 	{
-	rudata|=0x00;
+	  rudata|=0x00;
 	}
       rudata=rudata<<1;
       SCL0();
@@ -711,7 +715,7 @@ void Set_Page_Address(unsigned char add)
   Start();
   SentByte(Write_Address);
   SentByte(0x80);
-  add=0xb0|add;
+  add=0xb0|(add & 0x7);
   SentByte(add);
   _nop_();
   Stop();
@@ -719,12 +723,13 @@ void Set_Page_Address(unsigned char add)
 }
 
 void Set_Column_Address(unsigned char add)
-{ Start();
+{
+  Start();
   SentByte(Write_Address);
   SentByte(0x80);
   SentByte((0x10|(add>>4)));
   SentByte(0x80);
-  SentByte((0x0f&add)|0x04);
+  SentByte((0x0f&add)|0x00);
   Stop();
   return;
 }
@@ -750,104 +755,104 @@ void RST0(void)
 
 void RST1(void)
 {
-    write_595(PIN_LATCHOUT1, 0x80);
+  write_595(PIN_LATCHOUT1, 0x80);
 }
 
 
 #pragma disable
-void Initial(void)
+void initialise_oled(void)
 {
   //while(1)
-    {
-      RST1();
-      Delay(2000);
-      RST0();
-      Delay(2000);
-      RST1();
+  {
+    RST1();
+    Delay(2000);
+    RST0();
+    Delay(2000);
+    RST1();
 
   
-  Delay(2000);
+    Delay(2000);
 
-  Start();
-  SentByte(Write_Address);
-  SentByte(0x80);
-  SentByte(0xae);//--turn off oled panel
+    Start();
+    SentByte(Write_Address);
+    SentByte(0x80);
+    SentByte(0xae);//--turn off oled panel
 
-  SentByte(0x80);
-  SentByte(0xd5);//--set display clock divide ratio/oscillator frequency
-  SentByte(0x80);
-  SentByte(0xa0);//--set divide ratio
+    SentByte(0x80);
+    SentByte(0xd5);//--set display clock divide ratio/oscillator frequency
+    SentByte(0x80);
+    SentByte(0xa0);//--set divide ratio
 
-  SentByte(0x80);  
-  SentByte(0xa8);//--set multiplex ratio(1 to 64)
-  SentByte(0x80);
-  SentByte(0x1f);//--1/32 duty
+    SentByte(0x80);  
+    SentByte(0xa8);//--set multiplex ratio(1 to 64)
+    SentByte(0x80);
+    SentByte(0x1f);//--1/32 duty
 
-  SentByte(0x80);
-  SentByte(0xd3);//-set display offset
-  SentByte(0x80);
-  SentByte(0x00);//-not offset
+    SentByte(0x80);
+    SentByte(0xd3);//-set display offset
+    SentByte(0x80);
+    SentByte(0x00);//-not offset
 
-  SentByte(0x80);
-  SentByte(0xad);//--Set Master Configuration
-  SentByte(0x80);
-  SentByte(0x8e);//--
+    SentByte(0x80);
+    SentByte(0xad);//--Set Master Configuration
+    SentByte(0x80);
+    SentByte(0x8e);//--
 
-  SentByte(0x80);
-  SentByte(0xd8);//--Set Area Color Mode On/Off & Low Power Display Mode
-  SentByte(0x80);
-  SentByte(0x05);//
+    SentByte(0x80);
+    SentByte(0xd8);//--Set Area Color Mode On/Off & Low Power Display Mode
+    SentByte(0x80);
+    SentByte(0x05);//
 
-  SentByte(0x80);
-  SentByte(0xa1);//--set segment re-map 128 to 0
+    SentByte(0x80);
+    SentByte(0xa1);//--set segment re-map 128 to 0
 
-  SentByte(0x80);
-  SentByte(0xC8);//--Set COM Output Scan Direction 64 to 1
+    SentByte(0x80);
+    SentByte(0xC8);//--Set COM Output Scan Direction 64 to 1
 
-  SentByte(0x80);
-  SentByte(0xda);//--Set COM Pins Hardware Configuration
-  SentByte(0x80);
-  SentByte(0x12);
+    SentByte(0x80);
+    SentByte(0xda);//--Set COM Pins Hardware Configuration
+    SentByte(0x80);
+    SentByte(0x12);
 
-  SentByte(0x80);
-  SentByte(0x91);//--Set current drive pulse width of BANK0, Color A, Band C.
-  SentByte(0x80);
-  SentByte(0x3f);
-  SentByte(0x80);
-  SentByte(0x3f);
-  SentByte(0x80);
-  SentByte(0x3f);
-  SentByte(0x80);
-  SentByte(0x3f);
+    SentByte(0x80);
+    SentByte(0x91);//--Set current drive pulse width of BANK0, Color A, Band C.
+    SentByte(0x80);
+    SentByte(0x3f);
+    SentByte(0x80);
+    SentByte(0x3f);
+    SentByte(0x80);
+    SentByte(0x3f);
+    SentByte(0x80);
+    SentByte(0x3f);
 
-  SentByte(0x80);
-  SentByte(0x81);//--set contrast control register
-  SentByte(0x80);
-  SentByte(Contrast_level);
+    SentByte(0x80);
+    SentByte(0x81);//--set contrast control register
+    SentByte(0x80);
+    SentByte(Contrast_level);
 
-  SentByte(0x80);
-  SentByte(0xd9);//--set pre-charge period
-  SentByte(0x80);
-  SentByte(0xd2);
+    SentByte(0x80);
+    SentByte(0xd9);//--set pre-charge period
+    SentByte(0x80);
+    SentByte(0xd2);
 
-  SentByte(0x80);
-  SentByte(0xdb);//--set vcomh
-  SentByte(0x80);
-  SentByte(0x34);
+    SentByte(0x80);
+    SentByte(0xdb);//--set vcomh
+    SentByte(0x80);
+    SentByte(0x34);
 
-  SentByte(0x80);
-  SentByte(0xa6);//--set normal display
+    SentByte(0x80);
+    SentByte(0xa6);//--set normal display
 
-  SentByte(0x80);
-  SentByte(0xa4);//Disable Entire Display On 
+    SentByte(0x80);
+    SentByte(0xa4);//Disable Entire Display On 
 
-  SentByte(0x80);
-  SentByte(0xaf);//--turn on oled panel
+    SentByte(0x80);
+    SentByte(0xaf);//--turn on oled panel
 
   
-  Stop();
+    Stop();
 
-    }
+  }
 }
 
 
@@ -855,26 +860,35 @@ void Initial(void)
 void Display_Chess(unsigned char value)
 {
   unsigned char i,j,k;
-  for(i=0;i<0x04;i++)
+  value = 0;
+  
+  // bank 0, 1 are top half of screen
+  
+  for(i=0; i<4; i++)
     {
       Set_Page_Address(i);
 
       Set_Column_Address(0x00);
 
       Start();
+      
       SentByte(Write_Address);
       SentByte(0x40);
 
-      for(j=0;j<0x10;j++)
- {
-   for(k=0;k<0x04;k++)
-     SentByte(value);
-   for(k=0;k<0x04;k++)
-     SentByte(~value);
- }
+      for(j=0; j<16; j++)
+	{
+	  for(k=0; k<4; k++)
+	    {
+	    SentByte(value++);
+	    }
+	  
+	  for(k=0; k<4; k++)
+	    {
+	    SentByte(value++);
+	    }
+	}
       Stop();
     }
-  return;
 }
 
 
@@ -886,22 +900,23 @@ void Display_Chinese(unsigned char ft[])
   for(b=0;b<2;b++)
     {
       for(i=0;i<0x02;i++)
- { Set_Page_Address(c);
-   Set_Column_Address(0x00);
-   num=i*0x10+b*256;
-   Start();
-   SentByte(Write_Address);
-   SentByte(0x40);
-   for(j=0;j<0x08;j++)
-     {
-       for(k=0;k<0x10;k++)
-  {
-    SentByte(ft[num+k]);
-  }
-       num+=0x20;
-     }c++;
-   Stop();
- }
+	{
+	  Set_Page_Address(c);
+	  Set_Column_Address(0x00);
+	  num=i*0x10+b*256;
+	  Start();
+	  SentByte(Write_Address);
+	  SentByte(0x40);
+	  for(j=0;j<0x08;j++)
+	    {
+	      for(k=0;k<0x10;k++)
+		{
+		  SentByte(ft[num+k]);
+		}
+	      num+=0x20;
+	    }c++;
+	  Stop();
+	}
     }
   return;
 }
@@ -919,12 +934,12 @@ void Display_Chinese_Column(unsigned char ft[])
       SentByte(Write_Address);
       SentByte(0x40);
       for(j=0;j<0x08;j++)
- {
-   for(k=0;k<0x10;k++)
-     {
-       SentByte(ft[num+k]);
-     }
- }
+	{
+	  for(k=0;k<0x10;k++)
+	    {
+	      SentByte(ft[num+k]);
+	    }
+	}
       Stop();
       num+=0x10;
     }
@@ -943,9 +958,31 @@ void Display_Picture(unsigned char pic[])
       SentByte(Write_Address);
       SentByte(0x40);
       for(j=0;j<0x80;j++)
- {
-   SentByte(pic[i*0x80+j]);
- }
+	{
+	  SentByte(pic[i*0x80+j]);
+	}
+      Stop();
+    }
+  return;
+}
+
+void clear_oled(void)
+{
+  unsigned char i,j,num = 0;
+  
+  for(i=0; i<0x04; i++)
+    {
+      Set_Page_Address(i);
+      Set_Column_Address(0x00);
+      
+      Start();
+      SentByte(Write_Address);
+      SentByte(0x40);
+      
+      for(j=0;j<0x80;j++)
+	{
+	  SentByte(0);
+	}
       Stop();
     }
   return;
@@ -963,10 +1000,11 @@ void oledmain(void)
   
   Delay(100);
 
-  Initial();
+  initialise_oled();
   Delay(1000);
   while(1)
     {
+#if 0      
       Display_Picture(pic);
       sleep_ms(DEMO_DELAY);
  
@@ -1028,7 +1066,9 @@ void oledmain(void)
       SentByte(0x00);
       Stop();
       sleep_ms(DEMO_DELAY);
+#endif
 
+#if 0      
       Start();
       SentByte(Write_Address);
       SentByte(0x80);
@@ -1037,7 +1077,18 @@ void oledmain(void)
       Stop();
       Display_Chess(0x0f);
       sleep_ms(DEMO_DELAY);
-
+#endif
+      int i = 0;
+      for(int y=0; y<4;  y++)
+	{
+	  for(int x=0; x<20; x++)
+	    {
+	      printxy(x, y, ' '+(i++));
+	      i = (i % 64);
+	    }
+	}
+	    
+#if 0      
       Start();
       SentByte(Write_Address);
       SentByte(0x80);
@@ -1090,6 +1141,7 @@ void oledmain(void)
       SentByte(0x00);
       Stop();
       sleep_ms(DEMO_DELAY);
+#endif
     }
 }
 
