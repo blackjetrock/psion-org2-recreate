@@ -15,8 +15,12 @@
 #include "hardware/gpio.h"
 #include "pico/binary_info.h"
 
-#define IGNORE_ACK       0
-#define DEMO_DELAY       1000
+#include "psion_recreate.h"
+
+#define IGNORE_ACK       1
+#define DEMO_DELAY       100
+#define FULL_DEMO        1
+#define NOP_DELAY        1
 
 extern const uint PIN_LATCHOUT1;
 void printxy(int x, int y, char ch);
@@ -586,7 +590,7 @@ void _nop_(void)
 {
   volatile int i = 0;
 
-  for(i=0; i<10; i++)
+  for(i=0; i<NOP_DELAY; i++)
     {
     }
   
@@ -594,6 +598,7 @@ void _nop_(void)
 
 void Start(void)
 {
+  _nop_();
   SDA1();
   _nop_();
   SCL1();
@@ -601,6 +606,7 @@ void Start(void)
   SDA0();
   _nop_();
   SCL0();
+  _nop_();
 } 
 
 
@@ -613,6 +619,7 @@ void Stop(void)
   SCL1();
   _nop_();
   SDA1();
+  _nop_();
 } 
 
 
@@ -627,7 +634,7 @@ void Check_Ack(void)//Acknowledge
     {
 #if IGNORE_ACK      
       ack = 0;
-      for(int i=0; i<100; i++)
+      for(int i=0; i<1; i++)
 	{
 	  _nop_();
 	}
@@ -659,13 +666,15 @@ void SentByte(unsigned char Byte)
 	{
 	  SDA0();
 	}
-      
+      _nop_();
       SCL1();
       _nop_();  
       Byte=Byte<<1;
     }
   
   SCL0();
+  _nop_();
+  
   Check_Ack();
 #else
   i2c_write_byte(Byte);
@@ -676,7 +685,9 @@ unsigned char ReceiveByte(void)
 {
   uchar i,rudata=0;
   SCL0();
+  _nop_();
   SDA1();
+  _nop_();
   
   for(i=0;i<8;i++)
     {
@@ -701,11 +712,15 @@ unsigned char ReceiveByte(void)
 
 void Send_ACK(void)
 {
+  _nop_();
   SCL0();
+  _nop_();
   SDA0();
   _nop_(); 
   SCL1();
+  _nop_();
   SCL0();
+  _nop_();
 }
 
 
@@ -750,12 +765,14 @@ void Set_Contrast_Control_Register(unsigned char mod)
 
 void RST0(void)
 {
-  write_595(PIN_LATCHOUT1, 0x00);
+  latchout1_shadow &= 0x7f;
+  write_595(PIN_LATCHOUT1, latchout1_shadow);
 }
 
 void RST1(void)
 {
-  write_595(PIN_LATCHOUT1, 0x80);
+  latchout1_shadow |= 0x80;
+  write_595(PIN_LATCHOUT1, latchout1_shadow);
 }
 
 
@@ -769,7 +786,6 @@ void initialise_oled(void)
     RST0();
     Delay(2000);
     RST1();
-
   
     Delay(2000);
 
@@ -979,16 +995,13 @@ void clear_oled(void)
       SentByte(Write_Address);
       SentByte(0x40);
       
-      for(j=0;j<0x80;j++)
+      for(j=0; j<132; j++)
 	{
 	  SentByte(0);
 	}
       Stop();
     }
-  return;
 }
-
-
 
 void oledmain(void)
 {
@@ -1000,11 +1013,12 @@ void oledmain(void)
   
   Delay(100);
 
-  initialise_oled();
-  Delay(1000);
   while(1)
     {
-#if 0      
+      initialise_oled();
+      Delay(1000);
+
+#if FULL_DEMO 
       Display_Picture(pic);
       sleep_ms(DEMO_DELAY);
  
@@ -1066,9 +1080,7 @@ void oledmain(void)
       SentByte(0x00);
       Stop();
       sleep_ms(DEMO_DELAY);
-#endif
 
-#if 0      
       Start();
       SentByte(Write_Address);
       SentByte(0x80);
@@ -1088,7 +1100,7 @@ void oledmain(void)
 	    }
 	}
 	    
-#if 0      
+#if FULL_DEMO 
       Start();
       SentByte(Write_Address);
       SentByte(0x80);

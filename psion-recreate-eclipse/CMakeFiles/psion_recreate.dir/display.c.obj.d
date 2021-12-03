@@ -53,4 +53,5 @@ CMakeFiles/psion_recreate.dir/display.c.obj: \
  /tree/downloaded_tools/pico/pico-sdk/src/common/pico_binary_info/include/pico/binary_info.h \
  /tree/downloaded_tools/pico/pico-sdk/src/common/pico_binary_info/include/pico/binary_info/defs.h \
  /tree/downloaded_tools/pico/pico-sdk/src/common/pico_binary_info/include/pico/binary_info/structure.h \
- /tree/downloaded_tools/pico/pico-sdk/src/common/pico_binary_info/include/pico/binary_info/code.h
+ /tree/downloaded_tools/pico/pico-sdk/src/common/pico_binary_info/include/pico/binary_info/code.h \
+ /tree/downloaded_tools/pico/psion-recreate/psion_recreate.h

@@ -132,6 +132,11 @@ int r = 0;
 return(r);
 }
 
+////////////////////////////////////////////////////////////////////////////////
+//
+// Prints a character at (X,Y)
+//
+
 void printxy(int x, int y, char ch)
 {
   int cx, cy;
@@ -156,4 +161,28 @@ void printxy(int x, int y, char ch)
   Stop();
 }
 
+////////////////////////////////////////////////////////////////////////////////
+//
+// Prints a string at (X,Y)
+//
 
+void printxy_str(int x, int y, char *str)
+{
+  while(*str)
+    {
+      printxy(x++, y, *(str++));
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Prints a value in hex as (X,Y)
+//
+
+void printxy_hex(int x, int y, int value)
+{
+  char hs[10];
+
+  sprintf(hs, "%02X", value);
+  printxy_str(x, y, hs);
+}

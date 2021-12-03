@@ -3,6 +3,12 @@
 #include "hardware/gpio.h"
 #include "pico/binary_info.h"
 
+#include "psion_recreate.h"
+
+////////////////////////////////////////////////////////////////////////////////
+
+#define OLED_DEMO 0
+
 ////////////////////////////////////////////////////////////////////////////////
 
 void initialise_oled(void);
@@ -27,6 +33,38 @@ const uint PIN_LATCHOUT1  = 22;
 const uint PIN_SCLKOUT    = 26;
 const uint PIN_VBAT_SW_ON = 27;
 
+uint8_t latchout1_shadow = 0;
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Read an 8 bit value from a 165 latch
+//
+////////////////////////////////////////////////////////////////////////////////
+
+uint8_t read_165(const uint latchpin)
+{
+  uint8_t value = 0;
+  
+  // Latch the data
+  gpio_put(latchpin, 0);
+  gpio_put(latchpin, 1);
+
+  // Clock the data out of the latch
+  for(int i=0; i<8; i++)
+    {
+      gpio_put(PIN_SCLKIN, 0);
+      gpio_put(PIN_SCLKIN, 1);
+
+      // Read data
+      value <<= 1;
+      if( gpio_get(PIN_SDAIN) )
+	{
+	  value |= 1;
+	}
+    }
+  
+  return(value);
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -69,12 +107,16 @@ void write_595(const uint latchpin, int value)
 
 ////////////////////////////////////////////////////////////////////////////////
 
+void oledmain(void);
 
 int main() {
+#if 0  
   const uint LED_PIN = PICO_DEFAULT_LED_PIN;
   
   gpio_init(LED_PIN);
   gpio_set_dir(LED_PIN, GPIO_OUT);
+#endif
+  
   
   // Set up the GPIOs
   gpio_init(PIN_VBAT_SW_ON);
@@ -89,6 +131,8 @@ int main() {
   gpio_init(PIN_LATCHOUT1);
   gpio_init(PIN_SDAIN);
   gpio_init(PIN_SCLKOUT);
+  gpio_init(PIN_LATCHIN);
+  gpio_init(PIN_SCLKIN);
 
   gpio_init(PIN_I2C_SCL);
   gpio_init(PIN_I2C_SDA);
@@ -98,15 +142,24 @@ int main() {
   gpio_set_dir(PIN_LATCHOUT1, GPIO_OUT);
   gpio_set_dir(PIN_SDAIN,     GPIO_IN);
   gpio_set_dir(PIN_SCLKOUT,   GPIO_OUT);
+  gpio_set_dir(PIN_LATCHIN,   GPIO_OUT);
+  gpio_set_dir(PIN_SCLKIN,    GPIO_OUT);
 
+  // Unlatch input latch
+  gpio_put(PIN_SDAIN,  1);
+  gpio_put(PIN_SCLKIN, 1);
+
+#if OLED_DEMO  
+  oledmain();
+#endif
+  
   // Set up and run OLED code
+  sleep_ms(100);
   initialise_oled();
 
   // Clear screen
   clear_oled();
-  
-  bi_decl(bi_program_description("This is a test binary."));
-  bi_decl(bi_1pin_with_name(LED_PIN, "On-board LED"));
+
   stdio_init_all();
 #if 0
   while (1) {

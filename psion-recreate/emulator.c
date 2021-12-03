@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "psion_recreate.h"
+
 // Emulates the 6303 processor
 // Emulates the HD44780 LCD controller
 
@@ -36,6 +38,7 @@ int on_key = 0;
 //
 
 void printxy(int x, int y, char ch);
+void write_595(const uint latchpin, int value);
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -80,6 +83,8 @@ int keyk = 3;
 u_int8_t  timer1_tcsr = 0;
 u_int16_t timer1_counter = 0;
 u_int16_t timer1_compare = 0;
+
+#define PORT5           0x0015
 
 ////////////////////////////////////////////////////////////////////////////////
 #if !EMBEDDED 
@@ -2159,9 +2164,18 @@ u_int8_t romdata[] = {
 
 ////////////////////////////////////////////////////////////////////////////////
 // SCA counter handling
+//
+// We check the counter and when we see a valid key scanning code
+// we write that to our keyboard drive latch
+//
+// For now, every time the SCA counter is updated, we write that value to the
+// output latch
+//
+// NOTE: The PCb has pull downs on the input latch, so we run with negative logic. The
+// emulated ROM will know no different.
 
 u_int8_t sca_counter = 0;
-int sca_i= 0;
+int sca_i = 0;
 
 void handle_sca(u_int16_t addr)
 {
@@ -2170,13 +2184,22 @@ void handle_sca(u_int16_t addr)
     {
     case SCA_RESET:
       sca_counter = 0;
+      latchout1_shadow &= 0x80;
+      latchout1_shadow |= 0x7f;
+      write_595(PIN_LATCHOUT1, latchout1_shadow);
+      printxy_hex(3,2,sca_counter);
       break;
       
     case SCA_CLOCK:
       sca_counter++;
+      latchout1_shadow &= 0x80;
+      latchout1_shadow |= (sca_counter ^ 0x7f);
+      write_595(PIN_LATCHOUT1, latchout1_shadow);
+      printxy_hex(3,2,sca_counter);
       break;
     }
 
+#if 0
   // No key?
   if( keyk == -1 )
     {
@@ -2220,7 +2243,8 @@ void handle_sca(u_int16_t addr)
 #if !EMBEDDED
   fprintf(lf, "    KEY:p5 now %02X", ramdata[P5_DATA]);
 #endif
-
+#endif
+  
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -2534,6 +2558,8 @@ u_int8_t *REF_ADDR(u_int16_t addr)
 
 u_int8_t RD_REF(u_int16_t addr)
 {
+  int p5reg;
+  
   switch(addr)
     {
     case TIM1_TCSR:
@@ -2542,16 +2568,49 @@ u_int8_t RD_REF(u_int16_t addr)
 #endif
       return(timer1_tcsr);
       break;
-      
+
+    case TIM1_COUNTER_H:
+      return((timer1_counter >> 8) & 0xff);
+      break;
+
+    case TIM1_COUNTER_L:
+      return(timer1_counter & 0xff);
+      break;
+	    
+    case TIM1_OCOMP_H:
+      return((timer1_compare >> 8) & 0xff);
+      break;
+
+    case TIM1_OCOMP_L:
+      return(timer1_compare & 0xff);
+      break;
+
     case LCD_CTRL_REG:
     case LCD_DATA_REG:
       return(handle_lcd_read(addr));
       break;
-
+      
     case SCA_RESET:
     case SCA_CLOCK:
       handle_sca(addr);
       return(0);
+      break;
+      
+      // Read of port5. We read the input patch and return the appropriate bits
+      // Unfortunately the resistors on the keyboard lines are pull-downs. So we need to
+      // run the keyboard with inverted logic.
+      
+    case PORT5:
+      ramdata[PORT5] = (read_165(PIN_LATCHIN) ^ 0xff);
+
+      // Turn off low battery warning
+      ramdata[PORT5] &= 0x7E;
+
+      // Display value
+      printxy_hex(0,2,ramdata[PORT5]);
+      
+      // The port 5 register value needs to be built
+      return(ramdata[PORT5]);
       break;
     }
 
@@ -2569,11 +2628,28 @@ void WR_REF(u_int16_t addr, u_int8_t value)
       break;
       
     case TIM1_COUNTER_H:
+      timer1_counter &= 0x00FF;
+      timer1_counter |= value << 8;
+      break;
+
     case TIM1_COUNTER_L:
+      timer1_counter &= 0xFF00;
+      timer1_counter |= value & 0xff;
+      break;
+	    
     case TIM1_OCOMP_H:
+      timer1_compare &= 0x00FF;
+      timer1_compare |= value << 8;
+      break;
+
     case TIM1_OCOMP_L:
+      timer1_compare &= 0xFF00;
+      timer1_compare |= value & 0xff;
+      break;
+      
     case TIM1_ICAP_H:
     case TIM1_ICAP_L:
+
 #if !EMBEDDED
       fprintf(lf, "\nTimer1 Access");
 #endif
@@ -2617,6 +2693,25 @@ u_int8_t RD_ADDR(u_int16_t addr)
       handle_sca(addr);
       return(0);
       break;
+      
+      // Read of port5. We read the input patch and return the appropriate bits
+      // Unfortunately the resistors on the keyboard lines are pull-downs. So we need to
+      // run the keyboard with inverted logic.
+      
+    case PORT5:
+      ramdata[PORT5] = (read_165(PIN_LATCHIN) ^ 0xff);
+
+      // Turn off low battery warning
+      ramdata[PORT5] &= 0x7E;
+
+      // Display value
+      printxy_hex(0,2,ramdata[PORT5]);
+      
+      // The port 5 register value needs to be built
+      return(ramdata[PORT5]);
+      
+      break;
+
     }
   
   if( addr > 0x7fff)
@@ -6123,6 +6218,12 @@ void loop_emulator(void)
   
   // Update timers
   update_timers();
+  update_timers();
+  update_timers();
+  update_timers();
+  update_timers();
+  update_timers();
+
   update_counter();
 }
 
