@@ -28,7 +28,7 @@ int on_key = 0;
 #define DUMP_RAM           1
 #define DISPLAY_PROCESSOR  0
 #define DISPLAY_PROC_PC    0
-
+#define CURSOR_BLINK_DELAY 100000
 
 #define LAST_N_PC   10
 
@@ -2259,6 +2259,25 @@ int lcd_blink    = 0;
 int lcd_auto_inc = 0;
 int lcd_shift    = 0;
 
+//------------------------------------------------------------------------------
+//
+// Cursor appears at ddram position
+
+int cursor_i = 0;
+int cursor_state = 0;
+int cursor_update = 0;
+
+void handle_cursor(void)
+{
+  cursor_i++;
+  if( cursor_i >= CURSOR_BLINK_DELAY )
+    {
+      cursor_i = 0;
+      cursor_state = !cursor_state;
+      cursor_update = 1;
+    }
+}
+
 u_int8_t handle_lcd_read(u_int16_t addr)
 {
   // handle each register
@@ -2283,43 +2302,55 @@ u_int8_t handle_lcd_read(u_int16_t addr)
 void dump_lcd(void)
 {
   int i;
-
+  uint8_t ch;
   
   
 #if DISPLAY_LCD
 
-  if( strcmp(last_lcd_display_buffer, lcd_display_buffer) != 0 )
+  if( (strcmp(last_lcd_display_buffer, lcd_display_buffer) != 0) || cursor_update)
     {
+      cursor_update = 0;
+      
       //      printf("\n'");
       for(i=0; i<=0x1F; i++)
 	{
-	  if( isprint(lcd_display_buffer[i]) )
+	  ch = lcd_display_buffer[i];
+	  
+	  if( (i == lcd_ddram) && lcd_cursor && lcd_blink )
 	    {
-	      printxy(i, 0, lcd_display_buffer[i]);
-	      //	      mvaddch(0, i, lcd_display_buffer[i]);
-	      
+	      if( cursor_state )
+		{
+		  ch = 0;
+		}
 	    }
-	  else
-	    {
-	      //mvaddch(0, i, '.');
-	    }
+	  
+	  printxy(i, 0, ch);
+	  //	      mvaddch(0, i, lcd_display_buffer[i]);
+	  
 	}
-	  //      printf("'\n'");
-
+      
       for(i=0x40; i<=0x5F; i++)
 	{
 	  if( isprint(lcd_display_buffer[i]) )
 	    {
 	      //mvaddch(1, i-0x40, lcd_display_buffer[i]);
-	      printxy(i-0x40, 1, lcd_display_buffer[i]);
+	      ch = lcd_display_buffer[i];
+
+	      if( (i == lcd_ddram) && lcd_cursor && lcd_blink )
+		{
+		  if( cursor_state )
+		    {
+		      ch = 0;
+		    }
+		}
+
+	      printxy(i-0x40, 1, ch);
 	    }
 	  else
 	    {
 	      //mvaddch(1, i-0x40, '.');
 	    }
 	}
-	  //printf("'\n");
-      //      refresh();
       
 #if 0
       fprintf(lf, "\n'");
@@ -2601,10 +2632,10 @@ u_int8_t RD_REF(u_int16_t addr)
       // run the keyboard with inverted logic.
       
     case PORT5:
-      ramdata[PORT5] = (read_165(PIN_LATCHIN) ^ 0xff);
+      ramdata[PORT5] = (read_165(PIN_LATCHIN) ^ 0x7f);
 
       // Turn off low battery warning
-      ramdata[PORT5] &= 0x7E;
+      ramdata[PORT5] &= 0xFE;
 
       // Display value
       printxy_hex(0,2,ramdata[PORT5]);
@@ -2699,10 +2730,10 @@ u_int8_t RD_ADDR(u_int16_t addr)
       // run the keyboard with inverted logic.
       
     case PORT5:
-      ramdata[PORT5] = (read_165(PIN_LATCHIN) ^ 0xff);
+      ramdata[PORT5] = (read_165(PIN_LATCHIN) ^ 0x7f);
 
       // Turn off low battery warning
-      ramdata[PORT5] &= 0x7E;
+      ramdata[PORT5] &= 0xFE;
 
       // Display value
       printxy_hex(0,2,ramdata[PORT5]);
@@ -6217,6 +6248,13 @@ void loop_emulator(void)
   INC_PC;
   
   // Update timers
+  
+  update_timers();
+  update_timers();
+  update_timers();
+  update_timers();
+  update_timers();
+  update_timers();
   update_timers();
   update_timers();
   update_timers();
@@ -6225,6 +6263,7 @@ void loop_emulator(void)
   update_timers();
 
   update_counter();
+  handle_cursor();
 }
 
 int rel = 0;

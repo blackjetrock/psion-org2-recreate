@@ -7,7 +7,9 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 
-#define OLED_DEMO 0
+#define FN_OLED_DEMO      0
+#define FN_KEYBOARD_TEST  0
+#define FN_FLASH_LED      0
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -62,7 +64,8 @@ uint8_t read_165(const uint latchpin)
 	  value |= 1;
 	}
     }
-  
+
+  printxy_hex(0,3, value);
   return(value);
 }
 
@@ -104,6 +107,35 @@ void write_595(const uint latchpin, int value)
 
 }
 
+////////////////////////////////////////////////////////////////////////////////
+//
+// Test the keyboard
+//
+
+void keyboard_test(void)
+{
+  uint8_t drive = 0;
+  uint8_t port5 = 0;
+
+  printxy_str(0,0, "Keyboard Test");
+
+    while(1)
+    {
+      if( drive == 0 )
+	{
+	  drive = 0x01;
+	}
+
+      // Drive KB line (keep display out of reset)
+      write_595(PIN_LATCHOUT1, drive | 0x80);
+
+      // read port5
+      port5 = (read_165(PIN_LATCHIN) ^ 0x7f);
+
+      // Display value
+      printxy_hex(0, 2, port5);
+    }
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -146,31 +178,51 @@ int main() {
   gpio_set_dir(PIN_SCLKIN,    GPIO_OUT);
 
   // Unlatch input latch
-  gpio_put(PIN_SDAIN,  1);
+  //  gpio_put(PIN_SDAIN,  1);
   gpio_put(PIN_SCLKIN, 1);
 
-#if OLED_DEMO  
+  //------------------------------------------------------------------------------
+  //
+  // Display test
+  //
+  
+#if FN_OLED_DEMO  
   oledmain();
 #endif
+  //------------------------------------------------------------------------------
+  //
+  // Initialise display
   
-  // Set up and run OLED code
   sleep_ms(100);
   initialise_oled();
-
+  
   // Clear screen
   clear_oled();
-
+  
+  
   stdio_init_all();
-#if 0
+  
+#if FN_FLASH_LED
   while (1) {
     gpio_put(LED_PIN, 0);
     sleep_ms(250);
     gpio_put(LED_PIN, 1);
-    puts("Hello World\n");
     sleep_ms(250);
   }
 #endif
+  
+  //------------------------------------------------------------------------------
+  //
+  // Drop into optional functions here, or fall through to perform emulation
+  //
+  
+#if FN_KEYBOARD_TEST
+  keyboard_test();
+#endif
+  
+  //------------------------------------------------------------------------------
 
+  
 #if 0
   #if !defined(i2c_default) || !defined(PICO_DEFAULT_I2C_SDA_PIN) || !defined(PICO_DEFAULT_I2C_SCL_PIN)
     #warning i2c/lcd_1602_i2c example requires a board with I2C pins

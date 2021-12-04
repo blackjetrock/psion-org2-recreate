@@ -21,6 +21,7 @@
 #define DEMO_DELAY       100
 #define FULL_DEMO        1
 #define NOP_DELAY        1
+#define NO_NOP_DELAY     1
 
 extern const uint PIN_LATCHOUT1;
 void printxy(int x, int y, char ch);
@@ -586,6 +587,13 @@ int READSDA(void)
   return(gpio_get(PIN_I2C_SDA));
 }
 
+#if NO_NOP_DELAY
+void _nop_(void)
+{
+}
+
+#else
+
 void _nop_(void)
 {
   volatile int i = 0;
@@ -595,6 +603,7 @@ void _nop_(void)
     }
   
 }
+#endif
 
 void Start(void)
 {
