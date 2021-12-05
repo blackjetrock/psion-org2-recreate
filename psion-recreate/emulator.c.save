@@ -2645,19 +2645,6 @@ u_int8_t RD_REF(u_int16_t addr)
       // The port 5 register value needs to be built
       return(ramdata[PORT5]);
       break;
-      
-    }
-  
-  if( addr > 0x7fff)
-    {
-      return(romdata[addr-0x8000]);
-    }
-  else
-    {
-#if !EMBEDDED      
-      fprintf(lf, "  RAM RD:%04X = %02X  ", addr, ramdata[addr]);
-#endif
-      return(ramdata[addr]);
     }
 
 }
