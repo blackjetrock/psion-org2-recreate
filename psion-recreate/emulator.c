@@ -2531,7 +2531,7 @@ struct
 
 #define FL_C8T(RR,MM,XX)  ( (NB7(XX) && B7(MM)) || (B7(MM) &&  B7(RR)) || ( B7(RR) && NB7(XX)))?FL_C1:FL_C0
 #define FL_C8TP(RR,MM,XX) (  (B7(XX) && B7(MM)) || (B7(MM) && NB7(RR)) || (NB7(RR) &&  B7(XX)))?FL_C1:FL_C0
-
+#define FL_C8W(XXX) if(XXX!=0x00) {REG_FLAGS |= FLAG_C_MASK;} else {REG_FLAGS &= ~FLAG_C_MASK;}
 // Flag testing
 #define FL_ZT(XXX)   if(XXX==0) {REG_FLAGS |= FLAG_Z_MASK;} else {REG_FLAGS &= ~FLAG_Z_MASK;}
 
@@ -3729,7 +3729,8 @@ OPCODE_FN(op_tba)
 
 OPCODE_FN(op_tap)
 {
-  REG_FLAGS = REG_A;
+  REG_FLAGS &= 0xC0;
+  REG_FLAGS |= (REG_A & 0x3F);
 }
 
 OPCODE_FN(op_tpa)
@@ -4275,7 +4276,7 @@ OPCODE_FN(op_daa)
 {
   u_int8_t msn, lsn;
   u_int16_t t, cf = 0;
-  uint8_t orig_a = REG_A;
+  int orig_a = REG_A;
 
   // We need this variable as REG_A is 8 bits and the algorithm requires
   // the answer tooverflow out of 8 bits
@@ -4309,10 +4310,10 @@ OPCODE_FN(op_daa)
       FL_C1;
     }
 
-  REG_A &= 0xff;
+  //  REG_A &= 0xff;
   
-  FL_N8T(REG_A);
-  FL_ZT(REG_A);
+  FL_N8T(ans);
+  FL_ZT(ans);
 
   if( ((orig_a ^ ans) & 0x80) != 0 )
     {
@@ -4863,10 +4864,10 @@ OPCODE_FN(op_neg)
       pstate.memory = 0;
     }
   
-  FL_V0;
-  FL_C0;
-  FL_Z1;
-  FL_N0;
+  FL_V80(*dest);
+  FL_C8W(*dest);
+  FL_ZT(*dest);
+  FL_N8T(*dest);
   
 }
 
@@ -5232,13 +5233,19 @@ OPCODE_FN(op_tst)
 
   if(pstate.memory)
     {
-      RD_REF(pstate.memory_addr);
+      int byte = RD_REF(pstate.memory_addr);
+#if !EMBEDDED
+      fprintf(lf, "\nRD_REF %04X byte = %02X", pstate.memory_addr, byte);
+#endif
       pstate.memory = 0;
-    }					      
-
-  FL_ZT(*dest);
-  FL_N8T(*dest);
-  
+      FL_ZT(byte);
+      FL_N8T(byte);
+    }
+  else
+    {
+      FL_ZT(*dest);
+      FL_N8T(*dest);
+    }
 }
 
 OPCODE_FN(op_swi)
