@@ -5,6 +5,8 @@
 
 #include "psion_recreate.h"
 
+#define DEBUG_STOP {volatile int x=1; while(x){}}
+
 // Emulates the 6303 processor
 // Emulates the HD44780 LCD controller
 
@@ -4265,7 +4267,7 @@ OPCODE_FN(op_adc)
   FL_V8T(*dest,add,before);
   FL_ZT(*dest);
   FL_N8T(*dest);
-  FL_C8T(*dest,add,before);
+  FL_C8TP(*dest,add,before);
   FL_H(*dest,add,before);
 }
 
@@ -4273,36 +4275,55 @@ OPCODE_FN(op_daa)
 {
   u_int8_t msn, lsn;
   u_int16_t t, cf = 0;
+  uint8_t orig_a = REG_A;
+
+  // We need this variable as REG_A is 8 bits and the algorithm requires
+  // the answer tooverflow out of 8 bits
   
+  int ans = REG_A;
+ 
   msn = REG_A & 0xf0;
   lsn = REG_A & 0x0f;
 
   if( FLG_H )
     {
-      REG_A += 0x06;
+      ans += 0x06;
     }
 
   if( lsn > 0x09 )
     {
-      REG_A += 0x06;
+      ans += 0x06;
     }
 
   if( FLG_C )
     {
-      REG_A += 0x60;
+      ans += 0x60;
     }
 
-  if( REG_A > 0x9f )
+  if( ans > 0x9f )
     {
-      REG_A += 0x60;
+      ans += 0x60;
     }
-  if( REG_A > 0x99 )
+  if( ans > 0x99 )
     {
       FL_C1;
     }
 
-    FL_N8T(REG_A);
-    FL_ZT(REG_A);
+  REG_A &= 0xff;
+  
+  FL_N8T(REG_A);
+  FL_ZT(REG_A);
+
+  if( ((orig_a ^ ans) & 0x80) != 0 )
+    {
+      FL_V1;
+    }
+  else
+    {
+      FL_V0;
+    }
+  
+  REG_A = (ans & 0xff);
 }
 
 OPCODE_FN(op_add)
