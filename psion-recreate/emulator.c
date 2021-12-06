@@ -2385,7 +2385,9 @@ void handle_lcd_write(u_int16_t addr, u_int8_t value)
 #if !EMBEDDED
       fprintf(lf, "\nWrite of LCD ctrl register Value %02X", value);
 #endif
-
+      // When the cursor position moves, update it on the display
+      cursor_update = 1;
+      
       if( (value >= 0x70) && (value <= 0xFF) )
 	{
 	  lcd_ddram = value & 0x7f;
@@ -2835,7 +2837,9 @@ void  WR_ADDR(u_int16_t addr, u_int8_t value)
   
   if( addr > 0x7fff)
     {
+#if ROM_WRITEABLE
       romdata[addr-0x8000] = value;
+#endif
     }
   else
     {
@@ -2966,7 +2970,7 @@ OPCODE_FN(op_oim)
     {
     case 0x62:
       result = RD_ADDR(p2 + REG_X) | p1;
-      WR_ADDR(p2, result);
+      WR_ADDR(p2+REG_X, result);
       break;
       
     case 0x72:
@@ -2991,7 +2995,7 @@ OPCODE_FN(op_aim)
     {
     case 0x61:
       result = RD_ADDR(p2 + REG_X) & p1;
-      WR_ADDR(p2, result);
+      WR_ADDR(p2+REG_X, result);
       break;
 
     case 0x71:
@@ -3016,7 +3020,7 @@ OPCODE_FN(op_eim)
     {
     case 0x65:
       result = RD_ADDR(p2 + REG_X) ^ p1;
-      WR_ADDR(p2, result);
+      WR_ADDR(p2+REG_X, result);
       break;
 
     case 0x75:
@@ -3107,7 +3111,7 @@ OPCODE_FN(op_psh)
 OPCODE_FN(op_and)
 {
   u_int8_t *dest;
-  u_int8_t  value;
+  u_int16_t  value;
   
   switch(opcode)
     {
@@ -3168,7 +3172,7 @@ OPCODE_FN(op_and)
       break;
     }
 
-  *dest &= value;
+  *dest &= (value & 0xff);
   
   FL_V0;
   FL_ZT(*dest);
@@ -3178,7 +3182,7 @@ OPCODE_FN(op_and)
 OPCODE_FN(op_eor)
 {
   u_int8_t *dest;
-  u_int8_t  value;
+  u_int16_t  value;
   
   switch(opcode)
     {
@@ -3239,7 +3243,7 @@ OPCODE_FN(op_eor)
       break;
     }
 
-  *dest ^= value;
+  *dest ^= (value & 0xff);
   
   FL_V0;
   FL_ZT(*dest);
@@ -3249,7 +3253,7 @@ OPCODE_FN(op_eor)
 OPCODE_FN(op_ora)
 {
   u_int8_t *dest;
-  u_int8_t  value;
+  u_int16_t  value;
   
   switch(opcode)
     {
@@ -3310,7 +3314,7 @@ OPCODE_FN(op_ora)
       break;
     }
 
-  *dest |= value;
+  *dest |= (value & 0xff);
   
   FL_V0;
   FL_ZT(*dest);
@@ -3320,7 +3324,7 @@ OPCODE_FN(op_ora)
 OPCODE_FN(op_bit)
 {
   u_int8_t *dest;
-  u_int8_t  value;
+  u_int16_t  value;
   
   switch(opcode)
     {
@@ -3381,7 +3385,7 @@ OPCODE_FN(op_bit)
       break;
     }
 
-  u_int8_t res = *dest & value;
+  u_int8_t res = *dest & (value & 0xff);
   
   FL_V0;
   FL_ZT(res);
@@ -3994,7 +3998,7 @@ OPCODE_FN(op_br)
 #if !EMBEDDED
       sprintf(opcode_decode, "BHI %02X, (%d) %04X", p1, rel, REG_PC+2+rel);
 #endif
-      if( !(FLG_C || FLG_Z) )
+      if( !(FLG_C) && !(FLG_Z) )
 	{
 	  REG_PC += 1 + rel;
 	  branched = 1;
@@ -4017,7 +4021,7 @@ OPCODE_FN(op_br)
       sprintf(opcode_decode, "BCC %02X, (%d) %04X", p1, rel, REG_PC+2+rel);
 #endif
 
-      if( FLG_C == 0 )
+      if( !FLG_C )
 	{
 	  REG_PC += 1 + rel;
 	  branched = 1;
@@ -4137,7 +4141,8 @@ OPCODE_FN(op_br)
       sprintf(opcode_decode, "BGT %02X, (%d) %04X", p1, rel, REG_PC+2+rel);
 #endif
 
-      if( FLG_Z || ((FLG_N && FLG_V) || ((!FLG_N) && (!FLG_V))) )
+      //      if( FLG_Z || ((FLG_N && FLG_V) || ((!FLG_N) && (!FLG_V))) )
+      if( (!FLG_Z) && ((FLG_N && FLG_V) || ((!FLG_N) && (!FLG_V))) )
 	{
 	  REG_PC += 1 + rel;
 	  branched = 1;
@@ -4149,7 +4154,8 @@ OPCODE_FN(op_br)
       sprintf(opcode_decode, "BLE %02X, (%d) %04X", p1, rel, REG_PC+2+rel);
 #endif
 
-      if( !(FLG_Z || ( (FLG_N && FLG_V) || ((!FLG_N) && (!FLG_V)))) )
+      //      if( !(FLG_Z || ( (FLG_N && FLG_V) || ((!FLG_N) && (!FLG_V)))) )
+      if( FLG_Z || ((FLG_N && (!FLG_V)) || ((!FLG_N) && FLG_V)) )
 	{
 	  REG_PC += 1 + rel;
 	  branched = 1;
@@ -4773,9 +4779,7 @@ OPCODE_FN(op_inc8)
       INC_PC;
       break;
     }
-
-  FL_V80(*dest);
-
+  
   if(pstate.memory)
     {
       RD_REF(pstate.memory_addr);
@@ -4783,12 +4787,13 @@ OPCODE_FN(op_inc8)
   
   (*dest)++;
   
-   if(pstate.memory)
+  if(pstate.memory)
     {
       WR_REF(pstate.memory_addr, *dest);
       pstate.memory = 0;
     }
-
+  
+  FL_V80(*dest);
   FL_ZT(*dest);
   FL_N8T(*dest);
   
@@ -5056,7 +5061,7 @@ OPCODE_FN(op_asld)
   val = REG_D;
   
   // Special flag test
-  FL_CSET(val & 0x80000);
+  FL_CSET(val & 0x8000);
 
   val <<= 1;
   FL_ZT(val);
