@@ -65,7 +65,9 @@ uint8_t read_165(const uint latchpin)
 	}
     }
 
+#if XP_DEBUG  
   printxy_hex(0,3, value);
+#endif
   return(value);
 }
 
