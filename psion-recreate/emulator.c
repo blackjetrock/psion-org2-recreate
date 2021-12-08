@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "hardware/gpio.h"
+
 #include "psion_recreate.h"
 
 #define DEBUG_STO {volatile int x=1; while(x){}}
@@ -50,7 +52,7 @@ int lcd_write_to_cgram = 0;
 //
 
 void printxy(int x, int y, char ch);
-void write_595(const uint latchpin, int value);
+void write_595(const uint latchpin, int value, int n);
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -78,6 +80,8 @@ int keyk = 3;
 #define LCD_CTRL_REG   0x0180
 #define LCD_DATA_REG   0x0181
 
+#define SWITCH_OFF     0x01c0
+
 #define SCA_RESET      0x0300
 #define SCA_CLOCK      0x0340
 
@@ -97,6 +101,11 @@ u_int16_t timer1_counter = 0;
 u_int16_t timer1_compare = 0;
 
 #define PORT5           0x0015
+#define PORT2           0x0003
+#define PORT6           0x0017
+
+#define PORT2_DDR       0x0001
+#define PORT6_DDR       0x0016
 
 ////////////////////////////////////////////////////////////////////////////////
 #if !EMBEDDED 
@@ -4354,8 +4363,10 @@ u_int8_t romdata[] = {
 // For now, every time the SCA counter is updated, we write that value to the
 // output latch
 //
-// NOTE: The PCb has pull downs on the input latch, so we run with negative logic. The
-// emulated ROM will know no different.
+// NOTE: The PCB has pull downs on the input latch, so we run with negative
+// logic. The emulated ROM will know no different.
+//
+// For the shift key to work, we need diodes on the keyboard scan drive lines
 
 u_int8_t sca_counter = 0;
 int sca_i = 0;
@@ -4367,9 +4378,12 @@ void handle_sca(u_int16_t addr)
     {
     case SCA_RESET:
       sca_counter = 0;
-      latchout1_shadow &= 0x80;
+      // Preserve OLED reset line
+      latchout1_shadow &= LAT1PIN_MASK_OLED_RES;
+
+      // Take all lines high
       latchout1_shadow |= 0x7f;
-      write_595(PIN_LATCHOUT1, latchout1_shadow);
+      write_595(PIN_LATCHOUT1, latchout1_shadow, 8);
 #if XP_DEBUG
       printxy_hex(3,2,sca_counter);
 #endif      
@@ -4377,12 +4391,21 @@ void handle_sca(u_int16_t addr)
       
     case SCA_CLOCK:
       sca_counter++;
-      latchout1_shadow &= 0x80;
+      
+      // Preserve OLED reset line
+      latchout1_shadow &= LAT1PIN_MASK_OLED_RES;
+
+      // Set up inverted latch value
       latchout1_shadow |= (sca_counter ^ 0x7f);
-      write_595(PIN_LATCHOUT1, latchout1_shadow);
+      write_595(PIN_LATCHOUT1, latchout1_shadow, 8);
 #if XP_DEBUG
       printxy_hex(3,2,sca_counter);
 #endif
+      break;
+
+    case SWITCH_OFF:
+      // Turn power off
+      gpio_put(PIN_VBAT_SW_ON, 0);
       break;
     }
 }
@@ -4770,6 +4793,224 @@ u_int8_t *REF_ADDR(u_int16_t addr)
 
 //------------------------------------------------------------------------------
 //
+// Port 2 access functions
+
+uint p2pin[] =
+  {
+   PIN_SD0,
+   PIN_SD1,
+   PIN_SD2,
+   PIN_SD3,
+   PIN_SD4,
+   PIN_SD5,
+   PIN_SD6,
+   PIN_SD7,
+  };
+
+#define MAX_P2_TRC  100
+
+int trace_port2_i = 0;
+u_int8_t trace_port2[MAX_P2_TRC+1];
+
+u_int8_t read_port2(void)
+{
+  u_int8_t p = 0;
+  
+  for(int i=0; i<8; i++)
+    {
+      p >>= 1;
+      if( gpio_get(p2pin[i]) )
+	{
+	  p |= 0x80;
+	}
+    }
+
+  if( trace_port2_i < MAX_P2_TRC )
+    {
+      trace_port2[trace_port2_i++] = p;
+    }
+  return(p);
+}
+
+void write_port2(u_int8_t value)
+{
+  for(int i=0; i<8; i++)
+    {
+      if( value & 1 )
+	{
+	  gpio_put(p2pin[i], 1);
+	}
+      else
+	{
+	  gpio_put(p2pin[i], 0);
+	}
+      value >>= 1;
+    }
+}
+
+void port2_ddr(int value)
+{
+
+  // We can only set the data direction to input or output
+  // for the entire port2 lines. We set to output if all are outputs
+  // inputs otherwise.
+  if( (value & 0x03) == 0x03 )
+    {
+      // Output
+      gpio_put(PIN_LS_DIR, 1);
+      
+      // Drive OE of the level shifter
+      latchout2_shadow &= ~LAT2PIN_MASK_SC_OE;
+      write_595(PIN_LATCHOUT2, latchout2_shadow, 16);
+
+      for(int i=0; i<8; i++)
+	{
+	  gpio_set_dir(p2pin[i], GPIO_OUT);
+	}
+    }
+  else
+    {
+      for(int i=0; i<8; i++)
+	{
+	  gpio_set_dir(p2pin[i], GPIO_IN);
+	}
+
+      // Input
+      gpio_put(PIN_LS_DIR, 0);
+      
+      // Drive OE of the level shifter
+      latchout2_shadow &= ~LAT2PIN_MASK_SC_OE;
+      write_595(PIN_LATCHOUT2, latchout2_shadow, 16);
+    }
+}
+
+uint p6pin[] =
+  {
+   PIN_SCLK,
+   PIN_SMR,
+   PIN_SPGM,
+   PIN_SOE,
+   PIN_SS1,
+   PIN_SS2,
+   PIN_SS3,
+   PIN_5V_ON,     // HIGH=5V on slots
+  };
+
+u_int8_t read_port6(void)
+{
+  u_int8_t p = 0;
+  
+  for(int i=0; i<8; i++)
+    {
+      p <<= 1;
+      if( gpio_get(p6pin[i]) )
+	{
+	  p |= 1;
+	}
+    }
+  return(p);
+}
+
+void write_port6(u_int8_t value)
+{
+  for(int i=0; i<8; i++)
+    {
+      if( p6pin[i] >= PSEUDO_PIN )
+	{
+	  switch(p6pin[i] )
+	    {
+	    case PIN_5V_ON:
+	      // Invert signal
+	      latchout2_shadow &= ~LAT2PIN_MASK_5V_ON;
+	      if( !(value & 1) )
+		{
+		  latchout2_shadow |= LAT2PIN_MASK_5V_ON;
+		}
+	      write_595(PIN_LATCHOUT2, latchout2_shadow, 16);
+	      break;
+
+	    case PIN_SS1:
+	      latchout2_shadow &= ~LAT2PIN_MASK_SS1;
+	      if( value & 1 )
+		{
+		  latchout2_shadow |= LAT2PIN_MASK_SS1;
+		}
+	      write_595(PIN_LATCHOUT2, latchout2_shadow, 16);
+
+	      break;
+
+	    case PIN_SS2:
+	      latchout2_shadow &= ~LAT2PIN_MASK_SS2;
+	      if( value & 1 )
+		{
+		  latchout2_shadow |= LAT2PIN_MASK_SS2;
+		}
+	      write_595(PIN_LATCHOUT2, latchout2_shadow, 16);
+	      break;
+
+	    case PIN_SS3:
+	      latchout2_shadow &= ~LAT2PIN_MASK_SS3;
+	      if( value & 1 )
+		{
+		  latchout2_shadow |= LAT2PIN_MASK_SS3;
+		}
+	      write_595(PIN_LATCHOUT2, latchout2_shadow, 16);
+	      break;
+
+	    case PIN_SPGM:
+	      latchout2_shadow &= ~LAT2PIN_MASK_P_SPGM;
+	      if( value & 1 )
+		{
+		  latchout2_shadow |= LAT2PIN_MASK_P_SPGM;
+		}
+	      write_595(PIN_LATCHOUT2, latchout2_shadow, 16);
+	      
+	      break;
+	    }
+	}
+      else
+	{
+	  if( value & 1 )
+	    {
+	      gpio_put(p6pin[i], 1);
+	    }
+	  else
+	    {
+	      gpio_put(p6pin[i], 0);
+	    }
+	}
+      value >>= 1;
+    }
+}
+
+void port6_ddr(int value)
+{
+  if( value != 0 )
+    {
+      for(int i=0; i<8; i++)
+	{
+	  if( p6pin[i] < PSEUDO_PIN )
+	    {
+	      gpio_set_dir(p6pin[i], GPIO_OUT);
+	    }
+	}
+
+      // Output
+      // Drive OE of the level shifter
+      latchout2_shadow &= ~LAT2PIN_MASK_SD_OE;
+      write_595(PIN_LATCHOUT2, latchout2_shadow, 16);
+    }
+  else
+    {
+      // Input
+      // Drive OE of the level shifter
+      latchout2_shadow |= LAT2PIN_MASK_SD_OE;
+      write_595(PIN_LATCHOUT2, latchout2_shadow, 16);
+    }
+}
+
+//------------------------------------------------------------------------------
+//
 // Memory reference read
 //
 
@@ -4813,6 +5054,12 @@ u_int8_t RD_REF(u_int16_t addr)
       return(0);
       break;
 
+    case SWITCH_OFF:
+      // Turn power off
+      gpio_put(PIN_VBAT_SW_ON, 0);
+      return(0);
+      break;
+
     case BANK_RESET:
     case BANK_NEXT_RAM:
     case BANK_NEXT_ROM:
@@ -4836,6 +5083,16 @@ u_int8_t RD_REF(u_int16_t addr)
 #endif
       // The port 5 register value needs to be built
       return(ramdata[PORT5]);
+      break;
+
+    case PORT2:
+      // Read the port lines
+      return(read_port2());
+      break;
+
+    case PORT6:
+      // Read the port lines
+      return(read_port6());
       break;
       
     }
@@ -4904,6 +5161,12 @@ void WR_REF(u_int16_t addr, u_int8_t value)
       return;
       break;
 
+    case SWITCH_OFF:
+      // Turn power off
+      gpio_put(PIN_VBAT_SW_ON, 0);
+      return;
+      break;
+
     case BANK_RESET:
     case BANK_NEXT_RAM:
     case BANK_NEXT_ROM:
@@ -4911,8 +5174,28 @@ void WR_REF(u_int16_t addr, u_int8_t value)
       return;
       break;
 
+    case PORT2:
+      write_port2(value);
+      return;
+      break;
+
+    case PORT2_DDR:
+      port2_ddr(value);
+      return;
+      break;
+
+    case PORT6:
+      write_port6(value);
+      return;
+      break;
+
+    case PORT6_DDR:
+      return;
+      break;
+      
     default:
       RAMDATA(addr) = value;
+      return;
       break;
     }
 }
@@ -4943,6 +5226,12 @@ u_int8_t RD_ADDR(u_int16_t addr)
       return(0);
       break;
 
+    case SWITCH_OFF:
+      // Turn power off
+      gpio_put(PIN_VBAT_SW_ON, 0);
+      return(0);
+      break;
+
     case BANK_RESET:
     case BANK_NEXT_RAM:
     case BANK_NEXT_ROM:
@@ -4970,6 +5259,13 @@ u_int8_t RD_ADDR(u_int16_t addr)
       
       break;
 
+    case PORT2:
+      return(read_port2());
+      break;
+
+    case PORT6:
+      return(read_port6());
+      break;
     }
   
   if( addr >= ROM_START)
@@ -5043,6 +5339,12 @@ void  WR_ADDR(u_int16_t addr, u_int8_t value)
       return;
       break;
 
+    case SWITCH_OFF:
+      // Turn power off
+      gpio_put(PIN_VBAT_SW_ON, 0);
+      return;
+      break;
+
     case BANK_RESET:
     case BANK_NEXT_RAM:
     case BANK_NEXT_ROM:
@@ -5050,6 +5352,37 @@ void  WR_ADDR(u_int16_t addr, u_int8_t value)
       return;
       break;
 
+    case PORT2:
+      write_port2(value);
+      return;
+      break;
+
+    case PORT6:
+      write_port6(value);
+      return;
+      break;
+
+    case PORT6_DDR:
+      if( value != 0 )
+	{
+	  // Drive OE of the level shifter
+	  latchout2_shadow &= ~LAT2PIN_MASK_SD_OE;
+	  write_595(PIN_LATCHOUT2, latchout2_shadow, 16);
+	}
+      else
+	{
+	  // Drive OE of the level shifter
+	  latchout2_shadow &= ~LAT2PIN_MASK_SD_OE;
+	  write_595(PIN_LATCHOUT2, latchout2_shadow, 16);
+	}
+
+      return;
+      break;
+ 
+    case PORT2_DDR:
+      port2_ddr(value);
+      return;
+      break;
     }
   
   if( addr >= ROM_START)

@@ -20,4 +20,27 @@ CMakeFiles/psion_recreate.dir/emulator.c.obj: \
  /usr/include/newlib/stdlib.h /usr/include/newlib/machine/stdlib.h \
  /usr/include/newlib/alloca.h /usr/include/newlib/string.h \
  /usr/include/newlib/strings.h /usr/include/newlib/sys/string.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_gpio/include/hardware/gpio.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/common/pico_base/include/pico.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/common/pico_base/include/pico/types.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/common/pico_base/include/pico/assert.h \
+ /usr/lib/gcc/arm-none-eabi/9.2.1/include/stdbool.h \
+ /usr/include/newlib/assert.h \
+ /usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h \
+ /tree/downloaded_tools/pico/psion-recreate-eclipse/generated/pico_base/pico/version.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/common/pico_base/include/pico/config.h \
+ /tree/downloaded_tools/pico/psion-recreate-eclipse/generated/pico_base/pico/config_autogen.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/boards/include/boards/pico.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/cmsis/include/cmsis/rename_exceptions.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_platform/include/pico/platform.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/common/pico_base/include/pico/types.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/platform_defs.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/common/pico_base/include/pico/error.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/sio.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_base/include/hardware/address_mapped.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/addressmap.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/sio.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/interp.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/padsbank0.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/pads_bank0.h \
  /tree/downloaded_tools/pico/psion-recreate/psion_recreate.h

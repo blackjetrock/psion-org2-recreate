@@ -29,7 +29,7 @@ void printxy(int x, int y, char ch);
 ////////////////////////////////////////////////////////////////////////////////
 // Prototypes
 //
-void write_595(const uint latchpin, int value);
+void write_595(const uint latchpin, int value, int n);
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -775,13 +775,13 @@ void Set_Contrast_Control_Register(unsigned char mod)
 void RST0(void)
 {
   latchout1_shadow &= 0x7f;
-  write_595(PIN_LATCHOUT1, latchout1_shadow);
+  write_595(PIN_LATCHOUT1, latchout1_shadow, 8);
 }
 
 void RST1(void)
 {
   latchout1_shadow |= 0x80;
-  write_595(PIN_LATCHOUT1, latchout1_shadow);
+  write_595(PIN_LATCHOUT1, latchout1_shadow, 8);
 }
 
 

@@ -23,6 +23,20 @@ void clear_oled(void);
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#define PIN_SD0 0
+#define PIN_SD1 1
+#define PIN_SD2 2
+#define PIN_SD3 3
+#define PIN_SD4 4
+#define PIN_SD5 5
+#define PIN_SD6 6
+#define PIN_SD7 7
+
+#define PIN_SCLK       10
+#define PIN_SOE        11
+#define PIN_SMR        12
+#define PIN_P57        13
+
 const uint PIN_SDAOUT     = 14;
 const uint PIN_LATCHOUT2  = 15;
 const uint PIN_I2C_SDA    = 16;
@@ -32,10 +46,12 @@ const uint PIN_LATCHIN    = 19;
 const uint PIN_SCLKIN     = 20;
 const uint PIN_SDAIN      = 21;
 const uint PIN_LATCHOUT1  = 22;
+
 const uint PIN_SCLKOUT    = 26;
 const uint PIN_VBAT_SW_ON = 27;
 
 uint8_t latchout1_shadow = 0;
+uint8_t latchout2_shadow = 0;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -48,7 +64,7 @@ uint8_t read_165(const uint latchpin)
   uint8_t value = 0;
   
   // Latch the data
-  gpio_put(latchpin, 0);
+  gpio_put(latchpin, 0);  
   gpio_put(latchpin, 1);
 
   // Clock the data out of the latch
@@ -56,7 +72,7 @@ uint8_t read_165(const uint latchpin)
     {
       gpio_put(PIN_SCLKIN, 0);
       gpio_put(PIN_SCLKIN, 1);
-
+      
       // Read data
       value <<= 1;
       if( gpio_get(PIN_SDAIN) )
@@ -73,22 +89,23 @@ uint8_t read_165(const uint latchpin)
 
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Write an 8 bit pattern to a 595 latch
+// Write an N bit pattern to a 595 latch or latches
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-void write_595(const uint latchpin, int value)
+void write_595(const uint latchpin, int value, int n)
 {
+  
   // Latch pin low
   gpio_put(latchpin, 0);
   
-  for(int i = 0; i<8; i++)
+  for(int i = 0; i<n; i++)
     {
       // Clock low
       gpio_put(PIN_SCLKOUT, 0);
       
       // Set data up
-      if( value & 0x80 )
+      if( value & (1<< (n-1)) )
 	{
 	  gpio_put(PIN_SDAOUT, 1);
 	}
@@ -129,7 +146,7 @@ void keyboard_test(void)
 	}
 
       // Drive KB line (keep display out of reset)
-      write_595(PIN_LATCHOUT1, drive | 0x80);
+      write_595(PIN_LATCHOUT1, drive | 0x80, 8);
 
       // read port5
       port5 = (read_165(PIN_LATCHIN) ^ 0x7f);
@@ -167,7 +184,11 @@ int main() {
   gpio_init(PIN_SCLKOUT);
   gpio_init(PIN_LATCHIN);
   gpio_init(PIN_SCLKIN);
-
+  
+  gpio_init(PIN_SCLK);
+  gpio_init(PIN_SOE);
+  gpio_init(PIN_SMR);
+  
   gpio_init(PIN_I2C_SCL);
   gpio_init(PIN_I2C_SDA);
   
@@ -178,6 +199,10 @@ int main() {
   gpio_set_dir(PIN_SCLKOUT,   GPIO_OUT);
   gpio_set_dir(PIN_LATCHIN,   GPIO_OUT);
   gpio_set_dir(PIN_SCLKIN,    GPIO_OUT);
+
+  gpio_set_dir(PIN_SCLK, GPIO_OUT);
+  gpio_set_dir(PIN_SOE,  GPIO_OUT);
+  gpio_set_dir(PIN_SMR,  GPIO_OUT);
 
   // Unlatch input latch
   //  gpio_put(PIN_SDAIN,  1);
@@ -194,8 +219,13 @@ int main() {
   //------------------------------------------------------------------------------
   //
   // Initialise display
-  
-  sleep_ms(100);
+
+  // Turn on the 12V supply
+  latchout2_shadow |= LAT2PIN_MASK_DRV_HV;
+  write_595(PIN_LATCHOUT2, latchout2_shadow, 16);
+
+  // Wait for it to start up
+  sleep_ms(10);
   initialise_oled();
   
   // Clear screen
