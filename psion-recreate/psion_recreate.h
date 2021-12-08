@@ -62,4 +62,4 @@ uint8_t read_165(const uint latchpin);
 #define LAT2PIN_MASK_SS2       0x0010
 #define LAT2PIN_MASK_SS3       0x0020
 
-
+extern unsigned char font_5x7_letters[];

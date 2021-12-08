@@ -86,6 +86,7 @@ int keyk = 3;
 #define SCA_CLOCK      0x0340
 
 #define MAX_DDRAM 0xFF
+#define MAX_CGRAM (5*16)
 
 // Timer1
 #define TIM1_TCSR       0x0008
@@ -4477,6 +4478,7 @@ int lcd_dispsize = 32;
 int cursor_i = 0;
 int cursor_state = 0;
 int cursor_update = 0;
+#define CURSOR_CHAR 256
 
 void handle_cursor(void)
 {
@@ -4553,7 +4555,7 @@ void dump_lcd(void)
 	    {
 	      if( cursor_state )
 		{
-		  ch = 0;
+		  ch = CURSOR_CHAR;
 		}
 	    }
 	  
@@ -4648,6 +4650,29 @@ void handle_lcd_write(u_int16_t addr, u_int8_t value)
 	  if( lcd_address > MAX_DDRAM )
 	    {
 	      lcd_address = MAX_DDRAM;
+	    }
+	}
+
+      // We have to rotate the CG character data
+      if( lcd_write_to_cgram )
+	{
+	  int bitnum = (lcd_address % 8);
+
+	  // Stripe the bits across the bytes of the character
+	  for(int i=0; i<5; i++)
+	    {
+	      font_5x7_letters[lcd_address/8*5+i] &= ~(1 << bitnum);
+	      if( value & (1 << (4-i)) )
+		{
+		  font_5x7_letters[lcd_address/8*5+i] |= (1 << bitnum);
+		}
+	    }
+
+	  lcd_address += (lcd_auto_inc)?1:-1;
+	  
+	  if( lcd_address > MAX_CGRAM )
+	    {
+	      lcd_address = MAX_CGRAM;
 	    }
 	}
       
