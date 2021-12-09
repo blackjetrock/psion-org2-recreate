@@ -515,6 +515,7 @@
 				<pathentry include="/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_fix/rp2040_usb_device_enumeration/include" kind="inc" path="" system="true"/>
 				<pathentry include="/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_unique_id/include" kind="inc" path="" system="true"/>
 				<pathentry include="/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_flash/include" kind="inc" path="" system="true"/>
+				<pathentry include="/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/include" kind="inc" path="" system="true"/>
 				<pathentry include="/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/boot_stage2/asminclude" kind="inc" path="" system="true"/>
 				<pathentry include="/usr/lib/gcc/arm-none-eabi/9.2.1/include" kind="inc" path="" system="true"/>
 				<pathentry include="/usr/lib/gcc/arm-none-eabi/9.2.1/include-fixed" kind="inc" path="" system="true"/>

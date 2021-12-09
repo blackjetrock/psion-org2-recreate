@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 3.13)
 
+# initalize pico_sdk from installed location
+# (note this can come from environment, CMake cache etc)
+set(PICO_SDK_PATH "/tree/downloaded_tools/pico/pico-sdk")
+
 include(pico_sdk_import.cmake)
 
 project(psion_recreate C CXX ASM)
@@ -18,5 +22,7 @@ emulator.c
 
 pico_enable_stdio_usb(psion_recreate 1)
 pico_enable_stdio_uart(psion_recreate 1)
+
+target_link_libraries(psion_recreate pico_stdlib pico_multicore)
 pico_add_extra_outputs(psion_recreate)
-target_link_libraries(psion_recreate pico_stdlib)
+

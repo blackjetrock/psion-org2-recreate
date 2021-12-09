@@ -20,7 +20,7 @@ CMakeFiles/psion_recreate.dir/emulator.c.obj: \
  /usr/include/newlib/stdlib.h /usr/include/newlib/machine/stdlib.h \
  /usr/include/newlib/alloca.h /usr/include/newlib/string.h \
  /usr/include/newlib/strings.h /usr/include/newlib/sys/string.h \
- /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_gpio/include/hardware/gpio.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/common/pico_stdlib/include/pico/stdlib.h \
  /tree/downloaded_tools/pico/pico-sdk/src/common/pico_base/include/pico.h \
  /tree/downloaded_tools/pico/pico-sdk/src/common/pico_base/include/pico/types.h \
  /tree/downloaded_tools/pico/pico-sdk/src/common/pico_base/include/pico/assert.h \
@@ -36,11 +36,29 @@ CMakeFiles/psion_recreate.dir/emulator.c.obj: \
  /tree/downloaded_tools/pico/pico-sdk/src/common/pico_base/include/pico/types.h \
  /tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/platform_defs.h \
  /tree/downloaded_tools/pico/pico-sdk/src/common/pico_base/include/pico/error.h \
- /tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/sio.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio/include/pico/stdio.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/include/pico/time.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_timer/include/hardware/timer.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/timer.h \
  /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_base/include/hardware/address_mapped.h \
  /tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/addressmap.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/timer.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_gpio/include/hardware/gpio.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/sio.h \
  /tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/sio.h \
  /tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/interp.h \
  /tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/padsbank0.h \
  /tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/pads_bank0.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/include/hardware/uart.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/uart.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/uart.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_uart/include/pico/stdio_uart.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/include/pico/stdio_usb.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/include/pico/multicore.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/include/pico/sync.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/include/pico/sem.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/include/pico/lock_core.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_sync/include/hardware/sync.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/include/pico/mutex.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/include/pico/critical_section.h \
  /tree/downloaded_tools/pico/psion-recreate/psion_recreate.h

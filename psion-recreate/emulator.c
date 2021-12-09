@@ -3,11 +3,20 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "pico/stdlib.h"
 #include "hardware/gpio.h"
+#include "pico/multicore.h"
 
 #include "psion_recreate.h"
 
-#define DEBUG_STO {volatile int x=1; while(x){}}
+#define DEBUG_STOP {volatile int x=1; while(x){}}
+
+
+// Do we use two cores?
+// If yes then the second core handles:
+//    Display update
+
+#define MULTI_CORE    1
 
 // Emulates the 6303 processor
 // Emulates the HD44780 LCD controller
@@ -51,7 +60,6 @@ int lcd_write_to_cgram = 0;
 // External functions
 //
 
-void printxy(int x, int y, char ch);
 void write_595(const uint latchpin, int value, int n);
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -4475,10 +4483,11 @@ int lcd_dispsize = 32;
 //
 // Cursor appears at ddram position
 
-int cursor_i = 0;
-int cursor_state = 0;
-int cursor_update = 0;
-#define CURSOR_CHAR 256
+volatile int cursor_i = 0;
+volatile int cursor_state = 0;
+volatile int cursor_update = 0;
+#define CURSOR_CHAR        256
+#define CURSOR_UNDERLINE   257
 
 void handle_cursor(void)
 {
@@ -4538,10 +4547,21 @@ u_int8_t xp_mapping[] =
    64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79
   };
 
+void create_underline_char(int ch, int dest_code)
+{
+  int i;
+  
+  for(i=0; i<5; i++)
+    {
+      font_5x7_letters[dest_code*5+i] = font_5x7_letters[ch*5+i] | 0x80;
+    }
+
+}
+
 void dump_lcd(void)
 {
   int i;
-  uint8_t ch;
+  int ch;
 
   if( (strcmp(last_lcd_display_buffer, lcd_display_buffer) != 0) || cursor_update)
     {
@@ -4551,11 +4571,48 @@ void dump_lcd(void)
 	{
 	  ch = lcd_display_buffer[lz_mapping[i]];
 	  
-	  if( (lz_mapping[i] == lcd_address) && lcd_cursor && lcd_blink )
+	  if( (lz_mapping[i] == lcd_address) && lcd_cursor )
 	    {
 	      if( cursor_state )
 		{
-		  ch = CURSOR_CHAR;
+		  // Which cursor?
+		  if( lcd_blink )
+		    {
+		      // Solid blinking block
+		      ch = CURSOR_CHAR;
+		    }
+		  else
+		    {
+		      // We have the character code, copy it and underline it in
+		      // the underline cursor entry in the font table
+		      create_underline_char(ch, CURSOR_UNDERLINE);	      
+
+		      // Non blinking underline of character
+		      ch = CURSOR_UNDERLINE;
+		    }
+		}
+	      else
+		{
+		  // Other phase of cursor
+		  // Which cursor?
+		  if( lcd_blink )
+		    {
+		      // Underline of char
+		      create_underline_char(ch, CURSOR_UNDERLINE);	      
+
+		      // Solid blinking block
+		      ch = CURSOR_UNDERLINE;
+		    }
+		  else
+		    {
+		      // We have the character code, copy it and underline it in
+		      // the underline cursor entry in the font table
+		      create_underline_char(ch, CURSOR_UNDERLINE);	      
+
+		      // Non blinking underline of character
+		      // on both phases
+		      ch = CURSOR_UNDERLINE;
+		    }
 		}
 	    }
 	  
@@ -4679,8 +4736,9 @@ void handle_lcd_write(u_int16_t addr, u_int8_t value)
       break;
 }      
 
-  
+#if !MULTI_CORE  
   dump_lcd();
+#endif
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -4861,6 +4919,7 @@ void write_port2(u_int8_t value)
 {
   for(int i=0; i<8; i++)
     {
+      gpio_init(p2pin[i]);
       if( value & 1 )
 	{
 	  gpio_put(p2pin[i], 1);
@@ -5106,6 +5165,18 @@ u_int8_t RD_REF(u_int16_t addr)
 #if XP_DEBUG
       printxy_hex(0,2,ramdata[PORT5]);
 #endif
+      
+#if 0
+      // See if ON key GPIO agrees with keyboard scan
+      if( gpio_get(PIN_P57) != (ramdata[PORT5] >> 7) )
+	{
+	  printxy(20, 0, '*');
+	}
+#endif
+
+      ramdata[PORT5] &= 0x7f;
+      ramdata[PORT5] |= (gpio_get(PIN_P57) << 7);
+      
       // The port 5 register value needs to be built
       return(ramdata[PORT5]);
       break;
@@ -5280,6 +5351,9 @@ u_int8_t RD_ADDR(u_int16_t addr)
       printxy_hex(0,2,ramdata[PORT5]);
 #endif
       // The port 5 register value needs to be built
+      ramdata[PORT5] &= 0x7f;
+      ramdata[PORT5] |= (gpio_get(PIN_P57) << 7);
+
       return(ramdata[PORT5]);
       
       break;
@@ -8796,6 +8870,14 @@ void dump_memory(int n, int addr)
 
 ////////////////////////////////////////////////////////////////////////////////
 
+void core1_main(void)
+{
+  while(1)
+    {
+      dump_lcd();
+    }
+}
+
 
 void initialise_emulator(void)
 {
@@ -8829,10 +8911,12 @@ void initialise_emulator(void)
   // No key pressed
   RAMDATA_FIX(P5_DATA) = COLD_START_STATE | NO_KEY_STATE | on_key;
 
-  // Execute
-  // Human readable output to stdout
-  // Address list to addrlist.txt which matches format of
-  // hardware rom emulator trace file
+#if MULTI_CORE
+  // If multi core then we run the LCD update on the other core
+    multicore_launch_core1(core1_main);
+
+#endif
+  
 }
 
 void loop_emulator(void)
@@ -8875,10 +8959,12 @@ void loop_emulator(void)
   update_counter();
   handle_cursor();
 
+#if !MULTI_CORE  
   if( cursor_update )
     {
       dump_lcd();
     }
+#endif
 }
 
 int rel = 0;

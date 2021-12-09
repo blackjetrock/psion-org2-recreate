@@ -10,6 +10,12 @@
 #define FN_OLED_DEMO      0
 #define FN_KEYBOARD_TEST  0
 #define FN_FLASH_LED      0
+#define SLOT_TEST         0
+#define SLOT_TEST_MASK    LAT2PIN_MASK_P_SPGM
+#define SLOT_TEST_G       0
+#define SLOT_TEST_GPIO    PIN_SD0
+#define TEST_PORT2        0
+
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -50,8 +56,8 @@ const uint PIN_LATCHOUT1  = 22;
 const uint PIN_SCLKOUT    = 26;
 const uint PIN_VBAT_SW_ON = 27;
 
-uint8_t latchout1_shadow = 0;
-uint8_t latchout2_shadow = 0;
+uint16_t latchout1_shadow = 0;
+uint16_t latchout2_shadow = 0;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -64,6 +70,7 @@ uint8_t read_165(const uint latchpin)
   uint8_t value = 0;
   
   // Latch the data
+  gpio_put(latchpin, 0);
   gpio_put(latchpin, 0);  
   gpio_put(latchpin, 1);
 
@@ -142,7 +149,7 @@ void keyboard_test(void)
     {
       if( drive == 0 )
 	{
-	  drive = 0x01;
+	  drive = 0x08;
 	}
 
       // Drive KB line (keep display out of reset)
@@ -160,15 +167,13 @@ void keyboard_test(void)
 
 void oledmain(void);
 
+////////////////////////////////////////////////////////////////////////////////
+//
+//
+
+
 int main() {
-#if 0  
-  const uint LED_PIN = PICO_DEFAULT_LED_PIN;
-  
-  gpio_init(LED_PIN);
-  gpio_set_dir(LED_PIN, GPIO_OUT);
-#endif
-  
-  
+
   // Set up the GPIOs
   gpio_init(PIN_VBAT_SW_ON);
   gpio_set_dir(PIN_VBAT_SW_ON, GPIO_OUT);
@@ -176,6 +181,9 @@ int main() {
   // Take power on high so we latch on
   gpio_put(PIN_VBAT_SW_ON, 1);
 
+  // ON key
+  gpio_init(PIN_P57);
+  
   // Set GPIOs up
   gpio_init(PIN_SDAOUT);
   gpio_init(PIN_LATCHOUT2);
@@ -184,6 +192,16 @@ int main() {
   gpio_init(PIN_SCLKOUT);
   gpio_init(PIN_LATCHIN);
   gpio_init(PIN_SCLKIN);
+  gpio_init(PIN_LS_DIR);
+  
+  gpio_init(PIN_SD0);
+  gpio_init(PIN_SD1);
+  gpio_init(PIN_SD2);
+  gpio_init(PIN_SD3);
+  gpio_init(PIN_SD4);
+  gpio_init(PIN_SD5);
+  gpio_init(PIN_SD6);
+  gpio_init(PIN_SD7);
   
   gpio_init(PIN_SCLK);
   gpio_init(PIN_SOE);
@@ -193,13 +211,16 @@ int main() {
   gpio_init(PIN_I2C_SDA);
   
   gpio_set_dir(PIN_SDAOUT,    GPIO_OUT);
+  gpio_set_dir(PIN_P57,       GPIO_IN);
+  gpio_set_dir(PIN_SDAOUT,    GPIO_OUT);
   gpio_set_dir(PIN_LATCHOUT2, GPIO_OUT);
   gpio_set_dir(PIN_LATCHOUT1, GPIO_OUT);
   gpio_set_dir(PIN_SDAIN,     GPIO_IN);
   gpio_set_dir(PIN_SCLKOUT,   GPIO_OUT);
   gpio_set_dir(PIN_LATCHIN,   GPIO_OUT);
   gpio_set_dir(PIN_SCLKIN,    GPIO_OUT);
-
+  gpio_set_dir(PIN_LS_DIR,    GPIO_OUT);
+  
   gpio_set_dir(PIN_SCLK, GPIO_OUT);
   gpio_set_dir(PIN_SOE,  GPIO_OUT);
   gpio_set_dir(PIN_SMR,  GPIO_OUT);
@@ -230,18 +251,7 @@ int main() {
   
   // Clear screen
   clear_oled();
-  
-  
   stdio_init_all();
-  
-#if FN_FLASH_LED
-  while (1) {
-    gpio_put(LED_PIN, 0);
-    sleep_ms(250);
-    gpio_put(LED_PIN, 1);
-    sleep_ms(250);
-  }
-#endif
   
   //------------------------------------------------------------------------------
   //
@@ -270,6 +280,69 @@ int main() {
 
     // Initialise emulator
     initialise_emulator();
+
+    // Test the slot lines?
+#if SLOT_TEST
+    while(1)
+      {
+	latchout2_shadow &= ~SLOT_TEST_MASK;
+	//	latchout2_shadow = 0;
+	if( 1 )
+	  {
+	    latchout2_shadow |= SLOT_TEST_MASK;
+	    //  latchout2_shadow |= 0x5555;
+	  }
+	write_595(PIN_LATCHOUT2, latchout2_shadow, 16);
+
+	latchout2_shadow &= ~SLOT_TEST_MASK;
+	//latchout2_shadow = 0;
+
+	if( 0 )
+	  {
+	    latchout2_shadow |= SLOT_TEST_MASK;
+	    //  latchout2_shadow |= 0xaaaa;
+	  }
+	write_595(PIN_LATCHOUT2, latchout2_shadow, 16);
+      }
+    
+#endif
+
+#if TEST_PORT2
+    gpio_init(PIN_SD0);
+    
+    while(1)
+      {
+#if 0
+	gpio_set_dir(PIN_SD0, GPIO_OUT);
+	gpio_put(PIN_SD0, 1);
+	gpio_put(PIN_SD0, 0);
+#endif
+#if 1	
+	port2_ddr(0xFF);
+	gpio_set_dir(PIN_SD0, GPIO_OUT);
+	write_port2(0xFF);
+
+	port2_ddr(0x00);
+	read_port2();
+	
+	port2_ddr(0xFF);
+	gpio_set_dir(PIN_SD0, GPIO_OUT);
+	write_port2(0x00);
+
+	port2_ddr(0x00);
+	read_port2();
+#endif
+      }
+#endif
+
+#if SLOT_TEST_G
+    while(1)
+      {
+	gpio_put(SLOT_TEST_GPIO, 0);
+	gpio_put(SLOT_TEST_GPIO, 1);
+	
+      }
+#endif
     
     // Main loop
     while(1)

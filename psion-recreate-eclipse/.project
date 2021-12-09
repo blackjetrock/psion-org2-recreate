@@ -502,6 +502,11 @@
 			<location>/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_flash/flash.c</location>
 		</link>
 		<link>
+			<name>[Targets]/[exe] psion_recreate/Source Files/multicore.c</name>
+			<type>1</type>
+			<location>/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c</location>
+		</link>
+		<link>
 			<name>[Targets]/[exe] psion_recreate/Header Files</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>

@@ -24,8 +24,8 @@ extern const uint PIN_LATCHOUT1;
 extern const uint PIN_SCLKOUT;
 extern const uint PIN_VBAT_SW_ON;
 
-extern uint8_t latchout1_shadow;
-extern uint8_t latchout2_shadow;
+extern uint16_t latchout1_shadow;
+extern uint16_t latchout2_shadow;
 
 uint8_t read_165(const uint latchpin);
 
@@ -49,17 +49,22 @@ uint8_t read_165(const uint latchpin);
 #define LAT1PIN_MASK_K7        0x40
 #define LAT1PIN_MASK_OLED_RES  0x80
 
-#define LAT2PIN_MASK_DRV_HV    0x0100
-#define LAT2PIN_MASK_ESP_ON    0x0200
-#define LAT2PIN_MASK_BUZZER    0x0400
-#define LAT2PIN_MASK_5V_ON     0x0800
-#define LAT2PIN_MASK_P_SPGM    0x1000
-#define LAT2PIN_MASK_VBSW_ON   0x2000
-#define LAT2PIN_MASK_SD_OE     0x4000
-#define LAT2PIN_MASK_SC_OE     0x8000
+#define LAT2PIN_MASK_DRV_HV    0x0001
+#define LAT2PIN_MASK_ESP_ON    0x0002
+#define LAT2PIN_MASK_BUZZER    0x0004
+#define LAT2PIN_MASK_5V_ON     0x0008
+#define LAT2PIN_MASK_P_SPGM    0x0010
+#define LAT2PIN_MASK_VBSW_ON   0x0020
+#define LAT2PIN_MASK_SD_OE     0x0040
+#define LAT2PIN_MASK_SC_OE     0x0080
 
-#define LAT2PIN_MASK_SS1       0x0008
-#define LAT2PIN_MASK_SS2       0x0010
-#define LAT2PIN_MASK_SS3       0x0020
+#define LAT2PIN_MASK_SS1       0x0800
+#define LAT2PIN_MASK_SS2       0x1000
+#define LAT2PIN_MASK_SS3       0x2000
 
 extern unsigned char font_5x7_letters[];
+
+void write_port2(u_int8_t value);
+u_int8_t read_port2(void);
+
+void printxy(int x, int y, int ch);
