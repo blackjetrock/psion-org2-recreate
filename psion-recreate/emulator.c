@@ -5032,8 +5032,8 @@ void write_port6(u_int8_t value)
       trace_port_i++;
     }
 
-#if 0  
-  if( value == 0x81 )
+#if 0
+  if( value == 0x19 )
     {
       while(1)
 	{
@@ -5159,7 +5159,7 @@ void port6_ddr(int value)
       //write_595(PIN_LATCHOUT2, latchout2_shadow, 16);
 
       // Write the port values
-      write_port6(latch2_shadow);
+      write_port6(port6_shadow);
     }
   else
     {
@@ -8963,6 +8963,15 @@ void core1_main(void)
 
 void initialise_emulator(void)
 {
+  int i;
+  
+  // Clear display buffer
+  for(i=0; i<MAX_DDRAM+1; i++)
+    {
+      lcd_display_buffer[i] = ' ';
+    }
+  lcd_display_buffer[i] = '\0';
+	
   switch(model)
     {
     case MODEL_XP:
