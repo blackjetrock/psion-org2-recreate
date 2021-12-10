@@ -4874,7 +4874,7 @@ u_int8_t *REF_ADDR(u_int16_t addr)
     }
 }
 
-//------------------------------------------------------------------------------
+//--------------------\----------------------------------------------------------
 //
 // Port 2 access functions
 
@@ -4890,10 +4890,15 @@ uint p2pin[] =
    PIN_SD7,
   };
 
-#define MAX_P2_TRC  100
+#define MAX_PORT_TRC  300
 
-int trace_port2_i = 0;
-u_int8_t trace_port2[MAX_P2_TRC+1];
+int trace_port_i = 0;
+struct
+{
+  u_int8_t portnum;
+  u_int8_t value;
+}
+  trace_port[MAX_PORT_TRC+1];
 
 u_int8_t read_port2(void)
 {
@@ -4908,18 +4913,28 @@ u_int8_t read_port2(void)
 	}
     }
 
-  if( trace_port2_i < MAX_P2_TRC )
+    if( trace_port_i < MAX_PORT_TRC )
     {
-      trace_port2[trace_port2_i++] = p;
+      trace_port[trace_port_i].portnum = 0xE2;
+      trace_port[trace_port_i].value = p;
+      trace_port_i++;
     }
+
   return(p);
 }
 
 void write_port2(u_int8_t value)
 {
+  if( trace_port_i < MAX_PORT_TRC )
+    {
+      trace_port[trace_port_i].portnum = 0x12;
+      trace_port[trace_port_i].value = value;
+      trace_port_i++;
+    }
+
   for(int i=0; i<8; i++)
     {
-      gpio_init(p2pin[i]);
+      //gpio_init(p2pin[i]);
       if( value & 1 )
 	{
 	  gpio_put(p2pin[i], 1);
@@ -4930,10 +4945,24 @@ void write_port2(u_int8_t value)
 	}
       value >>= 1;
     }
+  
+
 }
 
 void port2_ddr(int value)
 {
+  volatile int x = 0;
+
+  while(x)
+    {
+    }
+
+  if( trace_port_i < MAX_PORT_TRC )
+    {
+      trace_port[trace_port_i].portnum = 0xD2;
+      trace_port[trace_port_i].value = value;
+      trace_port_i++;
+    }
 
   // We can only set the data direction to input or output
   // for the entire port2 lines. We set to output if all are outputs
@@ -4944,8 +4973,10 @@ void port2_ddr(int value)
       gpio_put(PIN_LS_DIR, 1);
       
       // Drive OE of the level shifter
-      latchout2_shadow &= ~LAT2PIN_MASK_SC_OE;
-      write_595(PIN_LATCHOUT2, latchout2_shadow, 16);
+      latch2_clear_mask(LAT2PIN_MASK_SC_OE);
+      
+      //latchout2_shadow &= ~LAT2PIN_MASK_SC_OE;
+      //write_595(PIN_LATCHOUT2, latchout2_shadow, 16);
 
       for(int i=0; i<8; i++)
 	{
@@ -4963,9 +4994,12 @@ void port2_ddr(int value)
       gpio_put(PIN_LS_DIR, 0);
       
       // Drive OE of the level shifter
-      latchout2_shadow &= ~LAT2PIN_MASK_SC_OE;
-      write_595(PIN_LATCHOUT2, latchout2_shadow, 16);
+      latch2_clear_mask(LAT2PIN_MASK_SC_OE);
+      //      latchout2_shadow &= ~LAT2PIN_MASK_SC_OE;
+      //write_595(PIN_LATCHOUT2, latchout2_shadow, 16);
     }
+  
+
 }
 
 uint p6pin[] =
@@ -4980,23 +5014,32 @@ uint p6pin[] =
    PIN_5V_ON,     // HIGH=5V on slots
   };
 
+u_int8_t port6_shadow = 0;
+
 u_int8_t read_port6(void)
 {
-  u_int8_t p = 0;
-  
-  for(int i=0; i<8; i++)
-    {
-      p <<= 1;
-      if( gpio_get(p6pin[i]) )
-	{
-	  p |= 1;
-	}
-    }
-  return(p);
+  return(port6_shadow);
 }
 
 void write_port6(u_int8_t value)
 {
+  port6_shadow = value;
+  
+  if( trace_port_i < MAX_PORT_TRC )
+    {
+      trace_port[trace_port_i].portnum = 0x16;
+      trace_port[trace_port_i].value = value;
+      trace_port_i++;
+    }
+
+#if 0  
+  if( value == 0x81 )
+    {
+      while(1)
+	{
+	}
+    }
+#endif  
   for(int i=0; i<8; i++)
     {
       if( p6pin[i] >= PSEUDO_PIN )
@@ -5005,50 +5048,63 @@ void write_port6(u_int8_t value)
 	    {
 	    case PIN_5V_ON:
 	      // Invert signal
-	      latchout2_shadow &= ~LAT2PIN_MASK_5V_ON;
+	      //latchout2_shadow &= ~LAT2PIN_MASK_5V_ON;
 	      if( !(value & 1) )
 		{
-		  latchout2_shadow |= LAT2PIN_MASK_5V_ON;
+		  latch2_set_mask(LAT2PIN_MASK_5V_ON);
+		  // latchout2_shadow |= LAT2PIN_MASK_5V_ON;
 		}
-	      write_595(PIN_LATCHOUT2, latchout2_shadow, 16);
+	      else
+		{
+		  latch2_clear_mask(LAT2PIN_MASK_5V_ON);
+		}
+	      //	      write_595(PIN_LATCHOUT2, latchout2_shadow, 16);
 	      break;
 
 	    case PIN_SS1:
-	      latchout2_shadow &= ~LAT2PIN_MASK_SS1;
+
 	      if( value & 1 )
 		{
-		  latchout2_shadow |= LAT2PIN_MASK_SS1;
+		  latch2_set_mask(LAT2PIN_MASK_SS1);
 		}
-	      write_595(PIN_LATCHOUT2, latchout2_shadow, 16);
-
+	      else
+		{
+		  latch2_clear_mask(LAT2PIN_MASK_SS1);
+		}
 	      break;
 
 	    case PIN_SS2:
-	      latchout2_shadow &= ~LAT2PIN_MASK_SS2;
 	      if( value & 1 )
 		{
-		  latchout2_shadow |= LAT2PIN_MASK_SS2;
+		  latch2_set_mask(LAT2PIN_MASK_SS2);
 		}
-	      write_595(PIN_LATCHOUT2, latchout2_shadow, 16);
+	      else
+		{
+		  latch2_clear_mask(LAT2PIN_MASK_SS2);
+		}
 	      break;
 
 	    case PIN_SS3:
-	      latchout2_shadow &= ~LAT2PIN_MASK_SS3;
 	      if( value & 1 )
 		{
-		  latchout2_shadow |= LAT2PIN_MASK_SS3;
+		  latch2_set_mask(LAT2PIN_MASK_SS3);
 		}
-	      write_595(PIN_LATCHOUT2, latchout2_shadow, 16);
+	      else
+		{
+		  latch2_clear_mask(LAT2PIN_MASK_SS3);
+		}
+
 	      break;
 
 	    case PIN_SPGM:
-	      latchout2_shadow &= ~LAT2PIN_MASK_P_SPGM;
 	      if( value & 1 )
 		{
-		  latchout2_shadow |= LAT2PIN_MASK_P_SPGM;
+		  latch2_set_mask(LAT2PIN_MASK_P_SPGM);
 		}
-	      write_595(PIN_LATCHOUT2, latchout2_shadow, 16);
-	      
+	      else
+		{
+		  latch2_clear_mask(LAT2PIN_MASK_P_SPGM);
+		}
 	      break;
 	    }
 	}
@@ -5065,10 +5121,27 @@ void write_port6(u_int8_t value)
 	}
       value >>= 1;
     }
+
+
 }
+
+// When port 6 is set to inputs, we have to take the SSn lines high
 
 void port6_ddr(int value)
 {
+  volatile int x = 0;
+
+  while(x)
+    {
+    }
+
+  if( trace_port_i < MAX_PORT_TRC )
+    {
+      trace_port[trace_port_i].portnum = 0xD6;
+      trace_port[trace_port_i].value = value;
+      trace_port_i++;
+    }
+
   if( value != 0 )
     {
       for(int i=0; i<8; i++)
@@ -5081,16 +5154,36 @@ void port6_ddr(int value)
 
       // Output
       // Drive OE of the level shifter
-      latchout2_shadow &= ~LAT2PIN_MASK_SD_OE;
-      write_595(PIN_LATCHOUT2, latchout2_shadow, 16);
+      latch2_clear_mask(LAT2PIN_MASK_SD_OE);
+      //      latchout2_shadow &= ~LAT2PIN_MASK_SD_OE;
+      //write_595(PIN_LATCHOUT2, latchout2_shadow, 16);
+
+      // Write the port values
+      write_port6(latch2_shadow);
     }
   else
     {
+      latch2_set_mask(LAT2PIN_MASK_SD_OE);
+      latch2_set_mask(LAT2PIN_MASK_SS1);
+      latch2_set_mask(LAT2PIN_MASK_SS2);
+      latch2_set_mask(LAT2PIN_MASK_SS3);
+      latch2_set_mask(LAT2PIN_MASK_P_SPGM);
+
       // Input
       // Drive OE of the level shifter
-      latchout2_shadow |= LAT2PIN_MASK_SD_OE;
-      write_595(PIN_LATCHOUT2, latchout2_shadow, 16);
+      //latchout2_shadow |= LAT2PIN_MASK_SD_OE;
+      //write_595(PIN_LATCHOUT2, latchout2_shadow, 16);
+      for(int i=0; i<8; i++)
+	{
+	  if( p6pin[i] < PSEUDO_PIN )
+	    {
+	      gpio_set_dir(p6pin[i], GPIO_IN);
+	    }
+	}
+
     }
+
+
 }
 
 //------------------------------------------------------------------------------
@@ -5286,6 +5379,7 @@ void WR_REF(u_int16_t addr, u_int8_t value)
       break;
 
     case PORT6_DDR:
+      port6_ddr(value);
       return;
       break;
       
@@ -5462,19 +5556,7 @@ void  WR_ADDR(u_int16_t addr, u_int8_t value)
       break;
 
     case PORT6_DDR:
-      if( value != 0 )
-	{
-	  // Drive OE of the level shifter
-	  latchout2_shadow &= ~LAT2PIN_MASK_SD_OE;
-	  write_595(PIN_LATCHOUT2, latchout2_shadow, 16);
-	}
-      else
-	{
-	  // Drive OE of the level shifter
-	  latchout2_shadow &= ~LAT2PIN_MASK_SD_OE;
-	  write_595(PIN_LATCHOUT2, latchout2_shadow, 16);
-	}
-
+      port6_ddr(value);
       return;
       break;
  

@@ -11,10 +11,11 @@
 #define FN_KEYBOARD_TEST  0
 #define FN_FLASH_LED      0
 #define SLOT_TEST         0
-#define SLOT_TEST_MASK    LAT2PIN_MASK_P_SPGM
+#define SLOT_TEST_MASK    LAT2PIN_MASK_SS2
 #define SLOT_TEST_G       0
 #define SLOT_TEST_GPIO    PIN_SD0
 #define TEST_PORT2        0
+#define PACK_TEST         0
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -56,8 +57,57 @@ const uint PIN_LATCHOUT1  = 22;
 const uint PIN_SCLKOUT    = 26;
 const uint PIN_VBAT_SW_ON = 27;
 
+uint16_t latch2_shadow = 0;
 uint16_t latchout1_shadow = 0;
-uint16_t latchout2_shadow = 0;
+
+void latch2_set_mask(int value)
+{
+    if( latch2_shadow == 0x2009 )
+    {
+      volatile int x = 0;
+
+      while(x)
+	{
+	}
+    }
+
+  latch2_shadow |= value;
+  write_595(PIN_LATCHOUT2, latch2_shadow, 16);
+
+  if( latch2_shadow == 0x2009 )
+    {
+      volatile int x = 0;
+
+      while(x)
+	{
+	}
+    }
+
+}
+
+void latch2_clear_mask(int value)
+{
+  if( value == 0x2009 )
+    {
+      volatile int x = 0;
+
+      while(x)
+	{
+	}
+    }
+
+  latch2_shadow &= ~value;
+  write_595(PIN_LATCHOUT2, latch2_shadow, 16);
+
+  if( latch2_shadow == 0x2009 )
+    {
+      volatile int x = 0;
+
+      while(x)
+	{
+	}
+    }
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -202,6 +252,16 @@ int main() {
   gpio_init(PIN_SD5);
   gpio_init(PIN_SD6);
   gpio_init(PIN_SD7);
+
+  // Turn on pull downs on the data bus
+  gpio_pull_down(PIN_SD0);
+  gpio_pull_down(PIN_SD1);
+  gpio_pull_down(PIN_SD2);
+  gpio_pull_down(PIN_SD3);
+  gpio_pull_down(PIN_SD4);
+  gpio_pull_down(PIN_SD5);
+  gpio_pull_down(PIN_SD6);
+  gpio_pull_down(PIN_SD7);
   
   gpio_init(PIN_SCLK);
   gpio_init(PIN_SOE);
@@ -242,8 +302,10 @@ int main() {
   // Initialise display
 
   // Turn on the 12V supply
-  latchout2_shadow |= LAT2PIN_MASK_DRV_HV;
-  write_595(PIN_LATCHOUT2, latchout2_shadow, 16);
+  latch2_set_mask(LAT2PIN_MASK_DRV_HV);
+  
+  //  latchout2_shadow |= LAT2PIN_MASK_DRV_HV;
+  //write_595(PIN_LATCHOUT2, latchout2_shadow, 16);
 
   // Wait for it to start up
   sleep_ms(10);
@@ -285,28 +347,69 @@ int main() {
 #if SLOT_TEST
     while(1)
       {
-	latchout2_shadow &= ~SLOT_TEST_MASK;
-	//	latchout2_shadow = 0;
-	if( 1 )
-	  {
-	    latchout2_shadow |= SLOT_TEST_MASK;
-	    //  latchout2_shadow |= 0x5555;
-	  }
-	write_595(PIN_LATCHOUT2, latchout2_shadow, 16);
-
-	latchout2_shadow &= ~SLOT_TEST_MASK;
-	//latchout2_shadow = 0;
-
-	if( 0 )
-	  {
-	    latchout2_shadow |= SLOT_TEST_MASK;
-	    //  latchout2_shadow |= 0xaaaa;
-	  }
-	write_595(PIN_LATCHOUT2, latchout2_shadow, 16);
+	latch2_set_mask(SLOT_TEST_MASK);
+	latch2_set_mask(SLOT_CLEAR_MASK);
       }
     
 #endif
 
+#if PACK_TEST
+
+    volatile u_int8_t portbytes[20];
+    
+    while(1)
+      {
+	// Read a byte from a pack
+
+	// Inputs for ports
+	port2_ddr(0x00);    // Port 2 inputs
+	port6_ddr(0x00);    // Port 6 inputs
+
+	write_port6(0x74);   // Set up port 6 for later
+	port6_ddr(0x80);     // Power up 5V supply
+	sleep_ms(50);        // Wait for power to stabilise.
+
+	port6_ddr(0xFF);      // Port 6 outputs
+	write_port6(0x76);    // SMR set
+	write_port6(0x7e);    // SOE set
+
+	port2_ddr(0xFF);      // Port 2 outputs
+	write_port2(0x00);    // Write segmnt register
+
+	write_port6(0x7a);    // PGM clear
+	write_port6(0x5a);    // SS2 clear
+	write_port6(0x7a);    // SS2 set
+
+	write_port6(0x72);    // SOE clear
+	write_port6(0x70);    // SMR clear
+	write_port6(0x74);    // PGM set
+
+	port2_ddr(0x00);      // Port 2 inputs
+	write_port6(0x54);    // SS2 clear
+
+	int j = 0;
+	for(int i = 0; i<20; i++)
+	  {
+	    portbytes[j++] = read_port2();
+	    write_port6(0x55);              // Clock data
+	    portbytes[j++] = read_port2();
+	    write_port6(0x54);
+	  }
+	port6_ddr(0x00);
+      }
+    
+#endif
+
+	  //         SCLK           =0
+	  //         SMR            =1
+	  //         SPGM           =2
+	  //         SOE_B          =3
+	  //         SS1_B          =4
+	  //         SS2_B          =5
+	  //         SS3_B          =6
+	  //         PACON_B        =7
+
+    
 #if TEST_PORT2
     gpio_init(PIN_SD0);
     

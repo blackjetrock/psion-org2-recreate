@@ -25,7 +25,7 @@ extern const uint PIN_SCLKOUT;
 extern const uint PIN_VBAT_SW_ON;
 
 extern uint16_t latchout1_shadow;
-extern uint16_t latchout2_shadow;
+extern uint16_t latch2_shadow;
 
 uint8_t read_165(const uint latchpin);
 
