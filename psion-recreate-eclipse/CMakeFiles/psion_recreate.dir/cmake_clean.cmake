@@ -132,6 +132,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c.obj.d"
   "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.obj"
   "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.obj.d"
+  "CMakeFiles/psion_recreate.dir/wireless.c.obj"
+  "CMakeFiles/psion_recreate.dir/wireless.c.obj.d"
   "psion_recreate.elf"
   "psion_recreate.pdb"
 )

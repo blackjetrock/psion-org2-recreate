@@ -1733,6 +1733,30 @@ tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.s
 .PHONY : tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.s
 
+wireless.obj: wireless.c.obj
+.PHONY : wireless.obj
+
+# target to build an object file
+wireless.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/wireless.c.obj
+.PHONY : wireless.c.obj
+
+wireless.i: wireless.c.i
+.PHONY : wireless.i
+
+# target to preprocess a source file
+wireless.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/wireless.c.i
+.PHONY : wireless.c.i
+
+wireless.s: wireless.c.s
+.PHONY : wireless.s
+
+# target to generate assembly for a file
+wireless.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/wireless.c.s
+.PHONY : wireless.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -1940,6 +1964,9 @@ help:
 	@echo "... tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.obj"
 	@echo "... tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.i"
 	@echo "... tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.s"
+	@echo "... wireless.obj"
+	@echo "... wireless.i"
+	@echo "... wireless.s"
 .PHONY : help
 
 

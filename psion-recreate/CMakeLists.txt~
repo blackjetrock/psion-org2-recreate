@@ -5,7 +5,6 @@ cmake_minimum_required(VERSION 3.13)
 set(PICO_SDK_PATH "/tree/downloaded_tools/pico/pico-sdk")
 
 include(pico_sdk_import.cmake)
-include(pico_extras_import.cmake)
 
 project(psion_recreate C CXX ASM)
 

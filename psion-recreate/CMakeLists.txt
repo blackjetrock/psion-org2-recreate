@@ -18,6 +18,7 @@ psion_recreate.c
 display.c
 font.c
 emulator.c
+wireless.c
 )
 
 pico_enable_stdio_usb(psion_recreate 1)

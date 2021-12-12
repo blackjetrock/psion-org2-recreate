@@ -93,8 +93,6 @@ int keyk = 3;
 #define SCA_RESET      0x0300
 #define SCA_CLOCK      0x0340
 
-#define MAX_DDRAM 0xFF
-#define MAX_CGRAM (5*16)
 
 // Timer1
 #define TIM1_TCSR       0x0008
@@ -4469,6 +4467,14 @@ void handle_sca(u_int16_t addr)
 // LCD handling
 
 int lcd_address    = 0;
+
+// Buffer with no jumbling, for wifi for example
+char lcd_display[MAX_DDRAM+2];
+
+// separate lines of the display
+char display_line[DISPLAY_NUM_LINES][DISPLAY_NUM_CHARS+1];
+
+// Display buffer with jumbling ready to go to LD
 char lcd_display_buffer[MAX_DDRAM+2];
 char last_lcd_display_buffer[MAX_DDRAM+2];
 int display_on   = 0;
@@ -4562,7 +4568,8 @@ void dump_lcd(void)
 {
   int i;
   int ch;
-
+  int saved_char;
+  
   if( (strcmp(last_lcd_display_buffer, lcd_display_buffer) != 0) || cursor_update)
     {
       cursor_update = 0;
@@ -4578,6 +4585,8 @@ void dump_lcd(void)
 		  // Which cursor?
 		  if( lcd_blink )
 		    {
+		      saved_char = ch;
+		      
 		      // Solid blinking block
 		      ch = CURSOR_CHAR;
 		    }
@@ -4587,6 +4596,7 @@ void dump_lcd(void)
 		      // the underline cursor entry in the font table
 		      create_underline_char(ch, CURSOR_UNDERLINE);	      
 
+		      saved_char = ch;
 		      // Non blinking underline of character
 		      ch = CURSOR_UNDERLINE;
 		    }
@@ -4599,7 +4609,8 @@ void dump_lcd(void)
 		    {
 		      // Underline of char
 		      create_underline_char(ch, CURSOR_UNDERLINE);	      
-
+		      saved_char = ch;
+		      
 		      // Solid blinking block
 		      ch = CURSOR_UNDERLINE;
 		    }
@@ -4609,6 +4620,7 @@ void dump_lcd(void)
 		      // the underline cursor entry in the font table
 		      create_underline_char(ch, CURSOR_UNDERLINE);	      
 
+		      saved_char = ch;
 		      // Non blinking underline of character
 		      // on both phases
 		      ch = CURSOR_UNDERLINE;
@@ -4617,10 +4629,36 @@ void dump_lcd(void)
 	    }
 	  
 	  printxy(i % lcd_linelen, i / lcd_linelen, ch);
+
+	  // These buffer must have printable chars
+	  // UDG 0 causes problems so make it a space for now
+	  switch(ch)
+	    {
+	    case 0:
+	      ch = ch;
+	      break;
+	      
+	    case CURSOR_UNDERLINE:
+	    case CURSOR_CHAR:
+	      ch = saved_char;
+	      break;
+	    }
+
+	  // Also build the unjumbled buffer
+	  lcd_display[i] = isprint(ch)?ch:' ';;
+
+	  // And the separate line buffers
+	  display_line[i/20][i%20] = isprint(ch)?ch:' ';
 	}
       
       strcpy(last_lcd_display_buffer, lcd_display_buffer);
     }
+  // Terminate the buffers
+  for(int i=0; i<DISPLAY_NUM_LINES; i++)
+    {
+      display_line[i][DISPLAY_NUM_CHARS] = '\0';
+    }
+  lcd_display[lcd_dispsize] = '\0';
 }
 
 
@@ -5008,8 +5046,8 @@ uint p6pin[] =
    PIN_SMR,
    PIN_SPGM,
    PIN_SOE,
+   PIN_SS2,       // Out of order due to PCB layout
    PIN_SS1,
-   PIN_SS2,
    PIN_SS3,
    PIN_5V_ON,     // HIGH=5V on slots
   };
@@ -8957,6 +8995,10 @@ void core1_main(void)
   while(1)
     {
       dump_lcd();
+      
+#if !WIFI_TEST      
+      wireless_loop();
+#endif
     }
 }
 

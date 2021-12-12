@@ -7,16 +7,6 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 
-#define FN_OLED_DEMO      0
-#define FN_KEYBOARD_TEST  0
-#define FN_FLASH_LED      0
-#define SLOT_TEST         0
-#define SLOT_TEST_MASK    LAT2PIN_MASK_SS2
-#define SLOT_TEST_G       0
-#define SLOT_TEST_GPIO    PIN_SD0
-#define TEST_PORT2        0
-#define PACK_TEST         0
-
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -314,7 +304,16 @@ int main() {
   // Clear screen
   clear_oled();
   stdio_init_all();
+
+  // Initialise wifi
+  wireless_init();
   
+#if WIFI_TEST
+  while(1)
+    {
+      wireless_loop();
+    }
+#endif
   //------------------------------------------------------------------------------
   //
   // Drop into optional functions here, or fall through to perform emulation
@@ -340,8 +339,6 @@ int main() {
 #endif
 #endif
 
-    // Initialise emulator
-    initialise_emulator();
 
     // Test the slot lines?
 #if SLOT_TEST
@@ -437,6 +434,9 @@ int main() {
 #endif
       }
 #endif
+
+    // Initialise emulator
+    initialise_emulator();
 
 #if SLOT_TEST_G
     while(1)
