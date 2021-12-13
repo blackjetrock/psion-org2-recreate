@@ -4477,6 +4477,8 @@ char display_line[DISPLAY_NUM_LINES][DISPLAY_NUM_CHARS+1];
 // Display buffer with jumbling ready to go to LD
 char lcd_display_buffer[MAX_DDRAM+2];
 char last_lcd_display_buffer[MAX_DDRAM+2];
+char display_extra[DISPLAY_NUM_EXTRA];
+
 int display_on   = 0;
 int lcd_cursor   = 0;
 int lcd_blink    = 0;
@@ -4564,6 +4566,34 @@ void create_underline_char(int ch, int dest_code)
 
 }
 
+////////////////////////////////////////////////////////////////////////////////
+//
+// This is the main display function.
+// It takes what is in the display buffer and writes it to the OLED
+//
+// This is the only function that should interact with the OLED over I2C
+//
+// All other code should use the display buffer
+//
+////////////////////////////////////////////////////////////////////////////////
+
+// The organiser jumbles the display buffer so we have an access function here to
+// write into the buffer with jumbling
+
+void put_display_char(int x, int y, int ch)
+{
+  int cx, cy;
+
+  cx = 127-(x * 6);
+  cy = 3-y;
+ lcd_display_buffer[lz_mapping[y*DISPLAY_NUM_CHARS+x]] = ch;
+}
+
+void write_display_extra(int i, int ch)
+{
+  display_extra[i] = ch;
+}
+
 void dump_lcd(void)
 {
   int i;
@@ -4628,8 +4658,15 @@ void dump_lcd(void)
 		}
 	    }
 	  
-	  printxy(i % lcd_linelen, i / lcd_linelen, ch);
+	  i_printxy(i % lcd_linelen, i / lcd_linelen, ch);
 
+	  // Print the four characters at the far right of the display. They are there
+	  // as the OLED is bigger than the LCD
+	  for(int i=0; i<DISPLAY_NUM_EXTRA; i++)
+	    {
+	      i_printxy(DISPLAY_NUM_CHARS-1, i, display_extra[i]);
+	    }
+	  
 	  // These buffer must have printable chars
 	  // UDG 0 causes problems so make it a space for now
 	  switch(ch)
@@ -4653,6 +4690,7 @@ void dump_lcd(void)
       
       strcpy(last_lcd_display_buffer, lcd_display_buffer);
     }
+  
   // Terminate the buffers
   for(int i=0; i<DISPLAY_NUM_LINES; i++)
     {
@@ -8998,6 +9036,7 @@ void core1_main(void)
       
 #if !WIFI_TEST      
       wireless_loop();
+      //wireless_taskloop();
 #endif
     }
 }

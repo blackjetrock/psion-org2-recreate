@@ -75,19 +75,26 @@ uint8_t read_165(const uint latchpin);
 
 #define MAX_DDRAM 0xFF
 #define MAX_CGRAM (5*16)
-#define DISPLAY_NUM_LINES 4
-#define DISPLAY_NUM_CHARS 21
+#define DISPLAY_NUM_LINES   4
+#define DISPLAY_NUM_CHARS  21
+#define DISPLAY_NUM_EXTRA   4
 
 extern unsigned char font_5x7_letters[];
 extern char lcd_display_buffer[MAX_DDRAM+2];
 extern char lcd_display[MAX_DDRAM+2];;
 extern char display_line[DISPLAY_NUM_LINES][DISPLAY_NUM_CHARS+1];
 
+void put_display_char(int x,int y, int ch);
+
 void write_port2(u_int8_t value);
 u_int8_t read_port2(void);
 
 void printxy(int x, int y, int ch);
+void i_printxy(int x, int y, int ch);
+void i_printxy_str(int x, int y, char *str);
+void write_display_extra(int i, int ch);
 
 void wireless_init(void);
 void wireless_loop(void);
+void wireless_taskloop(void);
 

@@ -450,7 +450,9 @@ int main() {
     // Main loop
     while(1)
       {
-	loop_emulator();	
+	loop_emulator();
+	//wireless_taskloop();
+	//wireless_loop();
       }
     
 }

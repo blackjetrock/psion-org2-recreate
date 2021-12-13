@@ -1,4 +1,9 @@
+#include <ctype.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
+#include "psion_recreate.h"
 
 void Set_Column_Address(unsigned char add);
 void Stop(void);
@@ -299,8 +304,11 @@ return(r);
 //
 // Prints a character at (X,Y)
 //
+// ** internal functions that omly dump_lcd should use
+//
+////////////////////////////////////////////////////////////////////////////////
 
-void printxy(int x, int y, int ch)
+void i_printxy(int x, int y, int ch)
 {
   int cx, cy;
 
@@ -322,6 +330,42 @@ void printxy(int x, int y, int ch)
     }
   SentByte(0);
   Stop();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Prints a string at (X,Y)
+//
+
+void i_printxy_str(int x, int y, char *str)
+{
+  while(*str)
+    {
+      i_printxy(x++, y, *(str++));
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Prints a value in hex as (X,Y)
+//
+
+void i_printxy_hex(int x, int y, int value)
+{
+  char hs[10];
+
+  sprintf(hs, "%02X", value);
+  i_printxy_str(x, y, hs);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// 'External' functions that the rest of the code uses
+//
+
+void printxy(int x, int y, int ch)
+{
+  put_display_char(x, y, ch);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
