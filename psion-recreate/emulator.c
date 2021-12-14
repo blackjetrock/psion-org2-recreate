@@ -161,9 +161,6 @@ char opcode_decode[100] = "";
 // 32k of RAM.
 
 // How big ram and rom are
-#define RAM_SIZE 65536
-#define ROM_SIZE (sizeof(romdata))
-#define ROM_START (0x8000)
 
 #define BANK_RESET       0x0360
 #define BANK_NEXT_ROM    0x03e0

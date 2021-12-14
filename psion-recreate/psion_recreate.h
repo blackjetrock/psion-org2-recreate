@@ -189,4 +189,9 @@ void loop_emulator(void);
 // RTC tasks
 void rtc_tasks(void);
 extern int rtc_set_st;
-  
+
+#define RAM_SIZE 65536
+#define ROM_SIZE (sizeof(romdata))
+#define ROM_START (0x8000)
+
+extern u_int8_t ramdata[RAM_SIZE];

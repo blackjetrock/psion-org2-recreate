@@ -63,7 +63,9 @@ Connection: close\n\n\
 <html>\n\
 Psion Organiser Recreation\
 <br>Ticks:%d<br>\
-<pre><br><br><br>\
+<pre><br><br>\
+<tt>%s</tt><br>\
+<br>\
 <tt>%s</tt><br>\
 <tt>%s</tt><br>\
 <tt>%s</tt><br>\
@@ -165,9 +167,26 @@ void wireless_loop(void)
 	  
       if( strncmp(input_text, "+IPD", 4) == 0 )
 	{
+	  char m0[50];
+	  char ch[10];
+	  
 	  write_display_extra(2, 'P');
 
-	  sprintf(output_text, reply1, cxx, display_line[0], display_line[1], display_line[2], display_line[3]);
+	  // Get calculator memory 0
+	  m0[0] = '\0';
+	  for(int i=0; i<8; i++)
+	    {
+	      sprintf(ch, "%02X", ramdata[0x20ff+i]);
+	      strcat(m0, ch);
+	    }
+	  
+	  sprintf(output_text, reply1,
+		  cxx,
+		  m0,
+		  display_line[0],
+		  display_line[1],
+		  display_line[2],
+		  display_line[3]);
 	      
 	  // Wait for a second and then send reply
 	  sleep_us(1000000);
@@ -323,9 +342,26 @@ void wireless_taskloop(void)
 		  
       if( strncmp(input_text, "+IPD", 4) == 0 )
 	{
+	  char mems[(2*8+5)*10+5];
+	  char t[40];
+	  
 	  write_display_extra(2, 'P');
 
-	  sprintf(output_text, reply1, cxx, display_line[0], display_line[1], display_line[2], display_line[3]);
+	  // Get calculator memory 0
+	  mems[0] = '\0';
+	  for(int m=0; m<10; m++)
+	    {
+	      sprintf(t, "<br>M%d:", m);
+	      strcat(mems, t);
+	      
+	      for(int i=0; i<8; i++)
+		{
+		  sprintf(t, "%02X", ramdata[0x20ff+m*8+i]);
+		  strcat(mems, t);
+		}
+	    }
+	  
+	  sprintf(output_text, reply1, cxx, mems, display_line[0], display_line[1], display_line[2], display_line[3]);
 	      
 	  // Wait for a second and then send reply
 	  sleep_us(1000000);
