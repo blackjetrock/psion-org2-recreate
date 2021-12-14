@@ -7,6 +7,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/psion_recreate.dir/font.c.obj.d"
   "CMakeFiles/psion_recreate.dir/psion_recreate.c.obj"
   "CMakeFiles/psion_recreate.dir/psion_recreate.c.obj.d"
+  "CMakeFiles/psion_recreate.dir/rtc.c.obj"
+  "CMakeFiles/psion_recreate.dir/rtc.c.obj.d"
   "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.obj"
   "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.obj.d"
   "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj"

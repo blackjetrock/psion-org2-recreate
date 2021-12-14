@@ -32,8 +32,6 @@ void write_595(const uint latchpin, int value, int n);
 
 ////////////////////////////////////////////////////////////////////////////////
 
-#define uint unsigned int
-#define uchar unsigned char
 
 extern const uint PIN_I2C_SDA;
 extern const uint PIN_I2C_SCL;
@@ -56,26 +54,6 @@ uchar Contrast_level=0x7f;
 #define Start_page  0x00
 #define StartLine_set 0x00
 
-void Delay1(uint n);
-void Write_number(uchar *n,uchar k,uchar station_dot);
-void display_Contrast_level(uchar number);
-void adj_Contrast(void);
-void Delay(uint n);
-void Set_Page_Address(unsigned char add);
-void Set_Column_Address(unsigned char add);
-void Set_Contrast_Control_Register(unsigned char mod);
-void initialise_oled(void);
-void Display_Chess(unsigned char value);
-void Display_Chinese(unsigned char ft[]);
-void Display_Chinese_Column(unsigned char ft[]);
-void Display_Picture(unsigned char pic[]);
-void SentByte(unsigned char Byte);
-void Check_Ack(void);//Acknowledge
-void Stop(void);
-void Start(void);
-void Send_ACK(void);
-unsigned char ReceiveByte(void);
-void clear_oled(void);
 
 
 uchar num[]={0x00,0xF8,0xFC,0x04,0x04,0xFC,0xF8,0x00,0x00,0x03,0x07,0x04,0x04,0x07,0x03,0x00,
@@ -691,6 +669,7 @@ void SentByte(unsigned char Byte)
 unsigned char ReceiveByte(void)
 {
   uchar i,rudata=0;
+  
   SCL0();
   _nop_();
   SDA1();
@@ -700,7 +679,7 @@ unsigned char ReceiveByte(void)
     {
       SCL1();
       _nop_(); 
-      if (READSDA()==1)
+      if (READSDA())
 	{
 	  rudata|=0x01;
 	}

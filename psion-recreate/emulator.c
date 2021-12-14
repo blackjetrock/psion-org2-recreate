@@ -9,14 +9,6 @@
 
 #include "psion_recreate.h"
 
-#define DEBUG_STOP {volatile int x=1; while(x){}}
-
-
-// Do we use two cores?
-// If yes then the second core handles:
-//    Display update
-
-#define MULTI_CORE    1
 
 // Emulates the 6303 processor
 // Emulates the HD44780 LCD controller
@@ -4383,6 +4375,8 @@ void handle_sca(u_int16_t addr)
   sca_i++;
   switch(addr)
     {
+      // We need to write a value to the latch rather than set or clear
+      // a bit so access to the shadow register is needed.
     case SCA_RESET:
       sca_counter = 0;
       // Preserve OLED reset line
@@ -9026,20 +9020,6 @@ void dump_memory(int n, int addr)
   fprintf(af, "\n");
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
-void core1_main(void)
-{
-  while(1)
-    {
-      dump_lcd();
-      
-#if !WIFI_TEST      
-      wireless_loop();
-      //wireless_taskloop();
-#endif
-    }
-}
 
 
 void initialise_emulator(void)
@@ -9083,7 +9063,7 @@ void initialise_emulator(void)
   // No key pressed
   RAMDATA_FIX(P5_DATA) = COLD_START_STATE | NO_KEY_STATE | on_key;
 
-#if MULTI_CORE
+#if 0
   // If multi core then we run the LCD update on the other core
     multicore_launch_core1(core1_main);
 
@@ -9158,7 +9138,7 @@ void emulator_main(void)
 #endif
 
 #if DISPLAY_LCD  
-  init_curses();
+  //  init_curses();
 #endif
   
   initialise_emulator();

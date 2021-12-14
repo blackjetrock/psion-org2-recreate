@@ -1,3 +1,9 @@
+#define uint unsigned int
+#define uchar unsigned char
+
+#define DEBUG_STOP {volatile int x = 1; while (x) {} }
+
+
 #define FN_OLED_DEMO      0
 #define FN_KEYBOARD_TEST  0
 #define FN_FLASH_LED      0
@@ -8,6 +14,13 @@
 #define TEST_PORT2        0
 #define PACK_TEST         0
 #define WIFI_TEST         0
+#define RTC_TEST          0
+
+// Do we use two cores?
+// If yes then the second core handles:
+//    Display update
+
+#define MULTI_CORE        1
 
 #define PIN_SD0 0
 #define PIN_SD1 1
@@ -38,7 +51,11 @@ extern const uint PIN_VBAT_SW_ON;
 extern uint16_t latchout1_shadow;
 extern uint16_t latch2_shadow;
 
+void latch2_set_mask(int value);
+void latch2_clear_mask(int value);
+
 uint8_t read_165(const uint latchpin);
+void write_595(const uint latchpin, int value, int n);
 
 // Latch pins
 
@@ -83,6 +100,7 @@ extern unsigned char font_5x7_letters[];
 extern char lcd_display_buffer[MAX_DDRAM+2];
 extern char lcd_display[MAX_DDRAM+2];;
 extern char display_line[DISPLAY_NUM_LINES][DISPLAY_NUM_CHARS+1];
+void _nop_(void);
 
 void put_display_char(int x,int y, int ch);
 
@@ -90,11 +108,85 @@ void write_port2(u_int8_t value);
 u_int8_t read_port2(void);
 
 void printxy(int x, int y, int ch);
+void printxy_str(int x, int y, char *str);
+void printxy_hex(int x, int y, int value);
+
 void i_printxy(int x, int y, int ch);
 void i_printxy_str(int x, int y, char *str);
+
 void write_display_extra(int i, int ch);
 
 void wireless_init(void);
 void wireless_loop(void);
 void wireless_taskloop(void);
 
+////////////////////////////////////////////////////////////////////////////////
+//
+// MCP7940 Registers
+extern int read_seconds;
+extern int read_minutes;
+extern int read_hours;
+
+extern int rtc_seconds;
+extern int rtc_minutes;
+extern int rtc_hours;
+
+#define MCP_RTCSEC_REG   0x00
+#define MCP_ST_MASK      0x80
+
+#define MCP_RTCMIN_REG   0x01
+
+#define MCP_RTCHOUR_REG  0x02
+
+#define MCP_RTCWKDAY_REG 0x03
+#define MCP_VBATEN_MASK  0x08
+
+#define MCP_RTCDATE_REG  0x04
+
+#define MCP_RTCMTH_REG   0x05
+
+#define MCP_RTCYEAR_REG  0x06
+
+////////////////////////////////////////////////////////////////////////////////
+
+void set_st_bit();
+void set_vbaten_bit();
+void write_mcp7940(int r, int n, int data[]);
+int read_mcp7940(int r);
+void Delay1(uint n);
+void Write_number(uchar *n,uchar k,uchar station_dot);
+void display_Contrast_level(uchar number);
+void adj_Contrast(void);
+void Delay(uint n);
+void Set_Page_Address(unsigned char add);
+void Set_Column_Address(unsigned char add);
+void Set_Contrast_Control_Register(unsigned char mod);
+void initialise_oled(void);
+void Display_Chess(unsigned char value);
+void Display_Chinese(unsigned char ft[]);
+void Display_Chinese_Column(unsigned char ft[]);
+void Display_Picture(unsigned char pic[]);
+void SentByte(unsigned char Byte);
+void Check_Ack(void);//Acknowledge
+void Stop(void);
+void Start(void);
+void Send_ACK(void);
+unsigned char ReceiveByte(void);
+void clear_oled(void);
+
+void oledmain(void);
+
+
+void dump_lcd(void);
+
+// Core 1
+void core1_main(void);
+  
+// Emulator
+void initialise_emulator(void);
+void loop_emulator(void);
+
+// RTC tasks
+void rtc_tasks(void);
+extern int rtc_set_st;
+  

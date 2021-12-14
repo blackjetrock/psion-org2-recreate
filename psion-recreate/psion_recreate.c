@@ -2,7 +2,7 @@
 #include "pico/stdlib.h"
 #include "hardware/gpio.h"
 #include "pico/binary_info.h"
-
+#include "pico/multicore.h"
 #include "psion_recreate.h"
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -205,7 +205,32 @@ void keyboard_test(void)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void oledmain(void);
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// To improve performance we use the second core. It performs:
+//
+// Display update of buffer to OLED over I2C
+// Wireless task manager
+// RTC tasks
+//
+// As the core peforms OLED updates over I2C it also has to do all other
+// accesses or we'd have to have locks to prevent two cores using the same
+// I2C bus.
+
+void core1_main(void)
+{
+  while(1)
+    {
+      dump_lcd();
+      rtc_tasks();
+      
+#if !WIFI_TEST      
+      //wireless_loop();
+      //wireless_taskloop();
+#endif
+    }
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -305,13 +330,27 @@ int main() {
   clear_oled();
   stdio_init_all();
 
+  // Initialise emulator
+    initialise_emulator();
+
   // Initialise wifi
   wireless_init();
-  
+
+#if MULTI_CORE
+  // If multi core then we run the LCD update on the other core
+    multicore_launch_core1(core1_main);
+
+#endif
+
 #if WIFI_TEST
+  printxy_str(0,0,"Wifi Test Mode");
+
   while(1)
     {
-      wireless_loop();
+#if !MULTI_CORE
+      core1_main();
+#endif
+      wireless_taskloop();
     }
 #endif
   //------------------------------------------------------------------------------
@@ -323,23 +362,6 @@ int main() {
   keyboard_test();
 #endif
   
-  //------------------------------------------------------------------------------
-
-  
-#if 0
-  #if !defined(i2c_default) || !defined(PICO_DEFAULT_I2C_SDA_PIN) || !defined(PICO_DEFAULT_I2C_SCL_PIN)
-    #warning i2c/lcd_1602_i2c example requires a board with I2C pins
-#else
-    // This example will use I2C0 on the default SDA and SCL pins (4, 5 on a Pico)
-    i2c_init(i2c_default, 100 * 1000);
-    gpio_set_function(PICO_DEFAULT_I2C_SDA_PIN, GPIO_FUNC_I2C);
-    gpio_set_function(PICO_DEFAULT_I2C_SCL_PIN, GPIO_FUNC_I2C);
-    gpio_pull_up(PICO_DEFAULT_I2C_SDA_PIN);
-    gpio_pull_up(PICO_DEFAULT_I2C_SCL_PIN);
-#endif
-#endif
-
-
     // Test the slot lines?
 #if SLOT_TEST
     while(1)
@@ -435,8 +457,6 @@ int main() {
       }
 #endif
 
-    // Initialise emulator
-    initialise_emulator();
 
 #if SLOT_TEST_G
     while(1)
@@ -446,12 +466,30 @@ int main() {
 	
       }
 #endif
+
+#if RTC_TEST
+    // Set the clock running
+    rtc_set_st = 1;
+
+    printxy_str(1, 0, "RTC Test");
     
+    while(1)
+      {
+	int s;
+
+	read_seconds = 1;
+	s = rtc_seconds;
+	printxy_hex(1, 1, s);
+      }
+    
+#endif
+
+
     // Main loop
     while(1)
       {
 	loop_emulator();
-	//wireless_taskloop();
+	wireless_taskloop();
 	//wireless_loop();
       }
     

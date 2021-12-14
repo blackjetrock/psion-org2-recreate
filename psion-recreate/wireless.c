@@ -224,11 +224,13 @@ W_TASK tasklist[] =
   {
    {WTY_LABEL,    "init"},
    {WTY_PUTS,     "AT+CWMODE=2\r\n"},
-   {WTY_DELAY_MS, "5000"},
+   {WTY_DELAY_MS, "2000"},
    {WTY_PUTS,     "AT+CIPMUX=1\r\n"},
+   {WTY_DELAY_MS, "2000"},
+   {WTY_PUTS,     "AT+CWSAP=\"PsionOrg2\",\"1234567890\",5,3\r\n"},
    {WTY_DELAY_MS, "5000"},
    {WTY_PUTS,     "AT+CIPSERVER=1,80\r\n"},
-   {WTY_DELAY_MS, "5000"},
+   {WTY_DELAY_MS, "2000"},
    {WTY_STOP,     ""},                      // All done
   };
 
@@ -255,17 +257,13 @@ void start_task(char *label)
     }
 }
 
+char cmd[200];
+char output_text[2000];
+char input_text[2000];
+
 void wireless_taskloop(void)
 {
-  char cmd[200];
-  char output_text[2000];
-  char input_text[2000];
   long parameter = 0;
-
-#if WIFI_TEST  
-  printxy_str(0,0,"Wifi Test Mode");
-#endif
-    
   int c;
 
   cxx++;
@@ -313,30 +311,16 @@ void wireless_taskloop(void)
       if( strncmp(input_text, "ready", 5) == 0 )
 	{
 	  setup = 1;
+
 #if WIFI_TEST
 	  printxy_str(0,1, "\nSetting up...");
 #else
 	  write_display_extra(0, 'S');
 #endif
 	  start_task("init");
-
-#if 0
-	  sleep_us(5000000);
-	  sprintf(cmd, "AT+CWMODE=2\r\n");
-	  uart_puts(UART_ID, cmd);
-
-	  sleep_us(5000000);
-	  sprintf(cmd, "AT+CIPMUX=1\r\n");
-	  uart_puts(UART_ID, cmd);
-
-	  sleep_us(1000000);
-	  sprintf(cmd, "AT+CIPSERVER=1,80\r\n");
-	  uart_puts(UART_ID, cmd);
-#endif	      
 	  input_text[0] = '\0';
 	}
 		  
-	  
       if( strncmp(input_text, "+IPD", 4) == 0 )
 	{
 	  write_display_extra(2, 'P');
@@ -369,9 +353,18 @@ void wireless_taskloop(void)
     {
       if( w_task_delaying )
 	{
+	  u_int64_t now = time_us_64();
+	  
 	  // Waiting for a delay to finish
-	  if( time_us_64 >= w_task_delay_end )
+	  if( now >= w_task_delay_end )
 	    {
+	      // Delay over
+	      w_task_delaying = 0;
+
+	      // We want to go round and process the opcode that we have
+	      // delayed on, it isn't delay as the index was incremented
+	      // after the delay was set up
+	      return;
 	    }
 	  else
 	    {
@@ -379,28 +372,43 @@ void wireless_taskloop(void)
 	      return;
 	    }
 	}
-
-      switch(tasklist[w_task_index].type)
+      else
 	{
-	case WTY_DELAY_MS:
-	  sscanf(tasklist[w_task_index].string, "%ld", parameter);
-	  w_task_delaying = 1;
-	  w_task_delay_end = time_us_64 + parameter*1000;
-	  break;
-
-	case WTY_PUTS:
-	  uart_puts(cmd, tasklist[w_task_index].string);
-	  break;
-
-	case WTY_STOP:
-	  w_task_running = 0;
-	  break;
+	  //DEBUG_STOP;
+	  switch(tasklist[w_task_index].type)
+	    {
+	    case WTY_DELAY_MS:
+	      sscanf(tasklist[w_task_index].string, "%ld", &parameter);
+	      w_task_delaying = 1;
+	      w_task_delay_end = time_us_64() + parameter*1000;
+	      sprintf(output_text, "%ld", parameter);
+	  
+#if WIFI_TEST
+	      printxy_str(2,2,output_text);
+#endif
+	      break;
+	      
+	    case WTY_PUTS:
+	      sprintf(cmd,  tasklist[w_task_index].string);
+#if WIFI_TEST
+	      printxy_str(0,3, cmd);
+#endif
+	      uart_puts(UART_ID, cmd);
+	      break;
+	      
+	    case WTY_STOP:
+	      w_task_running = 0;
+	      break;
+	    }
 	}
-
+      
       // Move to next iondex, if we aren't pointing to a stop
       if( tasklist[w_task_index].type != WTY_STOP )
 	{
 	  w_task_index++;
+#if WIFI_TEST
+	  printxy_hex(1,1,w_task_index);
+#endif
 	}
     }
 }

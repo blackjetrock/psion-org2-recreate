@@ -277,6 +277,30 @@ psion_recreate.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/psion_recreate.c.s
 .PHONY : psion_recreate.c.s
 
+rtc.obj: rtc.c.obj
+.PHONY : rtc.obj
+
+# target to build an object file
+rtc.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/rtc.c.obj
+.PHONY : rtc.c.obj
+
+rtc.i: rtc.c.i
+.PHONY : rtc.i
+
+# target to preprocess a source file
+rtc.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/rtc.c.i
+.PHONY : rtc.c.i
+
+rtc.s: rtc.c.s
+.PHONY : rtc.s
+
+# target to generate assembly for a file
+rtc.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/rtc.c.s
+.PHONY : rtc.c.s
+
 tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.obj: tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.obj
 .PHONY : tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.obj
 
@@ -1782,6 +1806,9 @@ help:
 	@echo "... psion_recreate.obj"
 	@echo "... psion_recreate.i"
 	@echo "... psion_recreate.s"
+	@echo "... rtc.obj"
+	@echo "... rtc.i"
+	@echo "... rtc.s"
 	@echo "... tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.obj"
 	@echo "... tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.i"
 	@echo "... tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.s"
