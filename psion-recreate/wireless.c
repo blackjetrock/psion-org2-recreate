@@ -77,6 +77,60 @@ volatile long cxx = 0L;
 int ip_i = 0;
 volatile int t = 1;
 
+// returns a string version of a floating point number
+// located at the RAM address given
+
+char string_float[40];
+
+char *stringify_float(int address)
+{
+  char ch[10];
+
+  ch[0] = '\0';
+  string_float[0] = '\0';
+  
+  if( ramdata[address+7] & 0x80)
+    {
+      strcat(string_float, "-");
+    }
+  else
+    {
+      strcat(string_float, " ");
+    }
+  
+  for(int i=5; i>=0; i--)
+    {
+      if( i == 5 )
+	{
+	  sprintf(ch, "%01X", ramdata[address+i] >> 4);
+	  strcat(string_float, ch);
+	  strcat(string_float, ".");
+	  sprintf(ch, "%01X", ramdata[address+i] & 0x0F);
+	  strcat(string_float, ch);
+	}
+      else
+	{
+	  sprintf(ch, "%02X", ramdata[address+i]);
+	  strcat(string_float, ch);
+	}
+    }
+
+  strcat(string_float, " E");
+  int8_t exp = ramdata[address+6];
+  
+  if( exp & 0x80 )
+    {
+      sprintf(ch, "-%02X", -exp);
+    }
+  else
+    {
+      sprintf(ch, "%02X", exp);
+    }
+  strcat(string_float, ch);
+  
+  return(string_float);
+}
+
 void wireless_loop(void)
 {
   char cmd[200];
@@ -174,11 +228,6 @@ void wireless_loop(void)
 
 	  // Get calculator memory 0
 	  m0[0] = '\0';
-	  for(int i=0; i<8; i++)
-	    {
-	      sprintf(ch, "%02X", ramdata[0x20ff+i]);
-	      strcat(m0, ch);
-	    }
 	  
 	  sprintf(output_text, reply1,
 		  cxx,
@@ -342,7 +391,7 @@ void wireless_taskloop(void)
 		  
       if( strncmp(input_text, "+IPD", 4) == 0 )
 	{
-	  char mems[(2*8+5)*10+5];
+	  char mems[10*(8+1+1+2+2+10)];
 	  char t[40];
 	  
 	  write_display_extra(2, 'P');
@@ -353,12 +402,15 @@ void wireless_taskloop(void)
 	    {
 	      sprintf(t, "<br>M%d:", m);
 	      strcat(mems, t);
-	      
+#if 0	      	      
 	      for(int i=0; i<8; i++)
 		{
 		  sprintf(t, "%02X", ramdata[0x20ff+m*8+i]);
 		  strcat(mems, t);
 		}
+#else
+	      strcat(mems, stringify_float(0x20ff+m*8));
+#endif
 	    }
 	  
 	  sprintf(output_text, reply1, cxx, mems, display_line[0], display_line[1], display_line[2], display_line[3]);

@@ -674,6 +674,7 @@ unsigned char ReceiveByte(void)
   _nop_();
   SDA1();
   _nop_();
+  READSDA();
   
   for(i=0;i<8;i++)
     {

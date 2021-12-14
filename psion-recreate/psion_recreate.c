@@ -223,7 +223,7 @@ void core1_main(void)
   while(1)
     {
       dump_lcd();
-      rtc_tasks();
+      //rtc_tasks();
       
 #if !WIFI_TEST      
       //wireless_loop();
@@ -476,6 +476,7 @@ int main() {
     while(1)
       {
 	int s;
+
 
 	read_seconds = 1;
 	s = rtc_seconds;
