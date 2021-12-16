@@ -253,6 +253,30 @@ font.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/font.c.s
 .PHONY : font.c.s
 
+i2c.obj: i2c.c.obj
+.PHONY : i2c.obj
+
+# target to build an object file
+i2c.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/i2c.c.obj
+.PHONY : i2c.c.obj
+
+i2c.i: i2c.c.i
+.PHONY : i2c.i
+
+# target to preprocess a source file
+i2c.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/i2c.c.i
+.PHONY : i2c.c.i
+
+i2c.s: i2c.c.s
+.PHONY : i2c.s
+
+# target to generate assembly for a file
+i2c.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/i2c.c.s
+.PHONY : i2c.c.s
+
 psion_recreate.obj: psion_recreate.c.obj
 .PHONY : psion_recreate.obj
 
@@ -1803,6 +1827,9 @@ help:
 	@echo "... font.obj"
 	@echo "... font.i"
 	@echo "... font.s"
+	@echo "... i2c.obj"
+	@echo "... i2c.i"
+	@echo "... i2c.s"
 	@echo "... psion_recreate.obj"
 	@echo "... psion_recreate.i"
 	@echo "... psion_recreate.s"

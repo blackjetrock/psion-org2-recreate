@@ -5,6 +5,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/psion_recreate.dir/emulator.c.obj.d"
   "CMakeFiles/psion_recreate.dir/font.c.obj"
   "CMakeFiles/psion_recreate.dir/font.c.obj.d"
+  "CMakeFiles/psion_recreate.dir/i2c.c.obj"
+  "CMakeFiles/psion_recreate.dir/i2c.c.obj.d"
   "CMakeFiles/psion_recreate.dir/psion_recreate.c.obj"
   "CMakeFiles/psion_recreate.dir/psion_recreate.c.obj.d"
   "CMakeFiles/psion_recreate.dir/rtc.c.obj"

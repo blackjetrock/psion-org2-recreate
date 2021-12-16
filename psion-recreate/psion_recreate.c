@@ -223,11 +223,11 @@ void core1_main(void)
   while(1)
     {
       dump_lcd();
-      //rtc_tasks();
+      rtc_tasks();
       
 #if !WIFI_TEST      
       //wireless_loop();
-      //wireless_taskloop();
+      wireless_taskloop();
 #endif
     }
 }
@@ -239,6 +239,27 @@ void core1_main(void)
 
 int main() {
 
+#if 0
+    // I2C bus
+  #define PIN_I2C_SDA 19
+  
+  gpio_init(PIN_I2C_SCL);
+  gpio_init(PIN_I2C_SDA);
+
+  // Use pull ups
+  gpio_pull_up(PIN_I2C_SDA);
+  gpio_pull_up(PIN_I2C_SCL);
+
+  gpio_set_dir(PIN_I2C_SDA, GPIO_OUT);
+  gpio_set_dir(PIN_I2C_SCL, GPIO_OUT);
+
+  gpio_put(PIN_I2C_SDA, 1);
+  gpio_put(PIN_I2C_SCL, 1);
+  
+  while(1)
+    {
+    }
+  #endif
   // Set up the GPIOs
   gpio_init(PIN_VBAT_SW_ON);
   gpio_set_dir(PIN_VBAT_SW_ON, GPIO_OUT);
@@ -281,9 +302,14 @@ int main() {
   gpio_init(PIN_SCLK);
   gpio_init(PIN_SOE);
   gpio_init(PIN_SMR);
-  
+
+  // I2C bus
   gpio_init(PIN_I2C_SCL);
   gpio_init(PIN_I2C_SDA);
+
+  // Use pull ups
+  gpio_pull_up(PIN_I2C_SDA);
+  gpio_pull_up(PIN_I2C_SCL);
   
   gpio_set_dir(PIN_SDAOUT,    GPIO_OUT);
   gpio_set_dir(PIN_P57,       GPIO_IN);
@@ -331,14 +357,14 @@ int main() {
   stdio_init_all();
 
   // Initialise emulator
-    initialise_emulator();
-
+  initialise_emulator();
+  
   // Initialise wifi
   wireless_init();
-
+  
 #if MULTI_CORE
   // If multi core then we run the LCD update on the other core
-    multicore_launch_core1(core1_main);
+  multicore_launch_core1(core1_main);
 
 #endif
 
@@ -471,16 +497,25 @@ int main() {
     // Set the clock running
     rtc_set_st = 1;
 
-    printxy_str(1, 0, "RTC Test");
+    printxy_str(0, 0, "RTC Test");
+
+    loop_emulator();
     
     while(1)
       {
-	int s;
-
-
+	int s, m, h;
+	
 	read_seconds = 1;
 	s = rtc_seconds;
-	printxy_hex(1, 1, s);
+	printxy_hex(7, 1, s);
+
+	read_minutes = 1;
+	m = rtc_minutes;
+	printxy_hex(4, 1, m);
+
+	read_hours = 1;
+	h = rtc_hours;
+	printxy_hex(1, 1, h);
       }
     
 #endif
@@ -490,7 +525,8 @@ int main() {
     while(1)
       {
 	loop_emulator();
-	wireless_taskloop();
+
+	//wireless_taskloop();
 	//wireless_loop();
       }
     

@@ -15,6 +15,9 @@
 #define PACK_TEST         0
 #define WIFI_TEST         0
 #define RTC_TEST          0
+#define NEW_I2C           1
+
+typedef u_int8_t BYTE;
 
 // Do we use two cores?
 // If yes then the second core handles:
@@ -151,7 +154,7 @@ extern int rtc_hours;
 
 void set_st_bit();
 void set_vbaten_bit();
-void write_mcp7940(int r, int n, int data[]);
+void write_mcp7940(int r, int n, BYTE data[]);
 int read_mcp7940(int r);
 void Delay1(uint n);
 void Write_number(uchar *n,uchar k,uchar station_dot);
@@ -195,3 +198,16 @@ extern int rtc_set_st;
 #define ROM_START (0x8000)
 
 extern u_int8_t ramdata[RAM_SIZE];
+
+// I2C functions
+void i2c_release(void);
+void i2c_delay(void);
+void i2c_sda_low(void);
+void i2c_sda_high(void);
+void i2c_scl_low(void);
+void i2c_scl_high(void);
+void i2c_start(void);
+void i2c_stop(void);
+int i2c_send_byte(BYTE b);
+int i2c_read_bytes(BYTE slave_addr, int n, BYTE *data);
+void i2c_send_bytes(BYTE slave_addr, int n, BYTE *data);

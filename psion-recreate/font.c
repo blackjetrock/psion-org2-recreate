@@ -318,7 +318,22 @@ void i_printxy(int x, int y, int ch)
   cy = 3-y;
   Set_Page_Address(cy);
   Set_Column_Address(cx);
+
+#if NEW_I2C
   
+  i2c_start();
+  
+  // Send slave address with read bit
+  i2c_send_byte(Write_Address);
+  i2c_send_byte(0x40);
+
+  for(int j=0; j<5; j++)
+    {
+      i2c_send_byte(invert_byte(font_5x7_letters[ch*5+(4-j)]));
+    }
+  i2c_send_byte(0);
+  i2c_stop();
+#else
   Start();
   
   SentByte(Write_Address);
@@ -330,6 +345,7 @@ void i_printxy(int x, int y, int ch)
     }
   SentByte(0);
   Stop();
+#endif
 }
 
 ////////////////////////////////////////////////////////////////////////////////

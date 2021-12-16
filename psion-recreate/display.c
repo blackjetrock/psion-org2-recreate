@@ -20,7 +20,7 @@
 #define IGNORE_ACK       1
 #define DEMO_DELAY       100
 #define FULL_DEMO        1
-#define NOP_DELAY        1
+#define NOP_DELAY        15
 #define NO_NOP_DELAY     1
 
 extern const uint PIN_LATCHOUT1;
@@ -409,7 +409,7 @@ void Delay1(uint n)
     }
 }
 
-
+#if 0
 void Write_number(uchar *n,uchar k,uchar station_dot)
 {
   uchar i; 
@@ -435,9 +435,9 @@ void Write_number(uchar *n,uchar k,uchar station_dot)
   Stop();
 
 }
+#endif
 
-
-
+#if 0
 void display_Contrast_level(uchar number)
 { uchar number1,number2,number3;
   number1=number/100;number2=number%100/10;number3=number%100%10;
@@ -452,6 +452,7 @@ void display_Contrast_level(uchar number)
   Write_number(num,number3,2);
 
 }
+#endif
 
 #if 0
 void adj_Contrast(void)
@@ -581,6 +582,7 @@ void _nop_(void)
 }
 #endif
 
+#if 0
 void Start(void)
 {
   _nop_();
@@ -593,7 +595,7 @@ void Start(void)
   SCL0();
   _nop_();
 } 
-
+#endif
 
 void Stop(void)
 {
@@ -714,6 +716,10 @@ void Send_ACK(void)
 // Set page address 0~4
 void Set_Page_Address(unsigned char add)
 {
+#if NEW_I2C
+  u_int8_t bytes[] = {0x80, 0xb0|(add & 0x7)};
+  i2c_send_bytes(Write_Address, 2, bytes);  
+#else
   Start();
   SentByte(Write_Address);
   SentByte(0x80);
@@ -721,11 +727,15 @@ void Set_Page_Address(unsigned char add)
   SentByte(add);
   _nop_();
   Stop();
-  return;
+#endif
 }
 
 void Set_Column_Address(unsigned char add)
 {
+#if NEW_I2C
+  u_int8_t bytes[] = {0x80, 0x10|(add >> 4), 0x80, (0x0f&add)|0x00};
+  i2c_send_bytes(Write_Address, 4, bytes);  
+#else
   Start();
   SentByte(Write_Address);
   SentByte(0x80);
@@ -733,7 +743,7 @@ void Set_Column_Address(unsigned char add)
   SentByte(0x80);
   SentByte((0x0f&add)|0x00);
   Stop();
-  return;
+#endif
 }
 
 
@@ -776,6 +786,86 @@ void initialise_oled(void)
   
     Delay(2000);
 
+#if NEW_I2C
+    i2c_start();
+    i2c_send_byte(Write_Address);
+    i2c_send_byte(0x80);
+    i2c_send_byte(0xae);//--turn off oled panel
+
+    i2c_send_byte(0x80);
+    i2c_send_byte(0xd5);//--set display clock divide ratio/oscillator frequency
+    i2c_send_byte(0x80);
+    i2c_send_byte(0xa0);//--set divide ratio
+
+    i2c_send_byte(0x80);  
+    i2c_send_byte(0xa8);//--set multiplex ratio(1 to 64)
+    i2c_send_byte(0x80);
+    i2c_send_byte(0x1f);//--1/32 duty
+
+    i2c_send_byte(0x80);
+    i2c_send_byte(0xd3);//-set display offset
+    i2c_send_byte(0x80);
+    i2c_send_byte(0x00);//-not offset
+
+    i2c_send_byte(0x80);
+    i2c_send_byte(0xad);//--Set Master Configuration
+    i2c_send_byte(0x80);
+    i2c_send_byte(0x8e);//--
+
+    i2c_send_byte(0x80);
+    i2c_send_byte(0xd8);//--Set Area Color Mode On/Off & Low Power Display Mode
+    i2c_send_byte(0x80);
+    i2c_send_byte(0x05);//
+
+    i2c_send_byte(0x80);
+    i2c_send_byte(0xa1);//--set segment re-map 128 to 0
+
+    i2c_send_byte(0x80);
+    i2c_send_byte(0xC8);//--Set COM Output Scan Direction 64 to 1
+
+    i2c_send_byte(0x80);
+    i2c_send_byte(0xda);//--Set COM Pins Hardware Configuration
+    i2c_send_byte(0x80);
+    i2c_send_byte(0x12);
+
+    i2c_send_byte(0x80);
+    i2c_send_byte(0x91);//--Set current drive pulse width of BANK0, Color A, Band C.
+    i2c_send_byte(0x80);
+    i2c_send_byte(0x3f);
+    i2c_send_byte(0x80);
+    i2c_send_byte(0x3f);
+    i2c_send_byte(0x80);
+    i2c_send_byte(0x3f);
+    i2c_send_byte(0x80);
+    i2c_send_byte(0x3f);
+
+    i2c_send_byte(0x80);
+    i2c_send_byte(0x81);//--set contrast control register
+    i2c_send_byte(0x80);
+    i2c_send_byte(Contrast_level);
+
+    i2c_send_byte(0x80);
+    i2c_send_byte(0xd9);//--set pre-charge period
+    i2c_send_byte(0x80);
+    i2c_send_byte(0xd2);
+
+    i2c_send_byte(0x80);
+    i2c_send_byte(0xdb);//--set vcomh
+    i2c_send_byte(0x80);
+    i2c_send_byte(0x34);
+
+    i2c_send_byte(0x80);
+    i2c_send_byte(0xa6);//--set normal display
+
+    i2c_send_byte(0x80);
+    i2c_send_byte(0xa4);//Disable Entire Display On 
+
+    i2c_send_byte(0x80);
+    i2c_send_byte(0xaf);//--turn on oled panel
+
+  
+    i2c_stop();
+#else
     Start();
     SentByte(Write_Address);
     SentByte(0x80);
@@ -854,7 +944,7 @@ void initialise_oled(void)
 
   
     Stop();
-
+#endif
   }
 }
 
@@ -977,7 +1067,19 @@ void clear_oled(void)
     {
       Set_Page_Address(i);
       Set_Column_Address(0x00);
+
+#if NEW_I2C
+      i2c_start();
+      i2c_send_byte(Write_Address);
+      i2c_send_byte(0x40);
+
+      for(j=0; j<132; j++)
+	{
+	  i2c_send_byte(0);
+	}
       
+      i2c_stop();
+#else
       Start();
       SentByte(Write_Address);
       SentByte(0x40);
@@ -987,6 +1089,7 @@ void clear_oled(void)
 	  SentByte(0);
 	}
       Stop();
+#endif
     }
 }
 
