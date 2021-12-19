@@ -54,4 +54,8 @@ CMakeFiles/psion_recreate.dir/wireless.c.obj: \
  /tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/uart.h \
  /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_uart/include/pico/stdio_uart.h \
  /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/include/pico/stdio_usb.h \
- /tree/downloaded_tools/pico/psion-recreate/psion_recreate.h
+ /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/include/hardware/irq.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/intctrl.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/m0plus.h \
+ /tree/downloaded_tools/pico/psion-recreate/psion_recreate.h \
+ /tree/downloaded_tools/pico/psion-recreate/match.h

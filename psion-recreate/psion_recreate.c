@@ -493,18 +493,40 @@ int main() {
       }
 #endif
 
+#if BUZZER_TEST
+    int d = 0;
+    while(1)
+      {
+
+
+	for(int i=0; i<10; i++)
+	  {
+	    latch2_set_mask( LAT2PIN_MASK_BUZZER);
+	    sleep_us(d);
+	    latch2_clear_mask( LAT2PIN_MASK_BUZZER);
+	    sleep_us(d);
+	  }
+	d+=1;
+	if( d > 200 )
+	  {
+	    d = 0;
+	  }
+      }
+    
+#endif
+    
 #if RTC_TEST
-    // Set the clock running
-    rtc_set_st = 1;
 
     printxy_str(0, 0, "RTC Test");
 
-    loop_emulator();
     
     while(1)
       {
 	int s, m, h;
-	
+
+	// Set the clock running
+	rtc_set_st = 1;
+
 	read_seconds = 1;
 	s = rtc_seconds;
 	printxy_hex(7, 1, s);
@@ -525,7 +547,8 @@ int main() {
     while(1)
       {
 	loop_emulator();
-
+	//dump_lcd();
+	
 	//wireless_taskloop();
 	//wireless_loop();
       }

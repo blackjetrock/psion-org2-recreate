@@ -237,6 +237,11 @@
 			<location>/tree/downloaded_tools/pico/psion-recreate/i2c.c</location>
 		</link>
 		<link>
+			<name>[Targets]/[exe] psion_recreate/Source Files/match.c</name>
+			<type>1</type>
+			<location>/tree/downloaded_tools/pico/psion-recreate/match.c</location>
+		</link>
+		<link>
 			<name>[Targets]/[exe] psion_recreate/Source Files/stdlib.c</name>
 			<type>1</type>
 			<location>/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c</location>

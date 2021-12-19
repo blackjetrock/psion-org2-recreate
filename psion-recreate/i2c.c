@@ -34,7 +34,7 @@ void i2c_delay(void)
 #else
   volatile int i;
 
-  for(i=0; i<2; i++)
+  for(i=0; i<15; i++)
     {
     }
 #endif
@@ -85,6 +85,8 @@ void i2c_start(void)
 
 void i2c_stop(void)
 {
+  i2c_sda_low();
+  i2c_delay();
   i2c_scl_high();
   i2c_delay();
   i2c_sda_high();

@@ -4597,6 +4597,8 @@ void dump_lcd(void)
       
       for(i=0; i<=lcd_dispsize; i++)
 	{
+	  wireless_taskloop();
+	  
 	  ch = lcd_display_buffer[lz_mapping[i]];
 	  
 	  if( (lz_mapping[i] == lcd_address) && lcd_cursor )

@@ -54,10 +54,11 @@ int read_mcp7940(int r)
 }
 
 // Write a register to the RTC
-void write_mcp7940(int r, int n, BYTE data[])
+void write_mcp7940(int r, BYTE value)
 {
 #if NEW_I2C
-  i2c_send_bytes(MCP_WRITE_ADDR, n, &(data[0]));
+  BYTE data[2] = {r, value};
+  i2c_send_bytes(MCP_WRITE_ADDR, 2, data);
 #else
   Start();
 
@@ -76,23 +77,23 @@ void write_mcp7940(int r, int n, BYTE data[])
 // Sets the VBATEN bit
 void set_vbaten_bit()
 {
-  BYTE reg0[1];
+  BYTE reg0;
 
-  reg0[0] = read_mcp7940(MCP_RTCWKDAY_REG);
-  reg0[0] |= MCP_VBATEN_MASK;
+  reg0 = read_mcp7940(MCP_RTCWKDAY_REG);
+  reg0 |= MCP_VBATEN_MASK;
 
-  write_mcp7940(MCP_RTCWKDAY_REG, 1, reg0);
+  write_mcp7940(MCP_RTCWKDAY_REG, reg0);
 }
 
 // Sets the ST bit
 void set_st_bit()
 {
-  BYTE reg0[1];
+  BYTE reg0;
 
-  reg0[0] = read_mcp7940(MCP_RTCSEC_REG);
-  reg0[0] |= MCP_ST_MASK;
+  reg0 = read_mcp7940(MCP_RTCSEC_REG);
+  reg0 |= MCP_ST_MASK;
 
-  write_mcp7940(MCP_RTCSEC_REG, 1, reg0);
+  write_mcp7940(MCP_RTCSEC_REG, reg0);
 
 }
 

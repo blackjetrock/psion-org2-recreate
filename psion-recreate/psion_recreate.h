@@ -1,3 +1,5 @@
+#include "match.h"
+
 #define uint unsigned int
 #define uchar unsigned char
 
@@ -15,7 +17,9 @@
 #define PACK_TEST         0
 #define WIFI_TEST         0
 #define RTC_TEST          0
-#define NEW_I2C           1
+#define NEW_I2C           1    // Better I2C, not demo code
+#define BUZZER_TEST       0
+#define UART_INTERRUPTS   1    // Interrupot for UART data collection
 
 typedef u_int8_t BYTE;
 
@@ -154,7 +158,7 @@ extern int rtc_hours;
 
 void set_st_bit();
 void set_vbaten_bit();
-void write_mcp7940(int r, int n, BYTE data[]);
+void write_mcp7940(int r, BYTE data);
 int read_mcp7940(int r);
 void Delay1(uint n);
 void Write_number(uchar *n,uchar k,uchar station_dot);
