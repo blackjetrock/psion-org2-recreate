@@ -57,6 +57,7 @@ int match(char *str, char *fmt)
   int si = 0;
   int fi = 0;
   int argval;
+  unsigned long largval;
   
   match_int_arg_i = 0;
   match_num_scanned = 0;
@@ -116,18 +117,34 @@ int match(char *str, char *fmt)
 
 	      // We match a string of digits
 	    case 'd':
+	    case 'x':
+	      
 	      if( str[si] == '\0' )
 		{
 		  return_fail("\nEndof string:d\n");
 		}
 	      
 	      argval = 0;
-	      while( isdigit(str[si]) )
+	      largval =0;
+	      
+	      while( ((fmt[fi] == 'd') && isdigit(str[si])) || ((fmt[fi] == 'x') && isxdigit(str[si])) )
 		{
 		  char digit[2] = " ";
 		  digit [0] = str[si];
-		  argval *= 10;
-		  argval += atoi(digit);
+
+		  switch(fmt[fi])
+		    {
+		    case 'd':
+		      argval *= 10;
+		      argval += atoi(digit);
+		      break;
+
+		    case 'x':
+		      argval *= 16;
+		      argval += (int)strtoul(digit, NULL, 16);
+		      //		      argval = (int) largval;
+		      break;
+		    }
 		  
 		  si++;
 		  match_num_scanned++;
@@ -160,7 +177,7 @@ int match(char *str, char *fmt)
 		  return_fail("\nMismatch:2\n");
 		}
 	      
-	      if( isdigit(str[si-1]) )
+	      if( ((fmt[fi] == 'd') && isdigit(str[si-1])) || ((fmt[fi] == 'x') && isxdigit(str[si-1])) )
 		{
 		  // All ok
 		  if( add_int_arg(argval, fmt) )
@@ -175,7 +192,7 @@ int match(char *str, char *fmt)
 	      else
 		{
 		  // mismatch
-		  return_fail("\nMismatch:2\n");
+		  return_fail("\nMismatch:3\n");
 		}
 	      fi++;
 	      break;
@@ -192,7 +209,7 @@ int match(char *str, char *fmt)
 	    }
 	  else
 	    {
-	      return_fail("\nLiteral mismatch:2\n");
+	      return_fail("\nLiteral mismatch:4\n");
 	    }
 	  match_num_scanned++;
 	  break;

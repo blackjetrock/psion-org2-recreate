@@ -89,6 +89,14 @@ TEST testlist[] =
    {"1234",   "12 34 ", 1, -1, {0}},
    {"",       "1234 ", 0, -1, {0}},
    {"",       " 1234 ", 0, -1, {0}},
+
+   {"x21y41",  "x%xy%x", 1, -1, {33,65}},
+   {"x1000yffff",  "x%xy%x", 1, -1, {4096,65535}},
+   {"x1000yFFFF",  "x%xy%x", 1, -1, {4096,65535}},
+   {"GET /memory/FFFF",  "GET /memory/%x", 1, -1, {65535}},
+   {"GET /memory/FFFF stuff",  "GET /memory/%x", 1, 16, {65535}},
+   
+
   };
 
 #define NUM_TESTS (sizeof(testlist)/sizeof(TEST))

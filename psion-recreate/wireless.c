@@ -38,7 +38,8 @@ void ifn_busy(int i);
 void ifn_connect(int i);
 
 void ufn_index(void);
-void ufn_memory(void);
+void ufn_memory0(void);
+void ufn_memoryat(void);
 void ufn_ram(void);
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -374,7 +375,8 @@ typedef struct _U_TASK
 // The master table of tasks
 U_TASK uri_list[] =
   {
-   {"GET /memory",                                     ufn_memory},
+   {"GET /memory/%x",                                  ufn_memoryat},
+   {"GET /memory",                                     ufn_memory0},
    {"GET /ram",                                        ufn_ram},
    {"GET /",                                           ufn_index},
   };
@@ -431,10 +433,13 @@ void get_n_bytes_then(int n, BYTE_CONT_FN fn)
 // Routes a URI to a function
 void process_uri(char *uri)
 {
+
   for(int i=0; i<U_NUM_TASKS; i++)
     {
-      if( strncmp(uri, uri_list[i].str, strlen(uri_list[i].str))==0 )
+
+      if( match(uri, uri_list[i].str) )
 	{
+
 	  (*uri_list[i].fn)();
 	  break;
 	}
@@ -779,30 +784,47 @@ Psion Organiser Recreation\
 </pre>\
 </html> \r\n";
 
-void ufn_memory(void)
+
+void ufn_memory_addr(int addr)
 {
 #define MEM_LEN  128
 #define MEM_LINE 16
   
   char mems[(MEM_LEN)*3+(MEM_LEN*6)+20];
   char t[40];
+  char ascii[MEM_LINE+1];
   
   // Get calculator memory 0
   mems[0] = '\0';
+  ascii[0] = '\0';
   
-  for(int m=0; m<MEM_LEN; m++)
+  for(int m=addr; m<addr+MEM_LEN; m++)
     {
       if( (m % MEM_LINE) == 0 )
 	{
-	  sprintf(t, "<br>%04X:", m);
+	  sprintf(t, "  %s<br>%04X:", ascii, m);
 	  strcat(mems, t);
+	  ascii[0] = '\0';
 	}
       
       sprintf(t, "%02X ", ramdata[m]);
       strcat(mems, t);
+      if( isprint(ramdata[m]) )
+	{
+	  t[0] = ramdata[m];
+	  t[1] = '\0';
+	  strcat(ascii, t);
+	}
+      else
+	{
+	  strcat(ascii, ".");
+	}
     }
-  
+
+  strcat(mems, "  ");
+  strcat(mems, ascii);
   sprintf(output_text, reply2, cxx, mems);
+
   
   // Send reply back
   // We send the command and have to wait for the OK and '>' prompt
@@ -815,6 +837,16 @@ void ufn_memory(void)
 #endif
 
 
+}
+
+void ufn_memory0(void)
+{
+  ufn_memory_addr(0x1000);
+}
+
+void ufn_memoryat(void)
+{
+  ufn_memory_addr(match_int_arg[0]);
 }
 
 void ufn_ram(void)
