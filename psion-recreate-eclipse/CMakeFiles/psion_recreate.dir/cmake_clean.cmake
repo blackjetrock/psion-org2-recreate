@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/psion_recreate.dir/display.c.obj"
   "CMakeFiles/psion_recreate.dir/display.c.obj.d"
+  "CMakeFiles/psion_recreate.dir/eeprom.c.obj"
+  "CMakeFiles/psion_recreate.dir/eeprom.c.obj.d"
   "CMakeFiles/psion_recreate.dir/emulator.c.obj"
   "CMakeFiles/psion_recreate.dir/emulator.c.obj.d"
   "CMakeFiles/psion_recreate.dir/font.c.obj"

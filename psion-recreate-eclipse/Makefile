@@ -205,6 +205,30 @@ display.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/display.c.s
 .PHONY : display.c.s
 
+eeprom.obj: eeprom.c.obj
+.PHONY : eeprom.obj
+
+# target to build an object file
+eeprom.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/eeprom.c.obj
+.PHONY : eeprom.c.obj
+
+eeprom.i: eeprom.c.i
+.PHONY : eeprom.i
+
+# target to preprocess a source file
+eeprom.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/eeprom.c.i
+.PHONY : eeprom.c.i
+
+eeprom.s: eeprom.c.s
+.PHONY : eeprom.s
+
+# target to generate assembly for a file
+eeprom.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/eeprom.c.s
+.PHONY : eeprom.c.s
+
 emulator.obj: emulator.c.obj
 .PHONY : emulator.obj
 
@@ -1845,6 +1869,9 @@ help:
 	@echo "... display.obj"
 	@echo "... display.i"
 	@echo "... display.s"
+	@echo "... eeprom.obj"
+	@echo "... eeprom.i"
+	@echo "... eeprom.s"
 	@echo "... emulator.obj"
 	@echo "... emulator.i"
 	@echo "... emulator.s"

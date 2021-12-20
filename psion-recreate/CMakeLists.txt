@@ -22,6 +22,7 @@ wireless.c
 rtc.c
 i2c.c
 match.c
+eeprom.c
 )
 
 pico_enable_stdio_usb(psion_recreate 1)

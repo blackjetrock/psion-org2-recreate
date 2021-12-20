@@ -38,9 +38,12 @@ void ifn_busy(int i);
 void ifn_connect(int i);
 
 void ufn_index(void);
-void ufn_memory0(void);
-void ufn_memoryat(void);
+void ufn_memory_0(void);
+void ufn_memory_at(void);
+void ufn_memory_write(void);
 void ufn_ram(void);
+void ufn_eeprom_write(void);
+void ufn_eeprom_read(void);
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -368,15 +371,18 @@ I_TASK input_list[] =
 typedef void (*U_FN)(void);
 typedef struct _U_TASK
 {
-  char    *str;       // URI
+  char    *str;       // URI/memory/20b0
   U_FN    fn;         // Call this function when match found  
 } U_TASK;
 
 // The master table of tasks
 U_TASK uri_list[] =
   {
-   {"GET /memory/%x",                                  ufn_memoryat},
-   {"GET /memory",                                     ufn_memory0},
+   {"GET /eeprom/%d/write/%x/%x",                      ufn_eeprom_write},
+   {"GET /eeprom/%d/%x",                               ufn_eeprom_read},
+   {"GET /memory/write/%x/%x",                         ufn_memory_write},
+   {"GET /memory/%x",                                  ufn_memory_at},
+   {"GET /memory",                                     ufn_memory_0},
    {"GET /ram",                                        ufn_ram},
    {"GET /",                                           ufn_index},
   };
@@ -728,6 +734,17 @@ void ifn_busy(int i)
     }
 }
 
+////////////////////////////////////////////////////////////////////////////////
+//
+// Starts off a reply. The WTY_SENDDATA task will send the actual
+// data. Reply must be in output_text
+
+void send_reply(void)
+{
+  output_text_len = strlen(output_text);
+  sprintf(cmd, "AT+CIPSEND=0,%d\r\n", output_text_len);
+  uart_puts(UART_ID, cmd);
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -827,6 +844,7 @@ void ufn_memory_addr(int addr)
 
   
   // Send reply back
+  
   // We send the command and have to wait for the OK and '>' prompt
   output_text_len = strlen(output_text);
   sprintf(cmd, "AT+CIPSEND=0,%d\r\n", output_text_len);
@@ -839,18 +857,128 @@ void ufn_memory_addr(int addr)
 
 }
 
-void ufn_memory0(void)
+void ufn_memory_0(void)
 {
   ufn_memory_addr(0x1000);
 }
 
-void ufn_memoryat(void)
+void ufn_memory_at(void)
 {
   ufn_memory_addr(match_int_arg[0]);
 }
 
 void ufn_ram(void)
 {
+
+}
+
+char *reply_mem_write = "HTTP/1.1 200 OK\n\
+Content-Type: text/html\n\
+Connection: close\n\n\
+<!DOCTYPE HTML>\n\
+<html>\n\
+Psion Organiser Recreation\
+<br>Ticks:%d<br>\
+<br>%s: Wrote %02X to %04X<br>\
+</html> \r\n";
+
+void ufn_memory_write(void)
+{
+  // Write the byte to the RAM
+
+  ramdata[match_int_arg[0]] = match_int_arg[1];
+
+  // Give a reply
+  sprintf(output_text, reply_mem_write, cxx, "Memory", match_int_arg[1], match_int_arg[0]);
+
+  send_reply();
+}
+
+
+
+void ufn_eeprom_write(void)
+{
+  BYTE data[1];
+  int slave_addr;
+  int start;
+  
+  data[0] = match_int_arg[2];
+  if(match_int_arg[0]==0)
+    {
+      slave_addr = EEPROM_0_ADDR_RD;
+    }
+  else
+    {
+      slave_addr = EEPROM_1_ADDR_RD;
+    }
+  
+  start = match_int_arg[1];
+  
+  // Write the byte to the RAM
+  write_eeprom(slave_addr, start, 1, data);
+
+  // Give a reply
+  sprintf(output_text, reply_mem_write, cxx, "EEPROM", match_int_arg[2], match_int_arg[1]);
+
+  send_reply();
+}
+
+void ufn_eeprom_read(void)
+{
+#define MEM_LEN  128
+#define MEM_LINE 16
+  
+  char mems[(MEM_LEN)*3+(MEM_LEN*6)+20];
+  char t[40];
+  char ascii[MEM_LINE+1];
+  BYTE data[MEM_LINE];
+  int start;
+  int slave_addr;
+
+  slave_addr = (match_int_arg[0]==0)?EEPROM_0_ADDR_RD:EEPROM_1_ADDR_RD;
+  start = match_int_arg[1];
+
+  // Get calculator memory 0
+  mems[0] = '\0';
+  ascii[0] = '\0';
+
+  read_eeprom(slave_addr, start, MEM_LINE, data);
+  
+  for(int m=start; m<start+MEM_LEN; m++)
+    {
+      if( (m % MEM_LINE) == 0 )
+	{
+	  sprintf(t, "  %s<br>%04X:", ascii, m);
+	  strcat(mems, t);
+	  ascii[0] = '\0';
+	  read_eeprom(slave_addr, m, MEM_LINE, data);
+	}
+      
+      sprintf(t, "%02X ", data[m % MEM_LINE]);
+      strcat(mems, t);
+      if( isprint(data[m % MEM_LINE]) )
+	{
+	  t[0] = data[m];
+	  t[1] = '\0';
+	  strcat(ascii, t);
+	}
+      else
+	{
+	  strcat(ascii, ".");
+	}
+    }
+
+  strcat(mems, "  ");
+  strcat(mems, ascii);
+  sprintf(output_text, reply2, cxx, mems);
+
+  
+  // Send reply back
+  
+  // We send the command and have to wait for the OK and '>' prompt
+  output_text_len = strlen(output_text);
+  sprintf(cmd, "AT+CIPSEND=0,%d\r\n", output_text_len);
+  uart_puts(UART_ID, cmd);
 
 }
 
@@ -1086,7 +1214,6 @@ void wireless_taskloop(void)
 
 	    case WTY_SENDDATA:
 	      uart_puts(UART_ID, output_text);
-	      //	      uart_puts(UART_ID, "\r\n+++");
 	      break;
 	      
 	    case WTY_STOP:

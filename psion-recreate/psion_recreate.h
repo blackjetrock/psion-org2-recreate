@@ -1,5 +1,7 @@
 #include "match.h"
 
+typedef uint8_t BYTE;
+
 #define uint unsigned int
 #define uchar unsigned char
 
@@ -17,6 +19,7 @@
 #define PACK_TEST         0
 #define WIFI_TEST         0
 #define RTC_TEST          0
+#define EEPROM_TEST       1
 #define NEW_I2C           1    // Better I2C, not demo code
 #define BUZZER_TEST       0
 #define UART_INTERRUPTS   1    // Interrupot for UART data collection
@@ -215,3 +218,15 @@ void i2c_stop(void);
 int i2c_send_byte(BYTE b);
 int i2c_read_bytes(BYTE slave_addr, int n, BYTE *data);
 void i2c_send_bytes(BYTE slave_addr, int n, BYTE *data);
+
+// EEPROM
+
+#define EEPROM_0_ADDR_WR   (0xA0)
+#define EEPROM_0_ADDR_RD   (0xA1)
+#define EEPROM_1_ADDR_WR   (0xA2)
+#define EEPROM_1_ADDR_RD   (0xA3)
+
+int read_eeprom(int slave_addr, int start, int len, u_int8_t *dest);
+int write_eeprom(int slave_addr, int start, int len, BYTE *src);
+void eeprom_test(void);
+

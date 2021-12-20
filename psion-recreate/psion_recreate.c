@@ -368,6 +368,10 @@ int main() {
 
 #endif
 
+#if EEPROM_TEST
+  eeprom_test();
+#endif
+  
 #if WIFI_TEST
   printxy_str(0,0,"Wifi Test Mode");
 
