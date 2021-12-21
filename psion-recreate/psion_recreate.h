@@ -19,10 +19,14 @@ typedef uint8_t BYTE;
 #define PACK_TEST         0
 #define WIFI_TEST         0
 #define RTC_TEST          0
-#define EEPROM_TEST       1
+#define EEPROM_TEST       0
 #define NEW_I2C           1    // Better I2C, not demo code
 #define BUZZER_TEST       0
 #define UART_INTERRUPTS   1    // Interrupot for UART data collection
+#define I2C_DELAY         150   // Default, can be over-ridden
+
+#define WIFI              0
+#define BLUETOOTH         1
 
 typedef u_int8_t BYTE;
 
@@ -207,6 +211,9 @@ extern int rtc_set_st;
 extern u_int8_t ramdata[RAM_SIZE];
 
 // I2C functions
+//void i2c_fn_initialise(void);
+//void i2c_fn_set_delay(int delay);
+
 void i2c_release(void);
 void i2c_delay(void);
 void i2c_sda_low(void);

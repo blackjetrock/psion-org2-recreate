@@ -348,6 +348,9 @@ int main() {
   //  latchout2_shadow |= LAT2PIN_MASK_DRV_HV;
   //write_595(PIN_LATCHOUT2, latchout2_shadow, 16);
 
+  // Initialise I2C
+  //i2c_fn_initialise();
+  
   // Wait for it to start up
   sleep_ms(10);
   initialise_oled();

@@ -36,6 +36,8 @@ void ifn_recv(int i);
 void ifn_closed(int i);
 void ifn_busy(int i);
 void ifn_connect(int i);
+void ifn_btdata(int i);
+void ifn2_btdata(void);
 
 void ufn_index(void);
 void ufn_memory_0(void);
@@ -44,6 +46,10 @@ void ufn_memory_write(void);
 void ufn_ram(void);
 void ufn_eeprom_write(void);
 void ufn_eeprom_read(void);
+
+void btfn_hello(void);
+void btfn_mem_rd(void);
+void btfn_eeprom_rd(void);
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -56,6 +62,9 @@ char cmd[200];
 char delay_text[20];
 char output_text[2000];
 int output_text_len = 0;
+
+// Temporary result text buffer
+char temp_output_buffer[2000];
 
 #define INPUT_TEXT_SIZE  2000
 
@@ -295,6 +304,22 @@ typedef struct _W_TASK
 // The master table of tasks
 W_TASK tasklist[] =
   {
+   {WTY_LABEL,    "btinit"},
+   {WTY_PUTS,     "AT+BTINIT=1\r\n"},
+   {WTY_DELAY_MS, "2000"},
+   {WTY_PUTS,     "AT+BTSPPINIT=2\r\n"},
+   {WTY_DELAY_MS, "2000"},
+   {WTY_PUTS,     "AT+BTNAME=\"PsionOrg2\"\r\n"},
+   {WTY_DELAY_MS, "2000"},
+   {WTY_PUTS,     "AT+BTSCANMODE=2\r\n"},
+   {WTY_DELAY_MS, "2000"},
+   //   {WTY_PUTS,     "AT+BTSECPARAM=3,1,7735\r\n"},
+   //{WTY_DELAY_MS, "2000"},
+   {WTY_PUTS,     "AT+BTSPPSTART\r\n"},
+   {WTY_DELAY_MS, "2000"},
+
+   {WTY_STOP,     ""},                      // All done
+
    {WTY_LABEL,    "init"},
    {WTY_PUTS,     "AT+CWMODE=2\r\n"},
    {WTY_DELAY_MS, "2000"},
@@ -347,21 +372,40 @@ typedef struct _I_TASK
 // The master table of tasks
 I_TASK input_list[] =
   {
+   // General common 
    {ITY_STRING, " ready",                                       ifm_null,     ifn_ready},
+   {ITY_STRING, " OK",                                          ifm_null,     ifn_check_ok},
+   
+   // Wifi
+
    {ITY_STRING, " AT+CWMODE=2",                                 ifm_null,     ifn_next_is_ok},
    {ITY_STRING, " AT+CIPMUX=1",                                 ifm_null,     ifn_next_is_ok},
    {ITY_STRING, " AT+CWSAP=\"PsionOrg2\",\"1234567890\",5,3",   ifm_null,     ifn_next_is_ok},
    {ITY_STRING, " AT+CIPSERVER=1,80",                           ifm_null,     ifn_next_is_ok},
    {ITY_STRING, " AT+CIPCLOSE=%d",                              ifm_null,     ifn_next_is_ok},
    {ITY_STRING, " %d,CONNECT",                                  ifm_null,     ifn_connect},
+   {ITY_STRING, " +STA_CONNECTED:\"%x:%x:%x:%x:%x:%x\"",        ifm_null,     ifn_ignore},
    {ITY_FUNC,   " +IPD",                                        ifm_ipd,      ifn_ipd},
    {ITY_FUNC,   " AT+CIPSEND=%d,%d OK >",                       ifm_null,     ifn_cipsend},
    {ITY_FUNC,   " Recv %d bytes SEND OK",                       ifm_recv,     ifn_recv},
 
-   {ITY_STRING, " OK",                                          ifm_null,     ifn_check_ok},
+
    {ITY_STRING, " %d,CLOSED OK",                                ifm_null,     ifn_closed},
    {ITY_STRING, " %d,CLOSED",                                   ifm_null,     ifn_ignore},
    {ITY_STRING, " busy p...",                                   ifm_null,     ifn_busy},
+   {ITY_STRING, " link is not valid",                           ifm_null,     ifn_ignore},
+   {ITY_STRING, " ERROR",                                       ifm_null,     ifn_ignore},
+
+   // Bluetooth
+   {ITY_STRING, " AT+BTINIT=1",                                 ifm_null,     ifn_ignore},
+   {ITY_STRING, " AT+BTSPPINIT=2",                              ifm_null,     ifn_ignore},
+   {ITY_STRING, " AT+BTNAME=\"PsionOrg2\"",                     ifm_null,     ifn_ignore},
+   {ITY_STRING, " AT+BTSCANMODE=2",                             ifm_null,     ifn_ignore},
+   {ITY_STRING, " AT+BTSECPARAM=3,1,7735",                      ifm_null,     ifn_ignore},
+   {ITY_STRING, " AT+BTSPPSTART",                               ifm_null,     ifn_ignore},
+   {ITY_STRING, " +BTSPPCONN:%d,\"%x:%x:%x:%x:%x:%x\"",         ifm_null,     ifn_connect},
+   {ITY_STRING, " +BTDATA:%d,",                                 ifm_null,     ifn_btdata},
+   {ITY_FUNC,   " AT+BTSPPSEND=%d,%d >",                        ifm_null,     ifn_cipsend},
   };
 //AT+CWSAP=\"PsionOrg2\",\"1234567890\",5,3OKAT+CIPSERVER=1,80OK0
 #define I_NUM_TASKS (sizeof(input_list) / sizeof(I_TASK) )
@@ -388,6 +432,27 @@ U_TASK uri_list[] =
   };
 
 #define U_NUM_TASKS (sizeof(uri_list) / sizeof(U_TASK) )
+
+////////////////////////////////////////////////////////////////////////////////
+
+// Bluetooth command table
+
+typedef void (*BT_FN)(void);
+typedef struct _BT_TASK
+{
+  char    *str;       // URI/memory/20b0
+  BT_FN    fn;         // Call this function when match found  
+} BT_TASK;
+
+// The master table of tasks
+BT_TASK btcmd_list[] =
+  {
+   {"hello ",                      btfn_hello},
+   {"rdmem %x ",                   btfn_mem_rd},
+   {"rdee %x ",                    btfn_eeprom_rd},
+  };
+
+#define BT_NUM_TASKS (sizeof(btcmd_list) / sizeof(BT_TASK) )
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -447,6 +512,22 @@ void process_uri(char *uri)
 	{
 
 	  (*uri_list[i].fn)();
+	  break;
+	}
+    }
+}
+
+// Processes a bluetooth command
+void process_btcmd(char *cmd)
+{
+
+  for(int i=0; i<BT_NUM_TASKS; i++)
+    {
+
+      if( match(cmd, btcmd_list[i].str) )
+	{
+
+	  (*btcmd_list[i].fn)();
 	  break;
 	}
     }
@@ -590,6 +671,10 @@ void ifn_check_ok(int i)
   else
     {
       // Do nothing, the input strings will stop here.
+
+      // remove string we tested for
+      remove_n(match_num_scanned);
+
     }
 }
 
@@ -602,8 +687,15 @@ void ifn_ready(int i)
 #else
   write_display_extra(0, 'S');
 #endif
-  start_task("init");
 
+#if WIFI  
+  start_task("init");
+#endif
+
+#if BLUETOOTH
+  start_task("btinit");
+#endif
+  
   // Remove the string
   //remove_string("ready");
   remove_n(match_num_scanned);
@@ -661,7 +753,6 @@ void ifn_cipsend(int i)
       start_task("send");
 
       // The reply to the send will trigger the close
-      
     }
 }
 
@@ -734,6 +825,62 @@ void ifn_busy(int i)
     }
 }
 
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// BTDATA
+//
+// Bluetooth data has come in
+//
+////////////////////////////////////////////////////////////////////////////////
+
+// Processes the +IPD string
+void ifn_btdata(int i)
+{
+  write_display_extra(2, 'P');
+
+  //DEBUG_STOP;
+  
+  // We need to get the IPD textoff the input stream
+  // +IPD,0,370:
+  
+  if( match(input_text, " +BTDATA:%d,") )
+    {
+      // remove the command
+      remove_n(match_num_scanned);
+      
+      // Get the data
+      // numchars holds the number of characters of data we can get
+      // with a CIPREVDATA command. The URI should be in the input stream next
+      // though, so we get that.
+
+      // We now need to wait for numchars bytes to come in as that is the data for the IPD
+      get_n_bytes_then(match_int_arg[0], ifn2_btdata);
+    }
+}
+
+// We continue here after all data collected
+
+void ifn2_btdata(void)
+{
+  //DEBUG_STOP;
+  // We have the URI, process it and find out which page to return
+  // based on it
+  process_btcmd(byte_buffer);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Starts off a bluetooth reply. The WTY_SENDDATA task will send the actual
+// data. Reply must be in output_text
+
+void send_bt_reply(void)
+{
+  output_text_len = strlen(output_text);
+  sprintf(cmd, "AT+BTSPPSEND=0,%d\r\n", output_text_len);
+  uart_puts(UART_ID, cmd);
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 //
 // Starts off a reply. The WTY_SENDDATA task will send the actual
@@ -752,28 +899,30 @@ void send_reply(void)
 
 // Index page, we send back the main page with data added
 
+
+
 void ufn_index(void)
 {
-  char mems[10*(8+1+1+2+2+10)];
+
   char t[40];
   
   // Get calculator memory 0
-  mems[0] = '\0';
+  temp_output_buffer[0] = '\0';
   for(int m=0; m<10; m++)
     {
       sprintf(t, "<br>M%d:", m);
-      strcat(mems, t);
+      strcat(temp_output_buffer, t);
 #if 0	      	      
       for(int i=0; i<8; i++)
 	{
 	  sprintf(t, "%02X", ramdata[0x20ff+m*8+i]);
-	  strcat(mems, t);
+	  strcat(temp_output_buffer, t);
 	}
 #else
-      strcat(mems, stringify_float(0x20ff+m*8));
+      strcat(temp_output_buffer, stringify_float(0x20ff+m*8));
     }
 #endif
-  sprintf(output_text, reply1, cxx, mems, display_line[0], display_line[1], display_line[2], display_line[3], input_text);
+  sprintf(output_text, reply1, cxx, temp_output_buffer, display_line[0], display_line[1], display_line[2], display_line[3], input_text);
 
   // Send reply back
   // We send the command and have to wait for the OK and '>' prompt
@@ -802,30 +951,29 @@ Psion Organiser Recreation\
 </html> \r\n";
 
 
-void ufn_memory_addr(int addr)
+void ufn_memory_addr(int addr, char *line_term)
 {
 #define MEM_LEN  128
 #define MEM_LINE 16
-  
-  char mems[(MEM_LEN)*3+(MEM_LEN*6)+20];
+
   char t[40];
   char ascii[MEM_LINE+1];
   
   // Get calculator memory 0
-  mems[0] = '\0';
+  temp_output_buffer[0] = '\0';
   ascii[0] = '\0';
   
   for(int m=addr; m<addr+MEM_LEN; m++)
     {
       if( (m % MEM_LINE) == 0 )
 	{
-	  sprintf(t, "  %s<br>%04X:", ascii, m);
-	  strcat(mems, t);
+	  sprintf(t, "  %s%s%04X:", ascii, line_term, m);
+	  strcat(temp_output_buffer, t);
 	  ascii[0] = '\0';
 	}
       
       sprintf(t, "%02X ", ramdata[m]);
-      strcat(mems, t);
+      strcat(temp_output_buffer, t);
       if( isprint(ramdata[m]) )
 	{
 	  t[0] = ramdata[m];
@@ -838,33 +986,25 @@ void ufn_memory_addr(int addr)
 	}
     }
 
-  strcat(mems, "  ");
-  strcat(mems, ascii);
-  sprintf(output_text, reply2, cxx, mems);
-
-  
-  // Send reply back
-  
-  // We send the command and have to wait for the OK and '>' prompt
-  output_text_len = strlen(output_text);
-  sprintf(cmd, "AT+CIPSEND=0,%d\r\n", output_text_len);
-  uart_puts(UART_ID, cmd);
-  
-#if WIFI_TEST	  
-  printxy_str(0,2, cmd);
-#endif
+  strcat(temp_output_buffer, "  ");
+  strcat(temp_output_buffer, ascii);
 
 
+  // caller sends reply
 }
 
 void ufn_memory_0(void)
 {
-  ufn_memory_addr(0x1000);
+  ufn_memory_addr(0, "<br>");
+  sprintf(output_text, reply2, cxx, temp_output_buffer);
+  send_reply();
 }
 
 void ufn_memory_at(void)
 {
-  ufn_memory_addr(match_int_arg[0]);
+  ufn_memory_addr(match_int_arg[0], "<br>");
+  sprintf(output_text, reply2, cxx, temp_output_buffer);
+  send_reply();
 }
 
 void ufn_ram(void)
@@ -928,7 +1068,6 @@ void ufn_eeprom_read(void)
 #define MEM_LEN  128
 #define MEM_LINE 16
   
-  char mems[(MEM_LEN)*3+(MEM_LEN*6)+20];
   char t[40];
   char ascii[MEM_LINE+1];
   BYTE data[MEM_LINE];
@@ -939,7 +1078,7 @@ void ufn_eeprom_read(void)
   start = match_int_arg[1];
 
   // Get calculator memory 0
-  mems[0] = '\0';
+  temp_output_buffer[0] = '\0';
   ascii[0] = '\0';
 
   read_eeprom(slave_addr, start, MEM_LINE, data);
@@ -949,13 +1088,13 @@ void ufn_eeprom_read(void)
       if( (m % MEM_LINE) == 0 )
 	{
 	  sprintf(t, "  %s<br>%04X:", ascii, m);
-	  strcat(mems, t);
+	  strcat(temp_output_buffer, t);
 	  ascii[0] = '\0';
 	  read_eeprom(slave_addr, m, MEM_LINE, data);
 	}
       
       sprintf(t, "%02X ", data[m % MEM_LINE]);
-      strcat(mems, t);
+      strcat(temp_output_buffer, t);
       if( isprint(data[m % MEM_LINE]) )
 	{
 	  t[0] = data[m];
@@ -968,9 +1107,11 @@ void ufn_eeprom_read(void)
 	}
     }
 
-  strcat(mems, "  ");
-  strcat(mems, ascii);
-  sprintf(output_text, reply2, cxx, mems);
+  strcat(temp_output_buffer, "  ");
+  strcat(temp_output_buffer, ascii);
+
+  
+  sprintf(output_text, reply2, cxx, temp_output_buffer);
 
   
   // Send reply back
@@ -980,6 +1121,81 @@ void ufn_eeprom_read(void)
   sprintf(cmd, "AT+CIPSEND=0,%d\r\n", output_text_len);
   uart_puts(UART_ID, cmd);
 
+}
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//
+
+
+void btfn_hello(void)
+  
+{
+  // Give a reply
+  sprintf(output_text, "Hello from Psion Organiser2");
+  send_bt_reply();
+}
+
+void btfn_mem_rd(void)
+{
+  ufn_memory_addr(match_int_arg[0], "\r\n");
+
+  sprintf(output_text, temp_output_buffer);
+  send_bt_reply();
+}
+
+void btfn_eeprom_rd(void)
+{
+#define MEM_LEN  128
+#define MEM_LINE 16
+  
+  char t[40];
+  char ascii[MEM_LINE+1];
+  BYTE data[MEM_LINE];
+  int start;
+  int slave_addr;
+
+  slave_addr = (match_int_arg[0]==0)?EEPROM_0_ADDR_RD:EEPROM_1_ADDR_RD;
+  start = match_int_arg[1];
+
+  // Get calculator memory 0
+  temp_output_buffer[0] = '\0';
+  ascii[0] = '\0';
+
+  read_eeprom(slave_addr, start, MEM_LINE, data);
+  
+  for(int m=start; m<start+MEM_LEN; m++)
+    {
+      if( (m % MEM_LINE) == 0 )
+	{
+	  sprintf(t, "  %s\r\n%04X:", ascii, m);
+	  strcat(temp_output_buffer, t);
+	  ascii[0] = '\0';
+	  read_eeprom(slave_addr, m, MEM_LINE, data);
+	}
+      
+      sprintf(t, "%02X ", data[m % MEM_LINE]);
+      strcat(temp_output_buffer, t);
+      if( isprint(data[m % MEM_LINE]) )
+	{
+	  t[0] = data[m];
+	  t[1] = '\0';
+	  strcat(ascii, t);
+	}
+      else
+	{
+	  strcat(ascii, ".");
+	}
+    }
+
+  strcat(temp_output_buffer, "  ");
+  strcat(temp_output_buffer, ascii);
+  
+  strcpy(output_text, temp_output_buffer);
+
+  send_bt_reply();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1033,12 +1249,14 @@ void wireless_taskloop(void)
 
   // Any more characters?
   // If so, collect them
+#if 0
+  // Disabled as interrupts should be disabled before running this
   if( uart_is_readable(UART_ID) )
     {
       on_uart_rx();
       char_in_loop++;
     }
-  
+#endif
   // Has anything come in?
   // If so, add it to the input buffer
 

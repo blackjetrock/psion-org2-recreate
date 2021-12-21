@@ -22,16 +22,15 @@ int read_eeprom(int slave_addr, int start, int len, BYTE *dest)
 {
   BYTE a[2];
 
-  // Force slave address to have correct RDWR bit
-  slave_addr |= 1;
   
   a[0] = start >> 8;
   a[1] = start & 0xFF;
   
   // Set up the write address
-  i2c_send_bytes(slave_addr, 2, a);
-  
-  return(i2c_read_bytes(slave_addr, len, dest));
+
+  i2c_send_bytes(slave_addr & 0xFE, 2, a);
+
+  return(i2c_read_bytes(slave_addr | 0x01, len, dest));
 }
 
 int write_eeprom(int slave_addr, int start, int len, BYTE *src)
@@ -75,37 +74,41 @@ void eeprom_test(void)
 {
   BYTE data[TEST_LEN];
   int i;
-
+  int j;
+  
   //DEBUG_STOP;
-  
-  for(i=0; i<TEST_LEN; i++)
-    {
-      data[i] = 10+i;
-    }
-
-  printxy_str(0,0,"EEPROM Test");
-  
-  // Write some bytes to an eeprom, then read it back
-  write_eeprom(EEPROM_1_ADDR_WR, TEST_START, TEST_LEN, data);
-
-  for(i=0; i<TEST_LEN; i++)
-    {
-      printxy_hex(i*3, 1, data[i]);
-    }
-
-    for(i=0; i<TEST_LEN; i++)
-    {
-      data[i] = 0xAA;
-    }
-
-  read_eeprom(EEPROM_1_ADDR_RD, TEST_START, TEST_LEN, data);
-  
-  for(i=0; i<TEST_LEN; i++)
-    {
-      printxy_hex(i*3, 2, data[i]);
-    }
-
   while(1)
     {
-    }
+      j++;
+      
+      for(i=0; i<TEST_LEN; i++)
+	{
+	  data[i] = 10+i+j*5;
+	}
+      
+      printxy_str(0,0,"EEPROM Test");
+      
+      // Write some bytes to an eeprom, then read it back
+      write_eeprom(EEPROM_1_ADDR_WR, TEST_START, TEST_LEN, data);
+
+      sleep_ms(1000);
+      for(i=0; i<TEST_LEN; i++)
+	{
+	  printxy_hex(i*3, 1, data[i]);
+	}
+      
+      for(i=0; i<TEST_LEN; i++)
+	{
+	  data[i] = 0xAA;
+	}
+      
+      read_eeprom(EEPROM_1_ADDR_RD, TEST_START, TEST_LEN, data);
+      
+      for(i=0; i<TEST_LEN; i++)
+	{
+	  printxy_hex(i*3, 2, data[i]);
+	}
+
+      sleep_ms(1000);
+     }
 }

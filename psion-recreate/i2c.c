@@ -13,7 +13,21 @@
 
 #include "psion_recreate.h"
 
+// The delay for th ei2c routines. This can be altered before accessing a device
+//
+
+//int i2c_delay_value = I2C_DELAY;
+
+////////////////////////////////////////////////////////////////////////////////
+//
 // I2C functions
+//
+////////////////////////////////////////////////////////////////////////////////
+
+//void i2c_fn_set_delay(int delay)
+//{
+//  i2c_delay_value = delay;
+//}
 
 // Release the bus
 void i2c_release(void)
@@ -34,7 +48,7 @@ void i2c_delay(void)
 #else
   volatile int i;
 
-  for(i=0; i<1500; i++)
+  for(i=0; i<15; i++)
     {
     }
 #endif
@@ -269,7 +283,7 @@ void i2c_send_bytes(BYTE slave_addr, int n, BYTE *data)
   i2c_stop();
 }
 
-void i2c_init(void)
+void i2c_fn_initialise(void)
 {
   gpio_init(PIN_I2C_SDA);
   gpio_init(PIN_I2C_SCL);
