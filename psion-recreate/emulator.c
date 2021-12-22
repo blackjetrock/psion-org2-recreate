@@ -167,6 +167,7 @@ char opcode_decode[100] = "";
 #define BANK_NEXT_RAM    0x03a0
 
 #define BANK_START       0x4000
+
 // If we know we are accessing fixed RAM then we can ignore bank switching
 
 int badram(int addr)
@@ -199,7 +200,7 @@ int badrom(int addr)
 #endif
 
 // Offsets of current bank
-int ram_bank_off = 0x4000;
+int ram_bank_off = 0x0000;
 int rom_bank_off = 0x0000;
 
 u_int8_t ramdata[RAM_SIZE];
@@ -210,7 +211,7 @@ void handle_bank(int addr)
   switch(addr)
     {
     case BANK_RESET:
-      ram_bank_off = 0x4000;
+      ram_bank_off = 0x0000;
       rom_bank_off = 0x0000;
       break;
       
@@ -218,7 +219,7 @@ void handle_bank(int addr)
       ram_bank_off += 0x4000;
       break;
 
-      // ROM fixed bank is from (adjusted ROm addreses)
+      // ROM fixed bank is from (adjusted ROM addreses)
       // 0x4000 to 0x7FFF
       // banked area is 0x0000 to 0x3FFF
       // In image we have bank 0, fixed, bank1, bank2, bank n, ...
@@ -4402,6 +4403,9 @@ void handle_sca(u_int16_t addr)
       break;
 
     case SWITCH_OFF:
+#if RAM_RESTORE
+      eeprom_ram_dump();
+#endif
       // Turn power off
       gpio_put(PIN_VBAT_SW_ON, 0);
       break;
@@ -5301,6 +5305,10 @@ u_int8_t RD_REF(u_int16_t addr)
       break;
 
     case SWITCH_OFF:
+#if RAM_RESTORE
+      eeprom_ram_dump();
+#endif
+
       // Turn power off
       gpio_put(PIN_VBAT_SW_ON, 0);
       return(0);
@@ -5420,6 +5428,10 @@ void WR_REF(u_int16_t addr, u_int8_t value)
       break;
 
     case SWITCH_OFF:
+#if RAM_RESTORE
+      eeprom_ram_dump();
+#endif
+      
       // Turn power off
       gpio_put(PIN_VBAT_SW_ON, 0);
       return;
@@ -5486,6 +5498,10 @@ u_int8_t RD_ADDR(u_int16_t addr)
       break;
 
     case SWITCH_OFF:
+#if RAM_RESTORE
+      eeprom_ram_dump();
+#endif
+      
       // Turn power off
       gpio_put(PIN_VBAT_SW_ON, 0);
       return(0);
@@ -5602,6 +5618,10 @@ void  WR_ADDR(u_int16_t addr, u_int8_t value)
       break;
 
     case SWITCH_OFF:
+#if RAM_RESTORE
+      eeprom_ram_dump();
+#endif
+
       // Turn power off
       gpio_put(PIN_VBAT_SW_ON, 0);
       return;
@@ -9060,7 +9080,11 @@ void initialise_emulator(void)
   RAMDATA_FIX(0x14) = 0x00;
 
   // No key pressed
+#if RAM_RESTORE
+  RAMDATA_FIX(P5_DATA) = WARM_START_STATE | NO_KEY_STATE | on_key;
+#else
   RAMDATA_FIX(P5_DATA) = COLD_START_STATE | NO_KEY_STATE | on_key;
+#endif
 
 #if 0
   // If multi core then we run the LCD update on the other core

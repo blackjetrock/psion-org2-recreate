@@ -370,42 +370,50 @@ typedef struct _I_TASK
 } I_TASK;
 
 // The master table of tasks
-I_TASK input_list[] =
+const I_TASK input_list[] =
   {
    // General common 
-   {ITY_STRING, " ready",                                       ifm_null,     ifn_ready},
-   {ITY_STRING, " OK",                                          ifm_null,     ifn_check_ok},
+   {ITY_STRING, " ready",                                               ifm_null,     ifn_ready},
+   {ITY_STRING, " OK",                                                  ifm_null,     ifn_check_ok},
    
    // Wifi
+   {ITY_STRING, " AT+CWMODE=2",                                         ifm_null,     ifn_next_is_ok},
+   {ITY_STRING, " AT+CIPMUX=1",                                         ifm_null,     ifn_next_is_ok},
+   {ITY_STRING, " AT+CWSAP=\"PsionOrg2\",\"1234567890\",5,3",           ifm_null,     ifn_next_is_ok},
+   {ITY_STRING, " AT+CIPSERVER=1,80",                                   ifm_null,     ifn_next_is_ok},
+   {ITY_STRING, " AT+CIPCLOSE=%d",                                      ifm_null,     ifn_next_is_ok},
+   {ITY_STRING, " %d,CONNECT",                                          ifm_null,     ifn_connect},
+   {ITY_STRING, " +STA_CONNECTED:\"%x:%x:%x:%x:%x:%x\"",                ifm_null,     ifn_ignore},
+   {ITY_STRING, " +STA_DISCONNECTED:\"%x:%x:%x:%x:%x:%x\"",             ifm_null,     ifn_ignore},
+   {ITY_STRING, " +DIST_STA_IP:\"%x:%x:%x:%x:%x:%x\",\"%d.%d.%d.%d\"",  ifm_null,     ifn_ignore},
 
-   {ITY_STRING, " AT+CWMODE=2",                                 ifm_null,     ifn_next_is_ok},
-   {ITY_STRING, " AT+CIPMUX=1",                                 ifm_null,     ifn_next_is_ok},
-   {ITY_STRING, " AT+CWSAP=\"PsionOrg2\",\"1234567890\",5,3",   ifm_null,     ifn_next_is_ok},
-   {ITY_STRING, " AT+CIPSERVER=1,80",                           ifm_null,     ifn_next_is_ok},
-   {ITY_STRING, " AT+CIPCLOSE=%d",                              ifm_null,     ifn_next_is_ok},
-   {ITY_STRING, " %d,CONNECT",                                  ifm_null,     ifn_connect},
-   {ITY_STRING, " +STA_CONNECTED:\"%x:%x:%x:%x:%x:%x\"",        ifm_null,     ifn_ignore},
-   {ITY_FUNC,   " +IPD",                                        ifm_ipd,      ifn_ipd},
-   {ITY_FUNC,   " AT+CIPSEND=%d,%d OK >",                       ifm_null,     ifn_cipsend},
-   {ITY_FUNC,   " Recv %d bytes SEND OK",                       ifm_recv,     ifn_recv},
+   {ITY_STRING, " WIFI CONNECTED",                                      ifm_null,     ifn_ignore},
+   {ITY_STRING, " WIFI GOT IP",                                         ifm_null,     ifn_ignore},
+   {ITY_STRING, " WIFI DISCONNECT",                                     ifm_null,     ifn_ignore},
+   
+   {ITY_FUNC,   " +IPD",                                                ifm_ipd,      ifn_ipd},
+   {ITY_FUNC,   " AT+CIPSEND=%d,%d OK >",                               ifm_null,     ifn_cipsend},
+   {ITY_FUNC,   " AT+CIPSEND=%d,%d ERROR",                              ifm_null,     ifn_ignore},
+   {ITY_FUNC,   " Recv %d bytes SEND OK",                               ifm_recv,     ifn_recv},
+   {ITY_FUNC,   " Recv %d bytes SEND FAIL",                             ifm_recv,     ifn_recv},
 
 
-   {ITY_STRING, " %d,CLOSED OK",                                ifm_null,     ifn_closed},
-   {ITY_STRING, " %d,CLOSED",                                   ifm_null,     ifn_ignore},
-   {ITY_STRING, " busy p...",                                   ifm_null,     ifn_busy},
-   {ITY_STRING, " link is not valid",                           ifm_null,     ifn_ignore},
-   {ITY_STRING, " ERROR",                                       ifm_null,     ifn_ignore},
+   {ITY_STRING, " %d,CLOSED OK",                                        ifm_null,     ifn_closed},
+   {ITY_STRING, " %d,CLOSED",                                           ifm_null,     ifn_ignore},
+   {ITY_STRING, " busy p...",                                           ifm_null,     ifn_busy},
+   {ITY_STRING, " link is not valid",                                   ifm_null,     ifn_ignore},
+   {ITY_STRING, " ERROR",                                               ifm_null,     ifn_ignore},
 
    // Bluetooth
-   {ITY_STRING, " AT+BTINIT=1",                                 ifm_null,     ifn_ignore},
-   {ITY_STRING, " AT+BTSPPINIT=2",                              ifm_null,     ifn_ignore},
-   {ITY_STRING, " AT+BTNAME=\"PsionOrg2\"",                     ifm_null,     ifn_ignore},
-   {ITY_STRING, " AT+BTSCANMODE=2",                             ifm_null,     ifn_ignore},
-   {ITY_STRING, " AT+BTSECPARAM=3,1,7735",                      ifm_null,     ifn_ignore},
-   {ITY_STRING, " AT+BTSPPSTART",                               ifm_null,     ifn_ignore},
-   {ITY_STRING, " +BTSPPCONN:%d,\"%x:%x:%x:%x:%x:%x\"",         ifm_null,     ifn_connect},
-   {ITY_STRING, " +BTDATA:%d,",                                 ifm_null,     ifn_btdata},
-   {ITY_FUNC,   " AT+BTSPPSEND=%d,%d >",                        ifm_null,     ifn_cipsend},
+   {ITY_STRING, " AT+BTINIT=1",                                         ifm_null,     ifn_ignore},
+   {ITY_STRING, " AT+BTSPPINIT=2",                                      ifm_null,     ifn_ignore},
+   {ITY_STRING, " AT+BTNAME=\"PsionOrg2\"",                             ifm_null,     ifn_ignore},
+   {ITY_STRING, " AT+BTSCANMODE=2",                                     ifm_null,     ifn_ignore},
+   {ITY_STRING, " AT+BTSECPARAM=3,1,7735",                              ifm_null,     ifn_ignore},
+   {ITY_STRING, " AT+BTSPPSTART",                                       ifm_null,     ifn_ignore},
+   {ITY_STRING, " +BTSPPCONN:%d,\"%x:%x:%x:%x:%x:%x\"",                 ifm_null,     ifn_connect},
+   {ITY_STRING, " +BTDATA:%d,",                                         ifm_null,     ifn_btdata},
+   {ITY_FUNC,   " AT+BTSPPSEND=%d,%d >",                                ifm_null,     ifn_cipsend},
   };
 //AT+CWSAP=\"PsionOrg2\",\"1234567890\",5,3OKAT+CIPSERVER=1,80OK0
 #define I_NUM_TASKS (sizeof(input_list) / sizeof(I_TASK) )
@@ -1097,7 +1105,7 @@ void ufn_eeprom_read(void)
       strcat(temp_output_buffer, t);
       if( isprint(data[m % MEM_LINE]) )
 	{
-	  t[0] = data[m];
+	  t[0] = data[m % MEM_LINE];
 	  t[1] = '\0';
 	  strcat(ascii, t);
 	}
@@ -1180,7 +1188,7 @@ void btfn_eeprom_rd(void)
       strcat(temp_output_buffer, t);
       if( isprint(data[m % MEM_LINE]) )
 	{
-	  t[0] = data[m];
+	  t[0] = data[m % MEM_LINE];
 	  t[1] = '\0';
 	  strcat(ascii, t);
 	}

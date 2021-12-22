@@ -112,3 +112,40 @@ void eeprom_test(void)
       sleep_ms(1000);
      }
 }
+
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// EEPROM RAM Dump and restore
+//
+////////////////////////////////////////////////////////////////////////////////
+
+// The RAM is dumped to an eeprom
+//
+// We have a few areas in the RAm which we can use as a signature
+// to indicate that a valid RAM dump is in the EEPROM
+// The two bytes at 0x0190 and 0x0191 have a known value after a dump is
+// perfomed.
+
+#define PAGE_SIZE 128
+
+void eeprom_ram_dump(void)
+{
+  // Write in 128 byte pages to the eeprom
+  for(int i=0; i<RAM_SIZE; i+=PAGE_SIZE)
+    {
+      write_eeprom(EEPROM_0_ADDR_WR , i, PAGE_SIZE, &(ramdata[i]));
+      
+      // Write delay
+      sleep_ms(6);
+    }
+}
+
+void eeprom_ram_restore(void)
+{
+  // Read EEPROM and restore RAM
+  for(int i=0; i<RAM_SIZE; i+=PAGE_SIZE)
+    {
+      read_eeprom(EEPROM_0_ADDR_RD , i, PAGE_SIZE, &(ramdata[i]));
+    }
+}

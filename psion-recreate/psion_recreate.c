@@ -359,6 +359,13 @@ int main() {
   clear_oled();
   stdio_init_all();
 
+  // Restore RAM from EEPROM
+
+#if RAM_RESTORE  
+  eeprom_ram_restore();
+  
+#endif
+  
   // Initialise emulator
   initialise_emulator();
   

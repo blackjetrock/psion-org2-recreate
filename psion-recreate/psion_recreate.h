@@ -28,6 +28,8 @@ typedef uint8_t BYTE;
 #define WIFI              0
 #define BLUETOOTH         1
 
+#define RAM_RESTORE       1
+
 typedef u_int8_t BYTE;
 
 // Do we use two cores?
@@ -236,4 +238,5 @@ void i2c_send_bytes(BYTE slave_addr, int n, BYTE *data);
 int read_eeprom(int slave_addr, int start, int len, u_int8_t *dest);
 int write_eeprom(int slave_addr, int start, int len, BYTE *src);
 void eeprom_test(void);
-
+void eeprom_ram_restore(void);
+void eeprom_ram_dump(void);
