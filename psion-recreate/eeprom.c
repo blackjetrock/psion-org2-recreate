@@ -139,6 +139,11 @@ void eeprom_ram_dump(void)
       // Write delay
       sleep_ms(6);
     }
+
+  // We have written the data, do we check it?
+#if EEPROM_DUMP_CHECK
+  eeprom_ram_check();
+#endif
 }
 
 void eeprom_ram_restore(void)
@@ -146,6 +151,55 @@ void eeprom_ram_restore(void)
   // Read EEPROM and restore RAM
   for(int i=0; i<RAM_SIZE; i+=PAGE_SIZE)
     {
+      
+      //if ( (i>=0x2080) && (i<=0x2180) )
+      //	{
       read_eeprom(EEPROM_0_ADDR_RD , i, PAGE_SIZE, &(ramdata[i]));
+	  //	}
     }
 }
+
+// Checks that the values in eeprom match those in RAM as a check that
+// the write occurred correctly
+
+void eeprom_ram_check(void)
+{
+  BYTE buffer[PAGE_SIZE];
+  
+  // Read EEPROM and restore RAM
+  for(int i=0; i<RAM_SIZE; i+=PAGE_SIZE)
+    {
+      read_eeprom(EEPROM_0_ADDR_RD , i, PAGE_SIZE, &(buffer[0]));
+
+      // Check the data read is the same as that in RAM
+      for(int j=0; j<PAGE_SIZE; j++)
+	{
+	  if( ramdata[i+j] == buffer[j] )
+	    {
+	      // All ok 
+	    }
+	  else
+	    {
+	      // Error, record where and halt for debug
+	      DEBUG_STOP;
+	    }
+	}
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Function that starts a dump process running and waits for it to finish.
+// Must be run on Core0 if core1 is doing the dumping due to I2C conflicts
+
+void eeprom_perform_dump(void)
+{
+  // Ask core1 to restore the eeprom
+  eeprom_done_restore = 0;
+  eeprom_do_restore = 1;
+  while(!eeprom_done_restore)
+    {
+    }
+}
+
+

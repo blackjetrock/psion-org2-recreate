@@ -62,4 +62,6 @@ CMakeFiles/psion_recreate.dir/emulator.c.obj: \
  /tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/include/pico/mutex.h \
  /tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/include/pico/critical_section.h \
  /tree/downloaded_tools/pico/psion-recreate/psion_recreate.h \
- /tree/downloaded_tools/pico/psion-recreate/match.h
+ /tree/downloaded_tools/pico/psion-recreate/match.h \
+ /tree/downloaded_tools/pico/psion-recreate/emulator.h \
+ /tree/downloaded_tools/pico/psion-recreate/wireless.h

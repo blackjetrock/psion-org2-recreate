@@ -3,7 +3,9 @@
 #include "hardware/gpio.h"
 #include "pico/binary_info.h"
 #include "pico/multicore.h"
+
 #include "psion_recreate.h"
+#include "emulator.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -204,6 +206,39 @@ void keyboard_test(void)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+//
+// EEPROM tasks
+//
+// Dump and restore run in tight loops and use flags to action them
+// and flags to signal the job is done
+//
+
+volatile int eeprom_do_dump = 0;
+volatile int eeprom_do_restore = 0;
+volatile int eeprom_done_dump = 0;
+volatile int eeprom_done_restore = 0;
+
+void eeprom_tasks(void)
+{
+  if( eeprom_do_dump )
+    {
+      eeprom_do_dump = 0;
+      eeprom_ram_dump();
+      eeprom_done_dump = 1;
+    }
+  
+  if( eeprom_do_restore )
+    {
+      printxy_str(3,1, "Restoring...");
+      eeprom_do_restore = 0;
+      //eeprom_ram_restore();
+      eeprom_done_restore = 1;
+      printxy_str(3,1, "            ");
+    }
+
+}
+
+
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -213,6 +248,9 @@ void keyboard_test(void)
 // Display update of buffer to OLED over I2C
 // Wireless task manager
 // RTC tasks
+// EEPROM accesses
+// EEPROM dump and restore
+//
 //
 // As the core peforms OLED updates over I2C it also has to do all other
 // accesses or we'd have to have locks to prevent two cores using the same
@@ -222,12 +260,13 @@ void core1_main(void)
 {
   while(1)
     {
-      //dump_lcd();
+      dump_lcd();
       rtc_tasks();
+      eeprom_tasks();
       
 #if !WIFI_TEST      
       //wireless_loop();
-      //wireless_taskloop();
+      wireless_taskloop();
 #endif
     }
 }
@@ -239,6 +278,27 @@ void core1_main(void)
 
 int main() {
 
+#if 0
+    // I2C bus
+  #define PIN_I2C_SDA 19
+  
+  gpio_init(PIN_I2C_SCL);
+  gpio_init(PIN_I2C_SDA);
+
+  // Use pull ups
+  gpio_pull_up(PIN_I2C_SDA);
+  gpio_pull_up(PIN_I2C_SCL);
+
+  gpio_set_dir(PIN_I2C_SDA, GPIO_OUT);
+  gpio_set_dir(PIN_I2C_SCL, GPIO_OUT);
+
+  gpio_put(PIN_I2C_SDA, 1);
+  gpio_put(PIN_I2C_SCL, 1);
+  
+  while(1)
+    {
+    }
+  #endif
   // Set up the GPIOs
   gpio_init(PIN_VBAT_SW_ON);
   gpio_set_dir(PIN_VBAT_SW_ON, GPIO_OUT);
@@ -281,9 +341,14 @@ int main() {
   gpio_init(PIN_SCLK);
   gpio_init(PIN_SOE);
   gpio_init(PIN_SMR);
-  
+
+  // I2C bus
   gpio_init(PIN_I2C_SCL);
   gpio_init(PIN_I2C_SDA);
+
+  // Use pull ups
+  gpio_pull_up(PIN_I2C_SDA);
+  gpio_pull_up(PIN_I2C_SCL);
   
   gpio_set_dir(PIN_SDAOUT,    GPIO_OUT);
   gpio_set_dir(PIN_P57,       GPIO_IN);
@@ -322,6 +387,9 @@ int main() {
   //  latchout2_shadow |= LAT2PIN_MASK_DRV_HV;
   //write_595(PIN_LATCHOUT2, latchout2_shadow, 16);
 
+  // Initialise I2C
+  //i2c_fn_initialise();
+  
   // Wait for it to start up
   sleep_ms(10);
   initialise_oled();
@@ -330,18 +398,36 @@ int main() {
   clear_oled();
   stdio_init_all();
 
-  // Initialise emulator
-    initialise_emulator();
+  // Restore RAM from EEPROM
 
+  // Initialise emulator
+  initialise_emulator();
+  
   // Initialise wifi
   wireless_init();
-
+  
 #if MULTI_CORE
   // If multi core then we run the LCD update on the other core
-    multicore_launch_core1(core1_main);
+  multicore_launch_core1(core1_main);
 
 #endif
 
+#if 1
+  // Ask core1 to restore the eeprom
+  eeprom_done_restore = 0;
+  eeprom_do_restore = 1;
+  while(!eeprom_done_restore)
+    {
+    }
+  
+#endif
+  
+  after_ram_restore_init();
+
+#if EEPROM_TEST
+  eeprom_test();
+#endif
+  
 #if WIFI_TEST
   printxy_str(0,0,"Wifi Test Mode");
 
@@ -467,20 +553,51 @@ int main() {
       }
 #endif
 
-#if RTC_TEST
-    // Set the clock running
-    rtc_set_st = 1;
+#if BUZZER_TEST
+    int d = 0;
+    while(1)
+      {
 
-    printxy_str(1, 0, "RTC Test");
+
+	for(int i=0; i<10; i++)
+	  {
+	    latch2_set_mask( LAT2PIN_MASK_BUZZER);
+	    sleep_us(d);
+	    latch2_clear_mask( LAT2PIN_MASK_BUZZER);
+	    sleep_us(d);
+	  }
+	d+=1;
+	if( d > 200 )
+	  {
+	    d = 0;
+	  }
+      }
+    
+#endif
+    
+#if RTC_TEST
+
+    printxy_str(0, 0, "RTC Test");
+
     
     while(1)
       {
-	int s;
+	int s, m, h;
 
+	// Set the clock running
+	rtc_set_st = 1;
 
 	read_seconds = 1;
 	s = rtc_seconds;
-	printxy_hex(1, 1, s);
+	printxy_hex(7, 1, s);
+
+	read_minutes = 1;
+	m = rtc_minutes;
+	printxy_hex(4, 1, m);
+
+	read_hours = 1;
+	h = rtc_hours;
+	printxy_hex(1, 1, h);
       }
     
 #endif
@@ -490,7 +607,9 @@ int main() {
     while(1)
       {
 	loop_emulator();
-	wireless_taskloop();
+	//dump_lcd();
+	
+	//wireless_taskloop();
 	//wireless_loop();
       }
     

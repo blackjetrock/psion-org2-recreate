@@ -13,6 +13,8 @@
 #include "hardware/irq.h"
 
 #include "psion_recreate.h"
+#include "emulator.h"
+#include "wireless.h"
 
 void start_task(char *label);
 void remove_string(char *str);
@@ -50,6 +52,8 @@ void ufn_eeprom_read(void);
 void btfn_hello(void);
 void btfn_mem_rd(void);
 void btfn_eeprom_rd(void);
+void btfn_mem_wr(void);
+void btfn_processor_status(void);
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -90,6 +94,19 @@ int byte_buffer_index;
 int collecting_bytes = 0;
 BYTE_CONT_FN when_done_fn;
 int bytes_left_to_collect = 0;
+
+//------------------------------------------------------------------------------
+//
+// Bluetooth input buffer
+//
+
+#define BT_CL_BUFFER_SIZE  200
+
+int bt_cl_in = 0;
+int bt_cl_out = 0;
+
+BYTE bt_cl_buffer[BT_CL_BUFFER_SIZE];
+int bluetooth_to_cli = INITIAL_BT_TO_CLI;
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -412,10 +429,11 @@ const I_TASK input_list[] =
    {ITY_STRING, " AT+BTSECPARAM=3,1,7735",                              ifm_null,     ifn_ignore},
    {ITY_STRING, " AT+BTSPPSTART",                                       ifm_null,     ifn_ignore},
    {ITY_STRING, " +BTSPPCONN:%d,\"%x:%x:%x:%x:%x:%x\"",                 ifm_null,     ifn_connect},
+   {ITY_STRING, " +BTSPPDISCONN:%d,\"%x:%x:%x:%x:%x:%x\"",              ifm_null,     ifn_ignore},
    {ITY_STRING, " +BTDATA:%d,",                                         ifm_null,     ifn_btdata},
    {ITY_FUNC,   " AT+BTSPPSEND=%d,%d >",                                ifm_null,     ifn_cipsend},
   };
-//AT+CWSAP=\"PsionOrg2\",\"1234567890\",5,3OKAT+CIPSERVER=1,80OK0
+
 #define I_NUM_TASKS (sizeof(input_list) / sizeof(I_TASK) )
 
 // URI task table
@@ -457,7 +475,9 @@ BT_TASK btcmd_list[] =
   {
    {"hello ",                      btfn_hello},
    {"rdmem %x ",                   btfn_mem_rd},
-   {"rdee %x ",                    btfn_eeprom_rd},
+   {"wrmem %x %x",                 btfn_mem_wr},
+   {"rdee %d %x  ",                btfn_eeprom_rd},
+   {"procstat  ",                  btfn_processor_status},
   };
 
 #define BT_NUM_TASKS (sizeof(btcmd_list) / sizeof(BT_TASK) )
@@ -525,22 +545,48 @@ void process_uri(char *uri)
     }
 }
 
+////////////////////////////////////////////////////////////////////////////////
+//
 // Processes a bluetooth command
+//
+// Command line interface
+//
+
 void process_btcmd(char *cmd)
 {
-
   for(int i=0; i<BT_NUM_TASKS; i++)
     {
-
       if( match(cmd, btcmd_list[i].str) )
 	{
-
 	  (*btcmd_list[i].fn)();
 	  break;
 	}
     }
 }
 
+////////////////////////////////////////////////////////////////////////////////
+//
+// Put more text on the comms link fifo
+//
+
+void comms_link_input(char *text)
+{
+  int len = strlen(text);
+  
+  // Add the text to the Bluetooth to Comms Link buffer
+  for(int i=0; i<len; i++)
+    {
+      if( ((bt_cl_in + 1) %  BT_CL_BUFFER_SIZE) != bt_cl_out )
+	{
+	  bt_cl_buffer[bt_cl_in] = text[i];
+	  bt_cl_in = (bt_cl_in + 1) % BT_CL_BUFFER_SIZE;
+	}
+      else
+	{
+	  return;
+	}
+    }
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -868,13 +914,24 @@ void ifn_btdata(int i)
 }
 
 // We continue here after all data collected
+// We fork data off to the comms link, or command handler
+
+
 
 void ifn2_btdata(void)
 {
   //DEBUG_STOP;
   // We have the URI, process it and find out which page to return
   // based on it
-  process_btcmd(byte_buffer);
+  if( bluetooth_to_cli )
+    {
+      process_btcmd(byte_buffer);
+    }
+  else
+    {
+      comms_link_input(byte_buffer);
+    }
+  
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -996,7 +1053,7 @@ void ufn_memory_addr(int addr, char *line_term)
 
   strcat(temp_output_buffer, "  ");
   strcat(temp_output_buffer, ascii);
-
+  strcat(temp_output_buffer, "\r\n");
 
   // caller sends reply
 }
@@ -1154,6 +1211,15 @@ void btfn_mem_rd(void)
   send_bt_reply();
 }
 
+void btfn_mem_wr(void)
+{
+  // Write the byte to the RAM
+  ramdata[match_int_arg[0]] = match_int_arg[1];
+
+  sprintf(output_text, "Wrote %02X to %04X", match_int_arg[0], match_int_arg[1]);
+  send_bt_reply();
+}
+
 void btfn_eeprom_rd(void)
 {
 #define MEM_LEN  128
@@ -1200,8 +1266,63 @@ void btfn_eeprom_rd(void)
 
   strcat(temp_output_buffer, "  ");
   strcat(temp_output_buffer, ascii);
+  strcat(temp_output_buffer, "\r\n");
   
   strcpy(output_text, temp_output_buffer);
+
+  send_bt_reply();
+}
+
+//------------------------------------------------------------------------------
+//
+// Display the processor status
+//
+
+char str_flags[7] = "______";
+char *decode_flags(void)
+{
+  strcpy(str_flags, "______");
+  for(int i=0; flag_data[i].mask != FLAG_TERM_MASK; i++)
+    {
+      if( pstate.FLAGS & flag_data[i].mask )
+	{
+	  str_flags[i] = flag_data[i].name;
+	}
+    }
+  
+  return(str_flags);
+}
+
+void btfn_processor_status(void)
+{
+
+  sprintf(temp_output_buffer, "\n%s", (strlen(opcode_decode)==0)?opcode_names[opcode]:opcode_decode);
+  strcpy(output_text, temp_output_buffer);
+  
+  sprintf(temp_output_buffer, " : ");
+  strcat(output_text, temp_output_buffer);
+
+  for(int i=0; i<inst_length; i++)
+    {
+      sprintf(temp_output_buffer, " %02X ", RD_ADDR(pc_before+i));
+      strcat(output_text, temp_output_buffer);
+    }
+  
+  sprintf(temp_output_buffer, "\n PC:%04X", pstate.PC);
+  strcat(output_text, temp_output_buffer);
+  sprintf(temp_output_buffer, "\n SP:%04X", pstate.SP);
+  strcat(output_text, temp_output_buffer);
+  sprintf(temp_output_buffer, "\n A :%02X", pstate.A);
+  strcat(output_text, temp_output_buffer);
+  sprintf(temp_output_buffer, "\n B :%02X", pstate.B);
+  strcat(output_text, temp_output_buffer);
+  sprintf(temp_output_buffer, "\n D :%02X%02X", pstate.A, pstate.B);
+  strcat(output_text, temp_output_buffer);
+  sprintf(temp_output_buffer, "\n X :%04X", pstate.X);
+  strcat(output_text, temp_output_buffer);
+  
+  sprintf(temp_output_buffer, "\n FLAGS:%02X (%s)\n", pstate.FLAGS, decode_flags());
+  strcat(output_text, temp_output_buffer);
 
   send_bt_reply();
 }
@@ -1236,6 +1357,28 @@ void wireless_taskloop(void)
   long parameter = 0;
   int c;
   int process_text = 0;
+
+
+  // The bluetooth to comms link processing runs independently of the rest of this loop
+  if( bt_cl_in != bt_cl_out )
+    {
+      // Something to send to the comms link, is the receive data ready?
+      // RDRF bit is set when data still in the data register, only
+      // move data to comms link when clear
+      // We also wait for interrupts to be enabled
+      if( (!(ramdata[SERIAL_TRCSR] & TRCSR_RDRF)) && !FLG_I && (ramdata[SERIAL_TRCSR] & TRCSR_RIE) )
+	{
+	  // We can move a data byte in to the RDR register, set up status bits and
+	  // generate an interrupt
+	  ramdata[SERIAL_RDR] = bt_cl_buffer[bt_cl_out];
+	  bt_cl_out = (bt_cl_out + 1) % BT_CL_BUFFER_SIZE;
+
+	  // Set status bits in the control register
+	  serial_set_rdrf();
+	  
+	  interrupt_request(0xFFF0);
+	}
+    }
   
   cxx++;
 	
@@ -1282,10 +1425,18 @@ void wireless_taskloop(void)
       ch[0] = uart_getc(UART_ID);
 #endif
       
-      //#if WIFI_TEST      
-      //      printxy(1,19, ch[0]);
-      //#endif
+      // check for special characters
+      switch(ch[0])
+	{
+	  // CTRL-T: Toggle between BT cli and BT comms link
+	case 0x14:
+	  bluetooth_to_cli = !bluetooth_to_cli;
 
+	  // return as we don't want to process the toggle character
+	  return;
+	  break;
+	}
+      
       // If we are collecting data then store it in buffer and don't process it
       if( collecting_bytes,0 )
 	{

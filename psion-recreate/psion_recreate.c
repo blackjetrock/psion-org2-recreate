@@ -3,7 +3,10 @@
 #include "hardware/gpio.h"
 #include "pico/binary_info.h"
 #include "pico/multicore.h"
+
 #include "psion_recreate.h"
+#include "emulator.h"
+#include "wireless.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -204,6 +207,39 @@ void keyboard_test(void)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+//
+// EEPROM tasks
+//
+// Dump and restore run in tight loops and use flags to action them
+// and flags to signal the job is done
+//
+
+volatile int eeprom_do_dump = 0;
+volatile int eeprom_do_restore = 0;
+volatile int eeprom_done_dump = 0;
+volatile int eeprom_done_restore = 0;
+
+void eeprom_tasks(void)
+{
+  if( eeprom_do_dump )
+    {
+      eeprom_do_dump = 0;
+      eeprom_ram_dump();
+      eeprom_done_dump = 1;
+    }
+  
+  if( eeprom_do_restore )
+    {
+      printxy_str(3,1, "Restoring...");
+      eeprom_do_restore = 0;
+      //eeprom_ram_restore();
+      eeprom_done_restore = 1;
+      printxy_str(3,1, "            ");
+    }
+
+}
+
+
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -213,6 +249,9 @@ void keyboard_test(void)
 // Display update of buffer to OLED over I2C
 // Wireless task manager
 // RTC tasks
+// EEPROM accesses
+// EEPROM dump and restore
+//
 //
 // As the core peforms OLED updates over I2C it also has to do all other
 // accesses or we'd have to have locks to prevent two cores using the same
@@ -224,6 +263,7 @@ void core1_main(void)
     {
       dump_lcd();
       rtc_tasks();
+      eeprom_tasks();
       
 #if !WIFI_TEST      
       //wireless_loop();
@@ -361,11 +401,6 @@ int main() {
 
   // Restore RAM from EEPROM
 
-#if RAM_RESTORE  
-  eeprom_ram_restore();
-  
-#endif
-  
   // Initialise emulator
   initialise_emulator();
   
@@ -377,6 +412,18 @@ int main() {
   multicore_launch_core1(core1_main);
 
 #endif
+
+#if 1
+  // Ask core1 to restore the eeprom
+  eeprom_done_restore = 0;
+  eeprom_do_restore = 1;
+  while(!eeprom_done_restore)
+    {
+    }
+  
+#endif
+  
+  after_ram_restore_init();
 
 #if EEPROM_TEST
   eeprom_test();

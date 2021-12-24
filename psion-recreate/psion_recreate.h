@@ -8,6 +8,21 @@ typedef uint8_t BYTE;
 #define DEBUG_STOP {volatile int x = 1; while (x) {} }
 
 
+////////////////////////////////////////////////////////////////////////////////
+// The model we are emulating chnages the display layout
+
+#define MODEL_XP                 0
+#define MODEL_LZ                 1
+
+// Initial state of warm start flag 0x80 to have warm start
+#define WARM_FLAG_INITIAL        0x00
+
+// The model we are emulating
+extern int model;
+
+// The value t set model to
+#define MODEL_AT_START MODEL_LZ
+
 #define FN_OLED_DEMO      0
 #define FN_KEYBOARD_TEST  0
 #define FN_FLASH_LED      0
@@ -24,11 +39,15 @@ typedef uint8_t BYTE;
 #define BUZZER_TEST       0
 #define UART_INTERRUPTS   1    // Interrupot for UART data collection
 #define I2C_DELAY         150   // Default, can be over-ridden
-
+#define ALLOW_POWER_OFF   0     // Do we allow the power to be turned off?
 #define WIFI              0
 #define BLUETOOTH         1
 
 #define RAM_RESTORE       1
+#define EEPROM_DUMP_CHECK 1    // Do we check the dump contents?
+
+#define BLUETOOTH_TO_CLI  1
+#define BLUETOOTH_TO_COMMS_LINK  0
 
 typedef u_int8_t BYTE;
 
@@ -132,9 +151,6 @@ void i_printxy_str(int x, int y, char *str);
 
 void write_display_extra(int i, int ch);
 
-void wireless_init(void);
-void wireless_loop(void);
-void wireless_taskloop(void);
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -200,13 +216,18 @@ void core1_main(void);
   
 // Emulator
 void initialise_emulator(void);
+void after_ram_restore_init(void);
 void loop_emulator(void);
 
 // RTC tasks
 void rtc_tasks(void);
 extern int rtc_set_st;
 
-#define RAM_SIZE 65536
+//#define RAM_SIZE 32*1024
+#define RAM_SIZE 64*1024
+//#define RAM_SIZE 96*1024
+//#define RAM_SIZE 128*1024
+
 #define ROM_SIZE (sizeof(romdata))
 #define ROM_START (0x8000)
 
@@ -240,3 +261,10 @@ int write_eeprom(int slave_addr, int start, int len, BYTE *src);
 void eeprom_test(void);
 void eeprom_ram_restore(void);
 void eeprom_ram_dump(void);
+void eeprom_ram_check(void);
+void eeprom_perform_dump(void);
+
+extern volatile int eeprom_do_dump;
+extern volatile int eeprom_do_restore;
+extern volatile int eeprom_done_dump;
+extern volatile int eeprom_done_restore;

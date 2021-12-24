@@ -1,3 +1,10 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+// 6303 Emulator For Psion Organiser
+//
+//
+////////////////////////////////////////////////////////////////////////////////
+
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,15 +16,27 @@
 
 #include "psion_recreate.h"
 
+#include "emulator.h"
+#include "wireless.h"
+
+////////////////////////////////////////////////////////////////////////////////
+
+FLAG_DATA  flag_data[] =
+    {
+     {FLAG_H_MASK, 'H'},
+     {FLAG_I_MASK, 'I'},
+     {FLAG_N_MASK, 'N'},
+     {FLAG_Z_MASK, 'Z'},
+     {FLAG_V_MASK, 'V'},
+     {FLAG_C_MASK, 'C'},
+     {FLAG_TERM_MASK, '_'},
+    };
 
 // Emulates the 6303 processor
 // Emulates the HD44780 LCD controller
 
-#define MODEL_XP                 0
-#define MODEL_LZ                 1
-
 // The model we are emulating
-int model = MODEL_LZ;
+int model = MODEL_AT_START;
 
 // Address list file
 FILE *af;
@@ -28,10 +47,10 @@ FILE *lf;
 int inst_length;
 int pc_before;
 int on_key = 0;
+int warm_flag = WARM_FLAG_INITIAL;
 
 int lcd_write_to_ddram = 0;
 int lcd_write_to_cgram = 0;
-
 
 // If EMBEDDED is non zero then code is compiled to run on embedded processor
 // so no printfs or logging
@@ -54,14 +73,7 @@ int lcd_write_to_cgram = 0;
 
 void write_595(const uint latchpin, int value, int n);
 
-////////////////////////////////////////////////////////////////////////////////
-//
-//
 
-#define COLD_START_STATE   0x00
-#define WARM_START_STATE   0x80
-
-#define P5_DATA  0x15
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -72,44 +84,16 @@ void write_595(const uint latchpin, int value, int n);
 int keyp5 = NO_KEY_STATE;
 int keyk = 3;
 
-////////////////////////////////////////////////////////////////////////////////
-//
-// LCD controller
-//
-
-#define LCD_CTRL_REG   0x0180
-#define LCD_DATA_REG   0x0181
-
-#define SWITCH_OFF     0x01c0
-
-#define SCA_RESET      0x0300
-#define SCA_CLOCK      0x0340
-
-
-// Timer1
-#define TIM1_TCSR       0x0008
-#define TIM1_COUNTER_H  0x0009
-#define TIM1_COUNTER_L  0x000A
-#define TIM1_OCOMP_H    0x000B
-#define TIM1_OCOMP_L    0x000C
-#define TIM1_ICAP_H     0x000D
-#define TIM1_ICAP_L     0x000E
 
 u_int8_t  timer1_tcsr = 0;
 u_int16_t timer1_counter = 0;
 u_int16_t timer1_compare = 0;
 
-#define PORT5           0x0015
-#define PORT2           0x0003
-#define PORT6           0x0017
-
-#define PORT2_DDR       0x0001
-#define PORT6_DDR       0x0016
 
 ////////////////////////////////////////////////////////////////////////////////
-#if !EMBEDDED 
+
 char opcode_decode[100] = "";
-#endif
+
 ////////////////////////////////////////////////////////////////////////////////
 
 // Increment the PC
@@ -4404,10 +4388,13 @@ void handle_sca(u_int16_t addr)
 
     case SWITCH_OFF:
 #if RAM_RESTORE
-      eeprom_ram_dump();
+      eeprom_perform_dump();
 #endif
+      
+#if ALLOW_POWER_OFF
       // Turn power off
       gpio_put(PIN_VBAT_SW_ON, 0);
+#endif
       break;
     }
 }
@@ -4429,7 +4416,7 @@ void handle_sca(u_int16_t addr)
 #if !EMBEDDED
 	  fprintf(lf, "    KEY:key keyp5=%02X p5=%02X", keyp5, RAMDATA_FIX(P5_DATA));
 #endif
-	  RAMDATA_FIX(P5_DATA) = keyp5;
+	  RAMDATA_FIX(P5_DATA) =  keyp5;
 #if !EMBEDDED
 	  fprintf(lf, "    KEY:key keyp5=%02X p5=%02X", keyp5, RAMDATA_FIX(P5_DATA));
 #endif
@@ -4530,6 +4517,53 @@ u_int8_t handle_lcd_read(u_int16_t addr)
     }
 };
 
+////////////////////////////////////////////////////////////////////////////////
+//
+// Handles the serial communications registers
+//
+// RDRF flag is cleared after:
+//   a read of the status register with RDRF set
+//   then a read of the data register RDR
+
+typedef enum _RDRF_STATE
+  {
+   RDRF_ST_SET = 1,
+   RDRF_ST_READ_STATUS,  // Status has been read with RDRF set
+   RDRF_ST_CLEAR,
+  } RDRF_STATE;
+
+volatile RDRF_STATE rdrf_state = RDRF_ST_CLEAR;
+
+void serial_set_rdrf(void)
+{
+  ramdata[SERIAL_TRCSR] |= TRCSR_RDRF;
+  rdrf_state = RDRF_ST_SET;
+}
+
+void handle_serial_register_read(u_int16_t addr)
+{
+  switch(rdrf_state)
+    {
+    case RDRF_ST_SET:
+      // If status reg is read and RDRF set then move to next state
+      if( (addr == SERIAL_TRCSR) && (ramdata[SERIAL_TRCSR] & (TRCSR_RDRF)) )
+	{
+	  rdrf_state = RDRF_ST_READ_STATUS;
+	}
+      break;
+      
+    case RDRF_ST_READ_STATUS:
+      if( addr == SERIAL_RDR )
+	{
+	  rdrf_state = RDRF_ST_CLEAR;
+	  ramdata[SERIAL_TRCSR] &= ~(TRCSR_RDRF);
+	}
+      break;
+      
+    case RDRF_ST_CLEAR:
+      break;
+    }
+}
 
 
 //
@@ -4549,6 +4583,9 @@ u_int8_t xp_mapping[] =
    0,   1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15,
    64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79
   };
+
+// Which display mapping we are using
+u_int8_t *model_mapping;
 
 void create_underline_char(int ch, int dest_code)
 {
@@ -4581,7 +4618,7 @@ void put_display_char(int x, int y, int ch)
 
   cx = 127-(x * 6);
   cy = 3-y;
- lcd_display_buffer[lz_mapping[y*DISPLAY_NUM_CHARS+x]] = ch;
+ lcd_display_buffer[model_mapping[y*DISPLAY_NUM_CHARS+x]] = ch;
 }
 
 void write_display_extra(int i, int ch)
@@ -4603,9 +4640,9 @@ void dump_lcd(void)
 	{
 	  wireless_taskloop();
 	  
-	  ch = lcd_display_buffer[lz_mapping[i]];
+	  ch = lcd_display_buffer[model_mapping[i]];
 	  
-	  if( (lz_mapping[i] == lcd_address) && lcd_cursor )
+	  if( (model_mapping[i] == lcd_address) && lcd_cursor )
 	    {
 	      if( cursor_state )
 		{
@@ -4815,111 +4852,6 @@ void handle_lcd_write(u_int16_t addr, u_int8_t value)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-#define REG_A  (pstate.A)
-#define REG_B  (pstate.B)
-#define REG_D  ((((u_int16_t)REG_A) << 8) | REG_B )
-#define WRITE_REG_D(XXX) (REG_A = (XXX >> 8));(REG_B = (XXX & 0xFF))
-
-#define REG_PC (pstate.PC)
-#define REG_SP (pstate.SP)
-#define REG_X  (pstate.X)
-
-#define FLAG_H_MASK  0x20
-#define FLAG_I_MASK  0x10
-#define FLAG_N_MASK  0x08
-#define FLAG_Z_MASK  0x04
-#define FLAG_V_MASK  0x02
-#define FLAG_C_MASK  0x01
-
-
-#define FLG_H      (pstate.FLAGS & FLAG_H_MASK)
-#define FLG_I      (pstate.FLAGS & FLAG_I_MASK)
-#define FLG_N      (pstate.FLAGS & FLAG_N_MASK)
-#define FLG_Z      (pstate.FLAGS & FLAG_Z_MASK)
-#define FLG_V      (pstate.FLAGS & FLAG_V_MASK)
-#define FLG_C      (pstate.FLAGS & FLAG_C_MASK)
-
-struct
-{
-  u_int8_t mask;
-  char name;
-}
-  flag_data[6] =
-    {
-     {FLAG_H_MASK, 'H'},
-     {FLAG_I_MASK, 'I'},
-     {FLAG_N_MASK, 'N'},
-     {FLAG_Z_MASK, 'Z'},
-     {FLAG_V_MASK, 'V'},
-     {FLAG_C_MASK, 'C'},
-    };
-
-#define REG_FLAGS     (pstate.FLAGS)
-
-#define B3(XXX)   (XXX & 0x0008)
-#define B7(XXX)   (XXX & 0x0080)
-#define B15(XXX)  (XXX & 0x8000)
-
-#define NB3(XXX)  ( !B3(XXX))
-#define NB7(XXX)  ( !B7(XXX))
-#define NB15(XXX) (!B15(XXX))
-
-// Flag Clearing
-#define FL_N0        (REG_FLAGS &= (~FLAG_N_MASK))
-#define FL_Z0        (REG_FLAGS &= (~FLAG_Z_MASK))
-#define FL_Z1        (REG_FLAGS |= (FLAG_Z_MASK))
-#define FL_V0        (REG_FLAGS &= (~FLAG_V_MASK))
-#define FL_V1        (REG_FLAGS |= (FLAG_V_MASK))
-#define FL_C0        (REG_FLAGS &= (~FLAG_C_MASK))
-#define FL_C1        (REG_FLAGS |= (FLAG_C_MASK))
-#define FL_I0        (REG_FLAGS &= (~FLAG_I_MASK))
-#define FL_I1        (REG_FLAGS |= FLAG_I_MASK)
-#define FL_H0        (REG_FLAGS &= (~FLAG_H_MASK))
-#define FL_H1        (REG_FLAGS |= FLAG_H_MASK)
-
-#define FL_VSET(XXX) XXX?FL_V1:FL_V0
-#define FL_V_NXORC   (((FLG_N && (!FLG_C)) || ((!FLG_N) && FLG_C)))?FL_V1:FL_V0
-
-#define FL_CSET(XXX) XXX?FL_C1:FL_C0
-#define FL_C_0OR1    (FLG_C?1:0)
-
-#define FL_V80(XXX)  if(XXX==0x80) {REG_FLAGS |= FLAG_V_MASK;} else {REG_FLAGS &= ~FLAG_V_MASK;}
-#define FL_V8T(RR,MM,XX)  if( (B7(XX) && NB7(MM) && NB7(RR)) || (NB7(XX) &&  B7(MM) && B7(RR)) )FL_V1; else FL_V0;
-#define FL_V8TP(RR,MM,XX) if( (B7(XX) &&  B7(MM) && NB7(RR)) || (NB7(XX) && NB7(MM) && B7(RR)) )FL_V1; else FL_V0;
-
-#define FL_C8T(RR,MM,XX)  ( (NB7(XX) && B7(MM)) || (B7(MM) &&  B7(RR)) || ( B7(RR) && NB7(XX)))?FL_C1:FL_C0
-#define FL_C8TP(RR,MM,XX) (  (B7(XX) && B7(MM)) || (B7(MM) && NB7(RR)) || (NB7(RR) &&  B7(XX)))?FL_C1:FL_C0
-#define FL_C8W(XXX) if(XXX!=0x00) {REG_FLAGS |= FLAG_C_MASK;} else {REG_FLAGS &= ~FLAG_C_MASK;}
-// Flag testing
-#define FL_ZT(XXX)   if(XXX==0) {REG_FLAGS |= FLAG_Z_MASK;} else {REG_FLAGS &= ~FLAG_Z_MASK;}
-
-#define FL_N8T(XXX)  if(XXX & 0x0080) {REG_FLAGS |= FLAG_N_MASK;} else {REG_FLAGS &= ~FLAG_N_MASK;}
-#define FL_N16T(XXX) if(XXX & 0x8000) {REG_FLAGS |= FLAG_N_MASK;} else {REG_FLAGS &= ~FLAG_N_MASK;}
-
-#define FL_H(RR,MM,XX)     (( B3(XX) && B3(MM)) || (B3(MM) && NB3(RR)) || (NB3(RR) && B3(XX)) )?FL_H1:FL_H0
-
-#define FL_V16AT(RR,MM,XX) (( B15(XX) &&  B15(MM) && NB15(RR)) || (NB15(XX) && NB15(MM) &&  B15(RR)) )?FL_V1:FL_V0
-#define FL_V16ST(RR,MM,XX) (( B15(XX) && NB15(MM) && NB15(RR)) || (NB15(XX) &&  B15(MM) &&  B15(RR)) )?FL_V1:FL_V0
-
-#define FL_C16AT(RR,MM,XX) (( B15(XX) &&  B15(MM)) || (B15(MM) && NB15(RR)) || (NB15(RR) &&  B15(XX)))?FL_C1:FL_C0
-#define FL_C16ST(RR,MM,XX) ((NB15(XX) &&  B15(MM)) || (B15(MM) &&  B15(RR)) || ( B15(RR) && NB15(XX)))?FL_C1:FL_C0
-
-typedef struct _PROC6303_STATE
-{
-  u_int16_t  PC;
-  u_int16_t  X;
-  u_int16_t  SP;
-  u_int8_t   A;
-  u_int8_t   B;
-  u_int8_t   FLAGS;
-  int        memory;        // Memory reference is being used
-  u_int16_t  memory_addr;   // Address of memory being referenced
-} PROC6303_STATE;
-
 
 PROC6303_STATE pstate;
 
@@ -5298,6 +5230,20 @@ u_int8_t RD_REF(u_int16_t addr)
       return(handle_lcd_read(addr));
       break;
 
+    case SERIAL_TRCSR:
+    case SERIAL_RDR:
+      handle_serial_register_read(addr);
+      break;
+      
+    case BUZZER_ON:
+      TURN_BUZZER_ON;
+      break;
+      
+    case BUZZER_OFF:
+      TURN_BUZZER_OFF;
+      break;
+      
+
     case SCA_RESET:
     case SCA_CLOCK:
       handle_sca(addr);
@@ -5306,11 +5252,13 @@ u_int8_t RD_REF(u_int16_t addr)
 
     case SWITCH_OFF:
 #if RAM_RESTORE
-      eeprom_ram_dump();
+      eeprom_perform_dump();
 #endif
-
+      
+#if ALLOW_POWER_OFF
       // Turn power off
       gpio_put(PIN_VBAT_SW_ON, 0);
+#endif
       return(0);
       break;
 
@@ -5407,7 +5355,17 @@ void WR_REF(u_int16_t addr, u_int8_t value)
       timer1_compare &= 0xFF00;
       timer1_compare |= value & 0xff;
       break;
+
       
+    case BUZZER_ON:
+      TURN_BUZZER_ON;
+      break;
+      
+    case BUZZER_OFF:
+      TURN_BUZZER_OFF;
+      break;
+      
+
     case TIM1_ICAP_H:
     case TIM1_ICAP_L:
 
@@ -5429,11 +5387,13 @@ void WR_REF(u_int16_t addr, u_int8_t value)
 
     case SWITCH_OFF:
 #if RAM_RESTORE
-      eeprom_ram_dump();
+      eeprom_perform_dump();
 #endif
-      
+
+#if ALLOW_POWER_OFF
       // Turn power off
       gpio_put(PIN_VBAT_SW_ON, 0);
+#endif
       return;
       break;
 
@@ -5485,10 +5445,26 @@ u_int8_t RD_ADDR(u_int16_t addr)
 #endif
       return(timer1_tcsr);
       break;
+
+      
+    case BUZZER_ON:
+      TURN_BUZZER_ON;
+      break;
+      
+    case BUZZER_OFF:
+      TURN_BUZZER_OFF;
+      break;
+      
+
       
     case LCD_CTRL_REG:
     case LCD_DATA_REG:
       return(handle_lcd_read(addr));
+      break;
+
+    case SERIAL_TRCSR:
+    case SERIAL_RDR:
+      handle_serial_register_read(addr);
       break;
 
     case SCA_RESET:
@@ -5499,11 +5475,12 @@ u_int8_t RD_ADDR(u_int16_t addr)
 
     case SWITCH_OFF:
 #if RAM_RESTORE
-      eeprom_ram_dump();
+      eeprom_perform_dump();
 #endif
-      
+#if ALLOW_POWER_OFF
       // Turn power off
       gpio_put(PIN_VBAT_SW_ON, 0);
+#endif
       return(0);
       break;
 
@@ -5605,7 +5582,17 @@ void  WR_ADDR(u_int16_t addr, u_int8_t value)
       fprintf(lf, "\nTimer1 Access");
 #endif
       break;
+
       
+    case BUZZER_ON:
+      TURN_BUZZER_ON;
+      break;
+      
+    case BUZZER_OFF:
+      TURN_BUZZER_OFF;
+      break;
+      
+
     case LCD_CTRL_REG:
     case LCD_DATA_REG:
       return(handle_lcd_write(addr, value));
@@ -5619,11 +5606,13 @@ void  WR_ADDR(u_int16_t addr, u_int8_t value)
 
     case SWITCH_OFF:
 #if RAM_RESTORE
-      eeprom_ram_dump();
+      eeprom_perform_dump();
 #endif
-
+      
+#if ALLOW_POWER_OFF
       // Turn power off
       gpio_put(PIN_VBAT_SW_ON, 0);
+#endif
       return;
       break;
 
@@ -8816,40 +8805,85 @@ void dump_state(int opcode, int inst_length)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-// Interrupt handler
+// Interrupt Request
+//
+// Sets the request flag for the given interrupt
+// The process function then handles the genration of the interrupt
 
-void interrupt(u_int16_t vector_msb)
+typedef struct _INTERRUPT
+{
+  u_int16_t    vector;
+  volatile int flag;
+} INTERRUPT;
+
+INTERRUPT interrupt[] =
+  {
+   {0xFFF4, 0},
+   {0xFFFC, 0},
+   {0xFFF0, 0},
+  };
+
+#define NUM_IRQ (sizeof(interrupt)/sizeof(INTERRUPT))
+
+void interrupt_request(u_int16_t vector)
+{
+  for(int i=0; i<NUM_IRQ; i++)
+    {
+      if( vector == interrupt[i].vector )
+	{
+	  interrupt[i].flag = 1;
+	  return;
+	}
+    }
+}
+
+void update_interrupts(void)
 {
   if( FLG_I )
     {
       // Interrupts are masked
       return;
     }
+
+  // Run through interrupt table (in priority order) to see if an
+  // interrupt should be generated
   
+  for(int i=0; i<NUM_IRQ; i++)
+    {
+      if( interrupt[i].flag )
+	{
+	  interrupt[i].flag = 0;
+	  
+	  // Push registers
+	  WR_ADDR(REG_SP--, REG_PC & 0xFF);
+	  WR_ADDR(REG_SP--, REG_PC >> 8);
+	  WR_ADDR(REG_SP--, REG_X & 0xff);
+	  WR_ADDR(REG_SP--, REG_X >> 8);
+	  WR_ADDR(REG_SP--, REG_A);
+	  WR_ADDR(REG_SP--, REG_B);
+	  WR_ADDR(REG_SP--, REG_FLAGS);
+	  
+	  // Vector
+	  REG_PC = (u_int16_t)(
+			       (RD_ADDR(interrupt[i].vector) << 8) |
+			       (RD_ADDR(interrupt[i].vector+1))
+			       );
+	  
+	  // Mask interrupts
+	  FL_I1;
+	  
+#if !EMBEDDED
+	  fprintf(lf, "\n    PC:%04X", REG_PC);
+#endif
+	  return;
+	}
+    }
+
 #if !EMBEDDED
   fprintf(lf, "\n---------------------------------------");
-  fprintf(lf, "\nINTERRUPT:Vector %04X\n", vector_msb);
+  fprintf(lf, "\nINTERRUPT:Vector %04X\n", vector);
 #endif
-  
  
-  // Push registers
-  WR_ADDR(REG_SP--, REG_PC & 0xFF);
-  WR_ADDR(REG_SP--, REG_PC >> 8);
-  WR_ADDR(REG_SP--, REG_X & 0xff);
-  WR_ADDR(REG_SP--, REG_X >> 8);
-  WR_ADDR(REG_SP--, REG_A);
-  WR_ADDR(REG_SP--, REG_B);
-  WR_ADDR(REG_SP--, REG_FLAGS);
-
-  // Vector
-  REG_PC = (((u_int16_t)RD_ADDR(vector_msb)) << 8) | RD_ADDR(vector_msb+1);
-
-  // Mask interrupts
-  FL_I1;
-
-#if !EMBEDDED
-  fprintf(lf, "\n    PC:%04X", REG_PC);
-#endif
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -8870,7 +8904,7 @@ void update_timers(void)
 #if !EMBEDDED
 	  fprintf(lf, "\nOCI Int\n");
 #endif
-	  interrupt(0xFFF4);
+	  interrupt_request(0xFFF4);
 	}
     }
 }
@@ -8892,10 +8926,9 @@ void update_counter(void)
 #if DISPLAY_STATUS
 	  mvaddstr(6, 5, "NMI");
 #endif
-	  interrupt(0xFFFC);
+	  interrupt_request(0xFFFC);
 	}
     }
-
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -9039,7 +9072,57 @@ void dump_memory(int n, int addr)
   fprintf(af, "\n");
 }
 
+////////////////////////////////////////////////////////////////////////////////
+//
+// Generate 1s ticks
+//
+// Generate as many ticks as needed to keep timein sync with the Pico
+// tick clock
+//
+// Don't generate ticks more than every 100ms
+//
 
+u_int64_t last_tick = 0;
+u_int64_t last_nmi = 0;
+int pending_nmis = 0;
+
+void tick_1s(void)
+{
+  u_int64_t now = time_us_64();
+
+  // Any NMIs pending?
+  if( pending_nmis )
+    {
+      if( (now - last_nmi) > 200000 )
+	{
+	  last_nmi = now;
+	  interrupt_request(0xFFFC);
+	  pending_nmis--;
+	}
+    }
+  
+  if( (now - last_tick) > 1000000 )
+    {
+      last_tick += 1000000;
+
+      if( (now - last_nmi) > 200000 )
+	{
+	  last_nmi = now;
+	  interrupt_request(0xFFFC);
+	}
+      else
+	{
+	  // We needed an NMI but couldn't so we store up another pending one
+	  pending_nmis++;
+	}
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Initialise the emulator
+//
+////////////////////////////////////////////////////////////////////////////////
 
 void initialise_emulator(void)
 {
@@ -9057,14 +9140,16 @@ void initialise_emulator(void)
     case MODEL_XP:
       lcd_linelen = 16;
       lcd_dispsize = 32;
+      model_mapping = xp_mapping;
       break;
       
     case MODEL_LZ:
       lcd_linelen = 20;
       lcd_dispsize = 80;
+      model_mapping = lz_mapping;
       break;
     }
-  
+
   // Reset the processor
   // Latch MP0,MP1
   // Set interrupt mask bit
@@ -9075,16 +9160,7 @@ void initialise_emulator(void)
   // I is set and H may be
   REG_FLAGS = 0xf1;
   
-  // Set up various hardware values
-
-  RAMDATA_FIX(0x14) = 0x00;
-
   // No key pressed
-#if RAM_RESTORE
-  RAMDATA_FIX(P5_DATA) = WARM_START_STATE | NO_KEY_STATE | on_key;
-#else
-  RAMDATA_FIX(P5_DATA) = COLD_START_STATE | NO_KEY_STATE | on_key;
-#endif
 
 #if 0
   // If multi core then we run the LCD update on the other core
@@ -9093,6 +9169,17 @@ void initialise_emulator(void)
 #endif
   
 }
+
+void after_ram_restore_init(void)
+{
+#if RAM_RESTORE
+  RAMDATA_FIX(P5_CTRL) = warm_flag;
+#else
+  RAMDATA_FIX(P5_CTRL) = COLD_START_STATE;
+#endif
+}
+
+u_int8_t opcode;
 
 void loop_emulator(void)
 {
@@ -9117,7 +9204,6 @@ void loop_emulator(void)
   INC_PC;
   
   // Update timers
-  
   update_timers();
   update_timers();
   update_timers();
@@ -9134,6 +9220,9 @@ void loop_emulator(void)
   update_counter();
   handle_cursor();
 
+  update_interrupts();
+  tick_1s() ;
+  
 #if !MULTI_CORE  
   if( cursor_update )
     {
