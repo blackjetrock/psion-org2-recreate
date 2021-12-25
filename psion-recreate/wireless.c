@@ -57,6 +57,11 @@ void btfn_mem_rd(void);
 void btfn_eeprom_rd(void);
 void btfn_mem_wr(void);
 void btfn_processor_status(void);
+void btfn_display(void);
+void btfn_key(void);
+
+void push_key(int keycode, int offset);
+void process_bt_term(BYTE *byte_buffer, int num);
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -106,7 +111,7 @@ int sending_bt_data = 0;
 //
 
 // Switch that determines where BT is going and coming from
-int bluetooth_to_cli = INITIAL_BT_TO_CLI;
+int bluetooth_mode = BT_MODE_CLI;
 
 #define BT_CL_BUFFER_SIZE  1000
 
@@ -451,7 +456,7 @@ const I_TASK input_list[] =
    {ITY_STRING, " +BTSPPDISCONN:%d,\"%x:%x:%x:%x:%x:%x\"",              ifm_null,     ifn_ignore},
    {ITY_STRING, " +BTDATA:%d,",                                         ifm_null,     ifn_btdata},
    // We can have a busy and then a prompt, so split the strings
-   {ITY_FUNC,   " AT+BTSPPSEND=%d,%d",                                  ifm_null,     ifn_ignore},
+   {ITY_FUNC,   " AT+BTSPPSEND=%d,%d\r",                                ifm_null,     ifn_ignore},
    {ITY_FUNC,   " >",                                                   ifm_null,     ifn_cipsend},
   };
 
@@ -497,9 +502,11 @@ BT_TASK btcmd_list[] =
    {"hello ",                      btfn_hello},
    {"rdmem %x ",                   btfn_mem_rd},
    {"wrmem %x %x",                 btfn_mem_wr},
-   {"rdee %d %x  ",                btfn_eeprom_rd},
-   {"procstat  ",                  btfn_processor_status},
-  };
+   {"rdee %d %x ",                 btfn_eeprom_rd},
+   {"procstat ",                   btfn_processor_status},
+   {"display ",                    btfn_display},
+   {"key %d ",                     btfn_key},
+  }; 
 
 #define BT_NUM_TASKS (sizeof(btcmd_list) / sizeof(BT_TASK) )
 
@@ -961,13 +968,19 @@ void ifn2_btdata(void)
   //DEBUG_STOP;
   // We have the URI, process it and find out which page to return
   // based on it
-  if( bluetooth_to_cli )
+  switch(bluetooth_mode )
     {
+    case BT_MODE_CLI:
       process_btcmd(byte_buffer);
-    }
-  else
-    {
+      break;
+      
+    case BT_MODE_COMMS_LINK:
       comms_link_input(byte_buffer, num_bytes_collected);
+      break;
+      
+    case BT_MODE_TERM:
+      process_bt_term(byte_buffer, num_bytes_collected);
+      break;
     }
 }
 
@@ -1361,8 +1374,73 @@ void btfn_processor_status(void)
   send_bt_reply();
 }
 
+void btfn_display(void)
+{
+  sprintf(output_text, "Display\r\n%s\r\n%s\r\n%s\r\n%s\r\n", display_line[0], display_line[1], display_line[2], display_line[3], input_text);
+  send_bt_reply();
+}
+
+// Press keys on the keyboard
+
+void btfn_key(void)
+{
+  // push the keycode given into the keyboard buffer
+  push_key(match_int_arg[0], 0);
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 
+  // using these locations:
+  // 0x73:Index of oldest key in buffer (where to write new keys)
+  // 0x74: number of keys in buffer
+  // 20B0: 16 byte key buffer
+  // We seem to be able to press keys on the organiser keyboard
+
+// We pass in an offset as the value at 0x73 isn't altered and used as a base address
+
+void push_key(int keycode, int offset)
+{
+  int index = ramdata[0x73];
+
+  //DEBUG_STOP;
+
+  // Put key in buffer
+  ramdata[0x20b0+((index+offset) % 16)] = keycode;
+
+  // One more key pressed
+  ramdata[0x74]++;
+  
+}
+
+//------------------------------------------------------------------------------
+//
+// press the keys we were sent on the keyboard
+// RETURN has to be another code than 13 as that code is
+// used as a BT delimier
+
+void process_bt_term(BYTE *byte_buffer, int num)
+{
+  for(int i=0; i<num; i++)
+    {
+      switch(byte_buffer[i])
+	{
+	case '\r':
+	case '\n':
+	  break;
+
+	case 0x04:
+	  push_key(13, i);
+	  break;
+	  
+	default:
+	  push_key(byte_buffer[i], i);
+	  break;
+	}
+    }
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
 
 void start_task(char *label)
 {
@@ -1415,7 +1493,7 @@ void wireless_taskloop(void)
     }
 
   // if we are in comms link mode
-  if( !bluetooth_to_cli )
+  if( bluetooth_mode == BT_MODE_COMMS_LINK)
     {
       // Are we sending data? If so, hold off sending more
       if( !sending_bt_data )
@@ -1491,10 +1569,27 @@ void wireless_taskloop(void)
       // check for special characters
       switch(ch[0])
 	{
-	  // CTRL-T: Toggle between BT cli and BT comms link
+	  // CTRL-T: Toggle between BT cli and BT comms link and keyboard emulation
 	case 0x14:
-	  bluetooth_to_cli = !bluetooth_to_cli;
+	  bluetooth_mode = (bluetooth_mode + 1) % NUM_BT_MODES;
+	  strcpy(output_text, "Unkown mode");
+	  
+	  switch(bluetooth_mode )
+	    {
+	    case 0:
+	      strcpy(output_text, "CLI Mode");
+	      break;
 
+	    case 1:
+	      strcpy(output_text, "Comms Link Mode");
+	      break;
+	    case 2:
+	      strcpy(output_text, "Terminal Mode");
+	      break;
+	    }
+
+	  send_bt_reply();
+	  
 	  // return as we don't want to process the toggle character
 	  return;
 	  break;

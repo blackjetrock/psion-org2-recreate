@@ -5,8 +5,13 @@
 // Wifi and Bluetooth
 //
 
-
-#define  INITIAL_BT_TO_CLI 1
+typedef enum _BLUETOOTH_MODE
+  {
+   BT_MODE_CLI = 0,     // Bluetooth CLI
+   BT_MODE_COMMS_LINK,  // Bluetooth goes to comms link/serial registers
+   BT_MODE_TERM,        // Bluetooth goes to keyboard/display
+   NUM_BT_MODES,        // Number of modes we have
+  } BLUETOOTH_MODE;
 
 void wireless_init(void);
 void wireless_loop(void);
