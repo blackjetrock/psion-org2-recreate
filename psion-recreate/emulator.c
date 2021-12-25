@@ -4565,9 +4565,47 @@ void handle_serial_register_read(u_int16_t addr)
     }
 }
 
+void update_serial(void)
+{
+  if( pending_tx )
+    {
+      // Dummy a write to the TDR register
+      handle_serial_register_write(SERIAL_TDR, ramdata[SERIAL_TDR]);
+    }
+}
+
+// A write to a serial register has occurred
+void handle_serial_register_write(u_int16_t addr, u_int8_t value)
+{
+  switch(addr)
+    {
+    case SERIAL_TDR:
+      // A character to transmit has arrived, buffer it
+      // if we have space, otherwise leave it until we have space
+      if( ((cl_bt_in + 1) % CL_BT_BUFFER_SIZE) == cl_bt_out )
+	{
+	  // we are full, we need to come and re-read the register later
+	  pending_tx = 1;
+	}
+      else
+	{
+	  // No pending character any more
+	  pending_tx = 0;
+	  
+	  // get character
+	  cl_bt_buffer[cl_bt_in] = value;
+	  cl_bt_in = (cl_bt_in + 1) % CL_BT_BUFFER_SIZE;
+
+	  // Set the TDRE flag
+	  ramdata[SERIAL_TRCSR] |= TRCSR_TDRE;
+	}
+      break;
+    }
+}
+
 
 //
-// the mapping of the display is different between LZ and XP, so
+// The mapping of the display is different between LZ and XP, so
 // we have a compile time switch for now
 
 // LZ display mapping
@@ -5379,6 +5417,10 @@ void WR_REF(u_int16_t addr, u_int8_t value)
       return(handle_lcd_write(addr, value));
       break;
 
+    case SERIAL_TDR:
+      handle_serial_register_write(addr, value);
+      break;
+      
     case SCA_RESET:
     case SCA_CLOCK:
       handle_sca(addr);
@@ -5596,6 +5638,10 @@ void  WR_ADDR(u_int16_t addr, u_int8_t value)
     case LCD_CTRL_REG:
     case LCD_DATA_REG:
       return(handle_lcd_write(addr, value));
+      break;
+
+    case SERIAL_TDR:
+      handle_serial_register_write(addr, value);
       break;
 
     case SCA_RESET:
@@ -9221,7 +9267,13 @@ void loop_emulator(void)
   handle_cursor();
 
   update_interrupts();
+
+  // Handle pending serial data
+  update_serial();
+
+#if ENABLE_1S_TICK  
   tick_1s() ;
+#endif
   
 #if !MULTI_CORE  
   if( cursor_update )

@@ -20,6 +20,9 @@ void start_task(char *label);
 void remove_string(char *str);
 void remove_n(int n);
 
+void rfn_null(void);
+void rfn_send_done(void);
+
 int ifm_null(int i);
 void ifn_ignore(int i);
 int ifm_ipd(int i);
@@ -94,19 +97,30 @@ int byte_buffer_index;
 int collecting_bytes = 0;
 BYTE_CONT_FN when_done_fn;
 int bytes_left_to_collect = 0;
+int num_bytes_collected = 0;
+int sending_bt_data = 0;
 
 //------------------------------------------------------------------------------
 //
 // Bluetooth input buffer
 //
 
-#define BT_CL_BUFFER_SIZE  200
+// Switch that determines where BT is going and coming from
+int bluetooth_to_cli = INITIAL_BT_TO_CLI;
+
+#define BT_CL_BUFFER_SIZE  1000
 
 int bt_cl_in = 0;
 int bt_cl_out = 0;
 
 BYTE bt_cl_buffer[BT_CL_BUFFER_SIZE];
-int bluetooth_to_cli = INITIAL_BT_TO_CLI;
+
+// Bluetooth output buffer (sending over BT)
+int cl_bt_in = 0;
+int cl_bt_out = 0;
+
+BYTE cl_bt_buffer[CL_BT_BUFFER_SIZE];
+int pending_tx = 0;
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -309,60 +323,65 @@ typedef enum _W_TYPE
    WTY_DELAY_MS,
    WTY_LABEL,
    WTY_STOP,
-   WTY_SENDDATA
+   WTY_SENDDATA,
+   WTY_FN,
   } W_TYPE;
+
+typedef void (*W_FN)(void);
 
 typedef struct _W_TASK
 {
-  W_TYPE  type;    // What to do
-  char *string;    // String parameter
+  W_TYPE  type;       // What to do
+  char    *string;    // String parameter
+  W_FN    fn;         // Function to call (WTY_FN)
 } W_TASK;
 
 // The master table of tasks
 W_TASK tasklist[] =
   {
-   {WTY_LABEL,    "btinit"},
-   {WTY_PUTS,     "AT+BTINIT=1\r\n"},
-   {WTY_DELAY_MS, "2000"},
-   {WTY_PUTS,     "AT+BTSPPINIT=2\r\n"},
-   {WTY_DELAY_MS, "2000"},
-   {WTY_PUTS,     "AT+BTNAME=\"PsionOrg2\"\r\n"},
-   {WTY_DELAY_MS, "2000"},
-   {WTY_PUTS,     "AT+BTSCANMODE=2\r\n"},
-   {WTY_DELAY_MS, "2000"},
+   {WTY_LABEL,            "btinit",                         rfn_null},
+   {WTY_PUTS,             "AT+BTINIT=1\r\n",                rfn_null},
+   {WTY_DELAY_MS,         "2000",                           rfn_null},
+   {WTY_PUTS,             "AT+BTSPPINIT=2\r\n",             rfn_null},
+   {WTY_DELAY_MS,         "2000",                           rfn_null},
+   {WTY_PUTS,             "AT+BTNAME=\"PsionOrg2\"\r\n",    rfn_null},
+   {WTY_DELAY_MS,         "2000",                           rfn_null},
+   {WTY_PUTS,             "AT+BTSCANMODE=2\r\n",            rfn_null},
+   {WTY_DELAY_MS,         "2000",                           rfn_null},
    //   {WTY_PUTS,     "AT+BTSECPARAM=3,1,7735\r\n"},
    //{WTY_DELAY_MS, "2000"},
-   {WTY_PUTS,     "AT+BTSPPSTART\r\n"},
-   {WTY_DELAY_MS, "2000"},
+   {WTY_PUTS,             "AT+BTSPPSTART\r\n",              rfn_null},
+   {WTY_DELAY_MS,         "2000",                           rfn_null},
 
-   {WTY_STOP,     ""},                      // All done
+   {WTY_STOP,             "",                               rfn_null},                      // All done
 
-   {WTY_LABEL,    "init"},
-   {WTY_PUTS,     "AT+CWMODE=2\r\n"},
-   {WTY_DELAY_MS, "2000"},
-   {WTY_PUTS,     "AT+CIPMUX=1\r\n"},
-   {WTY_DELAY_MS, "2000"},
-   {WTY_PUTS,     "AT+CWSAP=\"PsionOrg2\",\"1234567890\",5,3\r\n"},
-   {WTY_DELAY_MS, "5000"},
-   {WTY_PUTS,     "AT+CIPSERVER=1,80\r\n"},
-   {WTY_DELAY_MS, "2000"},
+   {WTY_LABEL,            "init",                           rfn_null},
+   {WTY_PUTS,             "AT+CWMODE=2\r\n",                rfn_null},
+   {WTY_DELAY_MS,         "2000",                           rfn_null},
+   {WTY_PUTS,             "AT+CIPMUX=1\r\n",                rfn_null},
+   {WTY_DELAY_MS,         "2000",                           rfn_null},
+   {WTY_PUTS,             "AT+CWSAP=\"PsionOrg2\",\"1234567890\",5,3\r\n", rfn_null},
+   {WTY_DELAY_MS,         "5000",                           rfn_null},
+   {WTY_PUTS,             "AT+CIPSERVER=1,80\r\n",          rfn_null},
+   {WTY_DELAY_MS,         "2000",                           rfn_null},
 
    //   {WTY_PUTS,     "AT+CIPRECVMODE=0\r\n"},
    //{WTY_DELAY_MS, "2000"},
-   {WTY_STOP,     ""},                      // All done
+   {WTY_STOP,             "",                               rfn_null},                      // All done
 
-   {WTY_LABEL,    "p_index"},
-   //   {WTY_FN,       rfn_index},
-   {WTY_STOP,     ""},                      // All done
+   {WTY_LABEL,            "p_index",                        rfn_null},
 
-   {WTY_LABEL,     "send"},
-   {WTY_DELAY_MS,  "100"},
-   {WTY_SENDDATA,            ""},
-   {WTY_STOP,                ""},
+   {WTY_STOP,             "",                               rfn_null},                      // All done
 
-   {WTY_LABEL,     "close"},
-   {WTY_PUTS,                "AT+CIPCLOSE=0\r\n"},
-   {WTY_STOP,                ""},                      // All done
+   {WTY_LABEL,            "send",                           rfn_null},
+   {WTY_DELAY_MS,         "100",                            rfn_null},
+   {WTY_SENDDATA,         "",                               rfn_null},
+   {WTY_FN,               "",                               rfn_send_done},
+   {WTY_STOP,             "",                               rfn_null},
+
+   {WTY_LABEL,            "close",                          rfn_null},
+   {WTY_PUTS,             "AT+CIPCLOSE=0\r\n",              rfn_null},
+   {WTY_STOP,             "",                               rfn_null},                      // All done
   };
 
 #define W_NUM_TASKS (sizeof(tasklist) / sizeof(W_TASK) )
@@ -431,7 +450,9 @@ const I_TASK input_list[] =
    {ITY_STRING, " +BTSPPCONN:%d,\"%x:%x:%x:%x:%x:%x\"",                 ifm_null,     ifn_connect},
    {ITY_STRING, " +BTSPPDISCONN:%d,\"%x:%x:%x:%x:%x:%x\"",              ifm_null,     ifn_ignore},
    {ITY_STRING, " +BTDATA:%d,",                                         ifm_null,     ifn_btdata},
-   {ITY_FUNC,   " AT+BTSPPSEND=%d,%d >",                                ifm_null,     ifn_cipsend},
+   // We can have a busy and then a prompt, so split the strings
+   {ITY_FUNC,   " AT+BTSPPSEND=%d,%d",                                  ifm_null,     ifn_ignore},
+   {ITY_FUNC,   " >",                                                   ifm_null,     ifn_cipsend},
   };
 
 #define I_NUM_TASKS (sizeof(input_list) / sizeof(I_TASK) )
@@ -497,9 +518,9 @@ void get_n_bytes_then(int n, BYTE_CONT_FN fn)
   
   // Start of a new collection
   byte_buffer_index = 0;
-
   collecting_bytes = 1;
-
+  num_bytes_collected = bytes_left_to_collect;
+  
   // If there are any bytes in the input_text buffer then we copy them over
   int original_input_text_len = input_text_len;
 
@@ -511,6 +532,7 @@ void get_n_bytes_then(int n, BYTE_CONT_FN fn)
       bytes_left_to_collect--;
     }
 
+  // We restore the inoput length so we can use the generic removal function below
   input_text_len = original_input_text_len;
 
   // Take the bytes off the input text array (adjusts input_text_len)
@@ -569,10 +591,8 @@ void process_btcmd(char *cmd)
 // Put more text on the comms link fifo
 //
 
-void comms_link_input(char *text)
+void comms_link_input(char *text, int len)
 {
-  int len = strlen(text);
-  
   // Add the text to the Bluetooth to Comms Link buffer
   for(int i=0; i<len; i++)
     {
@@ -683,6 +703,26 @@ int ifm_recv(int i)
 int ifm_null(int i)
 {
   return(1);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Reply Functions
+//
+////////////////////////////////////////////////////////////////////////////////
+
+// Null rfn
+
+void rfn_null(void)
+{
+}
+
+
+// Data not being sent any more
+
+void rfn_send_done(void)
+{
+  sending_bt_data = 0;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -916,8 +956,6 @@ void ifn_btdata(int i)
 // We continue here after all data collected
 // We fork data off to the comms link, or command handler
 
-
-
 void ifn2_btdata(void)
 {
   //DEBUG_STOP;
@@ -929,9 +967,8 @@ void ifn2_btdata(void)
     }
   else
     {
-      comms_link_input(byte_buffer);
+      comms_link_input(byte_buffer, num_bytes_collected);
     }
-  
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -944,6 +981,8 @@ void send_bt_reply(void)
   output_text_len = strlen(output_text);
   sprintf(cmd, "AT+BTSPPSEND=0,%d\r\n", output_text_len);
   uart_puts(UART_ID, cmd);
+
+  sending_bt_data = 1;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1185,18 +1224,13 @@ void ufn_eeprom_read(void)
   output_text_len = strlen(output_text);
   sprintf(cmd, "AT+CIPSEND=0,%d\r\n", output_text_len);
   uart_puts(UART_ID, cmd);
-
 }
-
-
 
 ////////////////////////////////////////////////////////////////////////////////
 //
 //
 
-
 void btfn_hello(void)
-  
 {
   // Give a reply
   sprintf(output_text, "Hello from Psion Organiser2");
@@ -1377,6 +1411,35 @@ void wireless_taskloop(void)
 	  serial_set_rdrf();
 	  
 	  interrupt_request(0xFFF0);
+	}
+    }
+
+  // if we are in comms link mode
+  if( !bluetooth_to_cli )
+    {
+      // Are we sending data? If so, hold off sending more
+      if( !sending_bt_data )
+	{
+	  // Any bluetooth data to send?
+	  if( cl_bt_in != cl_bt_out )
+	    {
+	      // We get characters and send them to the bluetooth module
+	      // We grab what is available and chunk it up for sending
+	      output_text[0] = '\0';
+	      int out_i = 0;
+	      
+	      while(cl_bt_in != cl_bt_out)
+		{
+		  output_text[out_i++] = cl_bt_buffer[cl_bt_out] & 0x7f;
+		  cl_bt_out = (cl_bt_out + 1) % CL_BT_BUFFER_SIZE;
+		}
+	      
+	      // terminate so we send the correct number of bytes
+	      output_text[out_i] = '\0';
+	      
+	      // Send this data
+	      send_bt_reply();
+	    }
 	}
     }
   
@@ -1595,6 +1658,11 @@ void wireless_taskloop(void)
 	      
 	    case WTY_STOP:
 	      w_task_running = 0;
+	      break;
+
+	      // Run function
+	    case WTY_FN:
+	      (*tasklist[w_task_index].fn)();
 	      break;
 	    }
 	}

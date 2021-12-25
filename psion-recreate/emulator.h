@@ -159,8 +159,11 @@ extern PROC6303_STATE pstate;
 #define TRCSR_ORFE      0x40
 #define TRCSR_TDRE      0x20
 #define TRCSR_RIE       0x10
+#define TRCSR_TDRE      0x20
 
 #define SERIAL_RDR      0x12
+#define SERIAL_TDR      0x13
+
 #define P5_CTRL         0x14
 #define P5_DATA         0x15
 
@@ -174,3 +177,5 @@ u_int8_t RD_ADDR(u_int16_t addr);
 void update_interrupts(void);
 void interrupt_request(u_int16_t vector_msb);
 void serial_set_rdrf(void);
+void handle_serial_register_read(u_int16_t addr);
+void handle_serial_register_write(u_int16_t addr, u_int8_t value);

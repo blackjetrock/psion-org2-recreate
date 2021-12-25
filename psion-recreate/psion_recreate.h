@@ -42,6 +42,7 @@ extern int model;
 #define ALLOW_POWER_OFF   0     // Do we allow the power to be turned off?
 #define WIFI              0
 #define BLUETOOTH         1
+#define ENABLE_1S_TICK    0     
 
 #define RAM_RESTORE       1
 #define EEPROM_DUMP_CHECK 1    // Do we check the dump contents?
