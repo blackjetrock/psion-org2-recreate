@@ -11,8 +11,8 @@ typedef uint8_t BYTE;
 ////////////////////////////////////////////////////////////////////////////////
 // The model we are emulating chnages the display layout
 
-#define MODEL_XP             1
-#define MODEL_LZ             0
+#define MODEL_XP             0
+#define MODEL_LZ             1
 
 // Initial state of warm start flag 0x80 to have warm start
 #if DISABLE_RESTORE_ONLY     
@@ -25,7 +25,7 @@ typedef uint8_t BYTE;
 extern int model;
 
 // The value t set model to
-#define MODEL_AT_START       MODEL_XP
+#define MODEL_AT_START       MODEL_LZ
 
 #define FN_OLED_DEMO         0
 #define FN_KEYBOARD_TEST     0
@@ -46,7 +46,7 @@ extern int model;
 #define BUZZER_TEST          0
 #define UART_INTERRUPTS      1    // Interrupot for UART data collection
 #define I2C_DELAY            150   // Default, can be over-ridden
-#define ALLOW_POWER_OFF      0     // Do we allow the power to be turned off?
+#define ALLOW_POWER_OFF      1     // Do we allow the power to be turned off?
                                    // If 0 then sit in a loop on power off so
                                    // we can debug where the request to turn
                                    // off came from
@@ -59,8 +59,8 @@ extern int model;
 
 #define RAM_RESTORE          1    // Enable dump/restore RAM to/from EEPROM
 #define DISABLE_RESTORE_ONLY 0    // Disable the restore part, still dump
-#define EEPROM_DUMP_CHECK    1    // Do we check the dumped contents?
-#define DISABLE_DMP_WR       1    // Run dump code but don't write anything
+#define EEPROM_DUMP_CHECK    0    // Do we check the dumped contents?
+#define DISABLE_DMP_WR       0    // Run dump code but don't write anything
                                   // We can use one image over and over
 typedef u_int8_t BYTE;
 

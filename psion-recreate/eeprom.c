@@ -355,7 +355,7 @@ void eeprom_ram_check(void)
   // The checksum needs to match as well
   if( csum_calc_on_restore != csum_in_eeprom )
     {
-      DEBUG_STOP;
+      //DEBUG_STOP;
     }
 }
 
@@ -406,7 +406,7 @@ void eeprom_tasks(void)
 {
   if( eeprom_do_dump )
     {
-      printxy_str(3,1, "Dumping...");
+      printxy_str(1,1, "Dumping...");
       dump_lcd();
 
       eeprom_do_dump = 0;
@@ -419,7 +419,7 @@ void eeprom_tasks(void)
   
   if( eeprom_do_restore )
     {
-      printxy_str(3,1, "Restoring...");
+      printxy_str(1,1, "Restoring...");
       dump_lcd();
       
       eeprom_do_restore = 0;
