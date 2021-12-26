@@ -376,24 +376,37 @@ int main() {
   
   // Initialise wifi
   wireless_init();
+
+  // EEPROM tests before core 1 starts, so display won't work but tests
+  // won't have interference from that core on I2C
   
+#if EEPROM_TEST
+  eeprom_test();
+#endif
+
+#if EEPROM_TEST2
+  eeprom_test2();
+#endif
+
+#if EEPROM_TEST3
+  eeprom_test3();
+#endif
+
 #if MULTI_CORE
   // If multi core then we run the LCD update on the other core
   multicore_launch_core1(core1_main);
 
 #endif
 
+#if RAM_RESTORE
 #if !DISABLE_RESTORE_ONLY  
   // Ask core1 to restore the eeprom
   eeprom_perform_restore();
   
   after_ram_restore_init();
 #endif
-
-
-#if EEPROM_TEST
-  eeprom_test();
 #endif
+
   
 #if WIFI_TEST
   printxy_str(0,0,"Wifi Test Mode");
@@ -572,7 +585,7 @@ int main() {
 #if TRACE_ADDR
     // Trace a number of execution addresses
     int tracing            = 0;
-    u_int16_t trigger_addr = 0x8014;
+    u_int16_t trigger_addr = 0x80c8;
     int addr_trace_i       = 0;
 
     // Trace from a trigger address until trace full
@@ -609,8 +622,8 @@ int main() {
 	
 	if( tracing_to )
 	  {
-	    addr_trace_to[addr_trace_i++] = REG_PC;
-	    addr_trace_i %= NUM_ADDR_TRACE;
+	    addr_trace_to[addr_trace_to_i++] = REG_PC;
+	    addr_trace_to_i %= NUM_ADDR_TRACE;
 	  }
 #endif
 	

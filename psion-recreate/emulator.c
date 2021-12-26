@@ -200,6 +200,24 @@ u_int8_t ramdata[RAM_SIZE];
 
 //------------------------------------------------------------------------------
 
+void handle_power_off(void)
+{
+#if ALLOW_POWER_OFF
+  
+  // Turn power off
+  gpio_put(PIN_VBAT_SW_ON, 0);
+#else
+
+  // Sit in a loop so we don't repeatedly dump
+  while(1)
+    {
+    }
+#endif
+  
+}
+
+//------------------------------------------------------------------------------
+
 void handle_nmi(int addr)
 {
   switch(addr)
@@ -2325,8 +2343,10 @@ u_int8_t romdata[] = {
 // logic. The emulated ROM will know no different.
 //
 // For the shift key to work, we need diodes on the keyboard scan drive lines
+//
+// SCA counter is a 12 bit counter. Bit 12 goes to bit 1 of port 5
 
-u_int8_t sca_counter = 0;
+u_int16_t sca_counter = 0;
 int sca_i = 0;
 
 void handle_sca(u_int16_t addr)
@@ -2338,12 +2358,18 @@ void handle_sca(u_int16_t addr)
       // a bit so access to the shadow register is needed.
     case SCA_RESET:
       sca_counter = 0;
+      
       // Preserve OLED reset line
       latchout1_shadow &= LAT1PIN_MASK_OLED_RES;
 
       // Take all lines high
       latchout1_shadow |= 0x7f;
       write_595(PIN_LATCHOUT1, latchout1_shadow, 8);
+
+      // Also set up bit 1 of port 5
+      ramdata[PORT5] &= ~0x02;
+      ramdata[PORT5] |= (sca_counter & (1 << 12))? 0x02: 0x00;
+
 #if XP_DEBUG
       printxy_hex(3,2,sca_counter);
 #endif      
@@ -2358,6 +2384,11 @@ void handle_sca(u_int16_t addr)
       // Set up inverted latch value
       latchout1_shadow |= (sca_counter ^ 0x7f);
       write_595(PIN_LATCHOUT1, latchout1_shadow, 8);
+
+      // Also set up bit 1 of port 5
+      ramdata[PORT5] &= ~0x02;
+      ramdata[PORT5] |= (sca_counter & (1 << 12))? 0x02: 0x00;
+      
 #if XP_DEBUG
       printxy_hex(3,2,sca_counter);
 #endif
@@ -2368,59 +2399,11 @@ void handle_sca(u_int16_t addr)
       eeprom_perform_dump();
 #endif
       
-#if ALLOW_POWER_OFF
-      // Turn power off
-      gpio_put(PIN_VBAT_SW_ON, 0);
-#endif
+      handle_power_off();      
       break;
     }
 }
 
-#if 0
-  // No key?
-  if( keyk == -1 )
-    {
-#if !EMBEDDED
-      fprintf(lf, "    KEY:No key");
-#endif
-      RAMDATA_FIX(P5_DATA) = NO_KEY_STATE | on_key;
-    }
-  else
-    {
-      if( (sca_counter & (1 << keyk))==0 )
-	{
-	  mvaddch(7, 5+keyk, '*');	      
-#if !EMBEDDED
-	  fprintf(lf, "    KEY:key keyp5=%02X p5=%02X", keyp5, RAMDATA_FIX(P5_DATA));
-#endif
-	  RAMDATA_FIX(P5_DATA) =  keyp5;
-#if !EMBEDDED
-	  fprintf(lf, "    KEY:key keyp5=%02X p5=%02X", keyp5, RAMDATA_FIX(P5_DATA));
-#endif
-	}
-      else
-	{
-	  //mvaddch(7, 5+keyk, ' ');	      
-	  
-	  // Not our row
-	  RAMDATA_FIX(P5_DATA) = NO_KEY_STATE | on_key;
-	}
-    }
-
-
-#if DISPLAY_STATUS
-  char scastr[100];
-  sprintf(scastr, "%d SCA:%02X keyk:%d keyp5:%02X P5:%02X", sca_i, sca_counter, keyk, keyp5, RAMDATA_FIX(P5_DATA));
-  mvaddstr(6,10, scastr);
-#endif
-
-#if !EMBEDDED
-  fprintf(lf, "    KEY:p5 now %02X", RAMDATA_FIX(P5_DATA));
-#endif
-
-}
-
-#endif
 
 ////////////////////////////////////////////////////////////////////////////////
 // LCD handling
@@ -3274,11 +3257,8 @@ u_int8_t RD_REF(u_int16_t addr)
 #if RAM_RESTORE
       eeprom_perform_dump();
 #endif
-      
-#if ALLOW_POWER_OFF
-      // Turn power off
-      gpio_put(PIN_VBAT_SW_ON, 0);
-#endif
+
+      handle_power_off();
       return(0);
       break;
 
@@ -3297,6 +3277,7 @@ u_int8_t RD_REF(u_int16_t addr)
       ramdata[PORT5] = (read_165(PIN_LATCHIN) ^ 0x7f);
 
       // Turn off low battery warning
+      // turn off ACOUT
       ramdata[PORT5] &= 0xFE;
 
       // Display value
@@ -3314,7 +3295,11 @@ u_int8_t RD_REF(u_int16_t addr)
 
       ramdata[PORT5] &= 0x7f;
       ramdata[PORT5] |= (gpio_get(PIN_P57) << 7);
-      
+
+      // Also set up bit 1 of port 5
+      ramdata[PORT5] &= ~0x02;
+      ramdata[PORT5] |= (sca_counter & (1 << 12))? 0x02: 0x00;
+
       // The port 5 register value needs to be built
       return(ramdata[PORT5]);
       break;
@@ -3419,10 +3404,7 @@ void WR_REF(u_int16_t addr, u_int8_t value)
       eeprom_perform_dump();
 #endif
 
-#if ALLOW_POWER_OFF
-      // Turn power off
-      gpio_put(PIN_VBAT_SW_ON, 0);
-#endif
+      handle_power_off();
       return;
       break;
 
@@ -3509,10 +3491,9 @@ u_int8_t RD_ADDR(u_int16_t addr)
 #if RAM_RESTORE
       eeprom_perform_dump();
 #endif
-#if ALLOW_POWER_OFF
-      // Turn power off
-      gpio_put(PIN_VBAT_SW_ON, 0);
-#endif
+
+      handle_power_off();
+
       return(0);
       break;
 
@@ -3532,6 +3513,7 @@ u_int8_t RD_ADDR(u_int16_t addr)
       ramdata[PORT5] = (read_165(PIN_LATCHIN) ^ 0x7f);
 
       // Turn off low battery warning
+      // Turn off ACOUT
       ramdata[PORT5] &= 0xFE;
 
       // Display value
@@ -3541,6 +3523,10 @@ u_int8_t RD_ADDR(u_int16_t addr)
       // The port 5 register value needs to be built
       ramdata[PORT5] &= 0x7f;
       ramdata[PORT5] |= (gpio_get(PIN_P57) << 7);
+
+      // Also set up bit 1 of port 5
+      ramdata[PORT5] &= ~0x02;
+      ramdata[PORT5] |= (sca_counter & (1 << 12))? 0x02: 0x00;
 
       return(ramdata[PORT5]);
       
@@ -3648,11 +3634,9 @@ void  WR_ADDR(u_int16_t addr, u_int8_t value)
 #if RAM_RESTORE
       eeprom_perform_dump();
 #endif
+
+      handle_power_off();
       
-#if ALLOW_POWER_OFF
-      // Turn power off
-      gpio_put(PIN_VBAT_SW_ON, 0);
-#endif
       return;
       break;
 
@@ -6884,7 +6868,7 @@ void update_interrupts(void)
   // Run through interrupt table (in priority order) to see if an
   // interrupt should be generated
 
-#if 1
+#if 0
   if( FLG_I )
     {
       return;
@@ -6900,6 +6884,8 @@ void update_interrupts(void)
 
       if( interrupt[i].nmi && nmi_masked )
 	{
+	  // NMI does not interrupt if it is masked
+	  interrupt[i].flag = 0;
 	  continue;
 	}
       
@@ -7230,6 +7216,12 @@ void after_ram_restore_init(void)
 #else
   RAMDATA_FIX(P5_CTRL) = COLD_START_STATE;
 #endif
+
+  // We also clear the ACOUT bit in port 5 so it never looks like the
+  // counter has woken us up
+  
+  RAMDATA_FIX(P5_DATA) &= ~0x02;
+  sca_counter = 0;
 }
 
 u_int8_t opcode;
@@ -7240,6 +7232,13 @@ void loop_emulator(void)
   u_int8_t opcode;
   u_int8_t p1, p2;
 
+#if 0
+  if( REG_PC == 0x8196 )
+    {
+      DEBUG_STOP;
+    }
+#endif
+  
   // Fetch opcode
   opcode = RD_ADDR(REG_PC);
   

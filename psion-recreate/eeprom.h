@@ -10,6 +10,7 @@
 
 // Some areas of RAM are not used as they don't exist on the real organiser
 // so these are used for meta data
+#define PAGE_SIZE 128
 
 // EEPROM meta data
 
@@ -22,3 +23,6 @@ void eeprom_ram_check(void);
 void eeprom_tasks(void);
 void eeprom_perform_restore(void);
 void eeprom_perform_dump(void);
+void eeprom_test2(void);
+void eeprom_test3(void);
+

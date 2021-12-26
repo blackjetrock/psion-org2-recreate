@@ -1,0 +1,226 @@
+
+0x8000
+0x8009
+0xab07
+0xab10
+0xab11
+
+0xab16
+0xab38
+0xab1b
+0xab26
+0xab1d
+
+0x800c
+0xd84b
+0xd856
+0x87b8
+0x87c6
+0x8012
+0x8014
+
+
+0x8076   Warm start
+0x807c
+
+0x80af    Warm start vector
+
+
+0x81a2  Wait NMI loop
+0x81a5
+; Wait for NMI to occur by testing flag
+WAIT_FOR_NMI_LP   TST     >BTB_NMFL                   ;81A2: 7D 00 5B       '}.['
+        BNE     WAIT_FOR_NMI_LP                    ;81A5: 26 FB     
+0x81a7
+Z81A7   RTS                              ;81A7: 39  
+
+0x80b2
+;get time to turn off
+        LDX     M005C                    ;80B2: DE 5C          '.\'
+        PSHX                             ;80B4: 3C             '<'
+
+        TIM     #$02,Z0015               ;80B5: 7B 02 15       '{..'
+        BEQ     Z80D1                    ;80B8: 27 17          ''.'
+
+;Set kbd scan counter
+        LDD     #M0800                   ;80BA: CC 08 00       '...'
+        BSR     Z8105                    ;80BD: 8D 46          '.F'
+
+0x80bd
+
+0x8105
+Z8105   LSRD                             ;8105: 04             '.'
+        XGDX                             ;8106: 18             '.'
+        BCC     Z8113                    ;8107: 24 0A          '$.'
+        INX                              ;8109: 08             '.'
+        BRA     Z810F                    ;810A: 20 03          ' .'
+
+;Counter increment
+Z810C   TST     M0340                    ;810C: 7D 03 40       '}.@'
+Z810F   TST     M0340                    ;810F: 7D 03 40       '}.@'
+        DEX                              ;8112: 09             '.'
+Z8113   BNE     Z810C                    ;8113: 26 F7          '&.'
+        RTS                              ;8115: 39             '9'
+
+0x8113
+0x810c
+0x8113
+
+0x80bf
+
+0x81aa
+0x81bc
+0x8202
+0x822b
+0x825b
+0x81c2
+0xe8cb
+
+
+0x80c2
+
+0x81b9
+0x86b1
+0x8202
+0x8268
+0x86b5
+==================================
+0x80c8
+
+0x80fc
+Z80FC   STS     M2067                    ;80FC: BF 20 67       '. g'
+        LDX     M2058                    ;80FF: FE 20 58       '. X'
+        JMP     ,X                       ;8102: 6E 00  
+2067/68 		Save stack pointer while off.
+SWOF re-vector address
+
+
+
+
+
+0x8716
+0x8735
+0x8728
+
+0x8735
+0x8728
+
+0x8739
+0x8769
+0xa4fb
+0xa41e
+0xa421
+0xa423
+0xa430
+
+0xa43a
+0xa4fe
+
+0xa504
+0xe8ca
+0xe8cf
+
+0xe8d4
+
+0xe8d8
+0xe904
+0xa507
+0xa50d
+0xa549
+
+0xa55b
+
+0x8202
+
+Z8202   PSHA                             ;8202: 36             '6'
+        TPA                              ;8203: 07             '.'
+        SEI                              ;8204: 0F             '.'
+        STAA    M206F                    ;8205: B7 20 6F       '. o'
+        PULA                             ;8208: 32             '2'
+        STD     M2069                    ;8209: FD 20 69       '. i'
+        STX     M206B                    ;820C: FF 20 6B       '. k'
+        PULX                             ;820F: 38             '8'
+        LDAA    ,X                       ;8210: A6 00          '..'
+        BMI     Z822D                    ;8212: 2B 19          '+.'
+        STX     M206D                    ;8214: FF 20 6D       '. m'
+        LDX     #M000E                   ;8217: CE 00 0E       '...'
+Z821A   ASLA                             ;821A: 48             'H'
+        BPL     Z8223                    ;821B: 2A 06          '*.'
+        LDAB    $4C,X                    ;821D: E6 4C          '.L'
+        PSHB                             ;821F: 37             '7'
+        LDAB    $4B,X                    ;8220: E6 4B          '.K'
+        PSHB                             ;8222: 37             '7'
+Z8223   DEX                              ;8223: 09             '.'
+        DEX                              ;8224: 09             '.'
+        BNE     Z821A                    ;8225: 26 F3          '&.'
+        LDX     M206D                    ;8227: FE 20 6D       '. m'
+        INX                              ;822A: 08             '.'
+        BRA     Z825B                    ;822B: 20 2E          ' .'
+Z822D   LDX     #M004D                   ;822D: CE 00 4D       '..M'
+Z8230   LSRA                             ;8230: 44             'D'
+        BCC     Z8239                    ;8231: 24 06          '$.'
+        PULB                             ;8233: 33             '3'
+        STAB    ,X                       ;8234: E7 00          '..'
+        PULB                             ;8236: 33             '3'
+        STAB    $01,X                    ;8237: E7 01          '..'
+Z8239   INX                              ;8239: 08             '.'
+        INX                              ;823A: 08             '.'
+        CPX     #BTB_NMFL                   ;823B: 8C 00 5B       '..['
+        BNE     Z8230                    ;823E: 26 F0          '&.'
+        BRA     Z825C                    ;8240: 20 1A          ' .'
+
+;SWI handler
+        PULA                             ;8242: 32             '2'
+        STAA    M206F                    ;8243: B7 20 6F       '. o'
+        PULB                             ;8246: 33             '3'
+        PULA                             ;8247: 32             '2'
+        STD     M2069                    ;8248: FD 20 69       '. i'
+        PULX                             ;824B: 38             '8'
+        STX     M206B                    ;824C: FF 20 6B       '. k'
+        PULX                             ;824F: 38             '8'
+        LDAB    ,X                       ;8250: E6 00          '..'
+        INX                              ;8252: 08             '.'
+        PSHX                             ;8253: 3C             '<'
+        LDX     M23E7                    ;8254: FE 23 E7       '.#.'
+        ABX                              ;8257: 3A             ':'
+        ABX                              ;8258: 3A             ':'
+        LDX     ,X                       ;8259: EE 00          '..'
+Z825B   PSHX                             ;825B: 3C             '<'
+
+Z825C   LDX     M206B                    ;825C: FE 20 6B       '. k'
+        LDD     M2069                    ;825F: FC 20 69       '. i'
+        PSHA                             ;8262: 36             '6'
+        LDAA    M206F                    ;8263: B6 20 6F       '. o'
+M8266   TAP                              ;8266: 06             '.'
+        PULA                             ;8267: 32             '2'
+        RTS                              ;8268: 39             '9'
+
+0x823e
+
+0x8230
+
+0x8233
+
+
+0x8268
+;34 minutes 8 seconds of countdown
+        LDX     #M0800                   ;805C: CE 08 00       '...'
+        STX     M005C                    ;805F: DF 5C          '.\'
+
+        BCC     Z806B                    ;8061: 24 08          '$.'
+
+        STD     M005C                    ;8063: DD 5C          '.\'
+        XGDX                             ;8065: 18             '.'
+        SUBD    M005C                    ;8066: 93 5C          '.\'
+        JSR     Z8105                    ;8068: BD 81 05       '...'
+
+Z806B   TST     NMI_TO_COUNTER           ;806B: 7D 03 C0       '}..'
+        AIM     #$BF,M0014               ;806E: 71 BF 14       'q..'
+
+0x805c
+
+OFF here
+0x8071
+; Switch off
+Z8071   TST     M01C0                    ;8071: 7D 01 C0       '}..'
+        BRA     hdlr_RST                 ;8074: 20 8A          ' .'

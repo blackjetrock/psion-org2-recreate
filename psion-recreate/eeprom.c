@@ -23,7 +23,6 @@ int read_eeprom(int slave_addr, int start, int len, BYTE *dest)
 {
   BYTE a[2];
 
-  
   a[0] = start >> 8;
   a[1] = start & 0xFF;
   
@@ -61,6 +60,9 @@ int write_eeprom(int slave_addr, int start, int len, BYTE *src)
     }
 
   i2c_stop();
+
+  // Delay for the eeprom write time
+  sleep_ms(4);
 }
 
 
@@ -115,6 +117,139 @@ void eeprom_test(void)
 }
 
 
+// This test writes 128 bytes and reads it back then checks it
+#define TEST2_LEN  128
+
+void eeprom_test2(void)
+{
+  BYTE write_data[TEST2_LEN];
+  BYTE read_data[TEST2_LEN];
+  
+  int i;
+  int j;
+
+  printxy_str(1, 0, "EEPROM Test");
+  dump_lcd();
+  
+  //DEBUG_STOP;
+
+  // Set up test data
+  for(int i=0; i<TEST2_LEN; i++)
+    {
+      write_data[i] = 10+i;
+    }
+
+  // Write some bytes to an eeprom
+  write_eeprom(EEPROM_1_ADDR_WR, TEST_START, TEST2_LEN, write_data);
+
+  sleep_ms(100);
+
+  // read it back
+  read_eeprom(EEPROM_1_ADDR_RD, TEST_START, TEST2_LEN, read_data);
+  
+
+  // Compare it
+  for(int i=0; i<TEST2_LEN; i++)
+    {
+      if( write_data[i] == read_data[i] )
+	{
+	  // All ok
+	}
+      else
+	{
+	  // Bad
+	  printxy_str(1,1,"Bad");
+	  dump_lcd();
+	  DEBUG_STOP;
+	}
+    }
+  
+  printxy_str(1,1,"Good");
+  dump_lcd();
+  DEBUG_STOP;
+}
+
+
+// This test writes RAM to EEPROM and then checks it has written correctly
+
+void eeprom_test3(void)
+{
+  BYTE buffer[PAGE_SIZE];
+  
+  printxy_str(1, 0, "EEPROM Dmp Test");
+  dump_lcd();
+  
+  //DEBUG_STOP;
+
+  // repeat test N times
+  for(int k = 0; k< 10; k++)
+    {
+      // Run twice with different data each time
+      for(int p=0; p<2; p++)
+	{
+	  
+	  printxy_str(1, 1, "Setting");
+	  dump_lcd();
+	  
+	  for(int i = 0; i<RAM_SIZE; i++)
+	    {
+	      ramdata[i] = i*23*p;
+	    }
+	  
+	  printxy_str(1, 1, "Writing");
+	  dump_lcd();
+	  
+	  // Write in 128 byte pages to the eeprom
+	  for(int i=0; i<RAM_SIZE; i+=PAGE_SIZE)
+	    {
+	      // Write the page to EEPROM
+	      write_eeprom(EEPROM_0_ADDR_WR , i, PAGE_SIZE, &(ramdata[i]));
+	    }
+#if 0
+	  printxy_str(1, 1, "Wiping ");
+	  dump_lcd();
+	  
+	  for(int i = 0; i<RAM_SIZE; i++)
+	    {
+	      ramdata[i] = 0xee;
+	    }
+#endif
+	  printxy_str(1, 1, "Checking");
+	  dump_lcd();
+	  
+	  // Read EEPROM and check RAM matches
+	  for(int i=0; i<RAM_SIZE; i+=PAGE_SIZE)
+	    {
+	      //DEBUG_STOP;
+	      read_eeprom(EEPROM_0_ADDR_RD , i, PAGE_SIZE, &(buffer[0]));
+	      
+	      // Check the data read is the same as that in RAM
+	      for(int j=0; j<PAGE_SIZE; j++)
+		{
+		  
+		  if( ramdata[i+j] == buffer[j] )
+		    {
+		      // All ok 
+		    }
+		  else
+		    {
+		      // Error, record where and halt for debug
+		      printxy_str(1, 1, "BAD   ");
+		      dump_lcd();
+		      
+		      DEBUG_STOP;
+		    }
+		}
+	    }
+	}
+    }
+  
+  printxy_str(1, 1, "Good  ");
+  dump_lcd();
+  DEBUG_STOP;
+}
+
+
 ////////////////////////////////////////////////////////////////////////////////
 //
 // EEPROM RAM Dump and restore
@@ -123,17 +258,19 @@ void eeprom_test(void)
 
 // The RAM is dumped to an eeprom
 //
-// We have a few areas in the RAm which we can use as a signature
+// We have a few areas in the RAM which we can use as a signature
 // to indicate that a valid RAM dump is in the EEPROM
 // The two bytes at 0x0190 and 0x0191 have a known value after a dump is
-// perfomed.
-
-#define PAGE_SIZE 128
+// performed.
 
 void eeprom_ram_dump(void)
 {
   u_int16_t csum = 0;
 
+#if DISABLE_DMP_WR
+    return;
+#endif
+  
   // Zero checksum
   ramdata[EEPROM_CSUM_L] = 0;
   ramdata[EEPROM_CSUM_H] = 0;
@@ -149,9 +286,6 @@ void eeprom_ram_dump(void)
 
       // Write the page to EEPROM
       write_eeprom(EEPROM_0_ADDR_WR , i, PAGE_SIZE, &(ramdata[i]));
-      
-      // Write delay
-      sleep_ms(6);
     }
 
   // Write the checksum to the EEPROM copy
@@ -272,14 +406,21 @@ void eeprom_tasks(void)
 {
   if( eeprom_do_dump )
     {
+      printxy_str(3,1, "Dumping...");
+      dump_lcd();
+
       eeprom_do_dump = 0;
       eeprom_ram_dump();
       eeprom_done_dump = 1;
+      printxy_str(3,1, "          ");
+      dump_lcd();
+      
     }
   
   if( eeprom_do_restore )
     {
       printxy_str(3,1, "Restoring...");
+      dump_lcd();
       
       eeprom_do_restore = 0;
       
@@ -289,6 +430,7 @@ void eeprom_tasks(void)
       eeprom_done_restore = 1;
       
       printxy_str(3,1, "            ");
+      dump_lcd();
     }
 
 }

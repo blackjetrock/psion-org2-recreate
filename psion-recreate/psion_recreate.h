@@ -39,11 +39,17 @@ extern int model;
 #define WIFI_TEST            0
 #define RTC_TEST             0
 #define EEPROM_TEST          0
+#define EEPROM_TEST2         0
+#define EEPROM_TEST3         0    // Test RAM dump and restore
+
 #define NEW_I2C              1    // Better I2C, not demo code
 #define BUZZER_TEST          0
 #define UART_INTERRUPTS      1    // Interrupot for UART data collection
 #define I2C_DELAY            150   // Default, can be over-ridden
 #define ALLOW_POWER_OFF      0     // Do we allow the power to be turned off?
+                                   // If 0 then sit in a loop on power off so
+                                   // we can debug where the request to turn
+                                   // off came from
 #define WIFI                 0
 #define BLUETOOTH            1
 #define ENABLE_1S_TICK       1
@@ -51,10 +57,11 @@ extern int model;
 #define TRACE_ADDR           1     // Trace execution addresses
 #define NUM_ADDR_TRACE       300   // How many addresses to trace
 
-#define RAM_RESTORE          1   // Enable dump/restore RAM to/from EEPROM
-#define DISABLE_RESTORE_ONLY 1    // Disable the restore part, still dump
-#define EEPROM_DUMP_CHECK    0    // Do we check the dumped contents?
-
+#define RAM_RESTORE          1    // Enable dump/restore RAM to/from EEPROM
+#define DISABLE_RESTORE_ONLY 0    // Disable the restore part, still dump
+#define EEPROM_DUMP_CHECK    1    // Do we check the dumped contents?
+#define DISABLE_DMP_WR       1    // Run dump code but don't write anything
+                                  // We can use one image over and over
 typedef u_int8_t BYTE;
 
 // Do we use two cores?
