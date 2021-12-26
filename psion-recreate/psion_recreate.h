@@ -11,41 +11,49 @@ typedef uint8_t BYTE;
 ////////////////////////////////////////////////////////////////////////////////
 // The model we are emulating chnages the display layout
 
-#define MODEL_XP                 0
-#define MODEL_LZ                 1
+#define MODEL_XP             1
+#define MODEL_LZ             0
 
 // Initial state of warm start flag 0x80 to have warm start
-#define WARM_FLAG_INITIAL        0x00
+#if DISABLE_RESTORE_ONLY     
+#define WARM_FLAG_INITIAL    0x00
+#else
+#define WARM_FLAG_INITIAL    0x80
+#endif
 
 // The model we are emulating
 extern int model;
 
 // The value t set model to
-#define MODEL_AT_START MODEL_LZ
+#define MODEL_AT_START       MODEL_XP
 
-#define FN_OLED_DEMO      0
-#define FN_KEYBOARD_TEST  0
-#define FN_FLASH_LED      0
-#define SLOT_TEST         0
-#define SLOT_TEST_MASK    LAT2PIN_MASK_SS2
-#define SLOT_TEST_G       0
-#define SLOT_TEST_GPIO    PIN_SD0
-#define TEST_PORT2        0
-#define PACK_TEST         0
-#define WIFI_TEST         0
-#define RTC_TEST          0
-#define EEPROM_TEST       0
-#define NEW_I2C           1    // Better I2C, not demo code
-#define BUZZER_TEST       0
-#define UART_INTERRUPTS   1    // Interrupot for UART data collection
-#define I2C_DELAY         150   // Default, can be over-ridden
-#define ALLOW_POWER_OFF   0     // Do we allow the power to be turned off?
-#define WIFI              0
-#define BLUETOOTH         1
-#define ENABLE_1S_TICK    1     
+#define FN_OLED_DEMO         0
+#define FN_KEYBOARD_TEST     0
+#define FN_FLASH_LED         0
+#define SLOT_TEST            0
+#define SLOT_TEST_MASK       LAT2PIN_MASK_SS2
+#define SLOT_TEST_G          0
+#define SLOT_TEST_GPIO       PIN_SD0
+#define TEST_PORT2           0
+#define PACK_TEST            0
+#define WIFI_TEST            0
+#define RTC_TEST             0
+#define EEPROM_TEST          0
+#define NEW_I2C              1    // Better I2C, not demo code
+#define BUZZER_TEST          0
+#define UART_INTERRUPTS      1    // Interrupot for UART data collection
+#define I2C_DELAY            150   // Default, can be over-ridden
+#define ALLOW_POWER_OFF      0     // Do we allow the power to be turned off?
+#define WIFI                 0
+#define BLUETOOTH            1
+#define ENABLE_1S_TICK       1
+#define DISABLE_AUTO_OFF     1     // Disable auto off feature
+#define TRACE_ADDR           1     // Trace execution addresses
+#define NUM_ADDR_TRACE       300   // How many addresses to trace
 
-#define RAM_RESTORE       1
-#define EEPROM_DUMP_CHECK 1    // Do we check the dump contents?
+#define RAM_RESTORE          1   // Enable dump/restore RAM to/from EEPROM
+#define DISABLE_RESTORE_ONLY 1    // Disable the restore part, still dump
+#define EEPROM_DUMP_CHECK    0    // Do we check the dumped contents?
 
 typedef u_int8_t BYTE;
 
@@ -266,3 +274,11 @@ extern volatile int eeprom_do_dump;
 extern volatile int eeprom_do_restore;
 extern volatile int eeprom_done_dump;
 extern volatile int eeprom_done_restore;
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Checksums
+//
+
+uint16_t csum_calc_on_restore;
+uint16_t csum_in_eeprom;

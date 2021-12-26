@@ -1263,7 +1263,7 @@ void btfn_mem_wr(void)
   // Write the byte to the RAM
   ramdata[match_int_arg[0]] = match_int_arg[1];
 
-  sprintf(output_text, "Wrote %02X to %04X", match_int_arg[0], match_int_arg[1]);
+  sprintf(output_text, "Wrote %02X to %04X", match_int_arg[1], match_int_arg[0]);
   send_bt_reply();
 }
 

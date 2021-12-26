@@ -10,6 +10,7 @@
 #include "pico/stdlib.h"
 
 #include "psion_recreate.h"
+#include "eeprom.h"
 
 // Read a block of data from the EEPROM
 // 
@@ -131,15 +132,31 @@ void eeprom_test(void)
 
 void eeprom_ram_dump(void)
 {
+  u_int16_t csum = 0;
+
+  // Zero checksum
+  ramdata[EEPROM_CSUM_L] = 0;
+  ramdata[EEPROM_CSUM_H] = 0;
+  
   // Write in 128 byte pages to the eeprom
   for(int i=0; i<RAM_SIZE; i+=PAGE_SIZE)
     {
+      // Update checksum
+      for(int j=0; j<PAGE_SIZE; j++)
+	{
+	  csum += ramdata[i+j];
+	}
+
+      // Write the page to EEPROM
       write_eeprom(EEPROM_0_ADDR_WR , i, PAGE_SIZE, &(ramdata[i]));
       
       // Write delay
       sleep_ms(6);
     }
 
+  // Write the checksum to the EEPROM copy
+  write_eeprom(EEPROM_0_ADDR_WR , EEPROM_CSUM_H, EEPROM_CSUM_LEN, &(ramdata[EEPROM_CSUM_H]));
+  
   // We have written the data, do we check it?
 #if EEPROM_DUMP_CHECK
   eeprom_ram_check();
@@ -148,17 +165,31 @@ void eeprom_ram_dump(void)
 
 void eeprom_ram_restore(void)
 {
+  u_int16_t csum = 0;
+
   // Read EEPROM and restore RAM
   for(int i=0; i<RAM_SIZE; i+=PAGE_SIZE)
     {
-      
-      //if ( (i>=0x2080) && (i<=0x2180) )
-      //	{
       read_eeprom(EEPROM_0_ADDR_RD , i, PAGE_SIZE, &(ramdata[i]));
-	  //	}
+
+      // Update checksum
+      for(int j=0; j<PAGE_SIZE; j++)
+	{
+	  csum += ramdata[i+j];
+	}
     }
+
+  // When written, the data had 0 in the checksum location, so adjust it
+  csum -= ramdata[EEPROM_CSUM_H];
+  csum -= ramdata[EEPROM_CSUM_L];
+
+  // Save checksums
+  csum_in_eeprom = (ramdata[EEPROM_CSUM_H] << 8) + ramdata[EEPROM_CSUM_L];
+  csum_calc_on_restore = csum;
 }
 
+////////////////////////////////////////////////////////////////////////////////
+//
 // Checks that the values in eeprom match those in RAM as a check that
 // the write occurred correctly
 
@@ -166,9 +197,10 @@ void eeprom_ram_check(void)
 {
   BYTE buffer[PAGE_SIZE];
   
-  // Read EEPROM and restore RAM
+  // Read EEPROM and check RAM matches
   for(int i=0; i<RAM_SIZE; i+=PAGE_SIZE)
     {
+      //DEBUG_STOP;
       read_eeprom(EEPROM_0_ADDR_RD , i, PAGE_SIZE, &(buffer[0]));
 
       // Check the data read is the same as that in RAM
@@ -185,6 +217,12 @@ void eeprom_ram_check(void)
 	    }
 	}
     }
+
+  // The checksum needs to match as well
+  if( csum_calc_on_restore != csum_in_eeprom )
+    {
+      DEBUG_STOP;
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -192,7 +230,7 @@ void eeprom_ram_check(void)
 // Function that starts a dump process running and waits for it to finish.
 // Must be run on Core0 if core1 is doing the dumping due to I2C conflicts
 
-void eeprom_perform_dump(void)
+void eeprom_perform_restore(void)
 {
   // Ask core1 to restore the eeprom
   eeprom_done_restore = 0;
@@ -200,6 +238,59 @@ void eeprom_perform_dump(void)
   while(!eeprom_done_restore)
     {
     }
+}
+
+void eeprom_perform_dump(void)
+{
+  // Ask core1 to restore the eeprom
+  eeprom_done_dump = 0;
+  eeprom_do_dump = 1;
+  while(!eeprom_done_dump)
+    {
+    }
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// EEPROM tasks
+//
+// Dump and restore run in tight loops and use flags to action them
+// and flags to signal the job is done
+//
+// This is designed to run on core1 (or whatever core performs I2C
+// work) as we cannot have two cores performing I2C as the GPIO
+// writes will interfere.
+//
+
+volatile int eeprom_do_dump = 0;
+volatile int eeprom_do_restore = 0;
+volatile int eeprom_done_dump = 0;
+volatile int eeprom_done_restore = 0;
+
+void eeprom_tasks(void)
+{
+  if( eeprom_do_dump )
+    {
+      eeprom_do_dump = 0;
+      eeprom_ram_dump();
+      eeprom_done_dump = 1;
+    }
+  
+  if( eeprom_do_restore )
+    {
+      printxy_str(3,1, "Restoring...");
+      
+      eeprom_do_restore = 0;
+      
+#if !DISABLE_RESTORE_ONLY
+      eeprom_ram_restore();
+#endif
+      eeprom_done_restore = 1;
+      
+      printxy_str(3,1, "            ");
+    }
+
 }
 
 

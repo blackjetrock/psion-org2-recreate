@@ -64,4 +64,5 @@ CMakeFiles/psion_recreate.dir/emulator.c.obj: \
  /tree/downloaded_tools/pico/psion-recreate/psion_recreate.h \
  /tree/downloaded_tools/pico/psion-recreate/match.h \
  /tree/downloaded_tools/pico/psion-recreate/emulator.h \
- /tree/downloaded_tools/pico/psion-recreate/wireless.h
+ /tree/downloaded_tools/pico/psion-recreate/wireless.h \
+ /tree/downloaded_tools/pico/psion-recreate/eeprom.h

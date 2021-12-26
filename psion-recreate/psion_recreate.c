@@ -7,6 +7,7 @@
 #include "psion_recreate.h"
 #include "emulator.h"
 #include "wireless.h"
+#include "eeprom.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -50,8 +51,11 @@ const uint PIN_LATCHOUT1  = 22;
 const uint PIN_SCLKOUT    = 26;
 const uint PIN_VBAT_SW_ON = 27;
 
-uint16_t latch2_shadow = 0;
+uint16_t latch2_shadow    = 0;
 uint16_t latchout1_shadow = 0;
+
+uint16_t csum_calc_on_restore = 0;
+uint16_t csum_in_eeprom       = 0;
 
 void latch2_set_mask(int value)
 {
@@ -205,40 +209,6 @@ void keyboard_test(void)
       printxy_hex(0, 2, port5);
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
-//
-// EEPROM tasks
-//
-// Dump and restore run in tight loops and use flags to action them
-// and flags to signal the job is done
-//
-
-volatile int eeprom_do_dump = 0;
-volatile int eeprom_do_restore = 0;
-volatile int eeprom_done_dump = 0;
-volatile int eeprom_done_restore = 0;
-
-void eeprom_tasks(void)
-{
-  if( eeprom_do_dump )
-    {
-      eeprom_do_dump = 0;
-      eeprom_ram_dump();
-      eeprom_done_dump = 1;
-    }
-  
-  if( eeprom_do_restore )
-    {
-      printxy_str(3,1, "Restoring...");
-      eeprom_do_restore = 0;
-      //eeprom_ram_restore();
-      eeprom_done_restore = 1;
-      printxy_str(3,1, "            ");
-    }
-
-}
-
 
 
 
@@ -413,17 +383,13 @@ int main() {
 
 #endif
 
-#if 1
+#if !DISABLE_RESTORE_ONLY  
   // Ask core1 to restore the eeprom
-  eeprom_done_restore = 0;
-  eeprom_do_restore = 1;
-  while(!eeprom_done_restore)
-    {
-    }
-  
-#endif
+  eeprom_perform_restore();
   
   after_ram_restore_init();
+#endif
+
 
 #if EEPROM_TEST
   eeprom_test();
@@ -603,10 +569,58 @@ int main() {
     
 #endif
 
+#if TRACE_ADDR
+    // Trace a number of execution addresses
+    int tracing            = 0;
+    u_int16_t trigger_addr = 0x8014;
+    int addr_trace_i       = 0;
+
+    // Trace from a trigger address until trace full
+    volatile u_int16_t addr_trace_from[NUM_ADDR_TRACE];
+
+    // Trace continuously until trigger address seen
+    u_int16_t trace_stop_addr = 0x7fba;
+    volatile u_int16_t addr_trace_to[NUM_ADDR_TRACE];
+    int addr_trace_to_i       = 0;
+    int tracing_to            = 1;
+#endif
+    
 
     // Main loop
     while(1)
       {
+#if TRACE_ADDR
+	// Trace from when we see trigger address
+	if( REG_PC == trigger_addr )
+	  {
+	    tracing = 1;
+	  }
+	
+	if( (addr_trace_i < NUM_ADDR_TRACE) && tracing )
+	  {
+	    addr_trace_from[addr_trace_i++] = REG_PC;
+	  }
+
+	// Trace continuously until we see the stop address
+	if( REG_PC == trace_stop_addr )
+	  {
+	    tracing_to = 0;
+	  }
+	
+	if( tracing_to )
+	  {
+	    addr_trace_to[addr_trace_i++] = REG_PC;
+	    addr_trace_i %= NUM_ADDR_TRACE;
+	  }
+#endif
+	
+#if DISABLE_AUTO_OFF
+	// Continuously reset the auto off flag
+	if( (time_us_64() % 20000000) == 0 )
+	  {
+	    ramdata[0x007c] = 0;
+	  }
+#endif
 	loop_emulator();
 	//dump_lcd();
 	

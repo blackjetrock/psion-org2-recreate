@@ -67,4 +67,5 @@ CMakeFiles/psion_recreate.dir/psion_recreate.c.obj: \
  /usr/include/newlib/stdlib.h /usr/include/newlib/machine/stdlib.h \
  /usr/include/newlib/alloca.h \
  /tree/downloaded_tools/pico/psion-recreate/emulator.h \
- /tree/downloaded_tools/pico/psion-recreate/wireless.h
+ /tree/downloaded_tools/pico/psion-recreate/wireless.h \
+ /tree/downloaded_tools/pico/psion-recreate/eeprom.h
