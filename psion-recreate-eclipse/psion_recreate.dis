@@ -33,25 +33,25 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
  14 .comment      000000a7  00000000  00000000  000438a8  2**0
                   CONTENTS, READONLY
- 15 .debug_info   0006f0ed  00000000  00000000  0004394f  2**0
+ 15 .debug_info   0006f131  00000000  00000000  0004394f  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_abbrev 0001215f  00000000  00000000  000b2a3c  2**0
+ 16 .debug_abbrev 0001215f  00000000  00000000  000b2a80  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_loc    00037746  00000000  00000000  000c4b9b  2**0
+ 17 .debug_loc    00037746  00000000  00000000  000c4bdf  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_aranges 000022a0  00000000  00000000  000fc2e8  2**3
+ 18 .debug_aranges 000022a0  00000000  00000000  000fc328  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .debug_ranges 00005f88  00000000  00000000  000fe588  2**3
+ 19 .debug_ranges 00005f88  00000000  00000000  000fe5c8  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .debug_line   0002dc05  00000000  00000000  00104510  2**0
+ 20 .debug_line   0002dc10  00000000  00000000  00104550  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_str    0000a6a4  00000000  00000000  00132115  2**0
+ 21 .debug_str    0000a6c2  00000000  00000000  00132160  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 22 .debug_frame  00004f44  00000000  00000000  0013c7bc  2**2
+ 22 .debug_frame  00004f44  00000000  00000000  0013c824  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 23 .stab         0000003c  00000000  00000000  00141700  2**2
+ 23 .stab         0000003c  00000000  00000000  00141768  2**2
                   CONTENTS, READONLY, DEBUGGING
- 24 .stabstr      00000117  00000000  00000000  0014173c  2**0
+ 24 .stabstr      00000117  00000000  00000000  001417a4  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 psion_recreate.elf:     file format elf32-littlearm
@@ -38180,7 +38180,7 @@ Disassembly of section .data:
 20000242:	b082      	sub	sp, #8
 20000244:	0007      	movs	r7, r0
 20000246:	4688      	mov	r8, r1
-20000248:	f000 f926 	bl	20000498 <__time_us_64_veneer>
+20000248:	f000 f936 	bl	200004b8 <__time_us_64_veneer>
 2000024c:	0004      	movs	r4, r0
 2000024e:	1e0d      	subs	r5, r1, #0
 20000250:	db1d      	blt.n	2000028e <mutex_enter_timeout_ms+0x52>
@@ -38190,7 +38190,7 @@ Disassembly of section .data:
 20000258:	2300      	movs	r3, #0
 2000025a:	4640      	mov	r0, r8
 2000025c:	2100      	movs	r1, #0
-2000025e:	f000 f92b 	bl	200004b8 <____wrap___aeabi_lmul_veneer>
+2000025e:	f000 f90b 	bl	20000478 <____wrap___aeabi_lmul_veneer>
 20000262:	0022      	movs	r2, r4
 20000264:	002b      	movs	r3, r5
 20000266:	1812      	adds	r2, r2, r0
@@ -38351,13 +38351,13 @@ Disassembly of section .data:
 200003ba:	000e      	movs	r6, r1
 200003bc:	0015      	movs	r5, r2
 200003be:	4826      	ldr	r0, [pc, #152]	; (20000458 <flash_do_cmd+0xa8>)
-200003c0:	f000 f85a 	bl	20000478 <__rom_func_lookup_veneer>
+200003c0:	f000 f86a 	bl	20000498 <__rom_func_lookup_veneer>
 200003c4:	4681      	mov	r9, r0
 200003c6:	4825      	ldr	r0, [pc, #148]	; (2000045c <flash_do_cmd+0xac>)
-200003c8:	f000 f856 	bl	20000478 <__rom_func_lookup_veneer>
+200003c8:	f000 f866 	bl	20000498 <__rom_func_lookup_veneer>
 200003cc:	0004      	movs	r4, r0
 200003ce:	4824      	ldr	r0, [pc, #144]	; (20000460 <flash_do_cmd+0xb0>)
-200003d0:	f000 f852 	bl	20000478 <__rom_func_lookup_veneer>
+200003d0:	f000 f862 	bl	20000498 <__rom_func_lookup_veneer>
 200003d4:	4680      	mov	r8, r0
 200003d6:	464b      	mov	r3, r9
 200003d8:	2b00      	cmp	r3, #0
@@ -38432,14 +38432,14 @@ Disassembly of section .data:
 20000474:	0000      	movs	r0, r0
 	...
 
-20000478 <__rom_func_lookup_veneer>:
+20000478 <____wrap___aeabi_lmul_veneer>:
 20000478:	b401      	push	{r0}
-2000047a:	4802      	ldr	r0, [pc, #8]	; (20000484 <__rom_func_lookup_veneer+0xc>)
+2000047a:	4802      	ldr	r0, [pc, #8]	; (20000484 <____wrap___aeabi_lmul_veneer+0xc>)
 2000047c:	4684      	mov	ip, r0
 2000047e:	bc01      	pop	{r0}
 20000480:	4760      	bx	ip
 20000482:	bf00      	nop
-20000484:	100097b1 	.word	0x100097b1
+20000484:	1000a6dd 	.word	0x1000a6dd
 
 20000488 <__best_effort_wfe_or_timeout_veneer>:
 20000488:	b401      	push	{r0}
@@ -38450,14 +38450,14 @@ Disassembly of section .data:
 20000492:	bf00      	nop
 20000494:	10007465 	.word	0x10007465
 
-20000498 <__time_us_64_veneer>:
+20000498 <__rom_func_lookup_veneer>:
 20000498:	b401      	push	{r0}
-2000049a:	4802      	ldr	r0, [pc, #8]	; (200004a4 <__time_us_64_veneer+0xc>)
+2000049a:	4802      	ldr	r0, [pc, #8]	; (200004a4 <__rom_func_lookup_veneer+0xc>)
 2000049c:	4684      	mov	ip, r0
 2000049e:	bc01      	pop	{r0}
 200004a0:	4760      	bx	ip
 200004a2:	bf00      	nop
-200004a4:	10007589 	.word	0x10007589
+200004a4:	100097b1 	.word	0x100097b1
 
 200004a8 <____assert_func_veneer>:
 200004a8:	b401      	push	{r0}
@@ -38468,14 +38468,14 @@ Disassembly of section .data:
 200004b2:	bf00      	nop
 200004b4:	10007d6d 	.word	0x10007d6d
 
-200004b8 <____wrap___aeabi_lmul_veneer>:
+200004b8 <__time_us_64_veneer>:
 200004b8:	b401      	push	{r0}
-200004ba:	4802      	ldr	r0, [pc, #8]	; (200004c4 <____wrap___aeabi_lmul_veneer+0xc>)
+200004ba:	4802      	ldr	r0, [pc, #8]	; (200004c4 <__time_us_64_veneer+0xc>)
 200004bc:	4684      	mov	ip, r0
 200004be:	bc01      	pop	{r0}
 200004c0:	4760      	bx	ip
 200004c2:	bf00      	nop
-200004c4:	1000a6dd 	.word	0x1000a6dd
+200004c4:	10007589 	.word	0x10007589
 
 200004c8 <Contrast_level>:
 200004c8:	0000007f                                ....

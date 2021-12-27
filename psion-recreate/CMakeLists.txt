@@ -23,6 +23,7 @@ rtc.c
 i2c.c
 match.c
 eeprom.c
+menu.c
 )
 
 pico_enable_stdio_usb(psion_recreate 1)

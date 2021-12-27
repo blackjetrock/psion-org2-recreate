@@ -172,6 +172,7 @@ extern u_int8_t opcode;
 extern char *opcode_names[256];
 extern int inst_length;
 extern int pc_before;
+extern u_int16_t sca_counter;
 
 u_int8_t RD_ADDR(u_int16_t addr);
 void update_interrupts(void);

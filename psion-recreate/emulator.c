@@ -19,6 +19,7 @@
 #include "emulator.h"
 #include "wireless.h"
 #include "eeprom.h"
+#include "menu.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -53,6 +54,7 @@ int warm_flag = WARM_FLAG_INITIAL;
 int lcd_write_to_ddram = 0;
 int lcd_write_to_cgram = 0;
 
+
 // If EMBEDDED is non zero then code is compiled to run on embedded processor
 // so no printfs or logging
 
@@ -65,7 +67,7 @@ int lcd_write_to_cgram = 0;
 #define DISPLAY_PROC_PC    0
 #define CURSOR_BLINK_DELAY 100000
 #define XP_DEBUG           0
-#define LAST_N_PC   10
+#define LAST_N_PC          10
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -5348,6 +5350,10 @@ u_int8_t RD_REF(u_int16_t addr)
       ramdata[PORT5] &= ~0x02;
       ramdata[PORT5] |= (sca_counter & (1 << 12))? 0x02: 0x00;
 
+#if MENU_ENABLED
+      check_menu_launch();
+#endif
+      
       // The port 5 register value needs to be built
       return(ramdata[PORT5]);
       break;
@@ -5575,6 +5581,10 @@ u_int8_t RD_ADDR(u_int16_t addr)
       // Also set up bit 1 of port 5
       ramdata[PORT5] &= ~0x02;
       ramdata[PORT5] |= (sca_counter & (1 << 12))? 0x02: 0x00;
+
+#if MENU_ENABLED
+      check_menu_launch();
+#endif
 
       return(ramdata[PORT5]);
       

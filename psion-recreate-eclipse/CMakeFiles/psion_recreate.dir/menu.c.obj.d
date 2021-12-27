@@ -1,5 +1,5 @@
-CMakeFiles/psion_recreate.dir/emulator.c.obj: \
- /tree/downloaded_tools/pico/psion-recreate/emulator.c \
+CMakeFiles/psion_recreate.dir/menu.c.obj: \
+ /tree/downloaded_tools/pico/psion-recreate/menu.c \
  /usr/include/newlib/ctype.h /usr/include/newlib/_ansi.h \
  /usr/include/newlib/newlib.h /usr/include/newlib/_newlib_version.h \
  /usr/include/newlib/sys/config.h /usr/include/newlib/machine/ieeefp.h \
@@ -54,16 +54,6 @@ CMakeFiles/psion_recreate.dir/emulator.c.obj: \
  /tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/uart.h \
  /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_uart/include/pico/stdio_uart.h \
  /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/include/pico/stdio_usb.h \
- /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/include/pico/multicore.h \
- /tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/include/pico/sync.h \
- /tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/include/pico/sem.h \
- /tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/include/pico/lock_core.h \
- /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_sync/include/hardware/sync.h \
- /tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/include/pico/mutex.h \
- /tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/include/pico/critical_section.h \
- /tree/downloaded_tools/pico/psion-recreate/psion_recreate.h \
- /tree/downloaded_tools/pico/psion-recreate/match.h \
  /tree/downloaded_tools/pico/psion-recreate/emulator.h \
- /tree/downloaded_tools/pico/psion-recreate/wireless.h \
- /tree/downloaded_tools/pico/psion-recreate/eeprom.h \
- /tree/downloaded_tools/pico/psion-recreate/menu.h
+ /tree/downloaded_tools/pico/psion-recreate/psion_recreate.h \
+ /tree/downloaded_tools/pico/psion-recreate/match.h

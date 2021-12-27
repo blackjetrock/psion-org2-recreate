@@ -384,6 +384,8 @@ CMakeFiles/psion_recreate.dir/match.c.obj: /tree/downloaded_tools/pico/psion-rec
   /usr/include/newlib/machine/stdlib.h \
   /usr/include/newlib/alloca.h
 
+CMakeFiles/psion_recreate.dir/menu.c.obj: /tree/downloaded_tools/pico/psion-recreate/menu.c
+
 CMakeFiles/psion_recreate.dir/psion_recreate.c.obj: /tree/downloaded_tools/pico/psion-recreate/psion_recreate.c \
   /usr/include/newlib/stdio.h \
   /usr/include/newlib/_ansi.h \
@@ -3430,6 +3432,12 @@ generated/pico_base/pico/config_autogen.h:
 
 /usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h:
 
+/tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/usb.h:
+
+/usr/include/newlib/sys/features.h:
+
+/usr/include/newlib/sys/stdio.h:
+
 /tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/queue.c:
 
 /tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/padsbank0.h:
@@ -3499,12 +3507,6 @@ generated/pico_base/pico/version.h:
 /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_runtime/runtime.c:
 
 /usr/include/newlib/sys/_types.h:
-
-/usr/include/newlib/sys/features.h:
-
-/usr/include/newlib/sys/stdio.h:
-
-/tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/usb.h:
 
 /tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/sio.h:
 
@@ -3671,6 +3673,8 @@ generated/pico_base/pico/version.h:
 /tree/downloaded_tools/pico/psion-recreate/match.c:
 
 /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/common/tusb_common.h:
+
+/tree/downloaded_tools/pico/psion-recreate/menu.c:
 
 /tree/downloaded_tools/pico/pico-sdk/src/common/pico_base/include/pico/config.h:
 

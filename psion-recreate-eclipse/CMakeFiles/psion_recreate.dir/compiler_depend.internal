@@ -390,6 +390,9 @@ CMakeFiles/psion_recreate.dir/match.c.obj
  /usr/include/newlib/machine/stdlib.h
  /usr/include/newlib/alloca.h
 
+CMakeFiles/psion_recreate.dir/menu.c.obj
+ /tree/downloaded_tools/pico/psion-recreate/menu.c
+
 CMakeFiles/psion_recreate.dir/psion_recreate.c.obj
  /tree/downloaded_tools/pico/psion-recreate/psion_recreate.c
  /usr/include/newlib/stdio.h

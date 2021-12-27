@@ -128,6 +128,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/tree/downloaded_tools/pico/psion-recreate/font.c" "CMakeFiles/psion_recreate.dir/font.c.obj" "gcc" "CMakeFiles/psion_recreate.dir/font.c.obj.d"
   "/tree/downloaded_tools/pico/psion-recreate/i2c.c" "CMakeFiles/psion_recreate.dir/i2c.c.obj" "gcc" "CMakeFiles/psion_recreate.dir/i2c.c.obj.d"
   "/tree/downloaded_tools/pico/psion-recreate/match.c" "CMakeFiles/psion_recreate.dir/match.c.obj" "gcc" "CMakeFiles/psion_recreate.dir/match.c.obj.d"
+  "/tree/downloaded_tools/pico/psion-recreate/menu.c" "CMakeFiles/psion_recreate.dir/menu.c.obj" "gcc" "CMakeFiles/psion_recreate.dir/menu.c.obj.d"
   "/tree/downloaded_tools/pico/psion-recreate/psion_recreate.c" "CMakeFiles/psion_recreate.dir/psion_recreate.c.obj" "gcc" "CMakeFiles/psion_recreate.dir/psion_recreate.c.obj.d"
   "/tree/downloaded_tools/pico/psion-recreate/rtc.c" "CMakeFiles/psion_recreate.dir/rtc.c.obj" "gcc" "CMakeFiles/psion_recreate.dir/rtc.c.obj.d"
   "/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c" "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.obj" "gcc" "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.obj.d"

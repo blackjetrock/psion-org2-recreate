@@ -62,6 +62,8 @@ extern int model;
 #define EEPROM_DUMP_CHECK    0    // Do we check the dumped contents?
 #define DISABLE_DMP_WR       0    // Run dump code but don't write anything
                                   // We can use one image over and over
+#define MENU_ENABLED         0    // Meta menu enabled
+
 typedef u_int8_t BYTE;
 
 // Do we use two cores?

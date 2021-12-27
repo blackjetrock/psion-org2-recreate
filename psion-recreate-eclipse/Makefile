@@ -325,6 +325,30 @@ match.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/match.c.s
 .PHONY : match.c.s
 
+menu.obj: menu.c.obj
+.PHONY : menu.obj
+
+# target to build an object file
+menu.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/menu.c.obj
+.PHONY : menu.c.obj
+
+menu.i: menu.c.i
+.PHONY : menu.i
+
+# target to preprocess a source file
+menu.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/menu.c.i
+.PHONY : menu.c.i
+
+menu.s: menu.c.s
+.PHONY : menu.s
+
+# target to generate assembly for a file
+menu.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/menu.c.s
+.PHONY : menu.c.s
+
 psion_recreate.obj: psion_recreate.c.obj
 .PHONY : psion_recreate.obj
 
@@ -1884,6 +1908,9 @@ help:
 	@echo "... match.obj"
 	@echo "... match.i"
 	@echo "... match.s"
+	@echo "... menu.obj"
+	@echo "... menu.i"
+	@echo "... menu.s"
 	@echo "... psion_recreate.obj"
 	@echo "... psion_recreate.i"
 	@echo "... psion_recreate.s"
