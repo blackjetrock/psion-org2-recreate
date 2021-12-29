@@ -44,7 +44,7 @@ extern int model;
 
 #define NEW_I2C              1    // Better I2C, not demo code
 #define BUZZER_TEST          0
-#define UART_INTERRUPTS      1    // Interrupot for UART data collection
+#define UART_INTERRUPTS      1     // Interrupt for UART data collection
 #define I2C_DELAY            150   // Default, can be over-ridden
 #define ALLOW_POWER_OFF      1     // Do we allow the power to be turned off?
                                    // If 0 then sit in a loop on power off so
@@ -52,9 +52,9 @@ extern int model;
                                    // off came from
 #define WIFI                 0
 #define BLUETOOTH            1
-#define ENABLE_1S_TICK       1
+#define ENABLE_1S_TICK       1     // Needed ny restore from EEPROM code, otherwise hangs
 #define DISABLE_AUTO_OFF     1     // Disable auto off feature
-#define TRACE_ADDR           1     // Trace execution addresses
+#define TRACE_ADDR           0     // Trace execution addresses
 #define NUM_ADDR_TRACE       300   // How many addresses to trace
 
 #define RAM_RESTORE          1    // Enable dump/restore RAM to/from EEPROM
@@ -62,7 +62,11 @@ extern int model;
 #define EEPROM_DUMP_CHECK    0    // Do we check the dumped contents?
 #define DISABLE_DMP_WR       0    // Run dump code but don't write anything
                                   // We can use one image over and over
-#define MENU_ENABLED         0    // Meta menu enabled
+#define MENU_ENABLED         1    // Meta menu enabled
+
+#define OVERCLOCK            0    // Overclock the RP2040
+
+#define META_MENU_SCAN_COUNT    10
 
 typedef u_int8_t BYTE;
 
@@ -157,14 +161,6 @@ void put_display_char(int x,int y, int ch);
 void write_port2(u_int8_t value);
 u_int8_t read_port2(void);
 
-void printxy(int x, int y, int ch);
-void printxy_str(int x, int y, char *str);
-void printxy_hex(int x, int y, int value);
-
-void i_printxy(int x, int y, int ch);
-void i_printxy_str(int x, int y, char *str);
-
-void write_display_extra(int i, int ch);
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -291,3 +287,6 @@ extern volatile int eeprom_done_restore;
 
 uint16_t csum_calc_on_restore;
 uint16_t csum_in_eeprom;
+
+
+#include "font.h"

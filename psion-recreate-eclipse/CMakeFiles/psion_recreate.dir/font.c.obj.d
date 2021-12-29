@@ -21,4 +21,5 @@ CMakeFiles/psion_recreate.dir/font.c.obj: \
  /usr/include/newlib/alloca.h /usr/include/newlib/string.h \
  /usr/include/newlib/strings.h /usr/include/newlib/sys/string.h \
  /tree/downloaded_tools/pico/psion-recreate/psion_recreate.h \
- /tree/downloaded_tools/pico/psion-recreate/match.h
+ /tree/downloaded_tools/pico/psion-recreate/match.h \
+ /tree/downloaded_tools/pico/psion-recreate/font.h

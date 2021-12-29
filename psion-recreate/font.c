@@ -409,3 +409,20 @@ void printxy_hex(int x, int y, int value)
   sprintf(hs, "%02X", value);
   printxy_str(x, y, hs);
 }
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Clears the display
+//
+////////////////////////////////////////////////////////////////////////////////
+
+void display_clear(void)
+{
+  for(int x=0; x<DISPLAY_NUM_CHARS; x++)
+    {
+      for(int y=0; y<DISPLAY_NUM_LINES; y++)
+	{
+	  printxy(x, y, ' ');
+	}
+    }
+}

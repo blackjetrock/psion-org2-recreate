@@ -4438,6 +4438,12 @@ void handle_sca(u_int16_t addr)
       // Also set up bit 1 of port 5
       ramdata[PORT5] &= ~0x02;
       ramdata[PORT5] |= (sca_counter & (1 << 12))? 0x02: 0x00;
+
+#if 0      
+#if MENU_ENABLED
+      check_menu_launch();
+#endif
+#endif
       
 #if XP_DEBUG
       printxy_hex(3,2,sca_counter);
@@ -4460,15 +4466,17 @@ void handle_sca(u_int16_t addr)
 
 int lcd_address    = 0;
 
+#define LCD_DISPLAY_BUFFER_LEN (MAX_DDRAM+2)
+
 // Buffer with no jumbling, for wifi for example
-char lcd_display[MAX_DDRAM+2];
+char lcd_display[LCD_DISPLAY_BUFFER_LEN];
 
 // separate lines of the display
 char display_line[DISPLAY_NUM_LINES][DISPLAY_NUM_CHARS+1];
 
 // Display buffer with jumbling ready to go to LD
-char lcd_display_buffer[MAX_DDRAM+2];
-char last_lcd_display_buffer[MAX_DDRAM+2];
+char lcd_display_buffer[LCD_DISPLAY_BUFFER_LEN];
+char last_lcd_display_buffer[LCD_DISPLAY_BUFFER_LEN];
 char display_extra[DISPLAY_NUM_EXTRA];
 
 int display_on   = 0;
@@ -4680,7 +4688,7 @@ void dump_lcd(void)
   int ch;
   int saved_char;
   
-  if( (strcmp(last_lcd_display_buffer, lcd_display_buffer) != 0) || cursor_update)
+  if( (memcmp(last_lcd_display_buffer, lcd_display_buffer, lcd_dispsize) != 0) || cursor_update)
     {
       cursor_update = 0;
       
@@ -4770,7 +4778,7 @@ void dump_lcd(void)
 	  display_line[i/20][i%20] = isprint(ch)?ch:' ';
 	}
       
-      strcpy(last_lcd_display_buffer, lcd_display_buffer);
+      memcpy(last_lcd_display_buffer, lcd_display_buffer, lcd_dispsize);
     }
   
   // Terminate the buffers
@@ -4927,7 +4935,31 @@ u_int8_t *REF_ADDR(u_int16_t addr)
     }
 }
 
-//--------------------\----------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
+//
+// Saves or restores  the display
+//
+////////////////////////////////////////////////////////////////////////////////
+
+char saved_lcd_display_buffer[LCD_DISPLAY_BUFFER_LEN];
+
+void display_save(void)
+{
+  for(int i=0; i<LCD_DISPLAY_BUFFER_LEN; i++)
+    {
+      saved_lcd_display_buffer[i] = lcd_display_buffer[i];
+    }
+}
+
+void display_restore(void)
+{
+  for(int i=0; i<LCD_DISPLAY_BUFFER_LEN; i++)
+    {
+      lcd_display_buffer[i] = saved_lcd_display_buffer[i];
+    }
+}
+
+//------------------------------------------------------------------------------
 //
 // Port 2 access functions
 
@@ -5174,8 +5206,6 @@ void write_port6(u_int8_t value)
 	}
       value >>= 1;
     }
-
-
 }
 
 // When port 6 is set to inputs, we have to take the SSn lines high
@@ -5320,7 +5350,8 @@ u_int8_t RD_REF(u_int16_t addr)
       break;
 
       // Read of port5. We read the input patch and return the appropriate bits
-      // Unfortunately the resistors on the keyboard lines are pull-downs. So we need to
+      // Unfortunately the resistors on the keyboard lines are
+      // pull-downs. So we need to
       // run the keyboard with inverted logic.
       
     case PORT5:
@@ -9286,8 +9317,6 @@ u_int8_t opcode;
 
 void loop_emulator(void)
 {
-  
-  u_int8_t opcode;
   u_int8_t p1, p2;
 
 #if 0
@@ -9328,7 +9357,7 @@ void loop_emulator(void)
   update_timers();
 
   update_counter();
-  handle_cursor();
+  //  handle_cursor();
 
   update_interrupts();
 

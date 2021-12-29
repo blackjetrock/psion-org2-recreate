@@ -167,6 +167,13 @@ extern PROC6303_STATE pstate;
 #define P5_CTRL         0x14
 #define P5_DATA         0x15
 
+////////////////////////////////////////////////////////////////////////////////
+
+#define KBB_STAT        0x7b
+#define KBB_NKEYS       0x74
+
+////////////////////////////////////////////////////////////////////////////////
+
 extern char opcode_decode[100];
 extern u_int8_t opcode;
 extern char *opcode_names[256];
@@ -180,3 +187,7 @@ void interrupt_request(u_int16_t vector_msb);
 void serial_set_rdrf(void);
 void handle_serial_register_read(u_int16_t addr);
 void handle_serial_register_write(u_int16_t addr, u_int8_t value);
+void handle_cursor(void);
+void display_restore(void);
+void display_save(void);
+void handle_power_off(void);

@@ -54,6 +54,8 @@ CMakeFiles/psion_recreate.dir/menu.c.obj: \
  /tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/uart.h \
  /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_uart/include/pico/stdio_uart.h \
  /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/include/pico/stdio_usb.h \
- /tree/downloaded_tools/pico/psion-recreate/emulator.h \
  /tree/downloaded_tools/pico/psion-recreate/psion_recreate.h \
- /tree/downloaded_tools/pico/psion-recreate/match.h
+ /tree/downloaded_tools/pico/psion-recreate/match.h \
+ /tree/downloaded_tools/pico/psion-recreate/font.h \
+ /tree/downloaded_tools/pico/psion-recreate/menu.h \
+ /tree/downloaded_tools/pico/psion-recreate/emulator.h

@@ -235,6 +235,8 @@ void core1_main(void)
       rtc_tasks();
       eeprom_tasks();
       
+      handle_cursor();
+      
 #if !WIFI_TEST      
       //wireless_loop();
       wireless_taskloop();
@@ -340,6 +342,11 @@ int main() {
   //  gpio_put(PIN_SDAIN,  1);
   gpio_put(PIN_SCLKIN, 1);
 
+#if OVERCLOCK
+  //  set_sys_clock_khz(260000, false);   // Works
+  set_sys_clock_khz(300000, false);  
+  
+#endif
   //------------------------------------------------------------------------------
   //
   // Display test
@@ -353,6 +360,8 @@ int main() {
   // Initialise display
 
   // Turn on the 12V supply
+  // This signal does nothing now. OLED turned on when 3V3 turned on
+  
   latch2_set_mask(LAT2PIN_MASK_DRV_HV);
   
   //  latchout2_shadow |= LAT2PIN_MASK_DRV_HV;

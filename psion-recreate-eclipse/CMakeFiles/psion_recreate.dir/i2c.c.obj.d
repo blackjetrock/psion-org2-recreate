@@ -65,4 +65,5 @@ CMakeFiles/psion_recreate.dir/i2c.c.obj: \
  /tree/downloaded_tools/pico/psion-recreate/match.h \
  /usr/include/newlib/ctype.h /usr/include/newlib/sys/_locale.h \
  /usr/include/newlib/stdlib.h /usr/include/newlib/machine/stdlib.h \
- /usr/include/newlib/alloca.h
+ /usr/include/newlib/alloca.h \
+ /tree/downloaded_tools/pico/psion-recreate/font.h

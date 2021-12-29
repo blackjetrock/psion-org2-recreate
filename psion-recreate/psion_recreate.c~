@@ -585,7 +585,7 @@ int main() {
 #if TRACE_ADDR
     // Trace a number of execution addresses
     int tracing            = 0;
-    u_int16_t trigger_addr = 0x80c2;
+    u_int16_t trigger_addr = 0x80c8;
     int addr_trace_i       = 0;
 
     // Trace from a trigger address until trace full

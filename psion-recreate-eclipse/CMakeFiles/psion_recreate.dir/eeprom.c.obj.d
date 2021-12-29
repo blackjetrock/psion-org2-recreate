@@ -56,4 +56,5 @@ CMakeFiles/psion_recreate.dir/eeprom.c.obj: \
  /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/include/pico/stdio_usb.h \
  /tree/downloaded_tools/pico/psion-recreate/psion_recreate.h \
  /tree/downloaded_tools/pico/psion-recreate/match.h \
+ /tree/downloaded_tools/pico/psion-recreate/font.h \
  /tree/downloaded_tools/pico/psion-recreate/eeprom.h
