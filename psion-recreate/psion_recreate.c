@@ -56,6 +56,7 @@ uint16_t latchout1_shadow = 0;
 
 uint16_t csum_calc_on_restore = 0;
 uint16_t csum_in_eeprom       = 0;
+uint16_t csum_calc_on_dump    = 0;
 
 void latch2_set_mask(int value)
 {

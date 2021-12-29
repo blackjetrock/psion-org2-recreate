@@ -288,6 +288,13 @@ void eeprom_ram_dump(void)
       write_eeprom(EEPROM_0_ADDR_WR , i, PAGE_SIZE, &(ramdata[i]));
     }
 
+  // Store csum for debug
+  csum_calc_on_dump = csum;
+
+  // Store sum in ramdata
+  ramdata[EEPROM_CSUM_L] = csum & 0xFF;
+  ramdata[EEPROM_CSUM_H] = csum >> 8;
+
   // Write the checksum to the EEPROM copy
   write_eeprom(EEPROM_0_ADDR_WR , EEPROM_CSUM_H, EEPROM_CSUM_LEN, &(ramdata[EEPROM_CSUM_H]));
   
@@ -328,6 +335,8 @@ void eeprom_ram_restore(void)
   // Save checksums
   csum_in_eeprom = (ramdata[EEPROM_CSUM_H] << 8) + ramdata[EEPROM_CSUM_L];
   csum_calc_on_restore = csum;
+
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////

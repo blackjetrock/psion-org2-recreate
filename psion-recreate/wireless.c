@@ -55,6 +55,7 @@ void ufn_eeprom_read(void);
 void btfn_hello(void);
 void btfn_mem_rd(void);
 void btfn_eeprom_rd(void);
+void btfn_eeprom_wr(void);
 void btfn_mem_wr(void);
 void btfn_processor_status(void);
 void btfn_display(void);
@@ -503,6 +504,7 @@ BT_TASK btcmd_list[] =
    {"rdmem %x ",                   btfn_mem_rd},
    {"wrmem %x %x",                 btfn_mem_wr},
    {"rdee %d %x ",                 btfn_eeprom_rd},
+   {"wree %d %x %x",               btfn_eeprom_wr},
    {"procstat ",                   btfn_processor_status},
    {"display ",                    btfn_display},
    {"key %d ",                     btfn_key},
@@ -1151,9 +1153,7 @@ void ufn_memory_write(void)
   send_reply();
 }
 
-
-
-void ufn_eeprom_write(void)
+void core_eeprom_write(void)
 {
   BYTE data[1];
   int slave_addr;
@@ -1173,12 +1173,19 @@ void ufn_eeprom_write(void)
   
   // Write the byte to the RAM
   write_eeprom(slave_addr, start, 1, data);
+}
 
-  // Give a reply
+void ufn_eeprom_write(void)
+{
+  core_eeprom_write();
+  
+    // Give a reply
   sprintf(output_text, reply_mem_write, cxx, "EEPROM", match_int_arg[2], match_int_arg[1]);
 
   send_reply();
 }
+
+
 
 void ufn_eeprom_read(void)
 {
@@ -1267,6 +1274,14 @@ void btfn_mem_wr(void)
   send_bt_reply();
 }
 
+void btfn_eeprom_wr(void)
+{
+  core_eeprom_write();
+  
+  sprintf(output_text, "Wrote %02X to %04X", match_int_arg[1], match_int_arg[0]);
+  send_bt_reply();
+}
+
 void btfn_eeprom_rd(void)
 {
 #define MEM_LEN  128
@@ -1286,22 +1301,24 @@ void btfn_eeprom_rd(void)
   ascii[0] = '\0';
 
   read_eeprom(slave_addr, start, MEM_LINE, data);
-  
+
+  int x = 0;
   for(int m=start; m<start+MEM_LEN; m++)
     {
       if( (m % MEM_LINE) == 0 )
 	{
+	  x = 0;
 	  sprintf(t, "  %s\r\n%04X:", ascii, m);
 	  strcat(temp_output_buffer, t);
 	  ascii[0] = '\0';
 	  read_eeprom(slave_addr, m, MEM_LINE, data);
 	}
       
-      sprintf(t, "%02X ", data[m % MEM_LINE]);
+      sprintf(t, "%02X ", data[x]);
       strcat(temp_output_buffer, t);
-      if( isprint(data[m % MEM_LINE]) )
+      if( isprint(data[x]) )
 	{
-	  t[0] = data[m % MEM_LINE];
+	  t[0] = data[x];
 	  t[1] = '\0';
 	  strcat(ascii, t);
 	}
@@ -1309,6 +1326,8 @@ void btfn_eeprom_rd(void)
 	{
 	  strcat(ascii, ".");
 	}
+      
+      x++;
     }
 
   strcat(temp_output_buffer, "  ");

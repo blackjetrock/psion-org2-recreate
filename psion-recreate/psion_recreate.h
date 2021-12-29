@@ -46,7 +46,7 @@ extern int model;
 #define BUZZER_TEST          0
 #define UART_INTERRUPTS      1     // Interrupt for UART data collection
 #define I2C_DELAY            150   // Default, can be over-ridden
-#define ALLOW_POWER_OFF      1     // Do we allow the power to be turned off?
+#define ALLOW_POWER_OFF      0     // Do we allow the power to be turned off?
                                    // If 0 then sit in a loop on power off so
                                    // we can debug where the request to turn
                                    // off came from
@@ -288,6 +288,6 @@ extern volatile int eeprom_done_restore;
 
 uint16_t csum_calc_on_restore;
 uint16_t csum_in_eeprom;
-
+uint16_t csum_calc_on_dump;
 
 #include "font.h"

@@ -9298,12 +9298,30 @@ void initialise_emulator(void)
   
 }
 
+////////////////////////////////////////////////////////////////////////////////
+
 void after_ram_restore_init(void)
 {
+  // If feature enabled then set up the warm start if the
+  // data is valid
+  
 #if RAM_RESTORE
-  RAMDATA_FIX(P5_CTRL) = warm_flag;
+  
+  // We check the checksums and only if they match do we set the 'warm start'
+  // flag. Otherwise we don't want the RAM contents to be used.
+  if( csum_in_eeprom == csum_calc_on_restore )
+    {
+      RAMDATA_FIX(P5_CTRL) = warm_flag;
+    }
+  else
+    {
+      RAMDATA_FIX(P5_CTRL) = COLD_START_STATE;
+    }
+
 #else
+
   RAMDATA_FIX(P5_CTRL) = COLD_START_STATE;
+
 #endif
 
   // We also clear the ACOUT bit in port 5 so it never looks like the
