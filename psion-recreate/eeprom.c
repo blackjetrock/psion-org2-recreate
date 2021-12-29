@@ -301,6 +301,10 @@ void eeprom_ram_restore(void)
 {
   u_int16_t csum = 0;
 
+#if OVERCLOCK_RESTORE
+  set_sys_clock_khz(260000, false);
+#endif
+  
   // Read EEPROM and restore RAM
   for(int i=0; i<RAM_SIZE; i+=PAGE_SIZE)
     {
@@ -312,6 +316,10 @@ void eeprom_ram_restore(void)
 	  csum += ramdata[i+j];
 	}
     }
+
+#if OVERCLOCK_RESTORE
+  set_sys_clock_khz(130000, false);
+#endif
 
   // When written, the data had 0 in the checksum location, so adjust it
   csum -= ramdata[EEPROM_CSUM_H];

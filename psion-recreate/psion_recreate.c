@@ -235,7 +235,7 @@ void core1_main(void)
       rtc_tasks();
       eeprom_tasks();
       
-      handle_cursor();
+      //handle_cursor();
       
 #if !WIFI_TEST      
       //wireless_loop();

@@ -1562,9 +1562,9 @@ Discarded input sections
                 0x0000000000000000       0x24 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.obj
  .rodata.__func__.4922
                 0x0000000000000000       0x22 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.obj
- .text          0x0000000000000000        0x0 /tmp/ccYGk5aa.o
- .data          0x0000000000000000        0x0 /tmp/ccYGk5aa.o
- .bss           0x0000000000000000        0x0 /tmp/ccYGk5aa.o
+ .text          0x0000000000000000        0x0 /tmp/ccwyN2GS.o
+ .data          0x0000000000000000        0x0 /tmp/ccwyN2GS.o
+ .bss           0x0000000000000000        0x0 /tmp/ccwyN2GS.o
  .data          0x0000000000000000        0x0 /usr/lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_dvmd_tls.o)
  .bss           0x0000000000000000        0x0 /usr/lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_dvmd_tls.o)
  .text          0x0000000000000000       0x10 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-atexit.o)
@@ -2164,7 +2164,7 @@ LOAD /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp
 .boot2          0x0000000010000000      0x100
                 0x0000000010000000                __boot2_start__ = .
  *(.boot2)
- .boot2         0x0000000010000000      0x100 /tmp/ccYGk5aa.o
+ .boot2         0x0000000010000000      0x100 /tmp/ccwyN2GS.o
                 0x0000000010000100                __boot2_end__ = .
                 0x0000000000000001                ASSERT (((__boot2_end__ - __boot2_start__) == 0x100), ERROR: Pico second stage bootloader must be 256 bytes in size)
 
@@ -2231,298 +2231,298 @@ LOAD /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp
  *(EXCLUDE_FILE(*libm.a: *libc.a:*lib_a-mem*.o *libgcc.a:) .text*)
  .text          0x00000000100002c4       0x98 /usr/lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/crtbegin.o
  .text.core1_main
-                0x000000001000035c       0x18 CMakeFiles/psion_recreate.dir/psion_recreate.c.obj
+                0x000000001000035c       0x14 CMakeFiles/psion_recreate.dir/psion_recreate.c.obj
                 0x000000001000035c                core1_main
  .text.read_165
-                0x0000000010000374       0x3a CMakeFiles/psion_recreate.dir/psion_recreate.c.obj
-                0x0000000010000374                read_165
+                0x0000000010000370       0x3a CMakeFiles/psion_recreate.dir/psion_recreate.c.obj
+                0x0000000010000370                read_165
  .text.write_595
-                0x00000000100003ae       0x56 CMakeFiles/psion_recreate.dir/psion_recreate.c.obj
-                0x00000000100003ae                write_595
+                0x00000000100003aa       0x56 CMakeFiles/psion_recreate.dir/psion_recreate.c.obj
+                0x00000000100003aa                write_595
  .text.latch2_set_mask
-                0x0000000010000404       0x4c CMakeFiles/psion_recreate.dir/psion_recreate.c.obj
-                0x0000000010000404                latch2_set_mask
+                0x0000000010000400       0x4c CMakeFiles/psion_recreate.dir/psion_recreate.c.obj
+                0x0000000010000400                latch2_set_mask
  .text.latch2_clear_mask
-                0x0000000010000450       0x48 CMakeFiles/psion_recreate.dir/psion_recreate.c.obj
-                0x0000000010000450                latch2_clear_mask
- .text.main     0x0000000010000498      0x1a4 CMakeFiles/psion_recreate.dir/psion_recreate.c.obj
-                0x0000000010000498                main
- .text.Delay    0x000000001000063c       0x16 CMakeFiles/psion_recreate.dir/display.c.obj
-                0x000000001000063c                Delay
+                0x000000001000044c       0x48 CMakeFiles/psion_recreate.dir/psion_recreate.c.obj
+                0x000000001000044c                latch2_clear_mask
+ .text.main     0x0000000010000494      0x1a4 CMakeFiles/psion_recreate.dir/psion_recreate.c.obj
+                0x0000000010000494                main
+ .text.Delay    0x0000000010000638       0x16 CMakeFiles/psion_recreate.dir/display.c.obj
+                0x0000000010000638                Delay
  .text.Set_Page_Address
-                0x0000000010000652       0x24 CMakeFiles/psion_recreate.dir/display.c.obj
-                0x0000000010000652                Set_Page_Address
+                0x000000001000064e       0x24 CMakeFiles/psion_recreate.dir/display.c.obj
+                0x000000001000064e                Set_Page_Address
  .text.Set_Column_Address
-                0x0000000010000676       0x26 CMakeFiles/psion_recreate.dir/display.c.obj
-                0x0000000010000676                Set_Column_Address
- .text.RST0     0x000000001000069c       0x20 CMakeFiles/psion_recreate.dir/display.c.obj
-                0x000000001000069c                RST0
- .text.RST1     0x00000000100006bc       0x24 CMakeFiles/psion_recreate.dir/display.c.obj
-                0x00000000100006bc                RST1
+                0x0000000010000672       0x26 CMakeFiles/psion_recreate.dir/display.c.obj
+                0x0000000010000672                Set_Column_Address
+ .text.RST0     0x0000000010000698       0x20 CMakeFiles/psion_recreate.dir/display.c.obj
+                0x0000000010000698                RST0
+ .text.RST1     0x00000000100006b8       0x24 CMakeFiles/psion_recreate.dir/display.c.obj
+                0x00000000100006b8                RST1
  .text.initialise_oled
-                0x00000000100006e0      0x198 CMakeFiles/psion_recreate.dir/display.c.obj
-                0x00000000100006e0                initialise_oled
+                0x00000000100006dc      0x198 CMakeFiles/psion_recreate.dir/display.c.obj
+                0x00000000100006dc                initialise_oled
  .text.clear_oled
-                0x0000000010000878       0x42 CMakeFiles/psion_recreate.dir/display.c.obj
-                0x0000000010000878                clear_oled
+                0x0000000010000874       0x42 CMakeFiles/psion_recreate.dir/display.c.obj
+                0x0000000010000874                clear_oled
  .text.invert_byte
-                0x00000000100008ba       0x1a CMakeFiles/psion_recreate.dir/font.c.obj
-                0x00000000100008ba                invert_byte
+                0x00000000100008b6       0x1a CMakeFiles/psion_recreate.dir/font.c.obj
+                0x00000000100008b6                invert_byte
  .text.i_printxy
-                0x00000000100008d4       0x60 CMakeFiles/psion_recreate.dir/font.c.obj
-                0x00000000100008d4                i_printxy
- .text.printxy  0x0000000010000934        0x8 CMakeFiles/psion_recreate.dir/font.c.obj
-                0x0000000010000934                printxy
+                0x00000000100008d0       0x60 CMakeFiles/psion_recreate.dir/font.c.obj
+                0x00000000100008d0                i_printxy
+ .text.printxy  0x0000000010000930        0x8 CMakeFiles/psion_recreate.dir/font.c.obj
+                0x0000000010000930                printxy
  .text.printxy_str
-                0x000000001000093c       0x1c CMakeFiles/psion_recreate.dir/font.c.obj
-                0x000000001000093c                printxy_str
+                0x0000000010000938       0x1c CMakeFiles/psion_recreate.dir/font.c.obj
+                0x0000000010000938                printxy_str
  .text.display_clear
-                0x0000000010000958       0x22 CMakeFiles/psion_recreate.dir/font.c.obj
-                0x0000000010000958                display_clear
- .text.op_null  0x000000001000097a        0x2 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x000000001000097a                op_null
- .text.op_nop   0x000000001000097c        0x2 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x000000001000097c                op_nop
- .text.op_slp   0x000000001000097e        0x2 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x000000001000097e                op_slp
- .text.op_abx   0x0000000010000980       0x10 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010000980                op_abx
- .text.op_xgdx  0x0000000010000990       0x1c CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010000990                op_xgdx
- .text.op_txs   0x00000000100009ac       0x10 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x00000000100009ac                op_txs
- .text.op_tsx   0x00000000100009bc       0x10 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x00000000100009bc                op_tsx
- .text.op_tab   0x00000000100009cc       0x44 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x00000000100009cc                op_tab
- .text.op_tba   0x0000000010000a10       0x44 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010000a10                op_tba
- .text.op_tap   0x0000000010000a54       0x1c CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010000a54                op_tap
- .text.op_tpa   0x0000000010000a70        0xc CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010000a70                op_tpa
- .text.op_clc   0x0000000010000a7c       0x10 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010000a7c                op_clc
- .text.op_sec   0x0000000010000a8c       0x10 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010000a8c                op_sec
- .text.op_sei   0x0000000010000a9c       0x10 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010000a9c                op_sei
- .text.op_cli   0x0000000010000aac       0x10 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010000aac                op_cli
+                0x0000000010000954       0x22 CMakeFiles/psion_recreate.dir/font.c.obj
+                0x0000000010000954                display_clear
+ .text.op_null  0x0000000010000976        0x2 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010000976                op_null
+ .text.op_nop   0x0000000010000978        0x2 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010000978                op_nop
+ .text.op_slp   0x000000001000097a        0x2 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x000000001000097a                op_slp
+ .text.op_abx   0x000000001000097c       0x10 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x000000001000097c                op_abx
+ .text.op_xgdx  0x000000001000098c       0x1c CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x000000001000098c                op_xgdx
+ .text.op_txs   0x00000000100009a8       0x10 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x00000000100009a8                op_txs
+ .text.op_tsx   0x00000000100009b8       0x10 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x00000000100009b8                op_tsx
+ .text.op_tab   0x00000000100009c8       0x44 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x00000000100009c8                op_tab
+ .text.op_tba   0x0000000010000a0c       0x44 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010000a0c                op_tba
+ .text.op_tap   0x0000000010000a50       0x1c CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010000a50                op_tap
+ .text.op_tpa   0x0000000010000a6c        0xc CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010000a6c                op_tpa
+ .text.op_clc   0x0000000010000a78       0x10 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010000a78                op_clc
+ .text.op_sec   0x0000000010000a88       0x10 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010000a88                op_sec
+ .text.op_sei   0x0000000010000a98       0x10 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010000a98                op_sei
+ .text.op_cli   0x0000000010000aa8       0x10 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010000aa8                op_cli
  .text.op_dec16
-                0x0000000010000abc       0x3c CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010000abc                op_dec16
+                0x0000000010000ab8       0x3c CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010000ab8                op_dec16
  .text.op_inc16
-                0x0000000010000af8       0x3c CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010000af8                op_inc16
- .text.op_br    0x0000000010000b34      0x184 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010000b34                op_br
- .text.op_daa   0x0000000010000cb8       0x90 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010000cb8                op_daa
- .text.op_mul   0x0000000010000d48       0x2c CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010000d48                op_mul
- .text.op_cba   0x0000000010000d74       0xb8 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010000d74                op_cba
- .text.op_sba   0x0000000010000e2c       0xb8 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010000e2c                op_sba
- .text.op_lsrd  0x0000000010000ee4       0x74 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010000ee4                op_lsrd
- .text.op_asld  0x0000000010000f58       0x90 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010000f58                op_asld
- .text.op_jmp   0x0000000010000fe8       0x28 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010000fe8                op_jmp
+                0x0000000010000af4       0x3c CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010000af4                op_inc16
+ .text.op_br    0x0000000010000b30      0x184 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010000b30                op_br
+ .text.op_daa   0x0000000010000cb4       0x90 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010000cb4                op_daa
+ .text.op_mul   0x0000000010000d44       0x2c CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010000d44                op_mul
+ .text.op_cba   0x0000000010000d70       0xb8 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010000d70                op_cba
+ .text.op_sba   0x0000000010000e28       0xb8 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010000e28                op_sba
+ .text.op_lsrd  0x0000000010000ee0       0x74 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010000ee0                op_lsrd
+ .text.op_asld  0x0000000010000f54       0x90 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010000f54                op_asld
+ .text.op_jmp   0x0000000010000fe4       0x28 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010000fe4                op_jmp
  .text.handle_power_off
-                0x0000000010001010       0x14 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010001010                handle_power_off
+                0x000000001000100c       0x14 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x000000001000100c                handle_power_off
  .text.handle_nmi
-                0x0000000010001024       0x24 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010001024                handle_nmi
+                0x0000000010001020       0x24 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010001020                handle_nmi
  .text.handle_bank
-                0x0000000010001048       0x5c CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010001048                handle_bank
+                0x0000000010001044       0x5c CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010001044                handle_bank
  .text.handle_sca
-                0x00000000100010a4       0xb8 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x00000000100010a4                handle_sca
+                0x00000000100010a0       0xb8 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x00000000100010a0                handle_sca
  .text.handle_cursor
-                0x000000001000115c       0x38 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x000000001000115c                handle_cursor
+                0x0000000010001158       0x38 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010001158                handle_cursor
  .text.handle_lcd_read
-                0x0000000010001194       0x24 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010001194                handle_lcd_read
+                0x0000000010001190       0x24 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010001190                handle_lcd_read
  .text.serial_set_rdrf
-                0x00000000100011b8       0x1c CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x00000000100011b8                serial_set_rdrf
+                0x00000000100011b4       0x1c CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x00000000100011b4                serial_set_rdrf
  .text.handle_serial_register_read
-                0x00000000100011d4       0x44 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x00000000100011d4                handle_serial_register_read
+                0x00000000100011d0       0x44 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x00000000100011d0                handle_serial_register_read
  .text.handle_serial_register_write
-                0x0000000010001218       0x58 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010001218                handle_serial_register_write
+                0x0000000010001214       0x58 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010001214                handle_serial_register_write
  .text.update_serial
-                0x0000000010001270       0x20 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010001270                update_serial
+                0x000000001000126c       0x20 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x000000001000126c                update_serial
  .text.create_underline_char
-                0x0000000010001290       0x2c CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010001290                create_underline_char
+                0x000000001000128c       0x2c CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x000000001000128c                create_underline_char
  .text.put_display_char
-                0x00000000100012bc       0x20 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x00000000100012bc                put_display_char
+                0x00000000100012b8       0x20 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x00000000100012b8                put_display_char
  .text.write_display_extra
-                0x00000000100012dc        0xc CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x00000000100012dc                write_display_extra
+                0x00000000100012d8        0xc CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x00000000100012d8                write_display_extra
  .text.dump_lcd
-                0x00000000100012e8      0x190 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x00000000100012e8                dump_lcd
+                0x00000000100012e4      0x190 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x00000000100012e4                dump_lcd
  .text.handle_lcd_write
-                0x0000000010001478      0x1bc CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010001478                handle_lcd_write
+                0x0000000010001474      0x1bc CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010001474                handle_lcd_write
  .text.REF_ADDR
-                0x0000000010001634       0x5c CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010001634                REF_ADDR
+                0x0000000010001630       0x5c CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010001630                REF_ADDR
  .text.display_save
-                0x0000000010001690       0x20 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010001690                display_save
+                0x000000001000168c       0x20 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x000000001000168c                display_save
  .text.display_restore
-                0x00000000100016b0       0x20 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x00000000100016b0                display_restore
+                0x00000000100016ac       0x20 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x00000000100016ac                display_restore
  .text.read_port2
-                0x00000000100016d0       0x58 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x00000000100016d0                read_port2
+                0x00000000100016cc       0x58 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x00000000100016cc                read_port2
  .text.write_port2
-                0x0000000010001728       0x60 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010001728                write_port2
+                0x0000000010001724       0x60 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010001724                write_port2
  .text.port2_ddr
-                0x0000000010001788       0xa0 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010001788                port2_ddr
+                0x0000000010001784       0xa0 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010001784                port2_ddr
  .text.read_port6
-                0x0000000010001828        0xc CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010001828                read_port6
+                0x0000000010001824        0xc CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010001824                read_port6
  .text.write_port6
-                0x0000000010001834       0xf0 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010001834                write_port6
+                0x0000000010001830       0xf0 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010001830                write_port6
  .text.port6_ddr
-                0x0000000010001924       0xb8 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010001924                port6_ddr
- .text.RD_REF   0x00000000100019dc      0x194 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x00000000100019dc                RD_REF
- .text.op_tst   0x0000000010001b70       0xe4 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010001b70                op_tst
- .text.WR_REF   0x0000000010001c54      0x138 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010001c54                WR_REF
- .text.op_dec8  0x0000000010001d8c       0xe0 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010001d8c                op_dec8
- .text.op_inc8  0x0000000010001e6c       0xe0 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010001e6c                op_inc8
- .text.op_clr   0x0000000010001f4c       0x8c CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010001f4c                op_clr
- .text.op_neg   0x0000000010001fd8       0xfc CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010001fd8                op_neg
- .text.op_asl   0x00000000100020d4      0x104 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x00000000100020d4                op_asl
- .text.op_com   0x00000000100021d8       0xd0 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x00000000100021d8                op_com
- .text.op_lsr   0x00000000100022a8       0xe4 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x00000000100022a8                op_lsr
- .text.op_asr   0x000000001000238c       0xf4 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x000000001000238c                op_asr
- .text.op_rol   0x0000000010002480      0x114 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010002480                op_rol
- .text.op_ror   0x0000000010002594      0x110 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010002594                op_ror
- .text.RD_ADDR  0x00000000100026a4      0x170 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x00000000100026a4                RD_ADDR
- .text.op_tim   0x0000000010002814       0x78 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010002814                op_tim
- .text.op_pul   0x000000001000288c       0x64 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x000000001000288c                op_pul
- .text.op_and   0x00000000100028f0      0x120 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x00000000100028f0                op_and
- .text.op_eor   0x0000000010002a10      0x120 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010002a10                op_eor
- .text.op_ora   0x0000000010002b30      0x120 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010002b30                op_ora
- .text.op_bit   0x0000000010002c50      0x11c CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010002c50                op_bit
- .text.op_addd  0x0000000010002d6c      0x170 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010002d6c                op_addd
- .text.op_cpx   0x0000000010002edc      0x15c CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010002edc                op_cpx
- .text.op_subd  0x0000000010003038      0x174 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010003038                op_subd
- .text.op_rti   0x00000000100031ac       0x84 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x00000000100031ac                op_rti
- .text.op_rts   0x0000000010003230       0x34 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010003230                op_rts
- .text.op_ldd   0x0000000010003264       0xd8 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010003264                op_ldd
- .text.op_adc   0x000000001000333c      0x1d0 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x000000001000333c                op_adc
- .text.op_add   0x000000001000350c      0x1d0 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x000000001000350c                op_add
- .text.op_lda   0x00000000100036dc      0x11c CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x00000000100036dc                op_lda
- .text.op_cmp   0x00000000100037f8      0x17c CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x00000000100037f8                op_cmp
- .text.op_sbc   0x0000000010003974      0x198 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010003974                op_sbc
- .text.op_sub   0x0000000010003b0c      0x188 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010003b0c                op_sub
+                0x0000000010001920       0xb8 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010001920                port6_ddr
+ .text.RD_REF   0x00000000100019d8      0x194 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x00000000100019d8                RD_REF
+ .text.op_tst   0x0000000010001b6c       0xe4 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010001b6c                op_tst
+ .text.WR_REF   0x0000000010001c50      0x138 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010001c50                WR_REF
+ .text.op_dec8  0x0000000010001d88       0xe0 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010001d88                op_dec8
+ .text.op_inc8  0x0000000010001e68       0xe0 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010001e68                op_inc8
+ .text.op_clr   0x0000000010001f48       0x8c CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010001f48                op_clr
+ .text.op_neg   0x0000000010001fd4       0xfc CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010001fd4                op_neg
+ .text.op_asl   0x00000000100020d0      0x104 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x00000000100020d0                op_asl
+ .text.op_com   0x00000000100021d4       0xd0 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x00000000100021d4                op_com
+ .text.op_lsr   0x00000000100022a4       0xe4 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x00000000100022a4                op_lsr
+ .text.op_asr   0x0000000010002388       0xf4 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010002388                op_asr
+ .text.op_rol   0x000000001000247c      0x114 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x000000001000247c                op_rol
+ .text.op_ror   0x0000000010002590      0x110 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010002590                op_ror
+ .text.RD_ADDR  0x00000000100026a0      0x170 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x00000000100026a0                RD_ADDR
+ .text.op_tim   0x0000000010002810       0x78 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010002810                op_tim
+ .text.op_pul   0x0000000010002888       0x64 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010002888                op_pul
+ .text.op_and   0x00000000100028ec      0x120 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x00000000100028ec                op_and
+ .text.op_eor   0x0000000010002a0c      0x120 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010002a0c                op_eor
+ .text.op_ora   0x0000000010002b2c      0x120 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010002b2c                op_ora
+ .text.op_bit   0x0000000010002c4c      0x11c CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010002c4c                op_bit
+ .text.op_addd  0x0000000010002d68      0x170 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010002d68                op_addd
+ .text.op_cpx   0x0000000010002ed8      0x15c CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010002ed8                op_cpx
+ .text.op_subd  0x0000000010003034      0x174 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010003034                op_subd
+ .text.op_rti   0x00000000100031a8       0x84 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x00000000100031a8                op_rti
+ .text.op_rts   0x000000001000322c       0x34 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x000000001000322c                op_rts
+ .text.op_ldd   0x0000000010003260       0xd8 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010003260                op_ldd
+ .text.op_adc   0x0000000010003338      0x1d0 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010003338                op_adc
+ .text.op_add   0x0000000010003508      0x1d0 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010003508                op_add
+ .text.op_lda   0x00000000100036d8      0x11c CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x00000000100036d8                op_lda
+ .text.op_cmp   0x00000000100037f4      0x17c CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x00000000100037f4                op_cmp
+ .text.op_sbc   0x0000000010003970      0x198 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010003970                op_sbc
+ .text.op_sub   0x0000000010003b08      0x188 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010003b08                op_sub
  .text.RDW_ADDR
-                0x0000000010003c94       0x9c CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010003c94                RDW_ADDR
- .text.op_ld16  0x0000000010003d30      0x12c CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010003d30                op_ld16
- .text.WR_ADDR  0x0000000010003e5c      0x104 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010003e5c                WR_ADDR
- .text.op_oim   0x0000000010003f60       0x90 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010003f60                op_oim
- .text.op_aim   0x0000000010003ff0       0x90 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010003ff0                op_aim
- .text.op_eim   0x0000000010004080       0x90 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010004080                op_eim
- .text.op_psh   0x0000000010004110       0x54 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010004110                op_psh
- .text.op_sta   0x0000000010004164       0xd4 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010004164                op_sta
- .text.op_swi   0x0000000010004238       0xa4 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010004238                op_swi
- .text.op_trap  0x00000000100042dc       0x98 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x00000000100042dc                op_trap
- .text.op_jsr   0x0000000010004374      0x100 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010004374                op_jsr
+                0x0000000010003c90       0x9c CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010003c90                RDW_ADDR
+ .text.op_ld16  0x0000000010003d2c      0x12c CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010003d2c                op_ld16
+ .text.WR_ADDR  0x0000000010003e58      0x104 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010003e58                WR_ADDR
+ .text.op_oim   0x0000000010003f5c       0x90 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010003f5c                op_oim
+ .text.op_aim   0x0000000010003fec       0x90 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010003fec                op_aim
+ .text.op_eim   0x000000001000407c       0x90 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x000000001000407c                op_eim
+ .text.op_psh   0x000000001000410c       0x54 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x000000001000410c                op_psh
+ .text.op_sta   0x0000000010004160       0xd4 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010004160                op_sta
+ .text.op_swi   0x0000000010004234       0xa4 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010004234                op_swi
+ .text.op_trap  0x00000000100042d8       0x98 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x00000000100042d8                op_trap
+ .text.op_jsr   0x0000000010004370      0x100 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010004370                op_jsr
  .text.WRW_ADDR
-                0x0000000010004474       0x1a CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010004474                WRW_ADDR
- *fill*         0x000000001000448e        0x2 
- .text.op_stx   0x0000000010004490       0x90 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010004490                op_stx
- .text.op_sts   0x0000000010004520       0x90 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010004520                op_sts
- .text.op_std   0x00000000100045b0       0xa4 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x00000000100045b0                op_std
+                0x0000000010004470       0x1a CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010004470                WRW_ADDR
+ *fill*         0x000000001000448a        0x2 
+ .text.op_stx   0x000000001000448c       0x90 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x000000001000448c                op_stx
+ .text.op_sts   0x000000001000451c       0x90 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x000000001000451c                op_sts
+ .text.op_std   0x00000000100045ac       0xa4 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x00000000100045ac                op_std
  .text.interrupt_request
-                0x0000000010004654       0x24 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010004654                interrupt_request
+                0x0000000010004650       0x24 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010004650                interrupt_request
  .text.update_interrupts
-                0x0000000010004678       0xdc CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010004678                update_interrupts
+                0x0000000010004674       0xdc CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010004674                update_interrupts
  .text.update_timers
-                0x0000000010004754       0x40 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010004754                update_timers
+                0x0000000010004750       0x40 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010004750                update_timers
  .text.update_counter
-                0x0000000010004794       0x40 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010004794                update_counter
- .text.tick_1s  0x00000000100047d4       0xb4 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x00000000100047d4                tick_1s
+                0x0000000010004790       0x40 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010004790                update_counter
+ .text.tick_1s  0x00000000100047d0       0xb4 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x00000000100047d0                tick_1s
  .text.initialise_emulator
-                0x0000000010004888       0x90 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010004888                initialise_emulator
+                0x0000000010004884       0x90 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010004884                initialise_emulator
  .text.after_ram_restore_init
-                0x0000000010004918       0x24 CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x0000000010004918                after_ram_restore_init
+                0x0000000010004914       0x24 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010004914                after_ram_restore_init
  .text.loop_emulator
-                0x000000001000493c       0x9c CMakeFiles/psion_recreate.dir/emulator.c.obj
-                0x000000001000493c                loop_emulator
+                0x0000000010004938       0xa0 CMakeFiles/psion_recreate.dir/emulator.c.obj
+                0x0000000010004938                loop_emulator
  .text.on_uart_rx
                 0x00000000100049d8       0x98 CMakeFiles/psion_recreate.dir/wireless.c.obj
                 0x00000000100049d8                on_uart_rx
@@ -5064,7 +5064,7 @@ LOAD CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_c
 LOAD CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.obj
 LOAD CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_flash/flash.c.obj
 LOAD CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.obj
-LOAD /tmp/ccYGk5aa.o
+LOAD /tmp/ccwyN2GS.o
 LOAD /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libstdc++.a
 LOAD /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a
 START GROUP
@@ -5205,7 +5205,7 @@ LOAD linker stubs
  .ARM.attributes
                 0x00000000000009b8       0x2c CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.obj
  .ARM.attributes
-                0x00000000000009e4       0x22 /tmp/ccYGk5aa.o
+                0x00000000000009e4       0x22 /tmp/ccwyN2GS.o
  .ARM.attributes
                 0x0000000000000a06       0x1e /usr/lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_dvmd_tls.o)
  .ARM.attributes
@@ -5420,118 +5420,118 @@ LOAD linker stubs
  .comment       0x00000000000000a7       0x4f /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(lseek.o)
  .comment       0x00000000000000a7       0x5a /usr/lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/crtend.o
 
-.debug_info     0x0000000000000000    0x70d44
- .debug_info    0x0000000000000000     0x25cf CMakeFiles/psion_recreate.dir/psion_recreate.c.obj
- .debug_info    0x00000000000025cf     0x2ad1 CMakeFiles/psion_recreate.dir/display.c.obj
- .debug_info    0x00000000000050a0     0x107f CMakeFiles/psion_recreate.dir/font.c.obj
- .debug_info    0x000000000000611f     0x5bdd CMakeFiles/psion_recreate.dir/emulator.c.obj
- .debug_info    0x000000000000bcfc     0x4a6f CMakeFiles/psion_recreate.dir/wireless.c.obj
- .debug_info    0x000000000001076b      0xead CMakeFiles/psion_recreate.dir/rtc.c.obj
- .debug_info    0x0000000000011618     0x1898 CMakeFiles/psion_recreate.dir/i2c.c.obj
- .debug_info    0x0000000000012eb0      0xb57 CMakeFiles/psion_recreate.dir/match.c.obj
- .debug_info    0x0000000000013a07     0x168f CMakeFiles/psion_recreate.dir/eeprom.c.obj
- .debug_info    0x0000000000015096     0x123d CMakeFiles/psion_recreate.dir/menu.c.obj
- .debug_info    0x00000000000162d3     0x144d CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.obj
- .debug_info    0x0000000000017720      0x6a2 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_claim/claim.c.obj
- .debug_info    0x0000000000017dc2      0x1cb CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_platform/platform.c.obj
- .debug_info    0x0000000000017f8d      0x576 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c.obj
- .debug_info    0x0000000000018503      0xb2d CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.obj
- .debug_info    0x0000000000019030     0x4352 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/time.c.obj
- .debug_info    0x000000000001d382     0x10e2 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
- .debug_info    0x000000000001e464      0x1e4 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/lock_core.c.obj
- .debug_info    0x000000000001e648     0x1384 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/mutex.c.obj
- .debug_info    0x000000000001f9cc      0x311 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/critical_section.c.obj
- .debug_info    0x000000000001fcdd     0x1aa5 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/pheap.c.obj
- .debug_info    0x0000000000021782     0x128a CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj
- .debug_info    0x0000000000022a0c      0xeec CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.obj
- .debug_info    0x00000000000238f8     0x190c CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
- .debug_info    0x0000000000025204       0x26 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S.obj
- .debug_info    0x000000000002522a      0x4d6 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_pll/pll.c.obj
- .debug_info    0x0000000000025700      0xd2c CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c.obj
- .debug_info    0x000000000002642c      0x1c5 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_xosc/xosc.c.obj
- .debug_info    0x00000000000265f1     0x1fbf CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
- .debug_info    0x00000000000285b0       0x22 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_bit_ops/bit_ops_aeabi.S.obj
- .debug_info    0x00000000000285d2      0x20d CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c.obj
- .debug_info    0x00000000000287df       0x22 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_divider/divider.S.obj
- .debug_info    0x0000000000028801       0x22 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
- .debug_info    0x0000000000028823      0xaf9 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_init_rom.c.obj
- .debug_info    0x000000000002931c       0x22 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_v1_rom_shim.S.obj
- .debug_info    0x000000000002933e       0x26 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_int64_ops/pico_int64_ops_aeabi.S.obj
- .debug_info    0x0000000000029364       0x22 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj
- .debug_info    0x0000000000029386      0xb42 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_init_rom.c.obj
- .debug_info    0x0000000000029ec8       0x22 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_v1_rom_shim.S.obj
- .debug_info    0x0000000000029eea      0xcd9 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_malloc/pico_malloc.c.obj
- .debug_info    0x000000000002abc3       0x22 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_mem_ops/mem_ops_aeabi.S.obj
- .debug_info    0x000000000002abe5       0x22 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_standard_link/crt0.S.obj
- .debug_info    0x000000000002ac07      0x2c6 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
- .debug_info    0x000000000002aecd     0x1a1a CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
- .debug_info    0x000000000002c8e7      0xbf9 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_uart/stdio_uart.c.obj
- .debug_info    0x000000000002d4e0     0x1138 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj
- .debug_info    0x000000000002e618     0x16fa CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
- .debug_info    0x000000000002fd12      0xf3e CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj
- .debug_info    0x0000000000030c50     0x24ea CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
- .debug_info    0x000000000003313a     0x161e CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.obj
- .debug_info    0x0000000000034758     0x4a83 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
- .debug_info    0x00000000000391db     0x1333 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj
- .debug_info    0x000000000003a50e     0x24fa CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
- .debug_info    0x000000000003ca08      0xe01 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/tusb.c.obj
- .debug_info    0x000000000003d809     0x3291 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
- .debug_info    0x0000000000040a9a      0x24b CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.obj
- .debug_info    0x0000000000040ce5      0xb84 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_flash/flash.c.obj
- .debug_info    0x0000000000041869     0x1ca6 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.obj
- .debug_info    0x000000000004350f       0x26 /usr/lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_dvmd_tls.o)
- .debug_info    0x0000000000043535      0x9d9 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-atoi.o)
- .debug_info    0x0000000000043f0e      0xc2f /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-callocr.o)
- .debug_info    0x0000000000044b3d      0xe91 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-ctype_.o)
- .debug_info    0x00000000000459ce      0xcd5 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-fclose.o)
- .debug_info    0x00000000000466a3      0xd85 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-fflush.o)
- .debug_info    0x0000000000047428     0x114b /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-findfp.o)
- .debug_info    0x0000000000048573      0xd99 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-freer.o)
- .debug_info    0x000000000004930c      0xca4 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-fwalk.o)
- .debug_info    0x0000000000049fb0      0x92a /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-impure.o)
- .debug_info    0x000000000004a8da      0xf1a /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-mallocr.o)
- .debug_info    0x000000000004b7f4      0x9c2 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-memcmp.o)
- .debug_info    0x000000000004c1b6      0x961 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-mlock.o)
- .debug_info    0x000000000004cb17      0xac2 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-reent.o)
- .debug_info    0x000000000004d5d9      0x9fb /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-sbrkr.o)
- .debug_info    0x000000000004dfd4      0xcbc /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-sscanf.o)
- .debug_info    0x000000000004ec90      0xe6c /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-stdio.o)
- .debug_info    0x000000000004fafc      0x9a4 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-strcat.o)
- .debug_info    0x00000000000504a0       0x26 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-strcmp.o)
- .debug_info    0x00000000000504c6      0x943 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-strcpy.o)
- .debug_info    0x0000000000050e09      0x973 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-strlen-stub.o)
- .debug_info    0x000000000005177c      0x995 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-strncmp.o)
- .debug_info    0x0000000000052111     0x1269 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-strtol.o)
- .debug_info    0x000000000005337a     0x11ec /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-strtoul.o)
- .debug_info    0x0000000000054566     0x1d4d /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-svfscanf.o)
- .debug_info    0x00000000000562b3      0xa2d /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-writer.o)
- .debug_info    0x0000000000056ce0      0x9d8 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-closer.o)
- .debug_info    0x00000000000576b8      0x953 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-errno.o)
- .debug_info    0x000000000005800b       0xc8 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-iswspace.o)
- .debug_info    0x00000000000580d3      0xec5 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-iswspace_l.o)
- .debug_info    0x0000000000058f98     0x10c7 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-locale.o)
- .debug_info    0x000000000005a05f      0xf49 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-localeconv.o)
- .debug_info    0x000000000005afa8      0xa0e /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-lseekr.o)
- .debug_info    0x000000000005b9b6     0x10cb /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-mbrtowc.o)
- .debug_info    0x000000000005ca81     0x1044 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-mbtowc_r.o)
- .debug_info    0x000000000005dac5     0x22bb /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-mprec.o)
- .debug_info    0x000000000005fd80      0xa26 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-readr.o)
- .debug_info    0x00000000000607a6      0xb93 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-sccl.o)
- .debug_info    0x0000000000061339      0x980 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-sf_nan.o)
- .debug_info    0x0000000000061cb9     0x1f81 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-strtod.o)
- .debug_info    0x0000000000063c3a     0x11ee /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-strtoll.o)
- .debug_info    0x0000000000064e28     0x11ee /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-strtoull.o)
- .debug_info    0x0000000000066016     0x1c38 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-svfiscanf.o)
- .debug_info    0x0000000000067c4e      0xd88 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-ungetc.o)
- .debug_info    0x00000000000689d6     0x1000 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-wctomb_r.o)
- .debug_info    0x00000000000699d6     0x1750 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-gdtoa-gethex.o)
- .debug_info    0x000000000006b126     0x1273 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-gdtoa-hexnan.o)
- .debug_info    0x000000000006c399      0xf0d /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-lnumeric.o)
- .debug_info    0x000000000006d2a6      0xf2b /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-memmove.o)
- .debug_info    0x000000000006e1d1      0xef1 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-reallocr.o)
- .debug_info    0x000000000006f0c2      0x984 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-s_nan.o)
- .debug_info    0x000000000006fa46      0x96e /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(close.o)
- .debug_info    0x00000000000703b4      0x990 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(lseek.o)
+.debug_info     0x0000000000000000    0x70d38
+ .debug_info    0x0000000000000000     0x25ba CMakeFiles/psion_recreate.dir/psion_recreate.c.obj
+ .debug_info    0x00000000000025ba     0x2ad1 CMakeFiles/psion_recreate.dir/display.c.obj
+ .debug_info    0x000000000000508b     0x107f CMakeFiles/psion_recreate.dir/font.c.obj
+ .debug_info    0x000000000000610a     0x5be6 CMakeFiles/psion_recreate.dir/emulator.c.obj
+ .debug_info    0x000000000000bcf0     0x4a6f CMakeFiles/psion_recreate.dir/wireless.c.obj
+ .debug_info    0x000000000001075f      0xead CMakeFiles/psion_recreate.dir/rtc.c.obj
+ .debug_info    0x000000000001160c     0x1898 CMakeFiles/psion_recreate.dir/i2c.c.obj
+ .debug_info    0x0000000000012ea4      0xb57 CMakeFiles/psion_recreate.dir/match.c.obj
+ .debug_info    0x00000000000139fb     0x168f CMakeFiles/psion_recreate.dir/eeprom.c.obj
+ .debug_info    0x000000000001508a     0x123d CMakeFiles/psion_recreate.dir/menu.c.obj
+ .debug_info    0x00000000000162c7     0x144d CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.obj
+ .debug_info    0x0000000000017714      0x6a2 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_claim/claim.c.obj
+ .debug_info    0x0000000000017db6      0x1cb CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_platform/platform.c.obj
+ .debug_info    0x0000000000017f81      0x576 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c.obj
+ .debug_info    0x00000000000184f7      0xb2d CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.obj
+ .debug_info    0x0000000000019024     0x4352 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/time.c.obj
+ .debug_info    0x000000000001d376     0x10e2 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
+ .debug_info    0x000000000001e458      0x1e4 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/lock_core.c.obj
+ .debug_info    0x000000000001e63c     0x1384 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/mutex.c.obj
+ .debug_info    0x000000000001f9c0      0x311 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/critical_section.c.obj
+ .debug_info    0x000000000001fcd1     0x1aa5 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/pheap.c.obj
+ .debug_info    0x0000000000021776     0x128a CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj
+ .debug_info    0x0000000000022a00      0xeec CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.obj
+ .debug_info    0x00000000000238ec     0x190c CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
+ .debug_info    0x00000000000251f8       0x26 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S.obj
+ .debug_info    0x000000000002521e      0x4d6 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_pll/pll.c.obj
+ .debug_info    0x00000000000256f4      0xd2c CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c.obj
+ .debug_info    0x0000000000026420      0x1c5 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_xosc/xosc.c.obj
+ .debug_info    0x00000000000265e5     0x1fbf CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
+ .debug_info    0x00000000000285a4       0x22 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_bit_ops/bit_ops_aeabi.S.obj
+ .debug_info    0x00000000000285c6      0x20d CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c.obj
+ .debug_info    0x00000000000287d3       0x22 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_divider/divider.S.obj
+ .debug_info    0x00000000000287f5       0x22 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
+ .debug_info    0x0000000000028817      0xaf9 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_init_rom.c.obj
+ .debug_info    0x0000000000029310       0x22 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_v1_rom_shim.S.obj
+ .debug_info    0x0000000000029332       0x26 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_int64_ops/pico_int64_ops_aeabi.S.obj
+ .debug_info    0x0000000000029358       0x22 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj
+ .debug_info    0x000000000002937a      0xb42 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_init_rom.c.obj
+ .debug_info    0x0000000000029ebc       0x22 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_v1_rom_shim.S.obj
+ .debug_info    0x0000000000029ede      0xcd9 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_malloc/pico_malloc.c.obj
+ .debug_info    0x000000000002abb7       0x22 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_mem_ops/mem_ops_aeabi.S.obj
+ .debug_info    0x000000000002abd9       0x22 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_standard_link/crt0.S.obj
+ .debug_info    0x000000000002abfb      0x2c6 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
+ .debug_info    0x000000000002aec1     0x1a1a CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
+ .debug_info    0x000000000002c8db      0xbf9 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_uart/stdio_uart.c.obj
+ .debug_info    0x000000000002d4d4     0x1138 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj
+ .debug_info    0x000000000002e60c     0x16fa CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
+ .debug_info    0x000000000002fd06      0xf3e CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj
+ .debug_info    0x0000000000030c44     0x24ea CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
+ .debug_info    0x000000000003312e     0x161e CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.obj
+ .debug_info    0x000000000003474c     0x4a83 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
+ .debug_info    0x00000000000391cf     0x1333 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj
+ .debug_info    0x000000000003a502     0x24fa CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
+ .debug_info    0x000000000003c9fc      0xe01 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/tusb.c.obj
+ .debug_info    0x000000000003d7fd     0x3291 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
+ .debug_info    0x0000000000040a8e      0x24b CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.obj
+ .debug_info    0x0000000000040cd9      0xb84 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_flash/flash.c.obj
+ .debug_info    0x000000000004185d     0x1ca6 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.obj
+ .debug_info    0x0000000000043503       0x26 /usr/lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_dvmd_tls.o)
+ .debug_info    0x0000000000043529      0x9d9 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-atoi.o)
+ .debug_info    0x0000000000043f02      0xc2f /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-callocr.o)
+ .debug_info    0x0000000000044b31      0xe91 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-ctype_.o)
+ .debug_info    0x00000000000459c2      0xcd5 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-fclose.o)
+ .debug_info    0x0000000000046697      0xd85 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-fflush.o)
+ .debug_info    0x000000000004741c     0x114b /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-findfp.o)
+ .debug_info    0x0000000000048567      0xd99 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-freer.o)
+ .debug_info    0x0000000000049300      0xca4 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-fwalk.o)
+ .debug_info    0x0000000000049fa4      0x92a /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-impure.o)
+ .debug_info    0x000000000004a8ce      0xf1a /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-mallocr.o)
+ .debug_info    0x000000000004b7e8      0x9c2 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-memcmp.o)
+ .debug_info    0x000000000004c1aa      0x961 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-mlock.o)
+ .debug_info    0x000000000004cb0b      0xac2 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-reent.o)
+ .debug_info    0x000000000004d5cd      0x9fb /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-sbrkr.o)
+ .debug_info    0x000000000004dfc8      0xcbc /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-sscanf.o)
+ .debug_info    0x000000000004ec84      0xe6c /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-stdio.o)
+ .debug_info    0x000000000004faf0      0x9a4 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-strcat.o)
+ .debug_info    0x0000000000050494       0x26 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-strcmp.o)
+ .debug_info    0x00000000000504ba      0x943 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-strcpy.o)
+ .debug_info    0x0000000000050dfd      0x973 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-strlen-stub.o)
+ .debug_info    0x0000000000051770      0x995 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-strncmp.o)
+ .debug_info    0x0000000000052105     0x1269 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-strtol.o)
+ .debug_info    0x000000000005336e     0x11ec /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-strtoul.o)
+ .debug_info    0x000000000005455a     0x1d4d /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-svfscanf.o)
+ .debug_info    0x00000000000562a7      0xa2d /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-writer.o)
+ .debug_info    0x0000000000056cd4      0x9d8 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-closer.o)
+ .debug_info    0x00000000000576ac      0x953 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-errno.o)
+ .debug_info    0x0000000000057fff       0xc8 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-iswspace.o)
+ .debug_info    0x00000000000580c7      0xec5 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-iswspace_l.o)
+ .debug_info    0x0000000000058f8c     0x10c7 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-locale.o)
+ .debug_info    0x000000000005a053      0xf49 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-localeconv.o)
+ .debug_info    0x000000000005af9c      0xa0e /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-lseekr.o)
+ .debug_info    0x000000000005b9aa     0x10cb /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-mbrtowc.o)
+ .debug_info    0x000000000005ca75     0x1044 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-mbtowc_r.o)
+ .debug_info    0x000000000005dab9     0x22bb /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-mprec.o)
+ .debug_info    0x000000000005fd74      0xa26 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-readr.o)
+ .debug_info    0x000000000006079a      0xb93 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-sccl.o)
+ .debug_info    0x000000000006132d      0x980 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-sf_nan.o)
+ .debug_info    0x0000000000061cad     0x1f81 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-strtod.o)
+ .debug_info    0x0000000000063c2e     0x11ee /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-strtoll.o)
+ .debug_info    0x0000000000064e1c     0x11ee /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-strtoull.o)
+ .debug_info    0x000000000006600a     0x1c38 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-svfiscanf.o)
+ .debug_info    0x0000000000067c42      0xd88 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-ungetc.o)
+ .debug_info    0x00000000000689ca     0x1000 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-wctomb_r.o)
+ .debug_info    0x00000000000699ca     0x1750 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-gdtoa-gethex.o)
+ .debug_info    0x000000000006b11a     0x1273 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-gdtoa-hexnan.o)
+ .debug_info    0x000000000006c38d      0xf0d /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-lnumeric.o)
+ .debug_info    0x000000000006d29a      0xf2b /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-memmove.o)
+ .debug_info    0x000000000006e1c5      0xef1 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-reallocr.o)
+ .debug_info    0x000000000006f0b6      0x984 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-s_nan.o)
+ .debug_info    0x000000000006fa3a      0x96e /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(close.o)
+ .debug_info    0x00000000000703a8      0x990 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(lseek.o)
 
 .debug_abbrev   0x0000000000000000    0x1263d
  .debug_abbrev  0x0000000000000000      0x403 CMakeFiles/psion_recreate.dir/psion_recreate.c.obj
@@ -6039,15 +6039,15 @@ LOAD linker stubs
  .debug_ranges  0x0000000000005f10       0xf0 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(lib_a-reallocr.o)
 
 .debug_line     0x0000000000000000    0x2e547
- .debug_line    0x0000000000000000      0xd12 CMakeFiles/psion_recreate.dir/psion_recreate.c.obj
- .debug_line    0x0000000000000d12      0xef6 CMakeFiles/psion_recreate.dir/display.c.obj
- .debug_line    0x0000000000001c08      0x3b9 CMakeFiles/psion_recreate.dir/font.c.obj
- .debug_line    0x0000000000001fc1     0x5259 CMakeFiles/psion_recreate.dir/emulator.c.obj
- .debug_line    0x000000000000721a     0x2392 CMakeFiles/psion_recreate.dir/wireless.c.obj
- .debug_line    0x00000000000095ac      0x445 CMakeFiles/psion_recreate.dir/rtc.c.obj
- .debug_line    0x00000000000099f1      0x975 CMakeFiles/psion_recreate.dir/i2c.c.obj
- .debug_line    0x000000000000a366      0x3c2 CMakeFiles/psion_recreate.dir/match.c.obj
- .debug_line    0x000000000000a728      0xa87 CMakeFiles/psion_recreate.dir/eeprom.c.obj
+ .debug_line    0x0000000000000000      0xd0d CMakeFiles/psion_recreate.dir/psion_recreate.c.obj
+ .debug_line    0x0000000000000d0d      0xef6 CMakeFiles/psion_recreate.dir/display.c.obj
+ .debug_line    0x0000000000001c03      0x3b9 CMakeFiles/psion_recreate.dir/font.c.obj
+ .debug_line    0x0000000000001fbc     0x525a CMakeFiles/psion_recreate.dir/emulator.c.obj
+ .debug_line    0x0000000000007216     0x2392 CMakeFiles/psion_recreate.dir/wireless.c.obj
+ .debug_line    0x00000000000095a8      0x445 CMakeFiles/psion_recreate.dir/rtc.c.obj
+ .debug_line    0x00000000000099ed      0x975 CMakeFiles/psion_recreate.dir/i2c.c.obj
+ .debug_line    0x000000000000a362      0x3c2 CMakeFiles/psion_recreate.dir/match.c.obj
+ .debug_line    0x000000000000a724      0xa8b CMakeFiles/psion_recreate.dir/eeprom.c.obj
  .debug_line    0x000000000000b1af      0x673 CMakeFiles/psion_recreate.dir/menu.c.obj
  .debug_line    0x000000000000b822      0x99a CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.obj
  .debug_line    0x000000000000c1bc      0x3fa CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_claim/claim.c.obj
@@ -6152,13 +6152,13 @@ LOAD linker stubs
  .debug_line    0x000000000002e431      0x116 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(lseek.o)
 
 .debug_str      0x0000000000000000     0xa7fa
- .debug_str     0x0000000000000000      0xbbb CMakeFiles/psion_recreate.dir/psion_recreate.c.obj
-                                        0xd45 (size before relaxing)
- .debug_str     0x0000000000000bbb      0x18b CMakeFiles/psion_recreate.dir/display.c.obj
+ .debug_str     0x0000000000000000      0xbad CMakeFiles/psion_recreate.dir/psion_recreate.c.obj
+                                        0xd37 (size before relaxing)
+ .debug_str     0x0000000000000bad      0x18b CMakeFiles/psion_recreate.dir/display.c.obj
                                         0xc44 (size before relaxing)
- .debug_str     0x0000000000000d46       0x83 CMakeFiles/psion_recreate.dir/font.c.obj
+ .debug_str     0x0000000000000d38       0x83 CMakeFiles/psion_recreate.dir/font.c.obj
                                         0x895 (size before relaxing)
- .debug_str     0x0000000000000dc9      0x749 CMakeFiles/psion_recreate.dir/emulator.c.obj
+ .debug_str     0x0000000000000dbb      0x757 CMakeFiles/psion_recreate.dir/emulator.c.obj
                                        0x13e1 (size before relaxing)
  .debug_str     0x0000000000001512      0x935 CMakeFiles/psion_recreate.dir/wireless.c.obj
                                        0x13fd (size before relaxing)

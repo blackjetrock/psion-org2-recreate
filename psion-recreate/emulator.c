@@ -9357,7 +9357,7 @@ void loop_emulator(void)
   update_timers();
 
   update_counter();
-  //  handle_cursor();
+  handle_cursor();
 
   update_interrupts();
 

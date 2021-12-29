@@ -65,6 +65,7 @@ extern int model;
 #define MENU_ENABLED         1    // Meta menu enabled
 
 #define OVERCLOCK            0    // Overclock the RP2040
+#define OVERCLOCK_RESTORE    0    // Overclock for eeprom restore
 
 #define META_MENU_SCAN_COUNT    10
 
