@@ -43,6 +43,7 @@ void ifn_busy(int i);
 void ifn_connect(int i);
 void ifn_btdata(int i);
 void ifn2_btdata(void);
+void ifn_startdisc(int i);
 
 void ufn_index(void);
 void ufn_memory_0(void);
@@ -63,6 +64,23 @@ void btfn_key(void);
 
 void push_key(int keycode, int offset);
 void process_bt_term(BYTE *byte_buffer, int num);
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Discovered devices
+
+typedef struct _BT_DEVICE
+{
+  char name[20];
+  char id[6*3+5];
+} BT_DEVICE;
+
+#define NUM_BT_DEVICES 30
+
+int bt_device_i = 0;
+BT_DEVICE bt_device[NUM_BT_DEVICES];
+
+char *bt_connect_name = "HTC Desire X";
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -345,6 +363,35 @@ typedef struct _W_TASK
 // The master table of tasks
 W_TASK tasklist[] =
   {
+   //------------------------------------------------------------------------------
+   //
+   // Bluetooth classic SPP initialisation as master
+   //
+   //------------------------------------------------------------------------------
+   
+   {WTY_LABEL,            "btinitm",                        rfn_null},
+   {WTY_PUTS,             "AT+BTINIT=1\r\n",                rfn_null},
+   {WTY_DELAY_MS,         "2000",                           rfn_null},
+   {WTY_PUTS,             "AT+BTSPPINIT=1\r\n",             rfn_null},
+   {WTY_DELAY_MS,         "2000",                           rfn_null},
+   {WTY_PUTS,             "AT+BTSTARTDISC=0,10,10\r\n",     rfn_null},
+   {WTY_DELAY_MS,         "2000",                           rfn_null},
+   
+   //{WTY_PUTS,             "AT+BTSCANMODE=2\r\n",            rfn_null},
+   //{WTY_DELAY_MS,         "2000",                           rfn_null},
+   //   {WTY_PUTS,     "AT+BTSECPARAM=3,1,7735\r\n"},
+   //{WTY_DELAY_MS, "2000"},
+   //   {WTY_PUTS,             "AT+BTSPPSTART\r\n",              rfn_null},
+   //{WTY_DELAY_MS,         "2000",                           rfn_null},
+
+   {WTY_STOP,             "",                               rfn_null},                      // All done
+
+   //------------------------------------------------------------------------------
+   //
+   // Bluetooth classic SPP initialisation as slave
+   //
+   //------------------------------------------------------------------------------
+   
    {WTY_LABEL,            "btinit",                         rfn_null},
    {WTY_PUTS,             "AT+BTINIT=1\r\n",                rfn_null},
    {WTY_DELAY_MS,         "2000",                           rfn_null},
@@ -361,6 +408,12 @@ W_TASK tasklist[] =
 
    {WTY_STOP,             "",                               rfn_null},                      // All done
 
+   //------------------------------------------------------------------------------
+   //
+   // Wifi Initialisation
+   //
+   //------------------------------------------------------------------------------
+   
    {WTY_LABEL,            "init",                           rfn_null},
    {WTY_PUTS,             "AT+CWMODE=2\r\n",                rfn_null},
    {WTY_DELAY_MS,         "2000",                           rfn_null},
@@ -375,16 +428,49 @@ W_TASK tasklist[] =
    //{WTY_DELAY_MS, "2000"},
    {WTY_STOP,             "",                               rfn_null},                      // All done
 
+   //------------------------------------------------------------------------------
+   //
+   //
+   
    {WTY_LABEL,            "p_index",                        rfn_null},
 
    {WTY_STOP,             "",                               rfn_null},                      // All done
 
+#if 0   
+   //------------------------------------------------------------------------------
+   //
+   // Connect to BT device
+   //
+   //------------------------------------------------------------------------------
+   
+   {WTY_LABEL,            "btconnect",                           rfn_null},
+   {WTY_PUTS,             "AT+BTSPPCONN=0,0,\"24:0a:c4:d6:e4:46\"\r\n",                rfn_null},
+   {WTY_DELAY_MS,         "100",                            rfn_null},
+   {WTY_SENDDATA,         "",                               rfn_null},
+   {WTY_FN,               "",                               rfn_send_done},
+   {WTY_STOP,             "",                               rfn_null},
+#endif
+   
+   //------------------------------------------------------------------------------
+   //
+   // Send data back
+   //
+   // Used for wifi and BT replies
+   //
+   //------------------------------------------------------------------------------
+   
    {WTY_LABEL,            "send",                           rfn_null},
    {WTY_DELAY_MS,         "100",                            rfn_null},
    {WTY_SENDDATA,         "",                               rfn_null},
    {WTY_FN,               "",                               rfn_send_done},
    {WTY_STOP,             "",                               rfn_null},
 
+   //------------------------------------------------------------------------------
+   //
+   // Close wifi connection
+   //
+   //------------------------------------------------------------------------------
+   
    {WTY_LABEL,            "close",                          rfn_null},
    {WTY_PUTS,             "AT+CIPCLOSE=0\r\n",              rfn_null},
    {WTY_STOP,             "",                               rfn_null},                      // All done
@@ -459,8 +545,13 @@ const I_TASK input_list[] =
    // We can have a busy and then a prompt, so split the strings
    {ITY_FUNC,   " AT+BTSPPSEND=%d,%d\r",                                ifm_null,     ifn_ignore},
    {ITY_FUNC,   " >",                                                   ifm_null,     ifn_cipsend},
-  };
 
+   // Bluetooth master mode
+   {ITY_STRING, " AT+BTSPPINIT=1",                                      ifm_null,     ifn_ignore},
+   {ITY_STRING, " AT+BTSTARTDISC=0,10,10",                              ifm_null,     ifn_ignore},
+   {ITY_STRING, " +BTSTARTDISC:\"%x:%x:%x:%x:%x:%x\",%[^,],0x%x,0x%x,0x%x,%[0x0-9a-fA-F-]\r",  ifm_null,     ifn_startdisc},
+  };
+   
 #define I_NUM_TASKS (sizeof(input_list) / sizeof(I_TASK) )
 
 // URI task table
@@ -796,7 +887,15 @@ void ifn_ready(int i)
 #endif
 
 #if BLUETOOTH
+
+#if BLUETOOTH_M
+  start_task("btinitm");
+#endif
+
+#if BLUETOOTH_S
   start_task("btinit");
+#endif
+  
 #endif
   
   // Remove the string
@@ -928,6 +1027,66 @@ void ifn_busy(int i)
     }
 }
 
+////////////////////////////////////////////////////////////////////////////////
+//
+// We have discovered a device
+//
+////////////////////////////////////////////////////////////////////////////////
+
+void ifn_startdisc(int i)
+{
+  write_display_extra(2, 'd');
+  
+  //DEBUG_STOP;
+  
+  if( match(input_text, " +BTSTARTDISC:\"%x:%x:%x:%x:%x:%x\",%[^,],0x%x,0x%x,0x%x,%[0x0-9a-fA-F-]\r") )
+    {
+      //DEBUG_STOP;
+      
+      // remove the command
+      remove_n(match_num_scanned);
+      
+      // Get the data
+      
+      // The device name
+      int known = 0;
+      
+      if( bt_device_i < NUM_BT_DEVICES )
+	{
+	  // If we don't already know about it
+	  for(int i=0; i<bt_device_i; i++)
+	    {
+	      if( strcmp(bt_device[i].name, match_str_arg[0]) == 0 )
+		{
+		  known = 1;
+		  break;
+		}
+	    }
+	  
+	  if( !known )
+	    {
+	      strcpy(bt_device[bt_device_i].name, match_str_arg[0]);
+	      sprintf(bt_device[bt_device_i].id, "%x:%x:%x:%x:%x:%x",
+		      match_int_arg[0],      
+		      match_int_arg[1],      
+		      match_int_arg[2],      
+		      match_int_arg[3],      
+		      match_int_arg[4],      
+			  match_int_arg[5]);
+
+
+	      // If device is the one we want to connect to then do it
+	      if( strcmp(bt_connect_name, match_str_arg[0]) == 0 )
+		{
+		    sprintf(cmd, "AT+BTSPPCONN=0,0,\"%s\"\r\n", bt_device[bt_device_i].id);
+		    uart_puts(UART_ID, cmd);
+		}
+
+	      bt_device_i++;
+	    }
+	}
+    }
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 //

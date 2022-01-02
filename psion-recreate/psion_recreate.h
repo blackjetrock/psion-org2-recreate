@@ -46,12 +46,15 @@ extern int model;
 #define BUZZER_TEST          0
 #define UART_INTERRUPTS      1     // Interrupt for UART data collection
 #define I2C_DELAY            150   // Default, can be over-ridden
-#define ALLOW_POWER_OFF      0     // Do we allow the power to be turned off?
+#define ALLOW_POWER_OFF      1     // Do we allow the power to be turned off?
                                    // If 0 then sit in a loop on power off so
                                    // we can debug where the request to turn
                                    // off came from
 #define WIFI                 0
-#define BLUETOOTH            1
+#define BLUETOOTH            1     // Enable bluetooth comms
+#define BLUETOOTH_M          1     // Operate BT in master mode
+#define BLUETOOTH_S          0     // Operate BT in slave mode
+
 #define ENABLE_1S_TICK       1     // Needed ny restore from EEPROM code, otherwise hangs
 #define DISABLE_AUTO_OFF     1     // Disable auto off feature
 #define TRACE_ADDR           0     // Trace execution addresses
