@@ -46,7 +46,7 @@ extern int model;
 #define BUZZER_TEST          0
 #define UART_INTERRUPTS      1     // Interrupt for UART data collection
 #define I2C_DELAY            150   // Default, can be over-ridden
-#define ALLOW_POWER_OFF      1     // Do we allow the power to be turned off?
+#define ALLOW_POWER_OFF      0     // Do we allow the power to be turned off?
                                    // If 0 then sit in a loop on power off so
                                    // we can debug where the request to turn
                                    // off came from
@@ -279,10 +279,8 @@ void eeprom_ram_dump(void);
 void eeprom_ram_check(void);
 void eeprom_perform_dump(void);
 
-extern volatile int eeprom_do_dump;
-extern volatile int eeprom_do_restore;
-extern volatile int eeprom_done_dump;
-extern volatile int eeprom_done_restore;
+
+extern volatile int core1_in_menu;
 
 ////////////////////////////////////////////////////////////////////////////////
 //

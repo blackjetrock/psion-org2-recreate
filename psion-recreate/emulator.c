@@ -4487,6 +4487,9 @@ int lcd_shift    = 0;
 
 int lcd_linelen = 16;
 int lcd_dispsize = 32;
+
+int display_changed = 0;
+
 //------------------------------------------------------------------------------
 //
 // Cursor appears at ddram position
@@ -4640,6 +4643,21 @@ u_int8_t xp_mapping[] =
    64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79
   };
 
+int largest_number_in(u_int8_t v[], int num)
+{
+  int largest = 0;
+
+  for(int i=0; i<num; i++)
+    {
+      if( v[i] > largest )
+	{
+	  largest = v[i];
+	}
+    }
+  
+  return(largest);
+}
+
 // Which display mapping we are using
 u_int8_t *model_mapping;
 
@@ -4671,15 +4689,17 @@ void create_underline_char(int ch, int dest_code)
 void put_display_char(int x, int y, int ch)
 {
   int cx, cy;
-
+  
   cx = 127-(x * 6);
   cy = 3-y;
- lcd_display_buffer[model_mapping[y*DISPLAY_NUM_CHARS+x]] = ch;
+  lcd_display_buffer[model_mapping[y*DISPLAY_NUM_CHARS+x]] = ch;
+  display_changed = 1;
 }
 
 void write_display_extra(int i, int ch)
 {
   display_extra[i] = ch;
+  display_changed = 1;
 }
 
 void dump_lcd(void)
@@ -4688,97 +4708,103 @@ void dump_lcd(void)
   int ch;
   int saved_char;
   
-  if( (memcmp(last_lcd_display_buffer, lcd_display_buffer, lcd_dispsize) != 0) || cursor_update)
+  if( display_changed || cursor_update)
     {
-      cursor_update = 0;
+      display_changed = 0;
       
-      for(i=0; i<=lcd_dispsize; i++)
+      //      if( (memcmp(last_lcd_display_buffer, lcd_display_buffer, lcd_dispsize) != 0) || cursor_update)
 	{
-	  wireless_taskloop();
+	  cursor_update = 0;
 	  
-	  ch = lcd_display_buffer[model_mapping[i]];
-	  
-	  if( (model_mapping[i] == lcd_address) && lcd_cursor )
+	  for(i=0; i<=lcd_dispsize; i++)
 	    {
-	      if( cursor_state )
-		{
-		  // Which cursor?
-		  if( lcd_blink )
-		    {
-		      saved_char = ch;
-		      
-		      // Solid blinking block
-		      ch = CURSOR_CHAR;
-		    }
-		  else
-		    {
-		      // We have the character code, copy it and underline it in
-		      // the underline cursor entry in the font table
-		      create_underline_char(ch, CURSOR_UNDERLINE);	      
-
-		      saved_char = ch;
-		      // Non blinking underline of character
-		      ch = CURSOR_UNDERLINE;
-		    }
-		}
-	      else
-		{
-		  // Other phase of cursor
-		  // Which cursor?
-		  if( lcd_blink )
-		    {
-		      // Underline of char
-		      create_underline_char(ch, CURSOR_UNDERLINE);	      
-		      saved_char = ch;
-		      
-		      // Solid blinking block
-		      ch = CURSOR_UNDERLINE;
-		    }
-		  else
-		    {
-		      // We have the character code, copy it and underline it in
-		      // the underline cursor entry in the font table
-		      create_underline_char(ch, CURSOR_UNDERLINE);	      
-
-		      saved_char = ch;
-		      // Non blinking underline of character
-		      // on both phases
-		      ch = CURSOR_UNDERLINE;
-		    }
-		}
-	    }
-	  
-	  i_printxy(i % lcd_linelen, i / lcd_linelen, ch);
-
-	  // Print the four characters at the far right of the display. They are there
-	  // as the OLED is bigger than the LCD
-	  for(int i=0; i<DISPLAY_NUM_EXTRA; i++)
-	    {
-	      i_printxy(DISPLAY_NUM_CHARS-1, i, display_extra[i]);
-	    }
-	  
-	  // These buffer must have printable chars
-	  // UDG 0 causes problems so make it a space for now
-	  switch(ch)
-	    {
-	    case 0:
-	      ch = ch;
-	      break;
+	      //wireless_taskloop();
 	      
-	    case CURSOR_UNDERLINE:
-	    case CURSOR_CHAR:
-	      ch = saved_char;
-	      break;
+	      ch = lcd_display_buffer[model_mapping[i]];
+	      
+	      if( (model_mapping[i] == lcd_address) && lcd_cursor )
+		{
+		  if( cursor_state )
+		    {
+		      // Which cursor?
+		      if( lcd_blink )
+			{
+			  saved_char = ch;
+			  
+			  // Solid blinking block
+			  ch = CURSOR_CHAR;
+			}
+		      else
+			{
+			  // We have the character code, copy it and underline it in
+			  // the underline cursor entry in the font table
+			  create_underline_char(ch, CURSOR_UNDERLINE);	      
+			  
+			  saved_char = ch;
+			  // Non blinking underline of character
+			  ch = CURSOR_UNDERLINE;
+			}
+		    }
+		  else
+		    {
+		      // Other phase of cursor
+		      // Which cursor?
+		      if( lcd_blink )
+			{
+			  // Underline of char
+			  create_underline_char(ch, CURSOR_UNDERLINE);	      
+			  saved_char = ch;
+			  
+			  // Solid blinking block
+			  ch = CURSOR_UNDERLINE;
+			}
+		      else
+			{
+			  // We have the character code, copy it and underline it in
+			  // the underline cursor entry in the font table
+			  create_underline_char(ch, CURSOR_UNDERLINE);	      
+			  
+			  saved_char = ch;
+			  // Non blinking underline of character
+			  // on both phases
+			  ch = CURSOR_UNDERLINE;
+			}
+		    }
+		}
+	      
+	      i_printxy(i % lcd_linelen, i / lcd_linelen, ch);
 	    }
-
-	  // Also build the unjumbled buffer
-	  lcd_display[i] = isprint(ch)?ch:' ';;
-
-	  // And the separate line buffers
-	  display_line[i/20][i%20] = isprint(ch)?ch:' ';
+	  
+	      // Print the four characters at the far right of the display. They are there
+	      // as the OLED is bigger than the LCD
+	      for(int i=0; i<DISPLAY_NUM_EXTRA; i++)
+		{
+		  i_printxy(DISPLAY_NUM_CHARS-1, i, display_extra[i]);
+		}
+	      
+	      // These buffer must have printable chars
+	      // UDG 0 causes problems so make it a space for now
+	      switch(ch)
+		{
+		case 0:
+		  ch = ch;
+		  break;
+		  
+		case CURSOR_UNDERLINE:
+		case CURSOR_CHAR:
+		  ch = saved_char;
+		  break;
+		}
+	      
+	      // Also build the unjumbled buffer
+	      lcd_display[i] = isprint(ch)?ch:' ';;
+	      
+	      // And the separate line buffers
+	      display_line[i/20][i%20] = isprint(ch)?ch:' ';
+	      //	    }
+	  
+	  memcpy(last_lcd_display_buffer, lcd_display_buffer, lcd_dispsize);
 	}
-      
-      memcpy(last_lcd_display_buffer, lcd_display_buffer, lcd_dispsize);
     }
   
   // Terminate the buffers
@@ -4823,11 +4849,7 @@ void handle_lcd_write(u_int16_t addr, u_int8_t value)
       switch(value)
 	{
 	case 0x01:
-	  // Clear display
-	  for(int i=0; i<=lcd_dispsize; i++)
-	    {
-	      lcd_display_buffer[i] = ' ';
-	    }
+	  display_clear();
 	  lcd_address = 0;
 	  break;
 	  
@@ -4867,6 +4889,7 @@ void handle_lcd_write(u_int16_t addr, u_int8_t value)
       if( lcd_write_to_ddram )
 	{
 	  lcd_display_buffer[lcd_address] = value;
+	  display_changed = 1;
 	  
 	  lcd_address += (lcd_auto_inc)?1:-1;
 	  
@@ -4957,6 +4980,8 @@ void display_restore(void)
     {
       lcd_display_buffer[i] = saved_lcd_display_buffer[i];
     }
+  
+  display_changed = 1;
 }
 
 //------------------------------------------------------------------------------
@@ -9255,28 +9280,24 @@ void tick_1s(void)
 void initialise_emulator(void)
 {
   int i;
-  
-  // Clear display buffer
-  for(i=0; i<MAX_DDRAM+1; i++)
-    {
-      lcd_display_buffer[i] = ' ';
-    }
-  lcd_display_buffer[i] = '\0';
-	
+    
   switch(model)
     {
     case MODEL_XP:
       lcd_linelen = 16;
-      lcd_dispsize = 32;
+      lcd_dispsize = largest_number_in(xp_mapping, sizeof(xp_mapping));
       model_mapping = xp_mapping;
       break;
       
     case MODEL_LZ:
       lcd_linelen = 20;
-      lcd_dispsize = 80;
+      lcd_dispsize = largest_number_in(lz_mapping, sizeof(lz_mapping));
       model_mapping = lz_mapping;
       break;
     }
+
+  // Clear display buffer
+  display_clear();
 
   // Reset the processor
   // Latch MP0,MP1

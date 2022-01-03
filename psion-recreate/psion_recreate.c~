@@ -8,9 +8,11 @@
 #include "emulator.h"
 #include "wireless.h"
 #include "eeprom.h"
+#include "menu.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 
+volatile int core1_in_menu = 0;
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -56,6 +58,7 @@ uint16_t latchout1_shadow = 0;
 
 uint16_t csum_calc_on_restore = 0;
 uint16_t csum_in_eeprom       = 0;
+uint16_t csum_calc_on_dump    = 0;
 
 void latch2_set_mask(int value)
 {
@@ -234,6 +237,16 @@ void core1_main(void)
       dump_lcd();
       rtc_tasks();
       eeprom_tasks();
+
+      // The menu running on core 1 is convenient as it can access the I2C
+      // itself.
+      if( core1_in_menu )
+	{
+	  enter_menu();
+	  core1_in_menu = 0;
+	}
+
+      //handle_cursor();
       
 #if !WIFI_TEST      
       //wireless_loop();
@@ -340,6 +353,11 @@ int main() {
   //  gpio_put(PIN_SDAIN,  1);
   gpio_put(PIN_SCLKIN, 1);
 
+#if OVERCLOCK
+  //  set_sys_clock_khz(260000, false);   // Works
+  set_sys_clock_khz(300000, false);  
+  
+#endif
   //------------------------------------------------------------------------------
   //
   // Display test
@@ -353,6 +371,8 @@ int main() {
   // Initialise display
 
   // Turn on the 12V supply
+  // This signal does nothing now. OLED turned on when 3V3 turned on
+  
   latch2_set_mask(LAT2PIN_MASK_DRV_HV);
   
   //  latchout2_shadow |= LAT2PIN_MASK_DRV_HV;
@@ -485,16 +505,6 @@ int main() {
     
 #endif
 
-	  //         SCLK           =0
-	  //         SMR            =1
-	  //         SPGM           =2
-	  //         SOE_B          =3
-	  //         SS1_B          =4
-	  //         SS2_B          =5
-	  //         SS3_B          =6
-	  //         PACON_B        =7
-
-    
 #if TEST_PORT2
     gpio_init(PIN_SD0);
     
@@ -597,7 +607,36 @@ int main() {
     int addr_trace_to_i       = 0;
     int tracing_to            = 1;
 #endif
+
+    // Before we start the emulator and sit in the emulation loop we
+    // scan the keyboard for a while. This allows entry into the
+    // meta menu for things like dump recovery and forced cold
+    // start
     
+    for(int i=0; i<NUM_SCAN_STATES*3; i++)
+      {
+	scan_keys();
+      }
+
+    if( gotkey )
+      {
+	// If SHIFT pressed
+	if( keychar == 's' )
+	{
+#if 0	  
+	    // Enter menu
+	    enter_menu();
+#else
+	    // get core 1 to run the menu
+	    core1_in_menu = 1;
+
+	    // Wait for the core to exit the menu before we continue
+	    while(core1_in_menu)
+	      {
+	      }
+#endif
+	}
+      }
 
     // Main loop
     while(1)

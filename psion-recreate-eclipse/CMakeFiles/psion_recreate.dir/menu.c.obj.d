@@ -58,4 +58,5 @@ CMakeFiles/psion_recreate.dir/menu.c.obj: \
  /tree/downloaded_tools/pico/psion-recreate/match.h \
  /tree/downloaded_tools/pico/psion-recreate/font.h \
  /tree/downloaded_tools/pico/psion-recreate/menu.h \
- /tree/downloaded_tools/pico/psion-recreate/emulator.h
+ /tree/downloaded_tools/pico/psion-recreate/emulator.h \
+ /tree/downloaded_tools/pico/psion-recreate/eeprom.h

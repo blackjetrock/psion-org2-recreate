@@ -19,10 +19,19 @@
 #define EEPROM_CSUM_H    0x0182
 #define EEPROM_CSUM_L    0x0183
 
+extern volatile int eeprom_do_invalidate;
+extern volatile int eeprom_do_dump;
+extern volatile int eeprom_do_restore;
+extern volatile int eeprom_done_dump;
+extern volatile int eeprom_done_restore;
+extern volatile int eeprom_done_invalidate;
+
 void eeprom_ram_check(void);
 void eeprom_tasks(void);
 void eeprom_perform_restore(void);
 void eeprom_perform_dump(void);
 void eeprom_test2(void);
 void eeprom_test3(void);
+
+
 

@@ -75,7 +75,8 @@ CMakeFiles/psion_recreate.dir/display.c.obj: /tree/downloaded_tools/pico/psion-r
   /usr/include/newlib/sys/_locale.h \
   /usr/include/newlib/stdlib.h \
   /usr/include/newlib/machine/stdlib.h \
-  /usr/include/newlib/alloca.h
+  /usr/include/newlib/alloca.h \
+  /tree/downloaded_tools/pico/psion-recreate/font.h
 
 CMakeFiles/psion_recreate.dir/eeprom.c.obj: /tree/downloaded_tools/pico/psion-recreate/eeprom.c \
   /usr/include/newlib/ctype.h \
@@ -151,6 +152,7 @@ CMakeFiles/psion_recreate.dir/eeprom.c.obj: /tree/downloaded_tools/pico/psion-re
   /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/include/pico/stdio_usb.h \
   /tree/downloaded_tools/pico/psion-recreate/psion_recreate.h \
   /tree/downloaded_tools/pico/psion-recreate/match.h \
+  /tree/downloaded_tools/pico/psion-recreate/font.h \
   /tree/downloaded_tools/pico/psion-recreate/eeprom.h
 
 CMakeFiles/psion_recreate.dir/emulator.c.obj: /tree/downloaded_tools/pico/psion-recreate/emulator.c \
@@ -234,6 +236,7 @@ CMakeFiles/psion_recreate.dir/emulator.c.obj: /tree/downloaded_tools/pico/psion-
   /tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/include/pico/critical_section.h \
   /tree/downloaded_tools/pico/psion-recreate/psion_recreate.h \
   /tree/downloaded_tools/pico/psion-recreate/match.h \
+  /tree/downloaded_tools/pico/psion-recreate/font.h \
   /tree/downloaded_tools/pico/psion-recreate/emulator.h \
   /tree/downloaded_tools/pico/psion-recreate/wireless.h \
   /tree/downloaded_tools/pico/psion-recreate/eeprom.h \
@@ -278,7 +281,8 @@ CMakeFiles/psion_recreate.dir/font.c.obj: /tree/downloaded_tools/pico/psion-recr
   /usr/include/newlib/strings.h \
   /usr/include/newlib/sys/string.h \
   /tree/downloaded_tools/pico/psion-recreate/psion_recreate.h \
-  /tree/downloaded_tools/pico/psion-recreate/match.h
+  /tree/downloaded_tools/pico/psion-recreate/match.h \
+  /tree/downloaded_tools/pico/psion-recreate/font.h
 
 CMakeFiles/psion_recreate.dir/i2c.c.obj: /tree/downloaded_tools/pico/psion-recreate/i2c.c \
   /usr/include/newlib/stdio.h \
@@ -361,11 +365,11 @@ CMakeFiles/psion_recreate.dir/i2c.c.obj: /tree/downloaded_tools/pico/psion-recre
   /usr/include/newlib/sys/_locale.h \
   /usr/include/newlib/stdlib.h \
   /usr/include/newlib/machine/stdlib.h \
-  /usr/include/newlib/alloca.h
+  /usr/include/newlib/alloca.h \
+  /tree/downloaded_tools/pico/psion-recreate/font.h
 
 CMakeFiles/psion_recreate.dir/match.c.obj: /tree/downloaded_tools/pico/psion-recreate/match.c \
-  /tree/downloaded_tools/pico/psion-recreate/match.h \
-  /usr/include/newlib/ctype.h \
+  /usr/include/newlib/stdio.h \
   /usr/include/newlib/_ansi.h \
   /usr/include/newlib/newlib.h \
   /usr/include/newlib/_newlib_version.h \
@@ -375,13 +379,32 @@ CMakeFiles/psion_recreate.dir/match.c.obj: /tree/downloaded_tools/pico/psion-rec
   /usr/include/newlib/sys/cdefs.h \
   /usr/include/newlib/machine/_default_types.h \
   /usr/lib/gcc/arm-none-eabi/9.2.1/include/stddef.h \
-  /usr/include/newlib/sys/_locale.h \
-  /usr/include/newlib/stdlib.h \
+  /usr/lib/gcc/arm-none-eabi/9.2.1/include/stdarg.h \
   /usr/include/newlib/sys/reent.h \
   /usr/include/newlib/_ansi.h \
   /usr/include/newlib/sys/_types.h \
   /usr/include/newlib/machine/_types.h \
   /usr/include/newlib/sys/lock.h \
+  /usr/include/newlib/sys/types.h \
+  /usr/include/newlib/sys/_stdint.h \
+  /usr/include/newlib/machine/endian.h \
+  /usr/include/newlib/machine/_endian.h \
+  /usr/include/newlib/sys/select.h \
+  /usr/include/newlib/sys/_sigset.h \
+  /usr/include/newlib/sys/_timeval.h \
+  /usr/include/newlib/sys/timespec.h \
+  /usr/include/newlib/sys/_timespec.h \
+  /usr/include/newlib/sys/_pthreadtypes.h \
+  /usr/include/newlib/sys/sched.h \
+  /usr/include/newlib/machine/types.h \
+  /usr/include/newlib/sys/stdio.h \
+  /usr/include/newlib/string.h \
+  /usr/include/newlib/sys/_locale.h \
+  /usr/include/newlib/strings.h \
+  /usr/include/newlib/sys/string.h \
+  /tree/downloaded_tools/pico/psion-recreate/match.h \
+  /usr/include/newlib/ctype.h \
+  /usr/include/newlib/stdlib.h \
   /usr/include/newlib/machine/stdlib.h \
   /usr/include/newlib/alloca.h
 
@@ -457,9 +480,12 @@ CMakeFiles/psion_recreate.dir/menu.c.obj: /tree/downloaded_tools/pico/psion-recr
   /tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/uart.h \
   /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_uart/include/pico/stdio_uart.h \
   /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/include/pico/stdio_usb.h \
-  /tree/downloaded_tools/pico/psion-recreate/emulator.h \
   /tree/downloaded_tools/pico/psion-recreate/psion_recreate.h \
-  /tree/downloaded_tools/pico/psion-recreate/match.h
+  /tree/downloaded_tools/pico/psion-recreate/match.h \
+  /tree/downloaded_tools/pico/psion-recreate/font.h \
+  /tree/downloaded_tools/pico/psion-recreate/menu.h \
+  /tree/downloaded_tools/pico/psion-recreate/emulator.h \
+  /tree/downloaded_tools/pico/psion-recreate/eeprom.h
 
 CMakeFiles/psion_recreate.dir/psion_recreate.c.obj: /tree/downloaded_tools/pico/psion-recreate/psion_recreate.c \
   /usr/include/newlib/stdio.h \
@@ -543,9 +569,11 @@ CMakeFiles/psion_recreate.dir/psion_recreate.c.obj: /tree/downloaded_tools/pico/
   /usr/include/newlib/stdlib.h \
   /usr/include/newlib/machine/stdlib.h \
   /usr/include/newlib/alloca.h \
+  /tree/downloaded_tools/pico/psion-recreate/font.h \
   /tree/downloaded_tools/pico/psion-recreate/emulator.h \
   /tree/downloaded_tools/pico/psion-recreate/wireless.h \
-  /tree/downloaded_tools/pico/psion-recreate/eeprom.h
+  /tree/downloaded_tools/pico/psion-recreate/eeprom.h \
+  /tree/downloaded_tools/pico/psion-recreate/menu.h
 
 CMakeFiles/psion_recreate.dir/rtc.c.obj: /tree/downloaded_tools/pico/psion-recreate/rtc.c \
   /usr/include/newlib/ctype.h \
@@ -620,7 +648,8 @@ CMakeFiles/psion_recreate.dir/rtc.c.obj: /tree/downloaded_tools/pico/psion-recre
   /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_uart/include/pico/stdio_uart.h \
   /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/include/pico/stdio_usb.h \
   /tree/downloaded_tools/pico/psion-recreate/psion_recreate.h \
-  /tree/downloaded_tools/pico/psion-recreate/match.h
+  /tree/downloaded_tools/pico/psion-recreate/match.h \
+  /tree/downloaded_tools/pico/psion-recreate/font.h
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.obj: /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c \
   /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/tusb_option.h \
@@ -3341,6 +3370,7 @@ CMakeFiles/psion_recreate.dir/wireless.c.obj: /tree/downloaded_tools/pico/psion-
   /tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/m0plus.h \
   /tree/downloaded_tools/pico/psion-recreate/psion_recreate.h \
   /tree/downloaded_tools/pico/psion-recreate/match.h \
+  /tree/downloaded_tools/pico/psion-recreate/font.h \
   /tree/downloaded_tools/pico/psion-recreate/emulator.h \
   /tree/downloaded_tools/pico/psion-recreate/wireless.h
 
@@ -3573,8 +3603,6 @@ generated/pico_base/pico/version.h:
 
 /usr/include/newlib/stdio.h:
 
-/tree/downloaded_tools/pico/psion-recreate/eeprom.h:
-
 /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c:
 
 /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/cmsis/include/cmsis/rename_exceptions.h:
@@ -3693,6 +3721,12 @@ generated/pico_base/pico/version.h:
 
 /usr/include/newlib/alloca.h:
 
+/tree/downloaded_tools/pico/psion-recreate/eeprom.h:
+
+/tree/downloaded_tools/pico/psion-recreate/font.h:
+
+/tree/downloaded_tools/pico/psion-recreate/i2c.c:
+
 /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_unique_id/include/pico/unique_id.h:
 
 /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_xosc/xosc.c:
@@ -3740,8 +3774,6 @@ generated/pico_base/pico/version.h:
 /tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/timer.h:
 
 /tree/downloaded_tools/pico/psion-recreate/font.c:
-
-/tree/downloaded_tools/pico/psion-recreate/i2c.c:
 
 /tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/xosc.h:
 

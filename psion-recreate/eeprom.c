@@ -414,10 +414,12 @@ void eeprom_perform_dump(void)
 // writes will interfere.
 //
 
+volatile int eeprom_do_invalidate = 0;
 volatile int eeprom_do_dump = 0;
 volatile int eeprom_do_restore = 0;
 volatile int eeprom_done_dump = 0;
 volatile int eeprom_done_restore = 0;
+volatile int eeprom_done_invalidate = 0;
 
 void eeprom_tasks(void)
 {
@@ -450,6 +452,22 @@ void eeprom_tasks(void)
       dump_lcd();
     }
 
+#if 0  
+  if( eeprom_do_invalidate )
+    {
+      eeprom_do_invalidate = 0;
+      
+      // This is run after a restore so we have the correct cheksum in ram
+      // we can just adjust it to get a bad csum
+      ramdata[EEPROM_CSUM_L]++;
+      ramdata[EEPROM_CSUM_H]++;
+      
+      // Write the checksum to the EEPROM copy
+      write_eeprom(EEPROM_0_ADDR_WR , EEPROM_CSUM_H, EEPROM_CSUM_LEN, &(ramdata[EEPROM_CSUM_H]));
+
+      eeprom_done_invalidate = 1;
+    }
+#endif
 }
 
 

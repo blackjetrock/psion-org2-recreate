@@ -5,6 +5,12 @@
 // This is the menu that lives outside the emulation and allows 'meta' tasks
 // to be performed.
 //
+// **********
+//
+// As it accesses the I2c, it MUST run on the core that is handling the I2C
+// which is core1 at th emoment.
+//
+// **********
 //
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -20,6 +26,20 @@
 
 #include "menu.h"
 #include "emulator.h"
+#include "eeprom.h"
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Meta menu
+//
+//
+
+MENU  *active_menu = &menu_top;
+
+volatile int menu_done = 0;
+volatile int menu_init = 0;
+
+MENU menu_mems;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -33,9 +53,6 @@ int keycode = 0;
 char keychar = 0;      // What the key code is
 int gotkey = 0;       // We have a key
 
-#define NUM_SCAN_STATES  20
-#define SCAN_STATE_DRIVE 0
-#define SCAN_STATE_READ  10
 
 struct _KEYDEF
 {
@@ -87,6 +104,7 @@ void scan_keys(void)
   switch(scan_state)
     {
     case SCAN_STATE_DRIVE:
+      
       // Drive scan lines
       latchout1_shadow &= 0x80;
       latchout1_shadow |= scan_drive;
@@ -101,14 +119,17 @@ void scan_keys(void)
 	{
 	  scan_drive = 0x1;
 	}
+      write_display_extra(2, 'a'+scan_drive);
       break;
 
     case SCAN_STATE_READ:
       // Read port5
+      write_display_extra(2, '5');
       kb_sense = (read_165(PIN_LATCHIN) & 0xFC) >> 2;
 
       if( kb_sense & 0x20 )
 	{
+	  write_display_extra(2, 'o');
 	  keychar = 'o';
 	  gotkey = 1;
 	}
@@ -117,8 +138,8 @@ void scan_keys(void)
 	  if( (kb_sense & 0x3F) != 0 )
 	    {
 	      // Build keycode
-	      //printxy_hex(5, 2, keycode);
-	      //printxy_hex(1, 2, kb_sense);
+	      printxy_hex(5, 2, keycode);
+	      printxy_hex(1, 2, kb_sense);
 	      
 	      keycode |= kb_sense << 8;
 	      
@@ -128,6 +149,7 @@ void scan_keys(void)
 		  if( menukeys[i].code == keycode )
 		    {
 		      keychar = menukeys[i].ch;
+		      write_display_extra(2, 'k');
 		      gotkey = 1;
 		      break;
 		    }
@@ -143,21 +165,11 @@ void scan_keys(void)
   scan_state = (scan_state + 1) % NUM_SCAN_STATES;
 }
 
-typedef enum _MENU_ID
-  {
-   MENU_TOP = 1,
-   MENU_SCAN_TEST,
-   MENU_INSTANT_OFF,
-  } MENU_ID;
 
-MENU_ID active_menu = MENU_TOP;
-
-int menu_done = 0;
-int menu_init = 0;
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void goto_menu(int menu)
+void goto_menu(MENU *menu)
 {
   menu_init = 1;
   active_menu = menu;
@@ -175,61 +187,129 @@ int do_menu_init(void)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+//
+// Menu handling
+//
 
-void menu_top(void)
+void menu_process(void)
 {
+  // Initialise?  
   if( do_menu_init() )
     {
       display_clear();
-      printxy_str(0, 0, "Meta Menu");
-      printxy_str(0,1, "Keytest Instantoff");
+      printxy_str(0, 0, active_menu->name);
+
+      int e = 0;
+      while( active_menu->item[e].key != '&' )
+	{
+	  printxy_str((e % 2) * 8, (e / 2)+1, active_menu->item[e].item_text);
+	  e++;
+	}
+
+      (*active_menu->init_fn)();
     }
   
   if( gotkey )
     {
-      switch(keychar)
-	{
-	case 'o':
-	  menu_done = 1;
-	  return;
-	  break;
+      int e = 0;
 
-	case 'K':
-	  goto_menu(MENU_SCAN_TEST);
-	  return;
-	  break;
-
-	case 'I':
-	  goto_menu(MENU_INSTANT_OFF);
-	  return;
-	  break;
-	}
-      
       gotkey = 0;
+      
+      while( active_menu->item[e].key != '&' )
+	{
+	  if( keychar == active_menu->item[e].key )
+	    {
+	      // Call the function
+	      (*active_menu->item[e].do_fn)();
+	      break;
+	    }
+	  e++;
+	}
     }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void init_menu_top(void)
+{
+  //display_clear();
+  printxy_str(0, 0, "Meta");
+}
+
+void init_menu_eeprom(void)
+{
+  display_clear();
+  printxy_str(0, 0, "EEPROM");
+}
+
+void init_menu_mems(void)
+{
+  display_clear();
+  printxy_str(0, 0, "Memories");
 }
 
 //------------------------------------------------------------------------------
 
+void menu_null(void)
+{
+}
+
+void menu_exit(void)
+{
+  menu_done = 1;
+}
+
+void menu_back(void)
+{
+  goto_menu(active_menu->last);
+}
+
+
+//------------------------------------------------------------------------------
+
+void menu_goto_eeprom(void)
+{
+  goto_menu(&menu_eeprom);
+}
+
+void menu_goto_mems(void)
+{
+  goto_menu(&menu_mems);
+}
+
+
+//------------------------------------------------------------------------------
+
+
+void init_scan_test(void)
+{
+  display_clear();
+  printxy_str(0,0, "Key test    ");
+}
+
 void menu_scan_test(void)
 {
-  if( do_menu_init() )
-    {
-      display_clear();
-      printxy_str(0,0, "Key test    ");
-    }
-  
-  if( gotkey )
-    {
-      printxy(2, 1, '=');
-      printxy(3, 1, keychar);
-      gotkey = 0;
+  init_scan_test();
 
-      // Exit on ON key, exiting demonstrates it is working...
-      if( keychar == 'o' )
+  //  while(1)
+    {
+      scan_keys();
+
+      // We are on core 1 so a loop will cause 
+      //      dump_lcd();
+      
+      if( gotkey )
 	{
-	  goto_menu(MENU_TOP);
-	  return;
+	  printxy(2, 1, '=');
+	  printxy(3, 1, keychar);
+	  gotkey = 0;
+	  
+	  // Exit on ON key, exiting demonstrates it is working...
+	  if( keychar == 'o' )
+	    {
+	      //	      goto_menu(&menu_top);
+	      return;
+	    }
 	}
     }
 }
@@ -249,11 +329,51 @@ void menu_instant_off(void)
   handle_power_off();
 }
 
+//------------------------------------------------------------------------------
+
+void menu_eeprom_invalidate(void)
+{
+  // This is run after a restore so we have the correct cheksum in ram
+  // we can just adjust it to get a bad csum, and also fix a value
+  ramdata[EEPROM_CSUM_L] = 0x11;
+  ramdata[EEPROM_CSUM_H]++;
+  
+  // Write the checksum to the EEPROM copy
+  write_eeprom(EEPROM_0_ADDR_WR , EEPROM_CSUM_H, EEPROM_CSUM_LEN, &(ramdata[EEPROM_CSUM_H]));
+
+  display_clear();
+  printxy_str(0, 0, "Invalidated");
+  sleep_ms(3000);
+
+  // We don't exit back to the eeprom menu, as we are still in it
+  menu_init = 1;
+}
+
+//------------------------------------------------------------------------------
+//
+// Memories
+//
+
+void menu_eeprom_save_mems(void)
+{
+}
+
+void menu_eeprom_load_mems(void)
+{
+}
+
+void menu_eeprom_extract_mems(void)
+{
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 //
 //
+// Start the menu running
+//
+//
 
-void enter_menu(void)
+void menu_enter(void)
 {
   // Save the bit pattern the serial latch is generating so keyboard
   // scan doesn't affect the organiser code
@@ -261,39 +381,28 @@ void enter_menu(void)
   
   // Save the display for the menu exit
   display_save();
-  
+
+  // Clear the display
   display_clear();
-  
-  printxy_str(0,0, "Menu");
+
+  // Draw the menu
+  //  printxy_str(0,0, "Menu");
 
   menu_done = 0;
 
-  goto_menu(MENU_TOP);
-  
-  while(!menu_done)
-    {
-      scan_keys();
+  goto_menu(&menu_top);
+}
 
-      switch(active_menu)
-	{
-	case MENU_TOP:
-	  menu_top();
-	  break;
-	  
-	case MENU_SCAN_TEST:
-	  menu_scan_test();
-	  break;
+void menu_loop(void)
+{
+  scan_keys();
+  menu_process();
+}
 
-	case MENU_INSTANT_OFF:
-	  menu_instant_off();
-	  break;
-	}
-
-      gotkey = 0;
-    }
-
+void menu_leave(void)
+{
   display_restore();
-
+  
   // Restore latch data
   write_595(PIN_LATCHOUT1, saved_latchout1_shadow, 8);
   latchout1_shadow = saved_latchout1_shadow;
@@ -302,9 +411,21 @@ void enter_menu(void)
 //------------------------------------------------------------------------------
 //
 // Menu detection
-
+//
 // How many presses of the SHIFT key have been seen
 // Let the organiser scan the keyboard and check the flag in memory
+//
+// This code uses the Organiser to scan the keyboard, it just looks in
+// RAM of the emulated 6303 to see if the organiser has seens a SHIFT key
+// or not. This does mean that if the emulated code isn't looking at the keyboard
+// then the meta menu can't be entered.
+// If we didn't do this then we'd have to stop the emulation for a while while
+// we scanned the keyboard and that impacts emulation speed.
+//
+// This does mean that if the processor TRAPs then it doesn't scan the keyboard and
+// we can't get to th emenu. If dump/restore is on then when the organiser restores
+// it goes back to the TRAP and you are stuck.
+//
 
 int shift_edge_counter = 0;
 int last_shift[NUM_LAST] = { 2, 2, 2, 2, 2, };
@@ -349,7 +470,17 @@ void check_menu_launch(void)
 	  
 	  if( shift_edge_counter == 4 )
 	    {
-	      enter_menu();
+#if 0	      
+	      menu_enter();
+#else
+	    // get core 1 to run the menu
+	    core1_in_menu = 1;
+
+	    // Wait for the core to exit the menu before we continue
+	    while(core1_in_menu)
+	      {
+	      }
+#endif
 	      shift_edge_counter = 0;
 	    }
 	}
@@ -363,3 +494,47 @@ void check_menu_launch(void)
     }
 }
 
+////////////////////////////////////////////////////////////////////////////////
+//
+
+
+MENU menu_top =
+  {
+   &menu_top,
+   "Meta",
+   init_menu_top,   
+   {
+    {'o', "",           menu_exit},
+    {'K', "Keytest",    menu_scan_test},
+    {'I', "Instantoff", menu_instant_off},
+    {'E', "Eeprom",     menu_goto_eeprom},
+    {'&', "",           menu_null},
+   }
+  };
+
+MENU menu_eeprom =
+  {
+   &menu_top,
+   "EEPROM",
+   init_menu_eeprom,   
+   {
+    {'o', "",           menu_back},
+    {'I', "Invalidate", menu_eeprom_invalidate},
+    {'M', "Mem",        menu_goto_mems},
+    {'&', "",           menu_null},
+   }
+  };
+
+MENU menu_mems =
+  {
+   &menu_eeprom,
+   "Memories",
+   init_menu_mems,   
+   {
+    {'o', "",           menu_back},
+    {'S', "Save",       menu_eeprom_save_mems},
+    {'L', "Load",       menu_eeprom_load_mems},
+    {'E', "Extract",    menu_eeprom_extract_mems},
+    {'&', "",           menu_null},
+   }
+  };
