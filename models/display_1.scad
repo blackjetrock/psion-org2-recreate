@@ -8,8 +8,8 @@ polariser_z = 0.2;
 glass_y = 24.2;
 polariser_y = 18;
 
-frame_y = 33.7;
-frame_z = (4.7+1.7);
+frame_y = 33.0;
+frame_z = (4.0);
 
 module oled()
 {
@@ -36,15 +36,20 @@ module frame()
 {
      difference()
      {
-	  cube([71, frame_y, frame_z], center=true);
+	  cube([70, frame_y, frame_z], center=true);
 
-	  translate([0, -(frame_y/2)+(glass_y/2)+7, -frame_z/2+glass_z/2-0.01])
+      // recess for display
+	  translate([0, -(frame_y/2)+(glass_y/2)+3, -frame_z/2+glass_z/2-0.01])
 	  {
 	       rotate([0, 180, 0])
 	       {
 		    oled();
 	       }
 	  }
+      
+      // Hole for foam if needed
+      cube([20,10, 20], center= true);
+      
      }
 }
 
