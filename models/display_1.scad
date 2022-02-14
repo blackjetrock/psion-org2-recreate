@@ -8,13 +8,13 @@ polariser_z = 0.2;
 glass_y = 24.2;
 polariser_y = 18;
 
-frame_y = 33.0;
+frame_y = 32.8;
 frame_z = (4.0);
 
 module oled()
 {
      // Glass
-     cube([62.2, glass_y, glass_z], center=true);
+     cube([62.0, glass_y, glass_z], center=true);
 
      // Polariser
      translate([0, glass_y/2-polariser_y/2-1.0, glass_z/2+polariser_z/2])
