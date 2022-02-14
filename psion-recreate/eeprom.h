@@ -19,6 +19,15 @@
 #define EEPROM_CSUM_H    0x0182
 #define EEPROM_CSUM_L    0x0183
 
+// Offset of memories in RAM copy
+#define EEPROM_OFF_COPY_MEMS_START      0x20ff
+#define EEPROM_OFF_COPY_MEMS_END        0x214e
+#define EEPROM_LEN_COPY_MEMS            (EEPROM_OFF_COPY_MEMS_END - EEPROM_OFF_COPY_MEMS_START+1)
+
+// Offsets of saved memories in second EEPROM chip
+#define EEPROM_OFF_SAVED_MEMS_0_START   0x1000
+
+
 extern volatile int eeprom_do_invalidate;
 extern volatile int eeprom_do_dump;
 extern volatile int eeprom_do_restore;

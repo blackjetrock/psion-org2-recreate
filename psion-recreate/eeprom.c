@@ -11,6 +11,7 @@
 
 #include "psion_recreate.h"
 #include "eeprom.h"
+#include "i2c.h"
 
 // Read a block of data from the EEPROM
 // 
@@ -23,6 +24,8 @@ int read_eeprom(int slave_addr, int start, int len, BYTE *dest)
 {
   BYTE a[2];
 
+  i2c_set_delay_value(I2C_DELAY_EEPROM);
+  
   a[0] = start >> 8;
   a[1] = start & 0xFF;
   
@@ -38,6 +41,8 @@ int write_eeprom(int slave_addr, int start, int len, BYTE *src)
   BYTE a[2];
   int i;
 
+  i2c_set_delay_value(I2C_DELAY_EEPROM);
+  
   // Force slave address to have correct RDWR bit
   slave_addr &= 0xFE;
   
@@ -78,10 +83,12 @@ void eeprom_test(void)
   BYTE data[TEST_LEN];
   int i;
   int j;
-  
+
   //DEBUG_STOP;
   while(1)
     {
+      dump_lcd();
+      
       j++;
       
       for(i=0; i<TEST_LEN; i++)
@@ -204,6 +211,7 @@ void eeprom_test3(void)
 	    {
 	      // Write the page to EEPROM
 	      write_eeprom(EEPROM_0_ADDR_WR , i, PAGE_SIZE, &(ramdata[i]));
+	      sleep_us(10);
 	    }
 #if 0
 	  printxy_str(1, 1, "Wiping ");
@@ -266,11 +274,10 @@ void eeprom_test3(void)
 void eeprom_ram_dump(void)
 {
   u_int16_t csum = 0;
-
-#if DISABLE_DMP_WR
-    return;
-#endif
   
+#if DISABLE_DMP_WR
+  return;
+#endif
   // Zero checksum
   ramdata[EEPROM_CSUM_L] = 0;
   ramdata[EEPROM_CSUM_H] = 0;
@@ -311,7 +318,7 @@ void eeprom_ram_restore(void)
 #if OVERCLOCK_RESTORE
   set_sys_clock_khz(260000, false);
 #endif
-  
+    
   // Read EEPROM and restore RAM
   for(int i=0; i<RAM_SIZE; i+=PAGE_SIZE)
     {

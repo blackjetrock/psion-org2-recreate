@@ -230,6 +230,54 @@ void keyboard_test(void)
 // accesses or we'd have to have locks to prevent two cores using the same
 // I2C bus.
 
+typedef enum
+  {
+   MS_ENTER = 1,
+   MS_INIT,
+   MS_RUNNING,
+   MS_LEAVE,
+   MS_IDLE,
+  } MENU_STATE;
+  
+MENU_STATE ms = MS_IDLE;
+
+void menu_tasks(void)
+{
+  switch(ms)
+    {
+    case MS_IDLE:
+      if( core1_in_menu )
+	{
+	  ms = MS_ENTER;
+	}
+      break;
+
+    case MS_ENTER:
+      menu_enter();
+      ms = MS_RUNNING;
+      break;
+
+    case MS_RUNNING:
+      menu_loop();
+
+      if( menu_done )
+	{
+	  menu_done = 0;
+	  ms = MS_LEAVE;
+	}
+      break;
+
+    case MS_LEAVE:
+      menu_leave();
+      core1_in_menu = 0;
+      ms = MS_IDLE;
+      break;
+
+    }
+}
+
+//------------------------------------------------------------------------------
+
 void core1_main(void)
 {
   while(1)
@@ -238,18 +286,9 @@ void core1_main(void)
       rtc_tasks();
       eeprom_tasks();
 
-      // The menu running on core 1 is convenient as it can access the I2C
-      // itself.
-      if( core1_in_menu )
-	{
-	  enter_menu();
-	  core1_in_menu = 0;
-	}
-
-      //handle_cursor();
+      menu_tasks();
       
 #if !WIFI_TEST      
-      //wireless_loop();
       wireless_taskloop();
 #endif
     }
@@ -613,19 +652,20 @@ int main() {
     // meta menu for things like dump recovery and forced cold
     // start
     
-    for(int i=0; i<NUM_SCAN_STATES*3; i++)
+    for(int i=0; i<NUM_SCAN_STATES*80; i++)
       {
 	scan_keys();
       }
 
+    DEBUG_STOP;
     if( gotkey )
       {
 	// If SHIFT pressed
 	if( keychar == 's' )
 	{
-#if 0	  
+#if 0
 	    // Enter menu
-	    enter_menu();
+	    menu_enter();
 #else
 	    // get core 1 to run the menu
 	    core1_in_menu = 1;

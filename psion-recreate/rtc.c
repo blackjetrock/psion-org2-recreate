@@ -11,6 +11,7 @@
 
 #include "psion_recreate.h"
 
+#include "rtc.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -85,6 +86,27 @@ void set_vbaten_bit()
   write_mcp7940(MCP_RTCWKDAY_REG, reg0);
 }
 
+// Sets the ALMPOL 0 bit
+void set_almpol0_bit()
+{
+  BYTE reg0;
+
+  reg0 = read_mcp7940(MCP_ALM0WKDAY_REG);
+  reg0 |= MCP_ALMPOL_MASK;
+
+  write_mcp7940(MCP_ALM0WKDAY_REG, reg0);
+}
+
+void set_almpol1_bit()
+{
+  BYTE reg0;
+
+  reg0 = read_mcp7940(MCP_ALM1WKDAY_REG);
+  reg0 |= MCP_ALMPOL_MASK;
+
+  write_mcp7940(MCP_ALM1WKDAY_REG, reg0);
+}
+
 // Sets the ST bit
 void set_st_bit()
 {
@@ -94,6 +116,32 @@ void set_st_bit()
   reg0 |= MCP_ST_MASK;
 
   write_mcp7940(MCP_RTCSEC_REG, reg0);
+
+}
+
+// Clear the MCP_OUT bit
+
+void clear_out_bit()
+{
+  BYTE reg0;
+
+  reg0 = read_mcp7940(MCP_RTCC_CONTROL_REG);
+  reg0 &= ~MCP_OUT_MASK;
+
+  write_mcp7940(MCP_RTCC_CONTROL_REG, reg0);
+
+}
+
+// Set the MCP_OUT bit
+
+void set_out_bit()
+{
+  BYTE reg0;
+
+  reg0 = read_mcp7940(MCP_RTCC_CONTROL_REG);
+  reg0 |= MCP_OUT_MASK;
+
+  write_mcp7940(MCP_RTCC_CONTROL_REG, reg0);
 
 }
 
@@ -116,7 +164,16 @@ void rtc_tasks(void)
 {
   if( rtc_set_st )
     {
+      // Set the ST bit
       set_st_bit();
+
+      // Also set the alarm polarity
+      set_almpol0_bit();
+      set_almpol0_bit();
+
+      // And set the OUT bit
+      clear_out_bit();
+      
       rtc_set_st = 0;
     }
   

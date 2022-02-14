@@ -119,17 +119,17 @@ void scan_keys(void)
 	{
 	  scan_drive = 0x1;
 	}
-      write_display_extra(2, 'a'+scan_drive);
+      //write_display_extra(2, 'a'+scan_drive);
       break;
 
     case SCAN_STATE_READ:
       // Read port5
-      write_display_extra(2, '5');
+      //write_display_extra(2, '5');
       kb_sense = (read_165(PIN_LATCHIN) & 0xFC) >> 2;
 
       if( kb_sense & 0x20 )
 	{
-	  write_display_extra(2, 'o');
+	  //write_display_extra(2, 'o');
 	  keychar = 'o';
 	  gotkey = 1;
 	}
@@ -198,11 +198,13 @@ void menu_process(void)
     {
       display_clear();
       printxy_str(0, 0, active_menu->name);
-
+      print_nl();
+      
       int e = 0;
       while( active_menu->item[e].key != '&' )
 	{
-	  printxy_str((e % 2) * 8, (e / 2)+1, active_menu->item[e].item_text);
+	  print_str(active_menu->item[e].item_text);
+	  print_str(" ");
 	  e++;
 	}
 
@@ -233,19 +235,20 @@ void menu_process(void)
 void init_menu_top(void)
 {
   //display_clear();
-  printxy_str(0, 0, "Meta");
+  //  printxy_str(0, 0, "Meta");
 }
 
 void init_menu_eeprom(void)
 {
-  display_clear();
-  printxy_str(0, 0, "EEPROM");
+  //display_clear();
+  //printxy_str(0, 0, "EEPROM");
 }
 
 void init_menu_mems(void)
 {
-  display_clear();
-  printxy_str(0, 0, "Memories");
+  //display_clear();
+  //print_home();
+  //print_str("Memories");
 }
 
 //------------------------------------------------------------------------------
@@ -261,6 +264,8 @@ void menu_exit(void)
 
 void menu_back(void)
 {
+  // Wait for key to be released
+  
   goto_menu(active_menu->last);
 }
 
@@ -291,9 +296,10 @@ void menu_scan_test(void)
 {
   init_scan_test();
 
-  //  while(1)
+  while(1)
     {
-      scan_keys();
+      // Keep the display updated
+      menu_loop_tasks();
 
       // We are on core 1 so a loop will cause 
       //      dump_lcd();
@@ -307,11 +313,13 @@ void menu_scan_test(void)
 	  // Exit on ON key, exiting demonstrates it is working...
 	  if( keychar == 'o' )
 	    {
-	      //	      goto_menu(&menu_top);
-	      return;
+	      break;
 	    }
 	}
     }
+
+  // Refresh menu on exit
+  menu_init = 1;
 }
 
 //------------------------------------------------------------------------------
@@ -343,6 +351,9 @@ void menu_eeprom_invalidate(void)
 
   display_clear();
   printxy_str(0, 0, "Invalidated");
+
+  menu_loop_tasks();
+  
   sleep_ms(3000);
 
   // We don't exit back to the eeprom menu, as we are still in it
@@ -356,14 +367,28 @@ void menu_eeprom_invalidate(void)
 
 void menu_eeprom_save_mems(void)
 {
+    write_eeprom(EEPROM_1_ADDR_RD,  EEPROM_OFF_SAVED_MEMS_0_START, EEPROM_LEN_COPY_MEMS, &(ramdata[RTT_NUMB]));
 }
 
 void menu_eeprom_load_mems(void)
 {
+  // Read memories from RAM image in EEPROM 0
+  read_eeprom(EEPROM_1_ADDR_RD,  EEPROM_OFF_SAVED_MEMS_0_START, EEPROM_LEN_COPY_MEMS, &(ramdata[RTT_NUMB]));
+  
 }
+
+// Extract the memories from the RAM copy in EEPROM.
+// Copy it to memory slot 0 in the other EEPROM
 
 void menu_eeprom_extract_mems(void)
 {
+  BYTE mems[EEPROM_LEN_COPY_MEMS];
+  
+  // Read memories from RAM image in EEPROM 0
+  read_eeprom(EEPROM_0_ADDR_RD,  EEPROM_OFF_COPY_MEMS_START, EEPROM_LEN_COPY_MEMS, mems);
+
+  // Write it to saved memory slot 0
+  write_eeprom(EEPROM_1_ADDR_WR,  EEPROM_OFF_SAVED_MEMS_0_START, EEPROM_LEN_COPY_MEMS, mems);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

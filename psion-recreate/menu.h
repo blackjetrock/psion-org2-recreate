@@ -40,7 +40,7 @@ extern MENU menu_eeprom;
 
 void check_menu_launch(void);
 void scan_keys(void);
-void enter_menu(void);
+void menu_enter(void);
 void menu_process(void);
 void menu_leave(void);
 void menu_loop(void);

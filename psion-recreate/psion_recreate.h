@@ -45,15 +45,18 @@ extern int model;
 #define NEW_I2C              1    // Better I2C, not demo code
 #define BUZZER_TEST          0
 #define UART_INTERRUPTS      1     // Interrupt for UART data collection
-#define I2C_DELAY            150   // Default, can be over-ridden
-#define ALLOW_POWER_OFF      0     // Do we allow the power to be turned off?
+#define I2C_DELAY            15    // Default, can be over-ridden
+#define I2C_DELAY_OLED       5     // OLED I2C delay value
+#define I2C_DELAY_EEPROM     15    // EEPROM I2C delay
+
+#define ALLOW_POWER_OFF      1     // Do we allow the power to be turned off?
                                    // If 0 then sit in a loop on power off so
                                    // we can debug where the request to turn
                                    // off came from
 #define WIFI                 0
 #define BLUETOOTH            1     // Enable bluetooth comms
-#define BLUETOOTH_M          1     // Operate BT in master mode
-#define BLUETOOTH_S          0     // Operate BT in slave mode
+#define BLUETOOTH_M          0     // Operate BT in master mode
+#define BLUETOOTH_S          1     // Operate BT in slave mode
 
 #define ENABLE_1S_TICK       1     // Needed ny restore from EEPROM code, otherwise hangs
 #define DISABLE_AUTO_OFF     1     // Disable auto off feature
@@ -167,32 +170,6 @@ u_int8_t read_port2(void);
 
 
 
-////////////////////////////////////////////////////////////////////////////////
-//
-// MCP7940 Registers
-extern int read_seconds;
-extern int read_minutes;
-extern int read_hours;
-
-extern int rtc_seconds;
-extern int rtc_minutes;
-extern int rtc_hours;
-
-#define MCP_RTCSEC_REG   0x00
-#define MCP_ST_MASK      0x80
-
-#define MCP_RTCMIN_REG   0x01
-
-#define MCP_RTCHOUR_REG  0x02
-
-#define MCP_RTCWKDAY_REG 0x03
-#define MCP_VBATEN_MASK  0x08
-
-#define MCP_RTCDATE_REG  0x04
-
-#define MCP_RTCMTH_REG   0x05
-
-#define MCP_RTCYEAR_REG  0x06
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -228,7 +205,8 @@ void dump_lcd(void);
 
 // Core 1
 void core1_main(void);
-  
+void menu_loop_tasks(void);
+    
 // Emulator
 void initialise_emulator(void);
 void after_ram_restore_init(void);

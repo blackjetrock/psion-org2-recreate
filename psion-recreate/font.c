@@ -425,4 +425,44 @@ void display_clear(void)
 	  printxy(x, y, ' ');
 	}
     }
+  
+  print_home();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//  Cursor positioned functions
+//
+////////////////////////////////////////////////////////////////////////////////
+
+int curx = 0;
+int cury = 0;
+
+void print_home(void)
+{
+  curx = 0;
+  cury = 0;
+}
+
+void print_nl(void)
+{
+  curx = 0;
+  cury++;
+  
+  if( cury >= DISPLAY_NUM_LINES )
+    {
+      cury = 0;
+    }
+}
+
+void print_str(char *s)
+{
+  printxy_str(curx,cury, s);
+
+  curx += strlen(s);
+
+  if( curx >= DISPLAY_NUM_CHARS )
+    {
+      print_nl();
+    }
 }

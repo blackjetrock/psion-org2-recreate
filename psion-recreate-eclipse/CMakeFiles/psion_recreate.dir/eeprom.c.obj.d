@@ -57,4 +57,5 @@ CMakeFiles/psion_recreate.dir/eeprom.c.obj: \
  /tree/downloaded_tools/pico/psion-recreate/psion_recreate.h \
  /tree/downloaded_tools/pico/psion-recreate/match.h \
  /tree/downloaded_tools/pico/psion-recreate/font.h \
- /tree/downloaded_tools/pico/psion-recreate/eeprom.h
+ /tree/downloaded_tools/pico/psion-recreate/eeprom.h \
+ /tree/downloaded_tools/pico/psion-recreate/i2c.h

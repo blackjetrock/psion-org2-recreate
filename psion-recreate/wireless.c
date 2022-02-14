@@ -1701,7 +1701,7 @@ void wireless_taskloop(void)
   
   cxx++;
 	
-  if( (cxx % 100) == 0 )
+  if( (cxx % 10) == 0 )
     {
       if( t )
 	{
@@ -1940,7 +1940,7 @@ void wireless_taskloop(void)
 	    }
 	}
       
-      // Move to next iondex, if we aren't pointing to a stop
+      // Move to next index, if we aren't pointing to a stop
       if( tasklist[w_task_index].type != WTY_STOP )
 	{
 	  w_task_index++;

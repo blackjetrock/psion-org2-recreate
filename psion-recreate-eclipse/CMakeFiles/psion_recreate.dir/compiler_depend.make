@@ -153,7 +153,8 @@ CMakeFiles/psion_recreate.dir/eeprom.c.obj: /tree/downloaded_tools/pico/psion-re
   /tree/downloaded_tools/pico/psion-recreate/psion_recreate.h \
   /tree/downloaded_tools/pico/psion-recreate/match.h \
   /tree/downloaded_tools/pico/psion-recreate/font.h \
-  /tree/downloaded_tools/pico/psion-recreate/eeprom.h
+  /tree/downloaded_tools/pico/psion-recreate/eeprom.h \
+  /tree/downloaded_tools/pico/psion-recreate/i2c.h
 
 CMakeFiles/psion_recreate.dir/emulator.c.obj: /tree/downloaded_tools/pico/psion-recreate/emulator.c \
   /usr/include/newlib/ctype.h \
@@ -240,7 +241,8 @@ CMakeFiles/psion_recreate.dir/emulator.c.obj: /tree/downloaded_tools/pico/psion-
   /tree/downloaded_tools/pico/psion-recreate/emulator.h \
   /tree/downloaded_tools/pico/psion-recreate/wireless.h \
   /tree/downloaded_tools/pico/psion-recreate/eeprom.h \
-  /tree/downloaded_tools/pico/psion-recreate/menu.h
+  /tree/downloaded_tools/pico/psion-recreate/menu.h \
+  /tree/downloaded_tools/pico/psion-recreate/i2c.h
 
 CMakeFiles/psion_recreate.dir/font.c.obj: /tree/downloaded_tools/pico/psion-recreate/font.c \
   /usr/include/newlib/ctype.h \
@@ -573,7 +575,8 @@ CMakeFiles/psion_recreate.dir/psion_recreate.c.obj: /tree/downloaded_tools/pico/
   /tree/downloaded_tools/pico/psion-recreate/emulator.h \
   /tree/downloaded_tools/pico/psion-recreate/wireless.h \
   /tree/downloaded_tools/pico/psion-recreate/eeprom.h \
-  /tree/downloaded_tools/pico/psion-recreate/menu.h
+  /tree/downloaded_tools/pico/psion-recreate/menu.h \
+  /tree/downloaded_tools/pico/psion-recreate/rtc.h
 
 CMakeFiles/psion_recreate.dir/rtc.c.obj: /tree/downloaded_tools/pico/psion-recreate/rtc.c \
   /usr/include/newlib/ctype.h \
@@ -649,7 +652,8 @@ CMakeFiles/psion_recreate.dir/rtc.c.obj: /tree/downloaded_tools/pico/psion-recre
   /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/include/pico/stdio_usb.h \
   /tree/downloaded_tools/pico/psion-recreate/psion_recreate.h \
   /tree/downloaded_tools/pico/psion-recreate/match.h \
-  /tree/downloaded_tools/pico/psion-recreate/font.h
+  /tree/downloaded_tools/pico/psion-recreate/font.h \
+  /tree/downloaded_tools/pico/psion-recreate/rtc.h
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.obj: /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c \
   /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/tusb_option.h \
@@ -3407,10 +3411,6 @@ CMakeFiles/psion_recreate.dir/wireless.c.obj: /tree/downloaded_tools/pico/psion-
 
 /tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/psm.h:
 
-/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_platform/platform.c:
-
-/tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/psm.h:
-
 /tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/watchdog.h:
 
 /tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/vreg_and_chip_reset.h:
@@ -3497,6 +3497,8 @@ CMakeFiles/psion_recreate.dir/wireless.c.obj: /tree/downloaded_tools/pico/psion-
 
 /tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/intctrl.h:
 
+/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/device/usbd_control.c:
+
 /tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/uart.h:
 
 /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/osal/osal_pico.h:
@@ -3524,8 +3526,6 @@ CMakeFiles/psion_recreate.dir/wireless.c.obj: /tree/downloaded_tools/pico/psion-
 /tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/tbman.h:
 
 /tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/include/pico/mutex.h:
-
-/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/device/usbd_control.c:
 
 /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_claim/include/hardware/claim.h:
 
@@ -3578,10 +3578,6 @@ generated/pico_base/pico/version.h:
 /tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/ioqspi.h:
 
 /usr/lib/gcc/arm-none-eabi/9.2.1/include/stdarg.h:
-
-/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_resets/include/hardware/resets.h:
-
-/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_rt_device.c:
 
 /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/osal/osal.h:
 
@@ -3739,6 +3735,20 @@ generated/pico_base/pico/version.h:
 
 /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc.h:
 
+/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_fix/rp2040_usb_device_enumeration/rp2040_usb_device_enumeration.c:
+
+/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c:
+
+/usr/include/newlib/sys/string.h:
+
+/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_platform/platform.c:
+
+/tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/psm.h:
+
+/tree/downloaded_tools/pico/psion-recreate/i2c.h:
+
+/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/include/tusb_config.h:
+
 /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c:
 
 /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/include/pico/multicore.h:
@@ -3785,6 +3795,12 @@ generated/pico_base/pico/version.h:
 
 /tree/downloaded_tools/pico/psion-recreate/menu.c:
 
+/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_resets/include/hardware/resets.h:
+
+/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_rt_device.c:
+
+/tree/downloaded_tools/pico/psion-recreate/rtc.h:
+
 /tree/downloaded_tools/pico/pico-sdk/src/common/pico_base/include/pico/config.h:
 
 /tree/downloaded_tools/pico/psion-recreate/rtc.c:
@@ -3800,8 +3816,6 @@ generated/pico_base/pico/version.h:
 /usr/include/newlib/machine/_default_types.h:
 
 /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/tusb_option.h:
-
-/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/include/tusb_config.h:
 
 /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/include/pico/double.h:
 
@@ -3838,9 +3852,3 @@ generated/pico_base/pico/version.h:
 /tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/include/pico/time.h:
 
 /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/device/dcd.h:
-
-/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_fix/rp2040_usb_device_enumeration/rp2040_usb_device_enumeration.c:
-
-/usr/include/newlib/sys/string.h:
-
-/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c:

@@ -20,6 +20,7 @@
 #include "wireless.h"
 #include "eeprom.h"
 #include "menu.h"
+#include "i2c.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -4707,6 +4708,9 @@ void dump_lcd(void)
   int i;
   int ch;
   int saved_char;
+
+  // Drive the I2C fast for the OLED updates
+  i2c_set_delay_value(I2C_DELAY_OLED);
   
   if( display_changed || cursor_update)
     {
@@ -4803,9 +4807,11 @@ void dump_lcd(void)
 	      display_line[i/20][i%20] = isprint(ch)?ch:' ';
 	      //	    }
 	  
-	  memcpy(last_lcd_display_buffer, lcd_display_buffer, lcd_dispsize);
+
 	}
     }
+  
+  memcpy(last_lcd_display_buffer, lcd_display_buffer, lcd_dispsize);
   
   // Terminate the buffers
   for(int i=0; i<DISPLAY_NUM_LINES; i++)
@@ -5271,7 +5277,13 @@ void port6_ddr(int value)
     }
   else
     {
+#if 0
       latch2_set_mask(LAT2PIN_MASK_SD_OE);
+#else
+      // Keep latch as outputs and drive the signals in the way the
+      // pull up and pull down resistors would.
+      latch2_clear_mask(LAT2PIN_MASK_SD_OE);
+#endif
       latch2_set_mask(LAT2PIN_MASK_SS1);
       latch2_set_mask(LAT2PIN_MASK_SS2);
       latch2_set_mask(LAT2PIN_MASK_SS3);
@@ -5281,6 +5293,7 @@ void port6_ddr(int value)
       // Drive OE of the level shifter
       //latchout2_shadow |= LAT2PIN_MASK_SD_OE;
       //write_595(PIN_LATCHOUT2, latchout2_shadow, 16);
+#if 0      
       for(int i=0; i<8; i++)
 	{
 	  if( p6pin[i] < PSEUDO_PIN )
@@ -5288,7 +5301,13 @@ void port6_ddr(int value)
 	      gpio_set_dir(p6pin[i], GPIO_IN);
 	    }
 	}
-
+#else
+	// We are leaving lines as outputs so we can emulate the pull
+	// ups and pull downs
+	gpio_put(PIN_SOE, 0);
+	gpio_put(PIN_SCLK, 0);
+	gpio_put(PIN_SMR, 0);
+#endif
     }
 
 

@@ -9,6 +9,7 @@
 #include "wireless.h"
 #include "eeprom.h"
 #include "menu.h"
+#include "rtc.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -278,6 +279,21 @@ void menu_tasks(void)
 
 //------------------------------------------------------------------------------
 
+// These are the tasks the menu function sneed to perform in order to
+// keep the display, wireless and so on running.
+
+void menu_loop_tasks(void)
+{
+  scan_keys();
+  dump_lcd();
+  rtc_tasks();
+  eeprom_tasks();
+  wireless_taskloop();
+}
+
+
+// This is the main function for the second core. It handles
+// everything apart from emulationm
 void core1_main(void)
 {
   while(1)
@@ -652,31 +668,23 @@ int main() {
     // meta menu for things like dump recovery and forced cold
     // start
     
-    for(int i=0; i<NUM_SCAN_STATES*3; i++)
+    for(int i=0; i<NUM_SCAN_STATES*80; i++)
       {
 	scan_keys();
       }
 
+    // If any key is pressed then we enter the menu
     if( gotkey )
       {
-	// If SHIFT pressed
-	if( keychar == 's' )
-	{
-#if 0	  
-	    // Enter menu
-	    menu_enter();
-#else
-	    // get core 1 to run the menu
-	    core1_in_menu = 1;
-
-	    // Wait for the core to exit the menu before we continue
-	    while(core1_in_menu)
-	      {
-	      }
-#endif
-	}
+	// get core 1 to run the menu
+	core1_in_menu = 1;
+	
+	// Wait for the core to exit the menu before we continue
+	while(core1_in_menu)
+	  {
+	  }
       }
-
+    
     // Main loop
     while(1)
       {

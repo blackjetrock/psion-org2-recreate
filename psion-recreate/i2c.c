@@ -13,10 +13,11 @@
 
 #include "psion_recreate.h"
 
-// The delay for th ei2c routines. This can be altered before accessing a device
+// The delay for the i2c routines. This can be altered before accessing a
+// device
 //
 
-//int i2c_delay_value = I2C_DELAY;
+int i2c_delay_value = I2C_DELAY;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -24,10 +25,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-//void i2c_fn_set_delay(int delay)
-//{
-//  i2c_delay_value = delay;
-//}
+void i2c_set_delay_value(int delay)
+{
+  i2c_delay_value = delay;
+}
 
 // Release the bus
 void i2c_release(void)
@@ -42,16 +43,11 @@ void i2c_release(void)
 // Delay to slow down to I2C bus rates
 void i2c_delay(void)
 {
-#if 0  
-  sleep_us(1);
-  return;
-#else
   volatile int i;
 
-  for(i=0; i<20; i++)
+  for(i=0; i<i2c_delay_value; i++)
     {
     }
-#endif
 }
 
 void i2c_sda_low(void)
@@ -91,7 +87,6 @@ int i2c_read_sda(void)
 void i2c_start(void)
 {
   i2c_sda_low();
-
   i2c_delay();
   i2c_scl_low();
   i2c_delay();
@@ -105,7 +100,6 @@ void i2c_stop(void)
   i2c_delay();
   i2c_sda_high();
   i2c_delay();
-
 }
 
 // Send 8 bits and read ACK
