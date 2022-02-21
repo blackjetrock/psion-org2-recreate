@@ -60,7 +60,7 @@ extern int model;
 
 #define ENABLE_1S_TICK       1     // Needed ny restore from EEPROM code, otherwise hangs
 #define DISABLE_AUTO_OFF     1     // Disable auto off feature
-#define TRACE_ADDR           0     // Trace execution addresses
+#define TRACE_ADDR           1     // Trace execution addresses
 #define NUM_ADDR_TRACE       300   // How many addresses to trace
 
 #define RAM_RESTORE          1    // Enable dump/restore RAM to/from EEPROM

@@ -27,7 +27,7 @@ close $f
 
 
 # Format the code as C array hex
-set f_hex ""
+set f_hex "\n// Embedded ROM file: $rom_filename\n"
 set f_i 0
 foreach byte [split $rom_data ""] {
     binary scan $byte H* hex
