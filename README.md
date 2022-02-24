@@ -13,6 +13,16 @@ EPROM datapack programming
 
 The original power PCB does not have a VPP supply as I didn't want to support programming of the EPROM datapacks. To do that would require the emulated code to run at a speed that exactly matched that of the original organiser, at least during the time that the programming pulses are being generated. Because of this I subsequently found that some datapacks have a regulator that takes the 21V VPP signal and turns it into a 5V signal. This is used, it appears, for the control of the page register on 128K EPROM datapacks. (At least the 27011 based packs). So the first pair of PCBs will not support the 128K EPROM datapacks. They will also not support any other datapacks that have a regulator on board, which seems ot include flash datapacks. I don't have any flash datapacks so can't test that.
 
+Datapacks that Use Vpp
+======================
+
+There are datapacks that use Vpp such as 128K EPROM packs and flash datapacks. These will also not work with the re-creation.
+
+Speed
+=====
+
+The processor emulation code now runs at about the same speed as the original Organiser. When accessing hardware the emulation speed can drop as the Pico has to emulate the hardware as well as the main processor.
+
 PCB Versions
 ============
 
