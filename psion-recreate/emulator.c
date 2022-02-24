@@ -5320,7 +5320,7 @@ void port6_ddr(int value)
 // Memory reference read
 //
 
-u_int8_t RD_REF(u_int16_t addr)
+inline u_int8_t RD_REF(u_int16_t addr)
 {
   int p5reg;
   
@@ -5461,7 +5461,7 @@ u_int8_t RD_REF(u_int16_t addr)
 
 }
 
-void WR_REF(u_int16_t addr, u_int8_t value)
+inline void WR_REF(u_int16_t addr, u_int8_t value)
 {
   switch(addr)
     {
@@ -5577,7 +5577,7 @@ void WR_REF(u_int16_t addr, u_int8_t value)
 // Read a byte from memory
 // Has to handle LCD accesses
 
-u_int8_t RD_ADDR(u_int16_t addr)
+inline u_int8_t RD_ADDR(u_int16_t addr)
 {
   switch(addr)
     {
@@ -5587,7 +5587,6 @@ u_int8_t RD_ADDR(u_int16_t addr)
 #endif
       return(timer1_tcsr);
       break;
-
       
     case BUZZER_ON:
       TURN_BUZZER_ON;
@@ -5692,7 +5691,8 @@ u_int8_t RD_ADDR(u_int16_t addr)
     }
 }
 
-u_int16_t RDW_ADDR(u_int16_t addr)
+
+inline u_int16_t RDW_ADDR(u_int16_t addr)
 {
   u_int16_t value;
   if( addr >= ROM_START)
@@ -5714,7 +5714,7 @@ u_int16_t RDW_ADDR(u_int16_t addr)
     }
 }
 
-void  WR_ADDR(u_int16_t addr, u_int8_t value)
+void WR_ADDR(u_int16_t addr, u_int8_t value)
 {
   switch(addr)
     {
@@ -5819,7 +5819,7 @@ void  WR_ADDR(u_int16_t addr, u_int8_t value)
 }
 
 // Write word to memory
-void  WRW_ADDR(u_int16_t addr, u_int16_t value)
+inline void  WRW_ADDR(u_int16_t addr, u_int16_t value)
 {
   u_int8_t v1, v2;
 
@@ -5849,7 +5849,11 @@ void  WRW_ADDR(u_int16_t addr, u_int16_t value)
 
 // Opcode table
 // Each opcode has a function that executes it
+#if 0
 typedef void (*OPCODE_FN)(u_int8_t opcode, PROC6303_STATE *ps, u_int8_t p1, u_int8_t p2);
+#else
+typedef void (*OPCODE_FN)(u_int8_t opcode, PROC6303_STATE *ps);
+#endif
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -5899,7 +5903,14 @@ void dump_ram(void)
 // p2:     parameter 2
 //
 
+#if 0
 #define OPCODE_FN(FNNAME) void FNNAME(u_int8_t opcode, PROC6303_STATE *ps, u_int8_t p1, u_int8_t p2)
+#else
+#define OPCODE_FN(FNNAME) void FNNAME(u_int8_t opcode, PROC6303_STATE *ps)
+#endif
+
+#define p1 RD_ADDR(REG_PC+1)
+#define p2 RD_ADDR(REG_PC+2)
 
 OPCODE_FN(op_null) 
 {
@@ -8411,6 +8422,8 @@ OPCODE_FN(op_jmp)
     }
 }
 
+#undef p1
+#undef p2
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -8989,6 +9002,10 @@ INTERRUPT interrupt[] =
    {0xFFF0, 0, 1, 0},
   };
 
+// Quick way to see if work needed to find an interrupt
+
+int interrupt_requested = 0;
+
 #define NUM_IRQ (sizeof(interrupt)/sizeof(INTERRUPT))
 
 void interrupt_request(u_int16_t vector)
@@ -9005,6 +9022,7 @@ void interrupt_request(u_int16_t vector)
     {
       if( vector == interrupt[i].vector )
 	{
+	  interrupt_requested = 1;
 	  interrupt[i].flag = 1;
 	  return;
 	}
@@ -9022,60 +9040,87 @@ void update_interrupts(void)
       return;
     }
 #endif
-  
-  for(int i=0; i<NUM_IRQ; i++)
-    {
-      if( interrupt[i].maskable && FLG_I )
-	{
-	  continue;
-	}
 
-      if( interrupt[i].nmi && nmi_masked )
+  if( interrupt_requested )
+    {
+      for(int i=0; i<NUM_IRQ; i++)
 	{
-	  // NMI does not interrupt if it is masked
-	  interrupt[i].flag = 0;
-	  continue;
+	  if( interrupt[i].maskable && FLG_I )
+	    {
+	      continue;
+	    }
+	  
+	  if( interrupt[i].nmi && nmi_masked )
+	    {
+	      // NMI does not interrupt if it is masked
+	      interrupt[i].flag = 0;
+	      continue;
+	    }
+	  
+	  if( interrupt[i].flag )
+	    {
+	      interrupt_requested = 0;
+	      
+	      interrupt[i].flag = 0;
+	      
+	      // Push registers
+	      WR_ADDR(REG_SP--, REG_PC & 0xFF);
+	      WR_ADDR(REG_SP--, REG_PC >> 8);
+	      WR_ADDR(REG_SP--, REG_X & 0xff);
+	      WR_ADDR(REG_SP--, REG_X >> 8);
+	      WR_ADDR(REG_SP--, REG_A);
+	      WR_ADDR(REG_SP--, REG_B);
+	      WR_ADDR(REG_SP--, REG_FLAGS);
+	      
+	      // Vector
+	      REG_PC = (u_int16_t)(
+				   (RD_ADDR(interrupt[i].vector) << 8) |
+				   (RD_ADDR(interrupt[i].vector+1))
+				   );
+	      
+	      // Mask interrupts
+	      FL_I1;
+	      
+#if !EMBEDDED
+	      fprintf(lf, "\n    PC:%04X", REG_PC);
+#endif
+	      return;
+	    }
 	}
       
-      if( interrupt[i].flag )
-	{
-	  interrupt[i].flag = 0;
-	  
-	  // Push registers
-	  WR_ADDR(REG_SP--, REG_PC & 0xFF);
-	  WR_ADDR(REG_SP--, REG_PC >> 8);
-	  WR_ADDR(REG_SP--, REG_X & 0xff);
-	  WR_ADDR(REG_SP--, REG_X >> 8);
-	  WR_ADDR(REG_SP--, REG_A);
-	  WR_ADDR(REG_SP--, REG_B);
-	  WR_ADDR(REG_SP--, REG_FLAGS);
-	  
-	  // Vector
-	  REG_PC = (u_int16_t)(
-			       (RD_ADDR(interrupt[i].vector) << 8) |
-			       (RD_ADDR(interrupt[i].vector+1))
-			       );
-	  
-	  // Mask interrupts
-	  FL_I1;
-	  
 #if !EMBEDDED
-	  fprintf(lf, "\n    PC:%04X", REG_PC);
+      fprintf(lf, "\n---------------------------------------");
+      fprintf(lf, "\nINTERRUPT:Vector %04X\n", vector);
 #endif
-	  return;
-	}
+      
     }
-
-#if !EMBEDDED
-  fprintf(lf, "\n---------------------------------------");
-  fprintf(lf, "\nINTERRUPT:Vector %04X\n", vector);
-#endif
- 
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void update_timers(void)
+inline void update_timers(int ticks)
+{
+  timer1_counter+=ticks;
+
+  if( ((timer1_counter-ticks) < timer1_compare) && (timer1_counter >= timer1_compare) )
+    {
+      // Compare interrupt
+
+      // set bit in status 
+      timer1_tcsr |= 0x40;
+
+      if( timer1_tcsr & 0x08 )
+	{
+#if !EMBEDDED
+	  fprintf(lf, "\nOCI Int\n");
+#endif
+	  interrupt_request(0xFFF4);
+	}
+    }
+}
+
+
+inline void update_timers_single(void)
 {
   timer1_counter++;
 
@@ -9099,7 +9144,7 @@ void update_timers(void)
 u_int16_t sca_counter_a = 0;
 u_int16_t sca_counter_b = 0;
 
-void update_counter(void)
+inline void update_counter(void)
 {
   sca_counter_a++;
 
@@ -9387,10 +9432,18 @@ void after_ram_restore_init(void)
 }
 
 u_int8_t opcode;
+int tick_1s_count = 0;
 
-void loop_emulator(void)
+#define LOOP_HERE 1
+
+inline void loop_emulator(void)
 {
   u_int8_t p1, p2;
+
+#if LOOP_HERE
+  while(1)
+    {
+#endif
 
 #if 0
   if( REG_PC == 0x8196 )
@@ -9398,24 +9451,49 @@ void loop_emulator(void)
       DEBUG_STOP;
     }
 #endif
-  
+
+#if 1  
+    if( REG_PC >= ROM_START)
+    {
+#if !EMBEDDED      
+      fprintf(lf, "  ROM RD:%04X = %02X  ", addr, ROMDATA(addr-ROM_START));
+#endif
+      opcode = ROMDATA(REG_PC-ROM_START);
+    }
+  else
+    {
+#if !EMBEDDED      
+      fprintf(lf, "  RAM RD:%04X = %02X  ", addr, RAMDATA(addr));
+#endif
+      opcode = RAMDATA(REG_PC);
+    }
+
+#else
   // Fetch opcode
   opcode = RD_ADDR(REG_PC);
-  
+#endif
+
+#if 0  
   p1 = RD_ADDR(REG_PC+1);
   p2 = RD_ADDR(REG_PC+2);
+#endif
   
   // Call opcode function to execute it
   inst_length = 0;
   pc_before = REG_PC;
-  
+
+#if 0  
   (*opcode_table[opcode].fn)(opcode, &pstate, p1, p2);
+#else
+  (*opcode_table[opcode].fn)(opcode, &pstate);
+#endif
   
-  // Skip past the opcode, longer instruction skip whatever they need t
+  // Skip past the opcode, longer instruction skip whatever they need to
   // in the opcode functions
   INC_PC;
   
   // Update timers
+#if 0  
   update_timers();
   update_timers();
   update_timers();
@@ -9428,7 +9506,10 @@ void loop_emulator(void)
   update_timers();
   update_timers();
   update_timers();
-
+#else
+  update_timers(12);
+#endif
+  
   update_counter();
   handle_cursor();
 
@@ -9437,8 +9518,13 @@ void loop_emulator(void)
   // Handle pending serial data
   update_serial();
 
-#if ENABLE_1S_TICK  
-  tick_1s() ;
+#if ENABLE_1S_TICK
+  if( tick_1s_count++ > 10000 )
+    {
+      tick_1s_count = 0;
+      tick_1s();      
+    }
+
 #endif
   
 #if !MULTI_CORE  
@@ -9448,6 +9534,9 @@ void loop_emulator(void)
     }
 #endif
 }
+#if LOOP_HERE
+}
+#endif
 
 int rel = 0;
 
