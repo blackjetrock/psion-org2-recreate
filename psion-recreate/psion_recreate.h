@@ -58,9 +58,11 @@ extern int model;
 #define BLUETOOTH_M          0     // Operate BT in master mode
 #define BLUETOOTH_S          1     // Operate BT in slave mode
 
-#define ENABLE_1S_TICK       1     // Needed ny restore from EEPROM code, otherwise hangs
+#define ENABLE_1S_TICK       1     // Needed by restore from EEPROM code,
+                                   // otherwise hangs
 #define DISABLE_AUTO_OFF     1     // Disable auto off feature
-#define TRACE_ADDR           1     // Trace execution addresses
+#define TRACE_ADDR           0     // Trace execution addresses
+#define TRACE_TO_TRAP        0     // Trace until a TRAP
 #define NUM_ADDR_TRACE       300   // How many addresses to trace
 
 #define RAM_RESTORE          1    // Enable dump/restore RAM to/from EEPROM
@@ -259,6 +261,13 @@ void eeprom_perform_dump(void);
 
 
 extern volatile int core1_in_menu;
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Tracing
+//
+
+extern int tracing_to;
 
 ////////////////////////////////////////////////////////////////////////////////
 //

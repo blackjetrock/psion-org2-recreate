@@ -8272,6 +8272,10 @@ OPCODE_FN(op_trap)
 {
   u_int8_t *dest;
 
+#if TRACE_TO_TRAP
+  tracing_to = 0;
+#endif
+  
   // Push everything on to stack
   WR_ADDR(REG_SP--, (REG_PC+1) & 0xFF);
   WR_ADDR(REG_SP--, (REG_PC+1) >> 8);
@@ -8318,8 +8322,9 @@ OPCODE_FN(op_jsr)
       break;
 
     case 0x9D:
-      dest = RDW_ADDR(p1);
-
+      //      dest = RDW_ADDR(p1);
+      dest = p1;
+      
       // Adjust for the increment of PC that occurs automatically
       dest--;
       
@@ -8967,7 +8972,7 @@ void dump_state(int opcode, int inst_length)
 // Interrupt Request
 //
 // Sets the request flag for the given interrupt
-// The process function then handles the genration of the interrupt
+// The process function then handles the generation of the interrupt
 
 typedef struct _INTERRUPT
 {
@@ -8988,6 +8993,14 @@ INTERRUPT interrupt[] =
 
 void interrupt_request(u_int16_t vector)
 {
+#if TRACE_TO_TRAP
+  if( vector == 0xffee )
+    {
+      tracing_to = 0;
+    }
+  
+#endif
+  
   for(int i=0; i<NUM_IRQ; i++)
     {
       if( vector == interrupt[i].vector )

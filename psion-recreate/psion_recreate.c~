@@ -650,14 +650,14 @@ int main() {
 #if TRACE_ADDR
     // Trace a number of execution addresses
     int tracing            = 0;
-    u_int16_t trigger_addr = 0x80c8;
+    u_int16_t trigger_addr = 0x7ed3;
     int addr_trace_i       = 0;
 
     // Trace from a trigger address until trace full
     volatile u_int16_t addr_trace_from[NUM_ADDR_TRACE];
 
     // Trace continuously until trigger address seen
-    u_int16_t trace_stop_addr = 0x7fba;
+    u_int16_t trace_stop_addr = 0x7ed3;
     volatile u_int16_t addr_trace_to[NUM_ADDR_TRACE];
     int addr_trace_to_i       = 0;
     int tracing_to            = 1;
