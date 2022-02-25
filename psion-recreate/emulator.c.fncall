@@ -9584,4 +9584,3 @@ void emulator_main(void)
 
   loop_emulator();
 }
-

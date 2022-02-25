@@ -4944,7 +4944,7 @@ PROC6303_STATE pstate;
 
 // Returns a reference to a byte in the memory space
 // 
-u_int8_t *REF_ADDR(u_int16_t addr)
+inline u_int8_t *REF_ADDR(u_int16_t addr)
 {
 
   if( addr >= ROM_START)
@@ -5692,7 +5692,7 @@ inline u_int8_t RD_ADDR(u_int16_t addr)
 }
 
 
-inline u_int16_t RDW_ADDR(u_int16_t addr)
+u_int16_t RDW_ADDR(u_int16_t addr)
 {
   u_int16_t value;
   if( addr >= ROM_START)
@@ -5909,2524 +5909,10 @@ void dump_ram(void)
 #define OPCODE_FN(FNNAME) void FNNAME(u_int8_t opcode, PROC6303_STATE *ps)
 #endif
 
-#define p1 RD_ADDR(REG_PC+1)
-#define p2 RD_ADDR(REG_PC+2)
 
-OPCODE_FN(op_null) 
-{
-#if 0  
-#if !EMBEDDED  
-  fprintf(lf, "\n                     Unknown opcode:%02X\n\n", opcode);
-  dump_ram();
-  exit(-1);
-#else
-  char str[100];
-  sprintf(str, "Unknown opcode %02X", opcode);
-  mvaddstr(10,10, str);
-  refresh();
-  while(1)
-    {
-    }
-#endif
-#endif  
-}
-
-OPCODE_FN(op_nop) 
-{
-}
-
-// NOP for now
-OPCODE_FN(op_slp) 
-{
-}
-      
-
-OPCODE_FN(op_oim)
-{
-  u_int8_t result;
-  
-  switch(opcode)
-    {
-    case 0x62:
-      result = RD_ADDR(p2 + REG_X) | p1;
-      WR_ADDR(p2+REG_X, result);
-      break;
-      
-    case 0x72:
-      result = RD_ADDR(p2) | p1;
-      WR_ADDR(p2, result);
-      break;
-    }
-  
-  INC_PC;
-  INC_PC;
-
-  FL_V0;
-  FL_N8T(result);
-  FL_ZT(result);
-}
-
-OPCODE_FN(op_aim)
-{
-  u_int8_t result;
-  
-  switch(opcode)
-    {
-    case 0x61:
-      result = RD_ADDR(p2 + REG_X) & p1;
-      WR_ADDR(p2+REG_X, result);
-      break;
-
-    case 0x71:
-      result = RD_ADDR(p2) & p1;
-      WR_ADDR(p2, result);
-      break;
-    }
-  
-  INC_PC;
-  INC_PC;
-
-  FL_V0;
-  FL_N8T(result);
-  FL_ZT(result);
-}
-
-OPCODE_FN(op_eim)
-{
-  u_int8_t result;
-  
-  switch(opcode)
-    {
-    case 0x65:
-      result = RD_ADDR(p2 + REG_X) ^ p1;
-      WR_ADDR(p2+REG_X, result);
-      break;
-
-    case 0x75:
-      result = RD_ADDR(p2) ^ p1;
-      WR_ADDR(p2, result);
-      break;
-    }
-  
-  INC_PC;
-  INC_PC;
-
-  FL_V0;
-  FL_N8T(result);
-  FL_ZT(result);
-}
-
-OPCODE_FN(op_tim)
-{
-  u_int8_t result;
-  
-  switch(opcode)
-    {
-    case 0x6B:
-      result = RD_ADDR(p2 + REG_X) & p1;
-      break;
-
-    case 0x7B:
-      result = RD_ADDR(p2) & p1;
-      break;
-    }
-  
-  INC_PC;
-  INC_PC;
-
-  FL_V0;
-  FL_N8T(result);
-  FL_ZT(result);
-}
-
-OPCODE_FN(op_pul)
-{
-  switch(opcode)
-    {
-    case 0x32:
-      (REG_SP)++;
-      REG_A = RD_ADDR(REG_SP);
-      break;
-
-    case 0x33:
-      (REG_SP)++;
-      REG_B = RD_ADDR(REG_SP);
-      break;
-
-    case 0x38:
-      (REG_SP)++;
-      REG_X = RD_ADDR(REG_SP);
-      REG_X <<=8;
-      (REG_SP)++;
-      REG_X += RD_ADDR(REG_SP);
-      break;
-    }
-}
-
-OPCODE_FN(op_abx)
-{
-  REG_X += REG_B;
-}
-
-OPCODE_FN(op_psh)
-{
-  switch(opcode)
-    {
-    case 0x36:
-      WR_ADDR(REG_SP--, REG_A);
-      break;
-
-    case 0x37:
-      WR_ADDR(REG_SP--, REG_B);
-      break;
-
-    case 0x3C:
-      WR_ADDR(REG_SP--, REG_X & 0xff);
-      WR_ADDR(REG_SP--, REG_X >> 8);
-      break;
-    }
-}
-
-OPCODE_FN(op_and)
-{
-  u_int8_t *dest;
-  u_int16_t  value;
-  
-  switch(opcode)
-    {
-    case 0x84:
-      value = p1;
-      dest = &(REG_A);
-      INC_PC;
-      break;
-      
-    case 0x94:
-      value = ADDR_WORD(0, p1);
-      value = RD_ADDR(value);
-      dest = &(REG_A);
-      INC_PC;
-      break;
-
-    case 0xB4:
-      value = ADDR_WORD(p1, p2);
-      value = RD_ADDR(value);
-      dest = &(REG_A);
-      INC_PC;
-      INC_PC;
-      break;
-      
-    case 0xA4:
-      value = REG_X + p1;
-      value = RD_ADDR(value);
-      dest = &(REG_A);
-      INC_PC;
-      break;
-
-    case 0xC4:
-      value = p1;
-      dest = &(REG_B);
-      INC_PC;
-      break;
-      
-    case 0xD4:
-      value = ADDR_WORD(0, p1);
-      value = RD_ADDR(value);
-      dest = &(REG_B);
-      INC_PC;
-      break;
-
-    case 0xF4:
-      value = ADDR_WORD(p1, p2);
-      value = RD_ADDR(value);
-      dest = &(REG_B);
-      INC_PC;
-      INC_PC;
-      break;
-      
-    case 0xE4:
-      value = REG_X + p1;
-      value = RD_ADDR(value);
-      dest = &(REG_B);
-      INC_PC;
-      break;
-    }
-
-  *dest &= (value & 0xff);
-  
-  FL_V0;
-  FL_ZT(*dest);
-  FL_N8T(*dest);
-}
-
-OPCODE_FN(op_eor)
-{
-  u_int8_t *dest;
-  u_int16_t  value;
-  
-  switch(opcode)
-    {
-    case 0x88:
-      value = p1;
-      dest = &(REG_A);
-      INC_PC;
-      break;
-      
-    case 0x98:
-      value = ADDR_WORD(0, p1);
-      value = RD_ADDR(value);
-      dest = &(REG_A);
-      INC_PC;
-      break;
-
-    case 0xB8:
-      value = ADDR_WORD(p1, p2);
-      value = RD_ADDR(value);
-      dest = &(REG_A);
-      INC_PC;
-      INC_PC;
-      break;
-      
-    case 0xA8:
-      value = REG_X + p1;
-      value = RD_ADDR(value);
-      dest = &(REG_A);
-      INC_PC;
-      break;
-
-    case 0xC8:
-      value = p1;
-      dest = &(REG_B);
-      INC_PC;
-      break;
-      
-    case 0xD8:
-      value = ADDR_WORD(0, p1);
-      value = RD_ADDR(value);
-      dest = &(REG_B);
-      INC_PC;
-      break;
-
-    case 0xF8:
-      value = ADDR_WORD(p1, p2);
-      value = RD_ADDR(value);
-      dest = &(REG_B);
-      INC_PC;
-      INC_PC;
-      break;
-      
-    case 0xE8:
-      value = REG_X + p1;
-      value = RD_ADDR(value);
-      dest = &(REG_B);
-      INC_PC;
-      break;
-    }
-
-  *dest ^= (value & 0xff);
-  
-  FL_V0;
-  FL_ZT(*dest);
-  FL_N8T(*dest);
-}
-
-OPCODE_FN(op_ora)
-{
-  u_int8_t *dest;
-  u_int16_t  value;
-  
-  switch(opcode)
-    {
-    case 0x8A:
-      value = p1;
-      dest = &(REG_A);
-      INC_PC;
-      break;
-      
-    case 0x9A:
-      value = ADDR_WORD(0, p1);
-      value = RD_ADDR(value);
-      dest = &(REG_A);
-      INC_PC;
-      break;
-
-    case 0xBA:
-      value = ADDR_WORD(p1, p2);
-      value = RD_ADDR(value);
-      dest = &(REG_A);
-      INC_PC;
-      INC_PC;
-      break;
-      
-    case 0xAA:
-      value = REG_X + p1;
-      value = RD_ADDR(value);
-      dest = &(REG_A);
-      INC_PC;
-      break;
-
-    case 0xCA:
-      value = p1;
-      dest = &(REG_B);
-      INC_PC;
-      break;
-      
-    case 0xDA:
-      value = ADDR_WORD(0, p1);
-      value = RD_ADDR(value);
-      dest = &(REG_B);
-      INC_PC;
-      break;
-
-    case 0xFA:
-      value = ADDR_WORD(p1, p2);
-      value = RD_ADDR(value);
-      dest = &(REG_B);
-      INC_PC;
-      INC_PC;
-      break;
-      
-    case 0xEA:
-      value = REG_X + p1;
-      value = RD_ADDR(value);
-      dest = &(REG_B);
-      INC_PC;
-      break;
-    }
-
-  *dest |= (value & 0xff);
-  
-  FL_V0;
-  FL_ZT(*dest);
-  FL_N8T(*dest);
-}
-
-OPCODE_FN(op_bit)
-{
-  u_int8_t *dest;
-  u_int16_t  value;
-  
-  switch(opcode)
-    {
-    case 0x85:
-      value = p1;
-      dest = &(REG_A);
-      INC_PC;
-      break;
-      
-    case 0x95:
-      value = ADDR_WORD(0, p1);
-      value = RD_ADDR(value);
-      dest = &(REG_A);
-      INC_PC;
-      break;
-
-    case 0xB5:
-      value = ADDR_WORD(p1, p2);
-      value = RD_ADDR(value);
-      dest = &(REG_A);
-      INC_PC;
-      INC_PC;
-      break;
-      
-    case 0xA5:
-      value = REG_X + p1;
-      value = RD_ADDR(value);
-      dest = &(REG_A);
-      INC_PC;
-      break;
-
-    case 0xC5:
-      value = p1;
-      dest = &(REG_B);
-      INC_PC;
-      break;
-      
-    case 0xD5:
-      value = ADDR_WORD(0, p1);
-      value = RD_ADDR(value);
-      dest = &(REG_B);
-      INC_PC;
-      break;
-
-    case 0xF5:
-      value = ADDR_WORD(p1, p2);
-      value = RD_ADDR(value);
-      dest = &(REG_B);
-      INC_PC;
-      INC_PC;
-      break;
-      
-    case 0xE5:
-      value = REG_X + p1;
-      value = RD_ADDR(value);
-      dest = &(REG_B);
-      INC_PC;
-      break;
-    }
-
-  u_int8_t res = *dest & (value & 0xff);
-  
-  FL_V0;
-  FL_ZT(res);
-  FL_N8T(res);
-}
-
-OPCODE_FN(op_sta)
-{
-  u_int16_t dest;
-  u_int8_t  value;
-  
-  switch(opcode)
-    {
-    case 0x97:
-      dest = p1;
-      value = REG_A;
-      INC_PC;
-      break;
-      
-    case 0xB7:
-      dest = p1;
-      dest <<= 8;
-      dest |= p2;
-      value = REG_A;
-      INC_PC;
-      INC_PC;
-      break;
-      
-    case 0xA7:
-      dest = REG_X + p1;
-      value = REG_A;
-      INC_PC;
-      break;
-
-    case 0xD7:
-      dest = p1;
-      value = REG_B;
-      INC_PC;
-      break;
-      
-    case 0xF7:
-      dest = p1;
-      dest <<= 8;
-      dest |= p2;
-      value = REG_B;
-      INC_PC;
-      INC_PC;
-      break;
-      
-    case 0xE7:
-      dest = REG_X + p1;
-      value = REG_B;
-      INC_PC;
-      break;
-    }
-
-  WR_ADDR(dest, value);
-  
-  FL_V0;
-  FL_ZT(value);
-  FL_N8T(value);
-}
-
-OPCODE_FN(op_stx)
-{
-  u_int16_t dest;
-  u_int16_t  value;
-  
-  switch(opcode)
-    {
-    case 0xDF:
-      dest = p1;
-      value = REG_X;
-      INC_PC;
-      break;
-      
-    case 0xFF:
-      dest = p1;
-      dest <<= 8;
-      dest |= p2;
-      value = REG_X;
-      INC_PC;
-      INC_PC;
-      break;
-      
-    case 0xEF:
-      dest = REG_X + p1;
-      value = REG_X;
-      INC_PC;
-      break;
-    }
-
-  WRW_ADDR(dest, value);
-  
-  FL_V0;
-  FL_ZT(value);
-  FL_N16T(value);
-}
-
-OPCODE_FN(op_sts)
-{
-  u_int16_t dest;
-  u_int16_t  value;
-  
-  switch(opcode)
-    {
-    case 0x9F:
-      dest = p1;
-      value = REG_SP;
-      INC_PC;
-      break;
-      
-    case 0xBF:
-      dest = p1;
-      dest <<= 8;
-      dest |= p2;
-      value = REG_SP;
-      INC_PC;
-      INC_PC;
-      break;
-      
-    case 0xAF:
-      dest = REG_X + p1;
-      value = REG_SP;
-      INC_PC;
-      break;
-    }
-
-  WRW_ADDR(dest, value);
-  
-  FL_V0;
-  FL_ZT(value);
-  FL_N16T(value);
-}
-
-OPCODE_FN(op_std)
-{
-  u_int16_t dest;
-  u_int16_t  value;
-  
-  switch(opcode)
-    {
-    case 0xDD:
-      dest = p1;
-      value = REG_D;
-      INC_PC;
-      break;
-      
-    case 0xFD:
-      dest = p1;
-      dest <<= 8;
-      dest |= p2;
-      value = REG_D;
-      INC_PC;
-      INC_PC;
-      break;
-      
-    case 0xED:
-      dest = REG_X + p1;
-      value = REG_D;
-      INC_PC;
-      break;
-    }
-
-  WRW_ADDR(dest, value);
-  
-  FL_V0;
-  FL_ZT(value);
-  FL_N16T(value);
-}
-
-OPCODE_FN(op_addd)
-{
-  u_int16_t  value;
-  u_int8_t   mh, ml;
-  
-  switch(opcode)
-    {
-    case 0xC3:
-      value = ADDR_WORD(p1,p2);
-      INC_PC;
-      INC_PC;
-      break;
-      
-    case 0xD3:
-      value = ADDR_WORD(0,p1);
-      mh = RD_ADDR(value+0);
-      ml = RD_ADDR(value+1);
-      value = ADDR_WORD(mh,ml);
-      INC_PC;
-      break;
-      
-    case 0xF3:
-      value = ADDR_WORD(p1,p2);
-      mh = RD_ADDR(value+0);
-      ml = RD_ADDR(value+1);
-      value = ADDR_WORD(mh,ml);
-      INC_PC;
-      INC_PC;
-      break;
-
-    case 0xE3:
-      value = REG_X + p1;
-      mh = RD_ADDR(value+0);
-      ml = RD_ADDR(value+1);
-      value = ADDR_WORD(mh,ml);
-      INC_PC;
-      break;
-    }
-
-  // get the result
-  u_int16_t mval = value;
-  
-  value = REG_D + value;
-
-  FL_V16AT(value,mval,REG_D);
-  FL_C16AT(value,mval,REG_D);
-  FL_ZT(value);
-  FL_N16T(value);
-
-  // Write result to D
-  WRITE_REG_D(value);
-}
-
-OPCODE_FN(op_cpx)
-{
-  u_int16_t  value;
-  u_int8_t   mh, ml;
-  
-  switch(opcode)
-    {
-    case 0x8C:
-      value = ADDR_WORD(p1,p2);
-      INC_PC;
-      INC_PC;
-      break;
-      
-    case 0x9C:
-      value = ADDR_WORD(0,p1);
-      mh = RD_ADDR(value+0);
-      ml = RD_ADDR(value+1);
-      value = ADDR_WORD(mh,ml);
-      INC_PC;
-      break;
-      
-    case 0xBC:
-      value = ADDR_WORD(p1,p2);
-      mh = RD_ADDR(value+0);
-      ml = RD_ADDR(value+1);
-      value = ADDR_WORD(mh,ml);
-      INC_PC;
-      INC_PC;
-      break;
-
-    case 0xAC:
-      value = REG_X + p1;
-      mh = RD_ADDR(value+0);
-      ml = RD_ADDR(value+1);
-      value = ADDR_WORD(mh,ml);
-      INC_PC;
-      break;
-    }
-
-  // get the result
-  u_int16_t mval = value;
-  
-  value = REG_X - value;
-
-  FL_V16ST(value,mval,REG_X);
-  FL_C16ST(value,mval,REG_X);
-  FL_ZT(value);
-  FL_N16T(value);
-}
-
-OPCODE_FN(op_subd)
-{
-  u_int16_t  value;
-  u_int8_t   mh, ml;
-  
-  switch(opcode)
-    {
-    case 0x83:
-      value = ADDR_WORD(p1,p2);
-      INC_PC;
-      INC_PC;
-      break;
-      
-    case 0x93:
-      value = ADDR_WORD(0,p1);
-      mh = RD_ADDR(value+0);
-      ml = RD_ADDR(value+1);
-      value = ADDR_WORD(mh,ml);
-      INC_PC;
-      break;
-      
-    case 0xB3:
-      value = ADDR_WORD(p1,p2);
-      mh = RD_ADDR(value+0);
-      ml = RD_ADDR(value+1);
-      value = ADDR_WORD(mh,ml);
-      INC_PC;
-      INC_PC;
-      break;
-
-    case 0xA3:
-      value = REG_X + p1;
-      mh = RD_ADDR(value+0);
-      ml = RD_ADDR(value+1);
-      value = ADDR_WORD(mh,ml);
-      INC_PC;
-      break;
-    }
-
-  // get the result
-  u_int16_t mval = value;
-  
-  value = REG_D - value;
-
-  FL_V16ST(value,mval,REG_D);
-  FL_C16ST(value,mval,REG_D);
-  FL_ZT(value);
-  FL_N16T(value);
-
-  // Write result to D
-  WRITE_REG_D(value);
-}
-
-OPCODE_FN(op_xgdx)
-{
-  u_int16_t temp;
-  
-  temp = REG_X;
-  REG_X = REG_D;
-  WRITE_REG_D(temp);
-}
-
-OPCODE_FN(op_txs)
-{
-  REG_SP = REG_X - 1;
-}
-
-OPCODE_FN(op_tsx)
-{
-  REG_X = REG_SP + 1;
-}
-
-OPCODE_FN(op_tab)
-{
-  REG_B = REG_A;
-  FL_V0;
-  FL_ZT(REG_B);
-  FL_N8T(REG_B);
-}
-
-OPCODE_FN(op_tba)
-{
-  REG_A = REG_B;
-  FL_V0;
-  FL_ZT(REG_A);
-  FL_N8T(REG_A);
-}
-
-OPCODE_FN(op_tap)
-{
-  REG_FLAGS &= 0xC0;
-  REG_FLAGS |= (REG_A & 0x3F);
-}
-
-OPCODE_FN(op_tpa)
-{
-  REG_A = REG_FLAGS;
-}
-
-OPCODE_FN(op_rti)
-{
-  REG_FLAGS = RD_ADDR(++REG_SP);
-  REG_B     = RD_ADDR(++REG_SP);
-  REG_A     = RD_ADDR(++REG_SP);
-  REG_X     = ((u_int16_t)RD_ADDR(++REG_SP) << 8);
-  REG_X    |= RD_ADDR(++REG_SP);
-  REG_PC    = ((u_int16_t)RD_ADDR(++REG_SP) << 8);
-  REG_PC   |= RD_ADDR(++REG_SP);
-
-  // Compensate for the increment of PC we always do
-  REG_PC--;
-}
-
-OPCODE_FN(op_rts)
-{
-  REG_PC    = ((u_int16_t)RD_ADDR(++REG_SP) << 8);
-  REG_PC   |= RD_ADDR(++REG_SP);
-
-  // Compensate for the increment of PC we always do
-  REG_PC--;
-}
-
-OPCODE_FN(op_ldd)
-{
-  u_int16_t  src;
-
-  switch(opcode)
-    {
-    case 0xCC:
-      REG_A = p1;
-      REG_B = p2;
-      INC_PC;
-      INC_PC;
-      break;
-
-    case 0xDC:
-      REG_A = RD_ADDR(p1);
-      REG_B = RD_ADDR(p1+1);
-      INC_PC;
-      break;
-
-    case 0xEC:
-      REG_A = RD_ADDR(REG_X+p1+0);
-      REG_B = RD_ADDR(REG_X+p1+1);
-      INC_PC;
-      break;
-
-    case 0xFC:
-#if !EMBEDDED      
-      fprintf(lf, "\np1=%02X p2=%02X", p1,p2);
-#endif
-      src = p1;
-      src <<=8;
-      src += p2;
-      
-      REG_A = RD_ADDR(src+0);
-      REG_B = RD_ADDR(src+1);
-      INC_PC;
-      INC_PC;
-      break;
-    }
-
-  // Update flags
-  FL_V0;
-  FL_ZT(REG_D);
-  FL_N16T(REG_D);
-  
-}
-
-OPCODE_FN(op_ld16)
-{
-  u_int16_t *dest;
-  u_int16_t value;
-  u_int16_t  src;
-  
-  switch(opcode)
-    {
-    case 0xCE:
-      dest = &(REG_X);
-      value = p1;
-      value <<= 8;
-      value |= p2;
-      INC_PC;
-      INC_PC;
-      break;
-
-    case 0xDE:
-      dest = &(REG_X);
-      value = RDW_ADDR(p1);
-      INC_PC;
-      break;
-
-    case 0xEE:
-      dest = &(REG_X);
-      value = RDW_ADDR(REG_X+p1);
-      INC_PC;
-      break;
-
-    case 0xFE:
-#if !EMBEDDED
-      fprintf(lf, "\np1=%02X p2=%02X", p1,p2);
-#endif
-      src = p1;
-      src <<=8;
-      src += p2;
-      dest = &(REG_X);
-      value = RDW_ADDR(src);
-      INC_PC;
-      INC_PC;
-      break;
-
-    case 0x8E:
-      dest = &(REG_SP);
-      value = p1;
-      value <<= 8;
-      value |= p2;
-      INC_PC;
-      INC_PC;
-      break;
-
-    case 0x9E:
-      dest = &(REG_SP);
-      value = RDW_ADDR(p1);
-      INC_PC;
-      break;
-
-    case 0xAE:
-      dest = &(REG_SP);
-      value = RDW_ADDR(REG_X+p1);
-      INC_PC;
-      break;
-
-    case 0xBE:
-      dest = &(REG_SP);
-      value = RDW_ADDR(ADDR_WORD(p1,p2));
-      INC_PC;
-      INC_PC;
-      break;
-    }
-
-  *dest = value;
-  
-  // Update flags
-  FL_V0;
-  FL_ZT(*dest);
-  FL_N16T(*dest);
-}
-
-OPCODE_FN(op_clc)
-{
-  FL_C0;
-}
-
-OPCODE_FN(op_sec)
-{
-  FL_C1;
-}
-
-OPCODE_FN(op_sei)
-{
-  FL_I1;
-}
-
-OPCODE_FN(op_cli)
-{
-  FL_I0;
-}
-
-OPCODE_FN(op_dec16)
-{
-  u_int16_t *dest;
-  
-  switch(opcode)
-    {
-    case 0x09:
-      dest = &(REG_X);
-      (*dest)--;
-      FL_ZT(*dest);
-      break;
-      
-    case 0x34:
-      dest = &(REG_SP);
-      (*dest)--;
-      break;
-    }
-}
-
-OPCODE_FN(op_inc16)
-{
-  u_int16_t *dest;
-  
-  switch(opcode)
-    {
-    case 0x08:
-      dest = &(REG_X);
-      (*dest)++;
-      FL_ZT(*dest);
-      break;
-      
-    case 0x31:
-      dest = &(REG_SP);
-      (*dest)++;
-      break;
-    }
-}
-
-OPCODE_FN(op_br)
-{
-  int branched = 0;
-  int16_t rel = CALC_REL(p1);
-
-  switch(opcode)
-    {
-    case 0x20:
-#if !EMBEDDED
-      fprintf(lf, "\nPC=%04X", REG_PC);
-      fprintf(lf, "\nrel=%d", rel);
-      sprintf(opcode_decode, "BRA %02X, (%d) %04X", p1, rel, REG_PC+2+rel); 
-#endif
-      REG_PC += 1 + rel;
-      branched = 1;
-#if !EMBEDDED
-      fprintf(lf, "\nPC=%04X", REG_PC);
-      fprintf(lf, "\np1=%02X", p1);
-#endif
-      break;
-
-      // Branch never?
-    case 0x21:
-#if !EMBEDDED
-            sprintf(opcode_decode, "BRN %02X, (%d) %04X", p1, rel, REG_PC+2+rel);
-#endif
-      break;
-
-    case 0x22:
-#if !EMBEDDED
-      sprintf(opcode_decode, "BHI %02X, (%d) %04X", p1, rel, REG_PC+2+rel);
-#endif
-      if( !(FLG_C) && !(FLG_Z) )
-	{
-	  REG_PC += 1 + rel;
-	  branched = 1;
-	}
-      break;
-
-    case 0x23:
-#if !EMBEDDED
-      sprintf(opcode_decode, "BLS %02X, (%d) %04X", p1, rel, REG_PC+2+rel);
-#endif
-      if( FLG_C || FLG_Z )
-	{
-	  REG_PC += 1 + rel;
-	  branched = 1;
-	}
-      break;
-
-    case 0x24:
-#if !EMBEDDED
-      sprintf(opcode_decode, "BCC %02X, (%d) %04X", p1, rel, REG_PC+2+rel);
-#endif
-
-      if( !FLG_C )
-	{
-	  REG_PC += 1 + rel;
-	  branched = 1;
-	}
-      break;
-
-    case 0x25:
-#if !EMBEDDED
-      sprintf(opcode_decode, "BCS %02X, (%d) %04X", p1, rel, REG_PC+2+rel);
-#endif
-
-      if( FLG_C )
-	{
-	  REG_PC += 1 + rel;
-	  branched = 1;
-	}
-      break;
-
-    case 0x26:
-#if !EMBEDDED
-      sprintf(opcode_decode, "BNE %02X, (%d) %04X", p1, rel, REG_PC+2+rel);
-#endif
-
-      if( !FLG_Z )
-	{
-	  REG_PC += 1 + rel;
-	  branched = 1;
-	}
-      break;
-
-    case 0x27:
-#if !EMBEDDED
-      sprintf(opcode_decode, "BEQ %02X, (%d) %04X", p1, rel, REG_PC+2+rel);
-#endif
-
-      if( FLG_Z )
-	{
-	  REG_PC += 1 + rel;
-	  branched = 1;
-	}
-      break;
-
-    case 0x28:
-#if !EMBEDDED
-      sprintf(opcode_decode, "BVC %02X, (%d) %04X", p1, rel, REG_PC+2+rel);
-#endif
-      
-      if( !FLG_V )
-	{
-	  REG_PC += 1 + rel;
-	  branched = 1;
-	}
-      break;
-      
-    case 0x29:
-#if !EMBEDDED
-      sprintf(opcode_decode, "BVS %02X, (%d) %04X", p1, rel, REG_PC+2+rel);
-#endif
-
-      if( FLG_V )
-	{
-	  REG_PC += 1 + rel;
-	  branched = 1;
-	}
-      break;
-
-    case 0x2A:
-#if !EMBEDDED
-      sprintf(opcode_decode, "BPL %02X, (%d) %04X", p1, rel, REG_PC+2+rel);
-#endif
-
-      if( !FLG_N )
-	{
-	  REG_PC += 1 + rel;
-	  branched = 1;
-	}
-      break;
-
-    case 0x2B:
-#if !EMBEDDED
-      sprintf(opcode_decode, "BMI %02X, (%d) %04X", p1, rel, REG_PC+2+rel);
-#endif
-
-      if( FLG_N )
-	{
-	  REG_PC += 1 + rel;
-	  branched = 1;
-	}
-      break;
-
-    case 0x2C:
-#if !EMBEDDED
-      sprintf(opcode_decode, "BGE %02X, (%d) %04X", p1, rel, REG_PC+2+rel);
-#endif
-
-      if( (FLG_N && FLG_V) || ((!FLG_N) && (!FLG_V)) )
-	{
-	  REG_PC += 1 + rel;
-	  branched = 1;
-	}
-      break;
-      
-    case 0x2D:
-#if !EMBEDDED
-      sprintf(opcode_decode, "BLT %02X, (%d) %04X", p1, rel, REG_PC+2+rel);
-#endif
-
-      if( ((!FLG_N) && FLG_V) || (FLG_N && (!FLG_V)) )
-	{
-	  REG_PC += 1 + rel;
-	  branched = 1;
-	}
-      break;
-      
-    case 0x2E:
-#if !EMBEDDED
-      sprintf(opcode_decode, "BGT %02X, (%d) %04X", p1, rel, REG_PC+2+rel);
-#endif
-
-      //      if( FLG_Z || ((FLG_N && FLG_V) || ((!FLG_N) && (!FLG_V))) )
-      if( (!FLG_Z) && ((FLG_N && FLG_V) || ((!FLG_N) && (!FLG_V))) )
-	{
-	  REG_PC += 1 + rel;
-	  branched = 1;
-	}
-      break;
-      
-    case 0x2F:
-#if !EMBEDDED
-      sprintf(opcode_decode, "BLE %02X, (%d) %04X", p1, rel, REG_PC+2+rel);
-#endif
-
-      //      if( !(FLG_Z || ( (FLG_N && FLG_V) || ((!FLG_N) && (!FLG_V)))) )
-      if( FLG_Z || ((FLG_N && (!FLG_V)) || ((!FLG_N) && FLG_V)) )
-	{
-	  REG_PC += 1 + rel;
-	  branched = 1;
-	}
-      break;
-    }
-
-  if( !branched )
-    {
-      INC_PC;
-    }
-  else
-    {
-      // Length of instruction is just for display purposes
-#if !EMBEDDED      
-      inst_length++;
-#endif
-    }
-}
-
-
-OPCODE_FN(op_dec8)
-{
-  u_int8_t *dest;
-  u_int8_t before;
-  
-  switch(opcode)
-    {
-    case 0x4A:
-      dest = &(REG_A);
-      break;
-      
-    case 0x5A:
-      dest = &(REG_B);
-      break;
-
-    case 0x7A:
-      dest = REF_ADDR(ADDR_WORD(p1,p2));
-      INC_PC;
-      INC_PC;
-      break;
-
-    case 0x6A:
-      dest = REF_ADDR(REG_X+p1);
-      INC_PC;
-      break;
-    }
-  
-  FL_V80(*dest);
-  
-  if(pstate.memory)
-    {
-      RD_REF(pstate.memory_addr);
-    }
-  
-  (*dest)--;
-  
-   if(pstate.memory)
-    {
-      WR_REF(pstate.memory_addr, *dest);
-      pstate.memory = 0;
-    }
-  
-  FL_ZT(*dest);
-  FL_N8T(*dest);
-  
-}
-
-OPCODE_FN(op_adc)
-{
-  u_int8_t add;
-  u_int8_t *dest;
-  u_int8_t before;
-  
-  switch(opcode)
-    {
-    case 0x89:
-      dest = &(REG_A);
-      add = p1;
-      INC_PC;
-      break;
-      
-    case 0x99:
-      dest = &(REG_A);
-      add = RD_ADDR(p1);
-      INC_PC;
-      break;
-
-    case 0xB9:
-      dest = &(REG_A);
-      add = RD_ADDR(ADDR_WORD(p1,p2));
-      INC_PC;
-      INC_PC;
-      break;
-
-    case 0xA9:
-      dest = &(REG_A);
-      add = RD_ADDR(REG_X+p1);
-      INC_PC;
-      break;
-
-    case 0xC9:
-      dest = &(REG_B);
-      add = p1;
-      INC_PC;
-      break;
-      
-    case 0xD9:
-      dest = &(REG_B);
-      add = RD_ADDR(p1);
-      INC_PC;
-      break;
-
-    case 0xF9:
-      dest = &(REG_B);
-      add = RD_ADDR(ADDR_WORD(p1,p2));
-      INC_PC;
-      INC_PC;
-      break;
-
-    case 0xE9:
-      dest = &(REG_B);
-      add = RD_ADDR(REG_X+p1);
-      INC_PC;
-      break;
-    }
-
-  before = *dest;
-  
-  // Special flag test
-  (*dest) += add + FL_C_0OR1;
-
-  FL_V8T(*dest,add,before);
-  FL_ZT(*dest);
-  FL_N8T(*dest);
-  FL_C8TP(*dest,add,before);
-  FL_H(*dest,add,before);
-}
-
-OPCODE_FN(op_daa)
-{
-  u_int8_t msn, lsn;
-  u_int16_t t, cf = 0;
-  int orig_a = REG_A;
-
-  // We need this variable as REG_A is 8 bits and the algorithm requires
-  // the answer tooverflow out of 8 bits
-  
-  int ans = REG_A;
- 
-  msn = REG_A & 0xf0;
-  lsn = REG_A & 0x0f;
-
-  if( FLG_H )
-    {
-      ans += 0x06;
-    }
-
-  if( lsn > 0x09 )
-    {
-      ans += 0x06;
-    }
-
-  if( FLG_C )
-    {
-      ans += 0x60;
-    }
-
-  if( ans > 0x9f )
-    {
-      ans += 0x60;
-    }
-  if( ans > 0x99 )
-    {
-      FL_C1;
-    }
-
-  //  REG_A &= 0xff;
-  
-  FL_N8T(ans);
-  FL_ZT(ans);
-
-  if( ((orig_a ^ ans) & 0x80) != 0 )
-    {
-      FL_V1;
-    }
-  else
-    {
-      FL_V0;
-    }
-  
-  REG_A = (ans & 0xff);
-}
-
-OPCODE_FN(op_add)
-{
-  u_int8_t add;
-  u_int8_t *dest;
-  u_int8_t before;
-  
-  switch(opcode)
-    {
-    case 0x1B:
-      dest = &(REG_A);
-      add = REG_B;
-      break;
-      
-    case 0x8B:
-      dest = &(REG_A);
-      add = p1;
-      INC_PC;
-      break;
-      
-    case 0x9B:
-      dest = &(REG_A);
-      add = RD_ADDR(p1);
-      INC_PC;
-      break;
-
-    case 0xBB:
-      dest = &(REG_A);
-      add = RD_ADDR(ADDR_WORD(p1,p2));
-      INC_PC;
-      INC_PC;
-      break;
-
-    case 0xAB:
-      dest = &(REG_A);
-      add = RD_ADDR(REG_X+p1);
-      INC_PC;
-      break;
-
-    case 0xCB:
-      dest = &(REG_B);
-      add = p1;
-      INC_PC;
-      break;
-      
-    case 0xDB:
-      dest = &(REG_B);
-      add = RD_ADDR(p1);
-      INC_PC;
-      break;
-
-    case 0xFB:
-      dest = &(REG_B);
-      add = RD_ADDR(ADDR_WORD(p1,p2));
-      INC_PC;
-      INC_PC;
-      break;
-
-    case 0xEB:
-      dest = &(REG_B);
-      add = RD_ADDR(REG_X+p1);
-      INC_PC;
-      break;
-    }
-
-  before = *dest;
-  
-  // Special flag test
-  (*dest) += add;
-  FL_V8TP(*dest,add,before);
-  FL_ZT(*dest);
-  FL_N8T(*dest);
-  FL_C8TP(*dest,add,before);
-  FL_H(*dest,add,before);
-}
-
-OPCODE_FN(op_mul)
-{
-  u_int16_t res;
-
-  res = ((u_int16_t)REG_A) * ((u_int16_t)REG_B);
-  WRITE_REG_D(res);
-  FL_CSET(res & 0x80);
-}
-
-OPCODE_FN(op_lda)
-{
-  u_int8_t add;
-  u_int8_t *dest;
-  u_int8_t before;
-  
-  switch(opcode)
-    {
-    case 0x86:
-      dest = &(REG_A);
-      add = p1;
-      INC_PC;
-      break;
-      
-    case 0x96:
-      dest = &(REG_A);
-      add = RD_ADDR(p1);
-      INC_PC;
-      break;
-
-    case 0xB6:
-      dest = &(REG_A);
-      add = RD_ADDR(ADDR_WORD(p1,p2));
-      INC_PC;
-      INC_PC;
-      break;
-
-    case 0xA6:
-      dest = &(REG_A);
-      add = RD_ADDR(REG_X+p1);
-      INC_PC;
-      break;
-
-    case 0xC6:
-      dest = &(REG_B);
-      add = p1;
-      INC_PC;
-      break;
-      
-    case 0xD6:
-      dest = &(REG_B);
-      add = RD_ADDR(p1);
-      INC_PC;
-      break;
-
-    case 0xF6:
-      dest = &(REG_B);
-      add = RD_ADDR(ADDR_WORD(p1,p2));
-      INC_PC;
-      INC_PC;
-      break;
-
-    case 0xE6:
-      dest = &(REG_B);
-      add = RD_ADDR(REG_X+p1);
-      INC_PC;
-      break;
-    }
-
-  before = *dest;
-  
-  // Special flag test
-  FL_V0;
-  (*dest) = add;
-  FL_ZT(*dest);
-  FL_N8T(*dest);
-}
-
-OPCODE_FN(op_cmp)
-{
-  u_int8_t add;
-  u_int8_t *dest;
-  u_int8_t before;
-  
-  switch(opcode)
-    {
-    case 0x81:
-      dest = &(REG_A);
-      add = p1;
-      INC_PC;
-      break;
-      
-    case 0x91:
-      dest = &(REG_A);
-      add = RD_ADDR(p1);
-      INC_PC;
-      break;
-
-    case 0xB1:
-      dest = &(REG_A);
-      add = RD_ADDR(ADDR_WORD(p1,p2));
-      INC_PC;
-      INC_PC;
-      break;
-
-    case 0xA1:
-      dest = &(REG_A);
-      add = RD_ADDR(REG_X+p1);
-      INC_PC;
-      break;
-
-    case 0xC1:
-      dest = &(REG_B);
-      add = p1;
-      INC_PC;
-      break;
-      
-    case 0xD1:
-      dest = &(REG_B);
-      add = RD_ADDR(p1);
-      INC_PC;
-      break;
-
-    case 0xF1:
-      dest = &(REG_B);
-      add = RD_ADDR(ADDR_WORD(p1,p2));
-      INC_PC;
-      INC_PC;
-      break;
-
-    case 0xE1:
-      dest = &(REG_B);
-      add = RD_ADDR(REG_X+p1);
-      INC_PC;
-      break;
-    }
-
-  before = *dest;
-  
-  // Special flag test
-  u_int8_t res = (*dest) - add;
-  FL_V8T(res,add,before);
-  FL_ZT(res);
-  FL_N8T(res);
-  FL_C8T(res,add,before);
-  
-}
-
-OPCODE_FN(op_cba)
-{
-  u_int8_t add;
-  u_int8_t *dest;
-  u_int8_t before;
-
-  dest = &(REG_A);
-  add = REG_B;
-
-  before = *dest;
-  
-  // Special flag test
-
-  u_int8_t res = *dest - add;
-  FL_V8T(res,add,before);
-  FL_ZT(res);
-  FL_N8T(res);
-  FL_C8T(res,add,before);
-  
-}
-
-OPCODE_FN(op_sba)
-{
-  u_int8_t add;
-  u_int8_t *dest;
-  u_int8_t before;
-
-  dest = &(REG_A);
-  add = REG_B;
-
-  before = *dest;
-  
-  // Special flag test
-  *dest -= add;
-  FL_V8T(*dest,add,before);
-  FL_ZT(*dest);
-  FL_N8T(*dest);
-  FL_C8T(*dest,add,before);
-  
-}
-
-OPCODE_FN(op_sbc)
-{
-  u_int8_t add;
-  u_int8_t *dest;
-  u_int8_t before;
-  
-  switch(opcode)
-    {
-    case 0x82:
-      dest = &(REG_A);
-      add = p1;
-      INC_PC;
-      break;
-      
-    case 0x92:
-      dest = &(REG_A);
-      add = RD_ADDR(p1);
-      INC_PC;
-      break;
-
-    case 0xB2:
-      dest = &(REG_A);
-      add = RD_ADDR(ADDR_WORD(p1,p2));
-      INC_PC;
-      INC_PC;
-      break;
-
-    case 0xA2:
-      dest = &(REG_A);
-      add = RD_ADDR(REG_X+p1);
-      INC_PC;
-      break;
-
-    case 0xC2:
-      dest = &(REG_B);
-      add = p1;
-      INC_PC;
-      break;
-      
-    case 0xD2:
-      dest = &(REG_B);
-      add = RD_ADDR(p1);
-      INC_PC;
-      break;
-
-    case 0xF2:
-      dest = &(REG_B);
-      add = RD_ADDR(ADDR_WORD(p1,p2));
-      INC_PC;
-      INC_PC;
-      break;
-
-    case 0xE2:
-      dest = &(REG_B);
-      add = RD_ADDR(REG_X+p1);
-      INC_PC;
-      break;
-    }
-
-  before = *dest;
-  
-  // Special flag test
-  (*dest) -= add + FL_C_0OR1;
-  FL_V8T(*dest,add,before);
-  FL_ZT(*dest);
-  FL_N8T(*dest);
-  FL_C8T(*dest,add,before);
-  
-}
-
-OPCODE_FN(op_sub)
-{
-  u_int8_t add;
-  u_int8_t *dest;
-  u_int8_t before;
-  
-  switch(opcode)
-    {
-    case 0x80:
-      dest = &(REG_A);
-      add = p1;
-      INC_PC;
-      break;
-      
-    case 0x90:
-      dest = &(REG_A);
-      add = RD_ADDR(p1);
-      INC_PC;
-      break;
-
-    case 0xB0:
-      dest = &(REG_A);
-      add = RD_ADDR(ADDR_WORD(p1,p2));
-      INC_PC;
-      INC_PC;
-      break;
-
-    case 0xA0:
-      dest = &(REG_A);
-      add = RD_ADDR(REG_X+p1);
-      INC_PC;
-      break;
-
-    case 0xC0:
-      dest = &(REG_B);
-      add = p1;
-      INC_PC;
-      break;
-      
-    case 0xD0:
-      dest = &(REG_B);
-      add = RD_ADDR(p1);
-      INC_PC;
-      break;
-
-    case 0xF0:
-      dest = &(REG_B);
-      add = RD_ADDR(ADDR_WORD(p1,p2));
-      INC_PC;
-      INC_PC;
-      break;
-
-    case 0xE0:
-      dest = &(REG_B);
-      add = RD_ADDR(REG_X+p1);
-      INC_PC;
-      break;
-    }
-
-  before = *dest;
-  
-  // Special flag test
-  (*dest) -= add;
-  FL_V8T(*dest,add,before);
-  FL_ZT(*dest);
-  FL_N8T(*dest);
-  FL_C8T(*dest,add,before);
-  
-}
-
-OPCODE_FN(op_inc8)
-{
-  u_int8_t *dest;
-  u_int8_t before;
-  
-  switch(opcode)
-    {
-    case 0x4C:
-      dest = &(REG_A);
-      break;
-      
-    case 0x5C:
-      dest = &(REG_B);
-      break;
-
-    case 0x7C:
-      dest = REF_ADDR(ADDR_WORD(p1,p2));
-      INC_PC;
-      INC_PC;
-      break;
-
-    case 0x6C:
-      dest = REF_ADDR(REG_X+p1);
-      INC_PC;
-      break;
-    }
-
-  if(pstate.memory)
-    {
-      RD_REF(pstate.memory_addr);
-    }
-  
-  (*dest)++;
-  
-  if(pstate.memory)
-    {
-      WR_REF(pstate.memory_addr, *dest);
-      pstate.memory = 0;
-    }
-  
-  FL_V80(*dest);
-  FL_ZT(*dest);
-  FL_N8T(*dest);
-  
-}
-
-OPCODE_FN(op_clr)
-{
-  u_int8_t *dest;
-  
-  switch(opcode)
-    {
-    case 0x4F:
-      dest = &(REG_A);
-      break;
-      
-    case 0x5F:
-      dest = &(REG_B);
-      break;
-
-    case 0x7F:
-      dest = REF_ADDR(ADDR_WORD(p1,p2));
-      INC_PC;
-      INC_PC;
-      break;
-
-    case 0x6F:
-      dest = REF_ADDR(REG_X+p1);
-      INC_PC;
-      break;
-    }
-  
-  // Special flag test
-#if 0
-    if(pstate.memory)
-    {
-      RD_REF(pstate.memory_addr);
-    }
-#endif
-    
-    if(pstate.memory)
-      {
-	WR_REF(pstate.memory_addr, 0);
-	pstate.memory = 0;
-      }
-    else
-      {
-        *dest = 0;
-      }
-    
-  FL_V0;
-  FL_C0;
-  FL_Z1;
-  FL_N0;
-  
-}
-
-OPCODE_FN(op_neg)
-{
-  u_int8_t *dest;
-  
-  switch(opcode)
-    {
-    case 0x40:
-      dest = &(REG_A);
-      break;
-      
-    case 0x50:
-      dest = &(REG_B);
-      break;
-
-    case 0x70:
-      dest = REF_ADDR(ADDR_WORD(p1,p2));
-      INC_PC;
-      INC_PC;
-      break;
-
-    case 0x60:
-      dest = REF_ADDR(REG_X+p1);
-      INC_PC;
-      break;
-    }
-  
-  // Special flag test
-  if(pstate.memory)
-    {
-      RD_REF(pstate.memory_addr);
-    }
-  
-  *dest = 0 - *dest;
-  
-  if(pstate.memory)
-    {
-      WR_REF(pstate.memory_addr, *dest);
-      pstate.memory = 0;
-    }
-  
-  FL_V80(*dest);
-  FL_C8W(*dest);
-  FL_ZT(*dest);
-  FL_N8T(*dest);
-  
-}
-
-OPCODE_FN(op_asl)
-{
-  u_int8_t *dest;
-  
-  switch(opcode)
-    {
-    case 0x48:
-      dest = &(REG_A);
-      break;
-      
-    case 0x58:
-      dest = &(REG_B);
-      break;
-
-    case 0x78:
-      dest = REF_ADDR(ADDR_WORD(p1,p2));
-      INC_PC;
-      INC_PC;
-      break;
-
-    case 0x68:
-      dest = REF_ADDR(REG_X+p1);
-      INC_PC;
-      break;
-    }
-  
-  // Special flag test
-  FL_CSET((*dest) & 0x80);
-
-
-  if(pstate.memory)
-    {
-      RD_REF(pstate.memory_addr);
-    }
-  
-  *dest <<= 1;
-  
-  if(pstate.memory)
-    {
-      WR_REF(pstate.memory_addr, *dest);
-      pstate.memory = 0;
-    }
-
-  FL_ZT(*dest);
-  FL_N8T(*dest);
-  FL_V_NXORC;  
-}
-
-OPCODE_FN(op_com)
-{
-  u_int8_t *dest;
-  
-  switch(opcode)
-    {
-    case 0x43:
-      dest = &(REG_A);
-      break;
-      
-    case 0x53:
-      dest = &(REG_B);
-      break;
-
-    case 0x73:
-      dest = REF_ADDR(ADDR_WORD(p1,p2));
-      INC_PC;
-      INC_PC;
-      break;
-
-    case 0x63:
-      dest = REF_ADDR(REG_X+p1);
-      INC_PC;
-      break;
-    }
-  
-  if(pstate.memory)
-    {
-      RD_REF(pstate.memory_addr);
-    }
-  
-  *dest ^= 0xFF;
-  
-  if(pstate.memory)
-    {
-      WR_REF(pstate.memory_addr, *dest);
-      pstate.memory = 0;
-    }
-
-  FL_V0;
-  FL_C1;
-  FL_ZT(*dest);
-  FL_N8T(*dest);
-}
-
-OPCODE_FN(op_lsr)
-{
-  u_int8_t *dest;
-  
-  switch(opcode)
-    {
-    case 0x44:
-      dest = &(REG_A);
-      break;
-      
-    case 0x54:
-      dest = &(REG_B);
-      break;
-
-    case 0x74:
-      dest = REF_ADDR(ADDR_WORD(p1,p2));
-      INC_PC;
-      INC_PC;
-      break;
-
-    case 0x64:
-      dest = REF_ADDR(REG_X+p1);
-      INC_PC;
-      break;
-    }
-  
-  // Special flag test
-  FL_CSET((*dest) & 1);
-  
-  if(pstate.memory)
-    {
-      RD_REF(pstate.memory_addr);
-    }
-  
-  *dest >>= 1;
-  
-  if(pstate.memory)
-    {
-      WR_REF(pstate.memory_addr, *dest);
-      pstate.memory = 0;
-    }
-
-  FL_VSET(FLG_C);
-  FL_ZT(*dest);
-  FL_N0;
-}
-
-OPCODE_FN(op_lsrd)
-{
-  u_int16_t val;
-
-  val = REG_D;
-  
-  // Special flag test
-  FL_CSET(val & 1);
-
-  val >>= 1;
-  FL_VSET(FLG_C);
-  FL_ZT(val);
-  FL_N0;
-  WRITE_REG_D(val);
-  
-}
-
-OPCODE_FN(op_asld)
-{
-  u_int16_t val;
-
-  val = REG_D;
-  
-  // Special flag test
-  FL_CSET(val & 0x8000);
-
-  val <<= 1;
-  FL_ZT(val);
-  FL_N16T(val);
-  FL_V_NXORC;
-  WRITE_REG_D(val);
-  
-}
-
-OPCODE_FN(op_asr)
-{
-  u_int8_t *dest;
-  
-  switch(opcode)
-    {
-    case 0x47:
-      dest = &(REG_A);
-      break;
-      
-    case 0x57:
-      dest = &(REG_B);
-      break;
-
-    case 0x77:
-      dest = REF_ADDR(ADDR_WORD(p1,p2));
-      INC_PC;
-      INC_PC;
-      break;
-
-    case 0x67:
-      dest = REF_ADDR(REG_X+p1);
-      INC_PC;
-      break;
-    }
-  
-  // Special flag test
-  FL_CSET((*dest) & 1);
-
-  if(pstate.memory)
-    {
-      RD_REF(pstate.memory_addr);
-    }
-  
-  *dest >>= 1;
-  if( (*dest) & 0x40 )
-    {
-      *dest |= 0x80;
-    }
-
-  if( pstate.memory )
-    {
-      WR_REF(pstate.memory_addr, *dest);
-      pstate.memory = 0;
-    }					      
-
-  FL_ZT(*dest);
-  FL_N0;
-  FL_V_NXORC;  
-}
-
-OPCODE_FN(op_rol)
-{
-  u_int8_t *dest;
-  
-  switch(opcode)
-    {
-    case 0x49:
-      dest = &(REG_A);
-      break;
-      
-    case 0x59:
-      dest = &(REG_B);
-      break;
-
-    case 0x79:
-      dest = REF_ADDR(ADDR_WORD(p1,p2));
-      INC_PC;
-      INC_PC;
-      break;
-
-    case 0x69:
-      dest = REF_ADDR(REG_X+p1);
-      INC_PC;
-      break;
-    }
-  
-  // Special flag test
-  int carry = FLG_C;
-  
-  FL_CSET((*dest) & 0x80);
-  
-  if(pstate.memory)
-    {
-      RD_REF(pstate.memory_addr);
-    }
-  
-  *dest <<= 1;
-  if( carry )
-    {
-      *dest |= 0x01;
-    }
-  
-  if( pstate.memory )
-    {
-      WR_REF(pstate.memory_addr, *dest);
-      pstate.memory = 0;
-    }					      
-  
-  FL_ZT(*dest);
-  FL_N8T(*dest);
-  FL_V_NXORC;
-}
-
-OPCODE_FN(op_ror)
-{
-  u_int8_t *dest;
-  
-  switch(opcode)
-    {
-    case 0x46:
-      dest = &(REG_A);
-      break;
-      
-    case 0x56:
-      dest = &(REG_B);
-      break;
-
-    case 0x76:
-      dest = REF_ADDR(ADDR_WORD(p1,p2));
-      INC_PC;
-      INC_PC;
-      break;
-
-    case 0x66:
-      dest = REF_ADDR(REG_X+p1);
-      INC_PC;
-      break;
-    }
-  
-  // Special flag test
-  int carry = FLG_C;
-  
-  FL_CSET((*dest) & 1);
-
-  if(pstate.memory)
-    {
-      RD_REF(pstate.memory_addr);
-    }
-  
-  *dest >>= 1;
-  if( carry )
-    {
-      *dest |= 0x80;
-    }
-  if( pstate.memory )
-    {
-      WR_REF(pstate.memory_addr, *dest);
-      pstate.memory = 0;
-    }					      
-
-  FL_ZT(*dest);
-  FL_N8T(*dest);
-  FL_V_NXORC;  
-}
-
-OPCODE_FN(op_tst)
-{
-  u_int8_t *dest;
-  
-  switch(opcode)
-    {
-    case 0x4D:
-      dest = &(REG_A);
-      break;
-      
-    case 0x5D:
-      dest = &(REG_B);
-      break;
-
-    case 0x7D:
-      dest = REF_ADDR(ADDR_WORD(p1,p2));
-      INC_PC;
-      INC_PC;
-      break;
-
-    case 0x6D:
-      dest = REF_ADDR(REG_X+p1);
-      INC_PC;
-      break;
-    }
-  
-  // Special flag test
-  FL_V0;
-  FL_C0;
-
-  if(pstate.memory)
-    {
-      int byte = RD_REF(pstate.memory_addr);
-      pstate.memory = 0;
-      FL_ZT(byte);
-      FL_N8T(byte);
-    }
-  else
-    {
-      FL_ZT(*dest);
-      FL_N8T(*dest);
-    }
-}
-
-OPCODE_FN(op_swi)
-{
-  u_int8_t *dest;
-
-  // Push everything on to stack
-  WR_ADDR(REG_SP--, (REG_PC+1) & 0xFF);
-  WR_ADDR(REG_SP--, (REG_PC+1) >> 8);
-  WR_ADDR(REG_SP--, REG_X & 0xFF);
-  WR_ADDR(REG_SP--, REG_X >> 8);
-  WR_ADDR(REG_SP--, REG_A);
-  WR_ADDR(REG_SP--, REG_B);
-  WR_ADDR(REG_SP--, REG_FLAGS);
-
-  FL_I1;
-  u_int8_t h = RD_ADDR(0xFFFA);
-  u_int8_t l = RD_ADDR(0xFFFB);
-  u_int16_t hl = h;
-  hl <<= 8;
-  hl += l;
-  REG_PC = hl;
-  
-  // Decrement as there is an automatic increment by one
-  // for opcode skipping
-  REG_PC--;
-
-  // Display the SWi code
-  inst_length++;
-}
-
-OPCODE_FN(op_trap)
-{
-  u_int8_t *dest;
-
-#if TRACE_TO_TRAP
-  tracing_to = 0;
-#endif
-  
-  // Push everything on to stack
-  WR_ADDR(REG_SP--, (REG_PC+1) & 0xFF);
-  WR_ADDR(REG_SP--, (REG_PC+1) >> 8);
-  WR_ADDR(REG_SP--, REG_X & 0xFF);
-  WR_ADDR(REG_SP--, REG_X >> 8);
-  WR_ADDR(REG_SP--, REG_A);
-  WR_ADDR(REG_SP--, REG_B);
-  WR_ADDR(REG_SP--, REG_FLAGS);
-
-  FL_I1;
-  u_int8_t h = RD_ADDR(0xFFEE);
-  u_int8_t l = RD_ADDR(0xFFEF);
-  u_int16_t hl = h;
-  hl <<= 8;
-  hl += l;
-  REG_PC = hl;
-  
-  // Decrement as there is an automatic increment by one
-  // for opcode skipping
-  REG_PC--;
-  
-}
-
-OPCODE_FN(op_jsr)
-{
-  u_int16_t dest;
-  
-  switch(opcode)
-    {
-    case 0xAD:
-      dest = REG_X + p1;
-
-      // Adjust for the increment of PC that occurs automatically
-      dest--;
-      
-      INC_PC;
-      INC_PC;
-
-      WR_ADDR(REG_SP--, REG_PC & 0xFF);
-      WR_ADDR(REG_SP--, REG_PC >> 8);
-      
-      // Jump to subroutine
-      REG_PC = dest;
-      break;
-
-    case 0x9D:
-      //      dest = RDW_ADDR(p1);
-      dest = p1;
-      
-      // Adjust for the increment of PC that occurs automatically
-      dest--;
-      
-      INC_PC;
-
-      WR_ADDR(REG_SP--, REG_PC & 0xFF);
-      WR_ADDR(REG_SP--, REG_PC >> 8);
-      
-      // Jump to subroutine
-      REG_PC = dest;
-      break;
-
-    case 0xBD:
-      dest = (p1 << 8) | p2;
-
-      // Adjust for the increment of PC that occurs automatically
-      dest--;
-      
-      INC_PC;
-      INC_PC;
-      INC_PC;
-
-      WR_ADDR(REG_SP--, REG_PC & 0xFF);
-      WR_ADDR(REG_SP--, REG_PC >> 8);
-
-      
-      // Jump to subroutine
-      REG_PC = dest;
-      break;
-      
-    case 0x8D:
-      dest = REG_PC + CALC_REL(p1) + 2;
-
-      // Adjust for the increment of PC that occurs automatically
-      dest--;
-
-      INC_PC;
-      INC_PC;
-
-      WR_ADDR(REG_SP--, REG_PC & 0xFF);
-      WR_ADDR(REG_SP--, REG_PC >> 8);
-      
-      // Jump to subroutine
-      REG_PC = dest;
-#if !EMBEDDED
-      fprintf(lf, "\n   JSR  rel");
-#endif
-      break;
-    }
-}
-
-OPCODE_FN(op_jmp)
-{
-  u_int16_t dest;
-  
-  switch(opcode)
-    {
-    case 0x7E:
-      dest = (p1 << 8) | p2;
-
-      // Adjust for the increment of PC that occurs automatically
-      dest--;
-      
-      INC_PC;
-      INC_PC;
-      INC_PC;
-
-      // Jump to subroutine
-      REG_PC = dest;
-      break;
-      
-    case 0x6E:
-      dest = REG_X + p1;
-
-      // Adjust for the increment of PC that occurs automatically
-      dest--;
-
-      INC_PC;
-      INC_PC;
-
-      // Jump to subroutine
-      REG_PC = dest;
-      break;
-    }
-}
-
-#undef p1
-#undef p2
 
 ////////////////////////////////////////////////////////////////////////////////
-
+#if 0
 struct
 {
   OPCODE_FN fn;  
@@ -8690,7 +6176,7 @@ struct
      op_ld16,                 // FE
      op_stx,                  // FF
     };
-
+#endif
 char *opcode_names[256] =
     {
      "op_trap",                 // 00
@@ -9436,7 +6922,7 @@ int tick_1s_count = 0;
 
 #define LOOP_HERE 1
 
-inline void loop_emulator(void)
+void loop_emulator(void)
 {
   u_int8_t p1, p2;
 
@@ -9482,11 +6968,3739 @@ inline void loop_emulator(void)
   inst_length = 0;
   pc_before = REG_PC;
 
+#if 0
+#if 0
 #if 0  
   (*opcode_table[opcode].fn)(opcode, &pstate, p1, p2);
 #else
   (*opcode_table[opcode].fn)(opcode, &pstate);
 #endif
+#else
+  switch(opcode)
+    {
+    case 0x00:
+      op_trap(opcode, &pstate);
+      break;
+      
+    case 0x01:
+      op_nop(opcode, &pstate);
+      break;
+      
+    case 0x02:
+    case 0x03:
+    case 0x0A:
+    case 0x0B:
+    case 0x12:
+    case 0x13:
+    case 0x14:
+    case 0x15:
+    case 0x1C:
+    case 0x1D:
+    case 0x1E:
+    case 0x1F:
+    case 0x3E:
+    case 0x41:
+    case 0x42:
+    case 0x45:
+    case 0x4B:
+    case 0x4E:
+    case 0x51:
+    case 0x52:
+    case 0x55:
+    case 0x5B:
+    case 0x5E:
+      op_null();
+      break;
+      
+    case 0x04:
+      op_lsrd(opcode, &pstate);
+      break;
+      
+    case 0x05:
+      op_asld(opcode, &pstate);
+      break;
+      
+    case 0x06:
+      op_tap(opcode, &pstate);
+      break;
+      
+    case 0x07:
+      op_tpa(opcode, &pstate);
+      break;
+      
+    case 0x08:
+      op_inc16(opcode, &pstate);
+      break;
+      
+    case 0x09:
+      op_dec16(opcode, &pstate);
+      break;
+      
+    case 0x0C:
+      op_clc(opcode, &pstate);
+      break;
+      
+    case 0x0D:
+      op_sec(opcode, &pstate);
+      break;
+      
+    case 0x0E:
+      op_cli(opcode, &pstate);
+      break;
+      
+    case 0x0F:
+      op_sei(opcode, &pstate);
+      break;
+
+    case 0x10:
+      op_sba(opcode, &pstate);
+      break;
+    case 0x11:
+      op_cba(opcode, &pstate);
+      break;
+    case 0x16:
+      op_tab(opcode, &pstate);
+      break;
+    case 0x17:
+      op_tba(opcode, &pstate);
+      break;
+    case 0x18:
+      op_xgdx(opcode, &pstate);
+      break;
+    case 0x19:
+      op_daa(opcode, &pstate);
+      break;
+    case 0x1A:
+      op_slp(opcode, &pstate);
+      break;
+    case 0x1B:
+      op_add(opcode, &pstate);
+      break;
+    case 0x20:
+    case 0x21:
+    case 0x22:
+    case 0x23:
+    case 0x24:
+    case 0x25:
+    case 0x26:
+    case 0x27:
+    case 0x28:
+    case 0x29:
+    case 0x2A:
+    case 0x2B:
+    case 0x2C:
+    case 0x2D:
+    case 0x2E:
+    case 0x2F:
+      op_br(opcode, &pstate);
+      break;
+
+    case 0x30:
+      op_tsx(opcode, &pstate);
+      break;
+    case 0x31:
+      op_inc16(opcode, &pstate);
+      break;
+
+    case 0x32:
+    case 0x33:
+    case 0x38:
+      op_pul(opcode, &pstate);
+      break;
+
+    case 0x34:
+      op_dec16(opcode, &pstate);
+      break;
+      
+    case 0x35:
+      op_txs(opcode, &pstate);
+      break;
+      
+    case 0x36:
+    case 0x37:
+    case 0x3C:
+      op_psh(opcode, &pstate);
+      break;
+
+    case 0x39:
+      op_rts(opcode, &pstate);
+      break;
+
+    case 0x3A:
+      op_abx(opcode, &pstate);
+      break;
+
+    case 0x3B:
+      op_rti(opcode, &pstate);
+      break;
+
+    case 0x3D:
+      op_mul(opcode, &pstate);
+      break;
+
+    case 0x3F:
+      op_swi(opcode, &pstate);
+      break;
+
+    case 0x40:
+      op_neg(opcode, &pstate);
+      break;
+
+    case 0x46:
+      op_ror(opcode, &pstate);
+      break;
+
+    case 0x47:
+      op_asr(opcode, &pstate);
+      break;
+
+    case 0x48:
+      op_asl(opcode, &pstate);
+      break;
+
+    case 0x49:
+      op_rol(opcode, &pstate);
+      break;
+
+    case 0x4A:
+      op_dec8(opcode, &pstate);
+      break;
+
+    case 0x4C:
+      op_inc8(opcode, &pstate);
+      break;
+
+    case 0x4D:
+      op_tst(opcode, &pstate);
+      break;
+
+    case 0x4F:
+      op_clr(opcode, &pstate);
+      break;
+
+    case 0x50:
+      op_neg(opcode, &pstate);
+      break;
+
+    case 0x56:
+      op_ror(opcode, &pstate);
+      break;
+
+    case 0x57:
+      op_asr(opcode, &pstate);
+      break;
+
+    case 0x58:
+      op_asl(opcode, &pstate);
+      break;
+
+    case 0x59:
+      op_rol(opcode, &pstate);
+      break;
+
+    case 0x5A:
+      op_dec8(opcode, &pstate);
+      break;
+
+    case 0x5C:
+      op_inc8(opcode, &pstate);
+      break;
+
+    case 0x5D:
+      op_tst(opcode, &pstate);
+      break;
+
+    case 0x5F:
+      op_clr(opcode, &pstate);
+      break;
+
+    case 0x60:
+      op_neg(opcode, &pstate);
+      break;
+
+    case 0x61:
+      op_aim(opcode, &pstate);
+      break;
+
+    case 0x62:
+    case 0x72:
+      op_oim(opcode, &pstate);
+      break;
+
+    case 0x43:
+    case 0x53:
+    case 0x63:
+    case 0x73:
+      op_com(opcode, &pstate);
+      break;
+
+    case 0x44:
+    case 0x54:
+    case 0x64:
+    case 0x74:
+      op_lsr(opcode, &pstate);
+      break;
+
+    case 0x65:
+    case 0x75:
+	    
+      op_eim(opcode, &pstate);
+      break;
+
+    case 0x66:
+      op_ror(opcode, &pstate);
+      break;
+
+    case 0x67:
+      op_asr(opcode, &pstate);
+      break;
+
+    case 0x68:
+      op_asl(opcode, &pstate);
+      break;
+
+    case 0x69:
+      op_rol(opcode, &pstate);
+      break;
+
+    case 0x6A:
+      op_dec8(opcode, &pstate);
+      break;
+
+    case 0x6B:
+      op_tim(opcode, &pstate);
+      break;
+
+    case 0x6C:
+      op_inc8(opcode, &pstate);
+      break;
+
+    case 0x6D:
+      op_tst(opcode, &pstate);
+      break;
+
+    case 0x6E:
+      op_jmp(opcode, &pstate);
+      break;
+
+    case 0x6F:
+      op_clr(opcode, &pstate);
+      break;
+
+    case 0x70:
+      op_neg(opcode, &pstate);
+      break;
+
+    case 0x71:
+      op_aim(opcode, &pstate);
+      break;
+
+    case 0x76:
+      op_ror(opcode, &pstate);
+      break;
+
+    case 0x77:
+      op_asr(opcode, &pstate);
+      break;
+
+    case 0x78:
+      op_asl(opcode, &pstate);
+      break;
+
+    case 0x79:
+      op_rol(opcode, &pstate);
+      break;
+
+    case 0x7A:
+      op_dec8(opcode, &pstate);
+      break;
+
+    case 0x7B:
+      op_tim(opcode, &pstate);
+      break;
+
+    case 0x7C:
+      op_inc8(opcode, &pstate);
+      break;
+
+    case 0x7D:
+      op_tst(opcode, &pstate);
+      break;
+
+    case 0x7E:
+      op_jmp(opcode, &pstate);
+      break;
+
+    case 0x7F:
+      op_clr(opcode, &pstate);
+      break;
+
+    case 0x80:
+      op_sub(opcode, &pstate);
+      break;
+
+    case 0x81:
+      op_cmp(opcode, &pstate);
+      break;
+
+    case 0x82:
+      op_sbc(opcode, &pstate);
+      break;
+
+    case 0x83:
+      op_subd(opcode, &pstate);
+      break;
+
+    case 0x84:
+      op_and(opcode, &pstate);
+      break;
+
+    case 0x85:
+      op_bit(opcode, &pstate);
+      break;
+
+    case 0x86:
+      op_lda(opcode, &pstate);
+      break;
+
+    case 0x87:
+      op_null(opcode, &pstate);
+      break;
+
+    case 0x88:
+      op_eor(opcode, &pstate);
+      break;
+
+    case 0x89:
+      op_adc(opcode, &pstate);
+      break;
+
+    case 0x8A:
+      op_ora(opcode, &pstate);
+      break;
+
+    case 0x8B:
+      op_add(opcode, &pstate);
+      break;
+
+    case 0x8C:
+      op_cpx(opcode, &pstate);
+      break;
+
+    case 0x8D:
+      op_jsr(opcode, &pstate);
+      break;
+
+    case 0x8E:
+      op_ld16(opcode, &pstate);
+      break;
+
+    case 0x8F:
+      op_null(opcode, &pstate);
+      break;
+
+    case 0x90:
+      op_sub(opcode, &pstate);
+      break;
+
+    case 0x91:
+      op_cmp(opcode, &pstate);
+      break;
+
+    case 0x92:
+      op_sbc(opcode, &pstate);
+      break;
+
+    case 0x93:
+      op_subd(opcode, &pstate);
+      break;
+
+    case 0x94:
+      op_and(opcode, &pstate);
+      break;
+
+    case 0x95:
+      op_bit(opcode, &pstate);
+      break;
+
+    case 0x96:
+      op_lda(opcode, &pstate);
+      break;
+
+    case 0x97:
+      op_sta(opcode, &pstate);
+      break;
+
+    case 0x98:
+      op_eor(opcode, &pstate);
+      break;
+
+    case 0x99:
+      op_adc(opcode, &pstate);
+      break;
+
+    case 0x9A:
+      op_ora(opcode, &pstate);
+      break;
+
+    case 0x9B:
+      op_add(opcode, &pstate);
+      break;
+
+    case 0x9C:
+      op_cpx(opcode, &pstate);
+      break;
+
+    case 0x9D:
+      op_jsr(opcode, &pstate);
+      break;
+
+    case 0x9E:
+      op_ld16(opcode, &pstate);
+      break;
+
+    case 0x9F:
+      op_sts(opcode, &pstate);
+      break;
+
+    case 0xA0:
+      op_sub(opcode, &pstate);
+      break;
+
+    case 0xA1:
+      op_cmp(opcode, &pstate);
+      break;
+
+    case 0xA2:
+      op_sbc(opcode, &pstate);
+      break;
+
+    case 0xA3:
+      op_subd(opcode, &pstate);
+      break;
+
+    case 0xA4:
+      op_and(opcode, &pstate);
+      break;
+
+    case 0xA5:
+      op_bit(opcode, &pstate);
+      break;
+
+    case 0xA6:
+      op_lda(opcode, &pstate);
+      break;
+
+    case 0xA7:
+      op_sta(opcode, &pstate);
+      break;
+
+    case 0xA8:
+      op_eor(opcode, &pstate);
+      break;
+
+    case 0xA9:
+      op_adc(opcode, &pstate);
+      break;
+
+    case 0xAA:
+      op_ora(opcode, &pstate);
+      break;
+
+    case 0xAB:
+      op_add(opcode, &pstate);
+      break;
+
+    case 0xAC:
+      op_cpx(opcode, &pstate);
+      break;
+
+    case 0xAD:
+      op_jsr(opcode, &pstate);
+      break;
+
+    case 0xAE:
+      op_ld16(opcode, &pstate);
+      break;
+
+    case 0xAF:
+      op_sts(opcode, &pstate);
+      break;
+
+    case 0xB0:
+      op_sub(opcode, &pstate);
+      break;
+
+    case 0xB1:
+      op_cmp(opcode, &pstate);
+      break;
+
+    case 0xB2:
+      op_sbc(opcode, &pstate);
+      break;
+
+    case 0xB3:
+      op_subd(opcode, &pstate);
+      break;
+
+    case 0xB4:
+      op_and(opcode, &pstate);
+      break;
+
+    case 0xB5:
+      op_bit(opcode, &pstate);
+      break;
+
+    case 0xB6:
+      op_lda(opcode, &pstate);
+      break;
+
+    case 0xB7:
+      op_sta(opcode, &pstate);
+      break;
+
+    case 0xB8:
+      op_eor(opcode, &pstate);
+      break;
+
+    case 0xB9:
+      op_adc(opcode, &pstate);
+      break;
+
+    case 0xBA:
+      op_ora(opcode, &pstate);
+      break;
+
+    case 0xBB:
+      op_add(opcode, &pstate);
+      break;
+
+    case 0xBC:
+      op_cpx(opcode, &pstate);
+      break;
+
+    case 0xBD:
+      op_jsr(opcode, &pstate);
+      break;
+
+    case 0xBE:
+      op_ld16(opcode, &pstate);
+      break;
+
+    case 0xBF:
+      op_sts(opcode, &pstate);
+      break;
+
+    case 0xC0:
+      op_sub(opcode, &pstate);
+      break;
+
+    case 0xC1:
+      op_cmp(opcode, &pstate);
+      break;
+
+    case 0xC2:
+      op_sbc(opcode, &pstate);
+      break;
+
+    case 0xC3:
+      op_addd(opcode, &pstate);
+      break;
+
+    case 0xC4:
+      op_and(opcode, &pstate);
+      break;
+
+    case 0xC5:
+      op_bit(opcode, &pstate);
+      break;
+
+    case 0xC6:
+      op_lda(opcode, &pstate);
+      break;
+
+    case 0xC7:
+      op_null(opcode, &pstate);
+      break;
+
+    case 0xC8:
+      op_eor(opcode, &pstate);
+      break;
+
+    case 0xC9:
+      op_adc(opcode, &pstate);
+      break;
+
+    case 0xCA:
+      op_ora(opcode, &pstate);
+      break;
+
+    case 0xCB:
+      op_add(opcode, &pstate);
+      break;
+
+    case 0xCC:
+      op_ldd(opcode, &pstate);
+      break;
+
+    case 0xCD:
+      op_null(opcode, &pstate);
+      break;
+
+    case 0xCE:
+      op_ld16(opcode, &pstate);
+      break;
+
+    case 0xCF:
+      op_null(opcode, &pstate);
+      break;
+
+    case 0xD0:
+      op_sub(opcode, &pstate);
+      break;
+
+    case 0xD1:
+      op_cmp(opcode, &pstate);
+      break;
+
+    case 0xD2:
+      op_sbc(opcode, &pstate);
+      break;
+
+    case 0xD3:
+      op_addd(opcode, &pstate);
+      break;
+
+    case 0xD4:
+      op_and(opcode, &pstate);
+      break;
+
+    case 0xD5:
+      op_bit(opcode, &pstate);
+      break;
+
+    case 0xD6:
+      op_lda(opcode, &pstate);
+      break;
+
+    case 0xD7:
+      op_sta(opcode, &pstate);
+      break;
+
+    case 0xD8:
+      op_eor(opcode, &pstate);
+      break;
+
+    case 0xD9:
+      op_adc(opcode, &pstate);
+      break;
+
+    case 0xDA:
+      op_ora(opcode, &pstate);
+      break;
+
+    case 0xDB:
+      op_add(opcode, &pstate);
+      break;
+
+    case 0xDC:
+      op_ldd(opcode, &pstate);
+      break;
+
+    case 0xDD:
+      op_std(opcode, &pstate);
+      break;
+
+    case 0xDE:
+      op_ld16(opcode, &pstate);
+      break;
+
+    case 0xDF:
+      op_stx(opcode, &pstate);
+      break;
+
+    case 0xE0:
+      op_sub(opcode, &pstate);
+      break;
+
+    case 0xE1:
+      op_cmp(opcode, &pstate);
+      break;
+
+    case 0xE2:
+      op_sbc(opcode, &pstate);
+      break;
+
+    case 0xE3:
+      op_addd(opcode, &pstate);
+      break;
+
+    case 0xE4:
+      op_and(opcode, &pstate);
+      break;
+
+    case 0xE5:
+      op_bit(opcode, &pstate);
+      break;
+
+    case 0xE6:
+      op_lda(opcode, &pstate);
+      break;
+
+    case 0xE7:
+      op_sta(opcode, &pstate);
+      break;
+
+    case 0xE8:
+      op_eor(opcode, &pstate);
+      break;
+
+    case 0xE9:
+      op_adc(opcode, &pstate);
+      break;
+
+    case 0xEA:
+      op_ora(opcode, &pstate);
+      break;
+
+    case 0xEB:
+      op_add(opcode, &pstate);
+      break;
+
+    case 0xEC:
+      op_ldd(opcode, &pstate);
+      break;
+
+    case 0xED:
+      op_std(opcode, &pstate);
+      break;
+
+    case 0xEE:
+      op_ld16(opcode, &pstate);
+      break;
+
+    case 0xEF:
+      op_stx(opcode, &pstate);
+      break;
+
+    case 0xF0:
+      op_sub(opcode, &pstate);
+      break;
+
+    case 0xF1:
+      op_cmp(opcode, &pstate);
+      break;
+
+    case 0xF2:
+      op_sbc(opcode, &pstate);
+      break;
+
+    case 0xF3:
+      op_addd(opcode, &pstate);
+      break;
+
+    case 0xF4:
+      op_and(opcode, &pstate);
+      break;
+
+    case 0xF5:
+      op_bit(opcode, &pstate);
+      break;
+
+    case 0xF6:
+      op_lda(opcode, &pstate);
+      break;
+
+    case 0xF7:
+      op_sta(opcode, &pstate);
+      break;
+
+    case 0xF8:
+      op_eor(opcode, &pstate);
+      break;
+
+    case 0xF9:
+      op_adc(opcode, &pstate);
+      break;
+
+    case 0xFA:
+      op_ora(opcode, &pstate);
+      break;
+
+    case 0xFB:
+      op_add(opcode, &pstate);
+      break;
+
+    case 0xFC:
+      op_ldd(opcode, &pstate);
+      break;
+
+    case 0xFD:
+      op_std(opcode, &pstate);
+      break;
+
+    case 0xFE:
+      op_ld16(opcode, &pstate);
+      break;
+
+    case 0xFF:
+      op_stx(opcode, &pstate);
+      break;
+      
+    }
+#endif
+#endif
+
+  //
+  // Main opcode switch
+  //
+
+#define p1 RD_ADDR(REG_PC+1)
+#define p2 RD_ADDR(REG_PC+2)
+
+  switch(opcode)
+    {
+    case 0x3A:
+      REG_X += REG_B;
+      //      op_abx();
+      break;
+      
+    case 0x89:
+    case 0x99:
+    case 0xA9:
+    case 0xB9:
+    case 0xC9:
+    case 0xD9:
+    case 0xE9:
+    case 0xF9:
+      {
+	u_int8_t add;
+	u_int8_t *dest;
+	u_int8_t before;
+	
+      switch(opcode)
+	{
+	case 0x89:
+	  dest = &(REG_A);
+	  add = p1;
+	  INC_PC;
+	  break;
+      
+	case 0x99:
+	  dest = &(REG_A);
+	  add = RD_ADDR(p1);
+	  INC_PC;
+	  break;
+
+	case 0xB9:
+	  dest = &(REG_A);
+	  add = RD_ADDR(ADDR_WORD(p1,p2));
+	  INC_PC;
+	  INC_PC;
+	  break;
+
+	case 0xA9:
+	  dest = &(REG_A);
+	  add = RD_ADDR(REG_X+p1);
+	  INC_PC;
+	  break;
+
+	case 0xC9:
+	  dest = &(REG_B);
+	  add = p1;
+	  INC_PC;
+	  break;
+      
+	case 0xD9:
+	  dest = &(REG_B);
+	  add = RD_ADDR(p1);
+	  INC_PC;
+	  break;
+
+	case 0xF9:
+	  dest = &(REG_B);
+	  add = RD_ADDR(ADDR_WORD(p1,p2));
+	  INC_PC;
+	  INC_PC;
+	  break;
+
+	case 0xE9:
+	  dest = &(REG_B);
+	  add = RD_ADDR(REG_X+p1);
+	  INC_PC;
+	  break;
+	}
+
+      before = *dest;
+  
+      // Special flag test
+      (*dest) += add + FL_C_0OR1;
+
+      FL_V8T(*dest,add,before);
+      FL_ZT(*dest);
+      FL_N8T(*dest);
+      FL_C8TP(*dest,add,before);
+      FL_H(*dest,add,before);
+      }
+      //op_adc();
+      break;
+      
+    case 0x1B:
+    case 0x8B:
+    case 0x9B:
+    case 0xAB:
+    case 0xBB:
+    case 0xCB:
+    case 0xDB:
+    case 0xEB:
+    case 0xFB:
+      {
+      u_int8_t add;
+      u_int8_t *dest;
+      u_int8_t before;
+  
+      switch(opcode)
+	{
+	case 0x1B:
+	  dest = &(REG_A);
+	  add = REG_B;
+	  break;
+      
+	case 0x8B:
+	  dest = &(REG_A);
+	  add = p1;
+	  INC_PC;
+	  break;
+      
+	case 0x9B:
+	  dest = &(REG_A);
+	  add = RD_ADDR(p1);
+	  INC_PC;
+	  break;
+
+	case 0xBB:
+	  dest = &(REG_A);
+	  add = RD_ADDR(ADDR_WORD(p1,p2));
+	  INC_PC;
+	  INC_PC;
+	  break;
+
+	case 0xAB:
+	  dest = &(REG_A);
+	  add = RD_ADDR(REG_X+p1);
+	  INC_PC;
+	  break;
+
+	case 0xCB:
+	  dest = &(REG_B);
+	  add = p1;
+	  INC_PC;
+	  break;
+      
+	case 0xDB:
+	  dest = &(REG_B);
+	  add = RD_ADDR(p1);
+	  INC_PC;
+	  break;
+
+	case 0xFB:
+	  dest = &(REG_B);
+	  add = RD_ADDR(ADDR_WORD(p1,p2));
+	  INC_PC;
+	  INC_PC;
+	  break;
+
+	case 0xEB:
+	  dest = &(REG_B);
+	  add = RD_ADDR(REG_X+p1);
+	  INC_PC;
+	  break;
+	}
+
+      before = *dest;
+  
+      // Special flag test
+      (*dest) += add;
+      FL_V8TP(*dest,add,before);
+      FL_ZT(*dest);
+      FL_N8T(*dest);
+      FL_C8TP(*dest,add,before);
+      FL_H(*dest,add,before);
+      }
+      //op_add();
+      break;
+      
+    case 0xC3:
+    case 0xD3:
+    case 0xE3:
+    case 0xF3:
+      {
+      u_int16_t  value;
+      u_int8_t   mh, ml;
+  
+      switch(opcode)
+	{
+	case 0xC3:
+	  value = ADDR_WORD(p1,p2);
+	  INC_PC;
+	  INC_PC;
+	  break;
+      
+	case 0xD3:
+	  value = ADDR_WORD(0,p1);
+	  mh = RD_ADDR(value+0);
+	  ml = RD_ADDR(value+1);
+	  value = ADDR_WORD(mh,ml);
+	  INC_PC;
+	  break;
+      
+	case 0xF3:
+	  value = ADDR_WORD(p1,p2);
+	  mh = RD_ADDR(value+0);
+	  ml = RD_ADDR(value+1);
+	  value = ADDR_WORD(mh,ml);
+	  INC_PC;
+	  INC_PC;
+	  break;
+
+	case 0xE3:
+	  value = REG_X + p1;
+	  mh = RD_ADDR(value+0);
+	  ml = RD_ADDR(value+1);
+	  value = ADDR_WORD(mh,ml);
+	  INC_PC;
+	  break;
+	}
+
+      // get the result
+      u_int16_t mval = value;
+  
+      value = REG_D + value;
+
+      FL_V16AT(value,mval,REG_D);
+      FL_C16AT(value,mval,REG_D);
+      FL_ZT(value);
+      FL_N16T(value);
+
+      // Write result to D
+      WRITE_REG_D(value);
+      }
+      //op_addd();
+      break;
+      
+    case 0x61:
+    case 0x71:
+      {
+      u_int8_t result;
+      
+      switch(opcode)
+	{
+	case 0x61:
+	  result = RD_ADDR(p2 + REG_X) & p1;
+	  WR_ADDR(p2+REG_X, result);
+	  break;
+	  
+	case 0x71:
+	  result = RD_ADDR(p2) & p1;
+	  WR_ADDR(p2, result);
+	  break;
+	}
+      
+      INC_PC;
+      INC_PC;
+      
+      FL_V0;
+      FL_N8T(result);
+      FL_ZT(result);
+      }
+      //op_aim();
+      break;
+      
+    case 0x84:
+    case 0x94:
+    case 0xA4:
+    case 0xB4:
+    case 0xC4:
+    case 0xD4:
+    case 0xE4:
+    case 0xF4:
+      {
+      u_int8_t *dest;
+      u_int16_t  value;
+  
+      switch(opcode)
+	{
+	case 0x84:
+	  value = p1;
+	  dest = &(REG_A);
+	  INC_PC;
+	  break;
+      
+	case 0x94:
+	  value = ADDR_WORD(0, p1);
+	  value = RD_ADDR(value);
+	  dest = &(REG_A);
+	  INC_PC;
+	  break;
+
+	case 0xB4:
+	  value = ADDR_WORD(p1, p2);
+	  value = RD_ADDR(value);
+	  dest = &(REG_A);
+	  INC_PC;
+	  INC_PC;
+	  break;
+      
+	case 0xA4:
+	  value = REG_X + p1;
+	  value = RD_ADDR(value);
+	  dest = &(REG_A);
+	  INC_PC;
+	  break;
+
+	case 0xC4:
+	  value = p1;
+	  dest = &(REG_B);
+	  INC_PC;
+	  break;
+      
+	case 0xD4:
+	  value = ADDR_WORD(0, p1);
+	  value = RD_ADDR(value);
+	  dest = &(REG_B);
+	  INC_PC;
+	  break;
+
+	case 0xF4:
+	  value = ADDR_WORD(p1, p2);
+	  value = RD_ADDR(value);
+	  dest = &(REG_B);
+	  INC_PC;
+	  INC_PC;
+	  break;
+      
+	case 0xE4:
+	  value = REG_X + p1;
+	  value = RD_ADDR(value);
+	  dest = &(REG_B);
+	  INC_PC;
+	  break;
+	}
+
+      *dest &= (value & 0xff);
+  
+      FL_V0;
+      FL_ZT(*dest);
+      FL_N8T(*dest);
+      }
+      //op_and();
+      break;
+      
+    case 0x48:
+    case 0x58:
+    case 0x68:
+    case 0x78:
+      {
+      u_int8_t *dest;
+  
+      switch(opcode)
+	{
+	case 0x48:
+	  dest = &(REG_A);
+	  break;
+      
+	case 0x58:
+	  dest = &(REG_B);
+	  break;
+
+	case 0x78:
+	  dest = REF_ADDR(ADDR_WORD(p1,p2));
+	  INC_PC;
+	  INC_PC;
+	  break;
+
+	case 0x68:
+	  dest = REF_ADDR(REG_X+p1);
+	  INC_PC;
+	  break;
+	}
+  
+      // Special flag test
+      FL_CSET((*dest) & 0x80);
+
+
+      if(pstate.memory)
+	{
+	  RD_REF(pstate.memory_addr);
+	}
+  
+      *dest <<= 1;
+  
+      if(pstate.memory)
+	{
+	  WR_REF(pstate.memory_addr, *dest);
+	  pstate.memory = 0;
+	}
+
+      FL_ZT(*dest);
+      FL_N8T(*dest);
+      FL_V_NXORC;  
+      }
+      //op_asl();
+      break;
+      
+    case 0x05:
+      {
+      u_int16_t val;
+
+      val = REG_D;
+  
+      // Special flag test
+      FL_CSET(val & 0x8000);
+
+      val <<= 1;
+      FL_ZT(val);
+      FL_N16T(val);
+      FL_V_NXORC;
+      WRITE_REG_D(val);
+      }
+      //op_asld();
+      break;
+      
+    case 0x47:
+    case 0x57:
+    case 0x67:
+    case 0x77:
+      {
+      u_int8_t *dest;
+  
+      switch(opcode)
+	{
+	case 0x47:
+	  dest = &(REG_A);
+	  break;
+      
+	case 0x57:
+	  dest = &(REG_B);
+	  break;
+
+	case 0x77:
+	  dest = REF_ADDR(ADDR_WORD(p1,p2));
+	  INC_PC;
+	  INC_PC;
+	  break;
+
+	case 0x67:
+	  dest = REF_ADDR(REG_X+p1);
+	  INC_PC;
+	  break;
+	}
+  
+      // Special flag test
+      FL_CSET((*dest) & 1);
+
+      if(pstate.memory)
+	{
+	  RD_REF(pstate.memory_addr);
+	}
+  
+      *dest >>= 1;
+      if( (*dest) & 0x40 )
+	{
+	  *dest |= 0x80;
+	}
+
+      if( pstate.memory )
+	{
+	  WR_REF(pstate.memory_addr, *dest);
+	  pstate.memory = 0;
+	}					      
+
+      FL_ZT(*dest);
+      FL_N0;
+      FL_V_NXORC;  
+      }
+      
+      //op_asr();
+      break;
+      
+    case 0x85:
+    case 0x95:
+    case 0xA5:
+    case 0xB5:
+    case 0xC5:
+    case 0xD5:
+    case 0xE5:
+    case 0xF5:
+      {
+      u_int8_t *dest;
+      u_int16_t  value;
+  
+      switch(opcode)
+	{
+	case 0x85:
+	  value = p1;
+	  dest = &(REG_A);
+	  INC_PC;
+	  break;
+      
+	case 0x95:
+	  value = ADDR_WORD(0, p1);
+	  value = RD_ADDR(value);
+	  dest = &(REG_A);
+	  INC_PC;
+	  break;
+
+	case 0xB5:
+	  value = ADDR_WORD(p1, p2);
+	  value = RD_ADDR(value);
+	  dest = &(REG_A);
+	  INC_PC;
+	  INC_PC;
+	  break;
+      
+	case 0xA5:
+	  value = REG_X + p1;
+	  value = RD_ADDR(value);
+	  dest = &(REG_A);
+	  INC_PC;
+	  break;
+
+	case 0xC5:
+	  value = p1;
+	  dest = &(REG_B);
+	  INC_PC;
+	  break;
+      
+	case 0xD5:
+	  value = ADDR_WORD(0, p1);
+	  value = RD_ADDR(value);
+	  dest = &(REG_B);
+	  INC_PC;
+	  break;
+
+	case 0xF5:
+	  value = ADDR_WORD(p1, p2);
+	  value = RD_ADDR(value);
+	  dest = &(REG_B);
+	  INC_PC;
+	  INC_PC;
+	  break;
+      
+	case 0xE5:
+	  value = REG_X + p1;
+	  value = RD_ADDR(value);
+	  dest = &(REG_B);
+	  INC_PC;
+	  break;
+	}
+
+      u_int8_t res = *dest & (value & 0xff);
+  
+      FL_V0;
+      FL_ZT(res);
+      FL_N8T(res);
+      }
+      
+      //op_bit();
+      break;
+      
+    case 0x20:
+    case 0x21:
+    case 0x22:
+    case 0x23:
+    case 0x24:
+    case 0x25:
+    case 0x26:
+    case 0x27:
+    case 0x28:
+    case 0x29:
+    case 0x2A:
+    case 0x2B:
+    case 0x2C:
+    case 0x2D:
+    case 0x2E:
+    case 0x2F:
+      {
+      int branched = 0;
+      int16_t rel = CALC_REL(p1);
+
+      switch(opcode)
+	{
+	case 0x20:
+#if !EMBEDDED
+	  fprintf(lf, "\nPC=%04X", REG_PC);
+	  fprintf(lf, "\nrel=%d", rel);
+	  sprintf(opcode_decode, "BRA %02X, (%d) %04X", p1, rel, REG_PC+2+rel); 
+#endif
+	  REG_PC += 1 + rel;
+	  branched = 1;
+#if !EMBEDDED
+	  fprintf(lf, "\nPC=%04X", REG_PC);
+	  fprintf(lf, "\np1=%02X", p1);
+#endif
+	  break;
+
+	  // Branch never?
+	case 0x21:
+#if !EMBEDDED
+	  sprintf(opcode_decode, "BRN %02X, (%d) %04X", p1, rel, REG_PC+2+rel);
+#endif
+	  break;
+
+	case 0x22:
+#if !EMBEDDED
+	  sprintf(opcode_decode, "BHI %02X, (%d) %04X", p1, rel, REG_PC+2+rel);
+#endif
+	  if( !(FLG_C) && !(FLG_Z) )
+	    {
+	      REG_PC += 1 + rel;
+	      branched = 1;
+	    }
+	  break;
+
+	case 0x23:
+#if !EMBEDDED
+	  sprintf(opcode_decode, "BLS %02X, (%d) %04X", p1, rel, REG_PC+2+rel);
+#endif
+	  if( FLG_C || FLG_Z )
+	    {
+	      REG_PC += 1 + rel;
+	      branched = 1;
+	    }
+	  break;
+
+	case 0x24:
+#if !EMBEDDED
+	  sprintf(opcode_decode, "BCC %02X, (%d) %04X", p1, rel, REG_PC+2+rel);
+#endif
+
+	  if( !FLG_C )
+	    {
+	      REG_PC += 1 + rel;
+	      branched = 1;
+	    }
+	  break;
+
+	case 0x25:
+#if !EMBEDDED
+	  sprintf(opcode_decode, "BCS %02X, (%d) %04X", p1, rel, REG_PC+2+rel);
+#endif
+
+	  if( FLG_C )
+	    {
+	      REG_PC += 1 + rel;
+	      branched = 1;
+	    }
+	  break;
+
+	case 0x26:
+#if !EMBEDDED
+	  sprintf(opcode_decode, "BNE %02X, (%d) %04X", p1, rel, REG_PC+2+rel);
+#endif
+
+	  if( !FLG_Z )
+	    {
+	      REG_PC += 1 + rel;
+	      branched = 1;
+	    }
+	  break;
+
+	case 0x27:
+#if !EMBEDDED
+	  sprintf(opcode_decode, "BEQ %02X, (%d) %04X", p1, rel, REG_PC+2+rel);
+#endif
+
+	  if( FLG_Z )
+	    {
+	      REG_PC += 1 + rel;
+	      branched = 1;
+	    }
+	  break;
+
+	case 0x28:
+#if !EMBEDDED
+	  sprintf(opcode_decode, "BVC %02X, (%d) %04X", p1, rel, REG_PC+2+rel);
+#endif
+      
+	  if( !FLG_V )
+	    {
+	      REG_PC += 1 + rel;
+	      branched = 1;
+	    }
+	  break;
+      
+	case 0x29:
+#if !EMBEDDED
+	  sprintf(opcode_decode, "BVS %02X, (%d) %04X", p1, rel, REG_PC+2+rel);
+#endif
+
+	  if( FLG_V )
+	    {
+	      REG_PC += 1 + rel;
+	      branched = 1;
+	    }
+	  break;
+
+	case 0x2A:
+#if !EMBEDDED
+	  sprintf(opcode_decode, "BPL %02X, (%d) %04X", p1, rel, REG_PC+2+rel);
+#endif
+
+	  if( !FLG_N )
+	    {
+	      REG_PC += 1 + rel;
+	      branched = 1;
+	    }
+	  break;
+
+	case 0x2B:
+#if !EMBEDDED
+	  sprintf(opcode_decode, "BMI %02X, (%d) %04X", p1, rel, REG_PC+2+rel);
+#endif
+
+	  if( FLG_N )
+	    {
+	      REG_PC += 1 + rel;
+	      branched = 1;
+	    }
+	  break;
+
+	case 0x2C:
+#if !EMBEDDED
+	  sprintf(opcode_decode, "BGE %02X, (%d) %04X", p1, rel, REG_PC+2+rel);
+#endif
+
+	  if( (FLG_N && FLG_V) || ((!FLG_N) && (!FLG_V)) )
+	    {
+	      REG_PC += 1 + rel;
+	      branched = 1;
+	    }
+	  break;
+      
+	case 0x2D:
+#if !EMBEDDED
+	  sprintf(opcode_decode, "BLT %02X, (%d) %04X", p1, rel, REG_PC+2+rel);
+#endif
+
+	  if( ((!FLG_N) && FLG_V) || (FLG_N && (!FLG_V)) )
+	    {
+	      REG_PC += 1 + rel;
+	      branched = 1;
+	    }
+	  break;
+      
+	case 0x2E:
+#if !EMBEDDED
+	  sprintf(opcode_decode, "BGT %02X, (%d) %04X", p1, rel, REG_PC+2+rel);
+#endif
+
+	  //      if( FLG_Z || ((FLG_N && FLG_V) || ((!FLG_N) && (!FLG_V))) )
+	  if( (!FLG_Z) && ((FLG_N && FLG_V) || ((!FLG_N) && (!FLG_V))) )
+	    {
+	      REG_PC += 1 + rel;
+	      branched = 1;
+	    }
+	  break;
+      
+	case 0x2F:
+#if !EMBEDDED
+	  sprintf(opcode_decode, "BLE %02X, (%d) %04X", p1, rel, REG_PC+2+rel);
+#endif
+
+	  //      if( !(FLG_Z || ( (FLG_N && FLG_V) || ((!FLG_N) && (!FLG_V)))) )
+	  if( FLG_Z || ((FLG_N && (!FLG_V)) || ((!FLG_N) && FLG_V)) )
+	    {
+	      REG_PC += 1 + rel;
+	      branched = 1;
+	    }
+	  break;
+	}
+
+      if( !branched )
+	{
+	  INC_PC;
+	}
+      else
+	{
+	  // Length of instruction is just for display purposes
+#if !EMBEDDED      
+	  inst_length++;
+#endif
+	}
+      }
+      
+      //op_br();
+      break;
+      
+    case 0x11:
+      {
+      u_int8_t add;
+      u_int8_t *dest;
+      u_int8_t before;
+
+      dest = &(REG_A);
+      add = REG_B;
+
+      before = *dest;
+  
+      // Special flag test
+
+      u_int8_t res = *dest - add;
+      FL_V8T(res,add,before);
+      FL_ZT(res);
+      FL_N8T(res);
+      FL_C8T(res,add,before);
+      }
+      //op_cba();
+      break;
+      
+    case 0x0C:
+      {
+      FL_C0;
+      }
+      //op_clc();
+      break;
+      
+    case 0x0E:
+      {
+      FL_I0;
+      }
+      //op_cli();
+      break;
+      
+    case 0x4F:
+    case 0x5F:
+    case 0x6F:
+    case 0x7F:
+      {
+      u_int8_t *dest;
+  
+      switch(opcode)
+	{
+	case 0x4F:
+	  dest = &(REG_A);
+	  break;
+      
+	case 0x5F:
+	  dest = &(REG_B);
+	  break;
+
+	case 0x7F:
+	  dest = REF_ADDR(ADDR_WORD(p1,p2));
+	  INC_PC;
+	  INC_PC;
+	  break;
+
+	case 0x6F:
+	  dest = REF_ADDR(REG_X+p1);
+	  INC_PC;
+	  break;
+	}
+  
+      // Special flag test
+#if 0
+      if(pstate.memory)
+	{
+	  RD_REF(pstate.memory_addr);
+	}
+#endif
+    
+      if(pstate.memory)
+	{
+	  WR_REF(pstate.memory_addr, 0);
+	  pstate.memory = 0;
+	}
+      else
+	{
+	  *dest = 0;
+	}
+    
+      FL_V0;
+      FL_C0;
+      FL_Z1;
+      FL_N0;
+      }
+      
+      //op_clr();
+      break;
+	
+    case 0x81:
+    case 0x91:
+    case 0xA1:
+    case 0xB1:
+    case 0xC1:
+    case 0xD1:
+    case 0xE1:
+    case 0xF1:
+      {
+      u_int8_t add;
+      u_int8_t *dest;
+      u_int8_t before;
+  
+      switch(opcode)
+	{
+	case 0x81:
+	  dest = &(REG_A);
+	  add = p1;
+	  INC_PC;
+	  break;
+      
+	case 0x91:
+	  dest = &(REG_A);
+	  add = RD_ADDR(p1);
+	  INC_PC;
+	  break;
+
+	case 0xB1:
+	  dest = &(REG_A);
+	  add = RD_ADDR(ADDR_WORD(p1,p2));
+	  INC_PC;
+	  INC_PC;
+	  break;
+
+	case 0xA1:
+	  dest = &(REG_A);
+	  add = RD_ADDR(REG_X+p1);
+	  INC_PC;
+	  break;
+
+	case 0xC1:
+	  dest = &(REG_B);
+	  add = p1;
+	  INC_PC;
+	  break;
+      
+	case 0xD1:
+	  dest = &(REG_B);
+	  add = RD_ADDR(p1);
+	  INC_PC;
+	  break;
+
+	case 0xF1:
+	  dest = &(REG_B);
+	  add = RD_ADDR(ADDR_WORD(p1,p2));
+	  INC_PC;
+	  INC_PC;
+	  break;
+
+	case 0xE1:
+	  dest = &(REG_B);
+	  add = RD_ADDR(REG_X+p1);
+	  INC_PC;
+	  break;
+	}
+
+      before = *dest;
+  
+      // Special flag test
+      u_int8_t res = (*dest) - add;
+      FL_V8T(res,add,before);
+      FL_ZT(res);
+      FL_N8T(res);
+      FL_C8T(res,add,before);
+      }
+      
+      //op_cmp();
+      break;
+      
+    case 0x43:
+    case 0x53:
+    case 0x63:
+    case 0x73:
+      {
+      u_int8_t *dest;
+  
+      switch(opcode)
+	{
+	case 0x43:
+	  dest = &(REG_A);
+	  break;
+      
+	case 0x53:
+	  dest = &(REG_B);
+	  break;
+
+	case 0x73:
+	  dest = REF_ADDR(ADDR_WORD(p1,p2));
+	  INC_PC;
+	  INC_PC;
+	  break;
+
+	case 0x63:
+	  dest = REF_ADDR(REG_X+p1);
+	  INC_PC;
+	  break;
+	}
+  
+      if(pstate.memory)
+	{
+	  RD_REF(pstate.memory_addr);
+	}
+  
+      *dest ^= 0xFF;
+  
+      if(pstate.memory)
+	{
+	  WR_REF(pstate.memory_addr, *dest);
+	  pstate.memory = 0;
+	}
+
+      FL_V0;
+      FL_C1;
+      FL_ZT(*dest);
+      FL_N8T(*dest);
+      }
+      
+      //op_com();
+      break;
+      
+    case 0x8C:
+    case 0x9C:
+    case 0xAC:
+    case 0xBC:
+      {
+      u_int16_t  value;
+      u_int8_t   mh, ml;
+  
+      switch(opcode)
+	{
+	case 0x8C:
+	  value = ADDR_WORD(p1,p2);
+	  INC_PC;
+	  INC_PC;
+	  break;
+      
+	case 0x9C:
+	  value = ADDR_WORD(0,p1);
+	  mh = RD_ADDR(value+0);
+	  ml = RD_ADDR(value+1);
+	  value = ADDR_WORD(mh,ml);
+	  INC_PC;
+	  break;
+      
+	case 0xBC:
+	  value = ADDR_WORD(p1,p2);
+	  mh = RD_ADDR(value+0);
+	  ml = RD_ADDR(value+1);
+	  value = ADDR_WORD(mh,ml);
+	  INC_PC;
+	  INC_PC;
+	  break;
+
+	case 0xAC:
+	  value = REG_X + p1;
+	  mh = RD_ADDR(value+0);
+	  ml = RD_ADDR(value+1);
+	  value = ADDR_WORD(mh,ml);
+	  INC_PC;
+	  break;
+	}
+
+      // get the result
+      u_int16_t mval = value;
+  
+      value = REG_X - value;
+
+      FL_V16ST(value,mval,REG_X);
+      FL_C16ST(value,mval,REG_X);
+      FL_ZT(value);
+      FL_N16T(value);
+      }
+      
+      //op_cpx();
+      break;
+      
+    case 0x19:
+      {
+      u_int8_t msn, lsn;
+      u_int16_t t, cf = 0;
+      int orig_a = REG_A;
+
+      // We need this variable as REG_A is 8 bits and the algorithm requires
+      // the answer tooverflow out of 8 bits
+  
+      int ans = REG_A;
+ 
+      msn = REG_A & 0xf0;
+      lsn = REG_A & 0x0f;
+
+      if( FLG_H )
+	{
+	  ans += 0x06;
+	}
+
+      if( lsn > 0x09 )
+	{
+	  ans += 0x06;
+	}
+
+      if( FLG_C )
+	{
+	  ans += 0x60;
+	}
+
+      if( ans > 0x9f )
+	{
+	  ans += 0x60;
+	}
+      if( ans > 0x99 )
+	{
+	  FL_C1;
+	}
+
+      //  REG_A &= 0xff;
+  
+      FL_N8T(ans);
+      FL_ZT(ans);
+
+      if( ((orig_a ^ ans) & 0x80) != 0 )
+	{
+	  FL_V1;
+	}
+      else
+	{
+	  FL_V0;
+	}
+  
+      REG_A = (ans & 0xff);
+      }
+      
+      //op_daa();
+      break;
+      
+    case 0x09:
+    case 0x34:
+      {
+      u_int16_t *dest;
+  
+      switch(opcode)
+	{
+	case 0x09:
+	  dest = &(REG_X);
+	  (*dest)--;
+	  FL_ZT(*dest);
+	  break;
+      
+	case 0x34:
+	  dest = &(REG_SP);
+	  (*dest)--;
+	  break;
+	}
+      }
+      
+      //op_dec16();
+      break;
+      
+    case 0x4A:
+    case 0x5A:
+    case 0x6A:
+    case 0x7A:
+      {
+      u_int8_t *dest;
+      u_int8_t before;
+  
+      switch(opcode)
+	{
+	case 0x4A:
+	  dest = &(REG_A);
+	  break;
+      
+	case 0x5A:
+	  dest = &(REG_B);
+	  break;
+
+	case 0x7A:
+	  dest = REF_ADDR(ADDR_WORD(p1,p2));
+	  INC_PC;
+	  INC_PC;
+	  break;
+
+	case 0x6A:
+	  dest = REF_ADDR(REG_X+p1);
+	  INC_PC;
+	  break;
+	}
+  
+      FL_V80(*dest);
+  
+      if(pstate.memory)
+	{
+	  RD_REF(pstate.memory_addr);
+	}
+  
+      (*dest)--;
+  
+      if(pstate.memory)
+	{
+	  WR_REF(pstate.memory_addr, *dest);
+	  pstate.memory = 0;
+	}
+  
+      FL_ZT(*dest);
+      FL_N8T(*dest);
+      }
+      
+      //op_dec8();
+      break;
+      
+    case 0x65:
+    case 0x75:
+      {
+      u_int8_t result;
+  
+      switch(opcode)
+	{
+	case 0x65:
+	  result = RD_ADDR(p2 + REG_X) ^ p1;
+	  WR_ADDR(p2+REG_X, result);
+	  break;
+
+	case 0x75:
+	  result = RD_ADDR(p2) ^ p1;
+	  WR_ADDR(p2, result);
+	  break;
+	}
+  
+      INC_PC;
+      INC_PC;
+
+      FL_V0;
+      FL_N8T(result);
+      FL_ZT(result);
+      }
+      
+      //      op_eim();
+      break;
+      
+    case 0x88:
+    case 0x98:
+    case 0xA8:
+    case 0xB8:
+    case 0xC8:
+    case 0xD8:
+    case 0xE8:
+    case 0xF8:
+      {
+      u_int8_t *dest;
+      u_int16_t  value;
+  
+      switch(opcode)
+	{
+	case 0x88:
+	  value = p1;
+	  dest = &(REG_A);
+	  INC_PC;
+	  break;
+      
+	case 0x98:
+	  value = ADDR_WORD(0, p1);
+	  value = RD_ADDR(value);
+	  dest = &(REG_A);
+	  INC_PC;
+	  break;
+
+	case 0xB8:
+	  value = ADDR_WORD(p1, p2);
+	  value = RD_ADDR(value);
+	  dest = &(REG_A);
+	  INC_PC;
+	  INC_PC;
+	  break;
+      
+	case 0xA8:
+	  value = REG_X + p1;
+	  value = RD_ADDR(value);
+	  dest = &(REG_A);
+	  INC_PC;
+	  break;
+
+	case 0xC8:
+	  value = p1;
+	  dest = &(REG_B);
+	  INC_PC;
+	  break;
+      
+	case 0xD8:
+	  value = ADDR_WORD(0, p1);
+	  value = RD_ADDR(value);
+	  dest = &(REG_B);
+	  INC_PC;
+	  break;
+
+	case 0xF8:
+	  value = ADDR_WORD(p1, p2);
+	  value = RD_ADDR(value);
+	  dest = &(REG_B);
+	  INC_PC;
+	  INC_PC;
+	  break;
+      
+	case 0xE8:
+	  value = REG_X + p1;
+	  value = RD_ADDR(value);
+	  dest = &(REG_B);
+	  INC_PC;
+	  break;
+	}
+
+      *dest ^= (value & 0xff);
+  
+      FL_V0;
+      FL_ZT(*dest);
+      FL_N8T(*dest);
+      }
+      
+      //      op_eor();
+      break;
+      
+    case 0x08:
+    case 0x31:
+      {
+      u_int16_t *dest;
+  
+      switch(opcode)
+	{
+	case 0x08:
+	  dest = &(REG_X);
+	  (*dest)++;
+	  FL_ZT(*dest);
+	  break;
+      
+	case 0x31:
+	  dest = &(REG_SP);
+	  (*dest)++;
+	  break;
+	}
+      }
+      
+      //op_inc16();
+      break;
+      
+    case 0x4C:
+    case 0x5C:
+    case 0x6C:
+    case 0x7C:
+      {
+      u_int8_t *dest;
+      u_int8_t before;
+  
+      switch(opcode)
+	{
+	case 0x4C:
+	  dest = &(REG_A);
+	  break;
+      
+	case 0x5C:
+	  dest = &(REG_B);
+	  break;
+
+	case 0x7C:
+	  dest = REF_ADDR(ADDR_WORD(p1,p2));
+	  INC_PC;
+	  INC_PC;
+	  break;
+
+	case 0x6C:
+	  dest = REF_ADDR(REG_X+p1);
+	  INC_PC;
+	  break;
+	}
+
+      if(pstate.memory)
+	{
+	  RD_REF(pstate.memory_addr);
+	}
+  
+      (*dest)++;
+  
+      if(pstate.memory)
+	{
+	  WR_REF(pstate.memory_addr, *dest);
+	  pstate.memory = 0;
+	}
+  
+      FL_V80(*dest);
+      FL_ZT(*dest);
+      FL_N8T(*dest);
+      }
+      
+      //op_inc8();
+      break;
+      
+    case 0x6E:
+    case 0x7E:
+      {
+      u_int16_t dest;
+  
+      switch(opcode)
+	{
+	case 0x7E:
+	  dest = (p1 << 8) | p2;
+
+	  // Adjust for the increment of PC that occurs automatically
+	  dest--;
+      
+	  INC_PC;
+	  INC_PC;
+	  INC_PC;
+
+	  // Jump to subroutine
+	  REG_PC = dest;
+	  break;
+      
+	case 0x6E:
+	  dest = REG_X + p1;
+
+	  // Adjust for the increment of PC that occurs automatically
+	  dest--;
+
+	  INC_PC;
+	  INC_PC;
+
+	  // Jump to subroutine
+	  REG_PC = dest;
+	  break;
+	}
+      }
+      //op_jmp();
+      break;
+      
+    case 0x8D:
+    case 0x9D:
+    case 0xAD:
+    case 0xBD:
+      {
+      u_int16_t dest;
+  
+      switch(opcode)
+	{
+	case 0xAD:
+	  dest = REG_X + p1;
+
+	  // Adjust for the increment of PC that occurs automatically
+	  dest--;
+      
+	  INC_PC;
+	  INC_PC;
+
+	  WR_ADDR(REG_SP--, REG_PC & 0xFF);
+	  WR_ADDR(REG_SP--, REG_PC >> 8);
+      
+	  // Jump to subroutine
+	  REG_PC = dest;
+	  break;
+
+	case 0x9D:
+	  //      dest = RDW_ADDR(p1);
+	  dest = p1;
+      
+	  // Adjust for the increment of PC that occurs automatically
+	  dest--;
+      
+	  INC_PC;
+
+	  WR_ADDR(REG_SP--, REG_PC & 0xFF);
+	  WR_ADDR(REG_SP--, REG_PC >> 8);
+      
+	  // Jump to subroutine
+	  REG_PC = dest;
+	  break;
+
+	case 0xBD:
+	  dest = (p1 << 8) | p2;
+
+	  // Adjust for the increment of PC that occurs automatically
+	  dest--;
+      
+	  INC_PC;
+	  INC_PC;
+	  INC_PC;
+
+	  WR_ADDR(REG_SP--, REG_PC & 0xFF);
+	  WR_ADDR(REG_SP--, REG_PC >> 8);
+
+      
+	  // Jump to subroutine
+	  REG_PC = dest;
+	  break;
+      
+	case 0x8D:
+	  dest = REG_PC + CALC_REL(p1) + 2;
+
+	  // Adjust for the increment of PC that occurs automatically
+	  dest--;
+
+	  INC_PC;
+	  INC_PC;
+
+	  WR_ADDR(REG_SP--, REG_PC & 0xFF);
+	  WR_ADDR(REG_SP--, REG_PC >> 8);
+      
+	  // Jump to subroutine
+	  REG_PC = dest;
+#if !EMBEDDED
+	  fprintf(lf, "\n   JSR  rel");
+#endif
+	  break;
+	}
+      }
+      //op_jsr();
+      break;
+      
+    case 0x8E:
+    case 0x9E:
+    case 0xAE:
+    case 0xBE:
+    case 0xCE:
+    case 0xDE:
+    case 0xEE:
+    case 0xFE:
+      {
+      u_int16_t *dest;
+      u_int16_t value;
+      u_int16_t  src;
+  
+      switch(opcode)
+	{
+	case 0xCE:
+	  dest = &(REG_X);
+	  value = p1;
+	  value <<= 8;
+	  value |= p2;
+	  INC_PC;
+	  INC_PC;
+	  break;
+
+	case 0xDE:
+	  dest = &(REG_X);
+	  value = RDW_ADDR(p1);
+	  INC_PC;
+	  break;
+
+	case 0xEE:
+	  dest = &(REG_X);
+	  value = RDW_ADDR(REG_X+p1);
+	  INC_PC;
+	  break;
+
+	case 0xFE:
+#if !EMBEDDED
+	  fprintf(lf, "\np1=%02X p2=%02X", p1,p2);
+#endif
+	  src = p1;
+	  src <<=8;
+	  src += p2;
+	  dest = &(REG_X);
+	  value = RDW_ADDR(src);
+	  INC_PC;
+	  INC_PC;
+	  break;
+
+	case 0x8E:
+	  dest = &(REG_SP);
+	  value = p1;
+	  value <<= 8;
+	  value |= p2;
+	  INC_PC;
+	  INC_PC;
+	  break;
+
+	case 0x9E:
+	  dest = &(REG_SP);
+	  value = RDW_ADDR(p1);
+	  INC_PC;
+	  break;
+
+	case 0xAE:
+	  dest = &(REG_SP);
+	  value = RDW_ADDR(REG_X+p1);
+	  INC_PC;
+	  break;
+
+	case 0xBE:
+	  dest = &(REG_SP);
+	  value = RDW_ADDR(ADDR_WORD(p1,p2));
+	  INC_PC;
+	  INC_PC;
+	  break;
+	}
+
+      *dest = value;
+  
+      // Update flags
+      FL_V0;
+      FL_ZT(*dest);
+      FL_N16T(*dest);
+      }
+      //op_ld16();
+      break;
+      
+    case 0x86:
+    case 0x96:
+    case 0xA6:
+    case 0xB6:
+    case 0xC6:
+    case 0xD6:
+    case 0xE6:
+    case 0xF6:
+      {
+      u_int8_t add;
+      u_int8_t *dest;
+      u_int8_t before;
+  
+      switch(opcode)
+	{
+	case 0x86:
+	  dest = &(REG_A);
+	  add = p1;
+	  INC_PC;
+	  break;
+      
+	case 0x96:
+	  dest = &(REG_A);
+	  add = RD_ADDR(p1);
+	  INC_PC;
+	  break;
+
+	case 0xB6:
+	  dest = &(REG_A);
+	  add = RD_ADDR(ADDR_WORD(p1,p2));
+	  INC_PC;
+	  INC_PC;
+	  break;
+
+	case 0xA6:
+	  dest = &(REG_A);
+	  add = RD_ADDR(REG_X+p1);
+	  INC_PC;
+	  break;
+
+	case 0xC6:
+	  dest = &(REG_B);
+	  add = p1;
+	  INC_PC;
+	  break;
+      
+	case 0xD6:
+	  dest = &(REG_B);
+	  add = RD_ADDR(p1);
+	  INC_PC;
+	  break;
+
+	case 0xF6:
+	  dest = &(REG_B);
+	  add = RD_ADDR(ADDR_WORD(p1,p2));
+	  INC_PC;
+	  INC_PC;
+	  break;
+
+	case 0xE6:
+	  dest = &(REG_B);
+	  add = RD_ADDR(REG_X+p1);
+	  INC_PC;
+	  break;
+	}
+
+      before = *dest;
+  
+      // Special flag test
+      FL_V0;
+      (*dest) = add;
+      FL_ZT(*dest);
+      FL_N8T(*dest);
+      }
+      //op_lda();
+      break;
+
+    case 0xCC:
+    case 0xDC:
+    case 0xEC:
+    case 0xFC:
+      {
+      u_int16_t  src;
+
+      switch(opcode)
+	{
+	case 0xCC:
+	  REG_A = p1;
+	  REG_B = p2;
+	  INC_PC;
+	  INC_PC;
+	  break;
+
+	case 0xDC:
+	  REG_A = RD_ADDR(p1);
+	  REG_B = RD_ADDR(p1+1);
+	  INC_PC;
+	  break;
+
+	case 0xEC:
+	  REG_A = RD_ADDR(REG_X+p1+0);
+	  REG_B = RD_ADDR(REG_X+p1+1);
+	  INC_PC;
+	  break;
+
+	case 0xFC:
+#if !EMBEDDED      
+	  fprintf(lf, "\np1=%02X p2=%02X", p1,p2);
+#endif
+	  src = p1;
+	  src <<=8;
+	  src += p2;
+      
+	  REG_A = RD_ADDR(src+0);
+	  REG_B = RD_ADDR(src+1);
+	  INC_PC;
+	  INC_PC;
+	  break;
+	}
+
+      // Update flags
+      FL_V0;
+      FL_ZT(REG_D);
+      FL_N16T(REG_D);
+      }
+      
+      //op_ldd();
+      break;
+
+    case 0x04:
+      {
+      u_int16_t val;
+
+      val = REG_D;
+  
+      // Special flag test
+      FL_CSET(val & 1);
+
+      val >>= 1;
+      FL_VSET(FLG_C);
+      FL_ZT(val);
+      FL_N0;
+      WRITE_REG_D(val);
+      }
+      //op_lsrd();
+      break;
+	    
+    case 0x44:
+    case 0x54:
+    case 0x64:
+    case 0x74:
+      {
+      u_int8_t *dest;
+  
+      switch(opcode)
+	{
+	case 0x44:
+	  dest = &(REG_A);
+	  break;
+      
+	case 0x54:
+	  dest = &(REG_B);
+	  break;
+
+	case 0x74:
+	  dest = REF_ADDR(ADDR_WORD(p1,p2));
+	  INC_PC;
+	  INC_PC;
+	  break;
+
+	case 0x64:
+	  dest = REF_ADDR(REG_X+p1);
+	  INC_PC;
+	  break;
+	}
+  
+      // Special flag test
+      FL_CSET((*dest) & 1);
+  
+      if(pstate.memory)
+	{
+	  RD_REF(pstate.memory_addr);
+	}
+  
+      *dest >>= 1;
+  
+      if(pstate.memory)
+	{
+	  WR_REF(pstate.memory_addr, *dest);
+	  pstate.memory = 0;
+	}
+
+      FL_VSET(FLG_C);
+      FL_ZT(*dest);
+      FL_N0;
+      }
+      
+      //op_lsr();
+      break;
+
+    case 0x3D:
+      {
+      u_int16_t res;
+
+      res = ((u_int16_t)REG_A) * ((u_int16_t)REG_B);
+      WRITE_REG_D(res);
+      FL_CSET(res & 0x80);
+      }
+      //op_mul();
+      break;
+
+    case 0x40:
+    case 0x50:
+    case 0x60:
+    case 0x70:
+      {
+      u_int8_t *dest;
+  
+      switch(opcode)
+	{
+	case 0x40:
+	  dest = &(REG_A);
+	  break;
+      
+	case 0x50:
+	  dest = &(REG_B);
+	  break;
+
+	case 0x70:
+	  dest = REF_ADDR(ADDR_WORD(p1,p2));
+	  INC_PC;
+	  INC_PC;
+	  break;
+
+	case 0x60:
+	  dest = REF_ADDR(REG_X+p1);
+	  INC_PC;
+	  break;
+	}
+  
+      // Special flag test
+      if(pstate.memory)
+	{
+	  RD_REF(pstate.memory_addr);
+	}
+  
+      *dest = 0 - *dest;
+  
+      if(pstate.memory)
+	{
+	  WR_REF(pstate.memory_addr, *dest);
+	  pstate.memory = 0;
+	}
+  
+      FL_V80(*dest);
+      FL_C8W(*dest);
+      FL_ZT(*dest);
+      FL_N8T(*dest);
+      }
+      
+      //op_neg();
+      break;
+
+    case 0x01:
+      //op_nop();
+      break;
+
+    case 0x02:
+    case 0x03:
+    case 0x0A:
+    case 0x0B:
+    case 0x12:
+    case 0x13:
+    case 0x14:
+    case 0x15:
+    case 0x1C:
+    case 0x1D:
+    case 0x1E:
+    case 0x1F:
+    case 0x3E:
+    case 0x41:
+    case 0x42:
+    case 0x45:
+    case 0x4B:
+    case 0x4E:
+    case 0x51:
+    case 0x52:
+    case 0x55:
+    case 0x5B:
+    case 0x5E:
+    case 0x87:
+    case 0x8F:
+    case 0xC7:
+    case 0xCD:
+    case 0xCF:
+      {
+#if 0  
+#if !EMBEDDED  
+      fprintf(lf, "\n                     Unknown opcode:%02X\n\n", opcode);
+      dump_ram();
+      exit(-1);
+#else
+      char str[100];
+      sprintf(str, "Unknown opcode %02X", opcode);
+      mvaddstr(10,10, str);
+      refresh();
+      while(1)
+	{
+	}
+#endif
+#endif  
+      }
+      
+      //op_nul();
+      break;
+
+    case 0x62:
+    case 0x72:
+      {
+      u_int8_t result;
+      
+      switch(opcode)
+	{
+	case 0x62:
+	  result = RD_ADDR(p2 + REG_X) | p1;
+	  WR_ADDR(p2+REG_X, result);
+	  break;
+	  
+	case 0x72:
+	  result = RD_ADDR(p2) | p1;
+	  WR_ADDR(p2, result);
+	  break;
+	}
+      
+      INC_PC;
+      INC_PC;
+      
+      FL_V0;
+      FL_N8T(result);
+      FL_ZT(result);
+      }
+      
+      //      op_oim();
+      break;
+      
+    case 0x8A:
+    case 0x9A:
+    case 0xAA:
+    case 0xBA:
+    case 0xCA:
+    case 0xDA:
+    case 0xEA:
+    case 0xFA:
+      {
+      u_int8_t *dest;
+      u_int16_t  value;
+  
+      switch(opcode)
+	{
+	case 0x8A:
+	  value = p1;
+	  dest = &(REG_A);
+	  INC_PC;
+	  break;
+      
+	case 0x9A:
+	  value = ADDR_WORD(0, p1);
+	  value = RD_ADDR(value);
+	  dest = &(REG_A);
+	  INC_PC;
+	  break;
+
+	case 0xBA:
+	  value = ADDR_WORD(p1, p2);
+	  value = RD_ADDR(value);
+	  dest = &(REG_A);
+	  INC_PC;
+	  INC_PC;
+	  break;
+      
+	case 0xAA:
+	  value = REG_X + p1;
+	  value = RD_ADDR(value);
+	  dest = &(REG_A);
+	  INC_PC;
+	  break;
+
+	case 0xCA:
+	  value = p1;
+	  dest = &(REG_B);
+	  INC_PC;
+	  break;
+      
+	case 0xDA:
+	  value = ADDR_WORD(0, p1);
+	  value = RD_ADDR(value);
+	  dest = &(REG_B);
+	  INC_PC;
+	  break;
+
+	case 0xFA:
+	  value = ADDR_WORD(p1, p2);
+	  value = RD_ADDR(value);
+	  dest = &(REG_B);
+	  INC_PC;
+	  INC_PC;
+	  break;
+      
+	case 0xEA:
+	  value = REG_X + p1;
+	  value = RD_ADDR(value);
+	  dest = &(REG_B);
+	  INC_PC;
+	  break;
+	}
+
+      *dest |= (value & 0xff);
+  
+      FL_V0;
+      FL_ZT(*dest);
+      FL_N8T(*dest);
+      }
+      
+      //op_ora();
+      break;
+
+    case 0x36:
+    case 0x37:
+    case 0x3C:
+      {
+      switch(opcode)
+	{
+	case 0x36:
+	  WR_ADDR(REG_SP--, REG_A);
+	  break;
+
+	case 0x37:
+	  WR_ADDR(REG_SP--, REG_B);
+	  break;
+
+	case 0x3C:
+	  WR_ADDR(REG_SP--, REG_X & 0xff);
+	  WR_ADDR(REG_SP--, REG_X >> 8);
+	  break;
+	}
+      }
+      //op_psh();
+      break;
+
+    case 0x32:
+    case 0x33:
+    case 0x38:
+      {
+      switch(opcode)
+	{
+	case 0x32:
+	  (REG_SP)++;
+	  REG_A = RD_ADDR(REG_SP);
+	  break;
+
+	case 0x33:
+	  (REG_SP)++;
+	  REG_B = RD_ADDR(REG_SP);
+	  break;
+
+	case 0x38:
+	  (REG_SP)++;
+	  REG_X = RD_ADDR(REG_SP);
+	  REG_X <<=8;
+	  (REG_SP)++;
+	  REG_X += RD_ADDR(REG_SP);
+	  break;
+	}
+      }
+      //op_pul();
+      break;
+
+    case 0x49:
+    case 0x59:
+    case 0x69:
+    case 0x79:
+      {
+      u_int8_t *dest;
+  
+      switch(opcode)
+	{
+	case 0x49:
+	  dest = &(REG_A);
+	  break;
+      
+	case 0x59:
+	  dest = &(REG_B);
+	  break;
+
+	case 0x79:
+	  dest = REF_ADDR(ADDR_WORD(p1,p2));
+	  INC_PC;
+	  INC_PC;
+	  break;
+
+	case 0x69:
+	  dest = REF_ADDR(REG_X+p1);
+	  INC_PC;
+	  break;
+	}
+  
+      // Special flag test
+      int carry = FLG_C;
+  
+      FL_CSET((*dest) & 0x80);
+  
+      if(pstate.memory)
+	{
+	  RD_REF(pstate.memory_addr);
+	}
+  
+      *dest <<= 1;
+      if( carry )
+	{
+	  *dest |= 0x01;
+	}
+  
+      if( pstate.memory )
+	{
+	  WR_REF(pstate.memory_addr, *dest);
+	  pstate.memory = 0;
+	}					      
+  
+      FL_ZT(*dest);
+      FL_N8T(*dest);
+      FL_V_NXORC;
+      }
+      //op_rol();
+      break;
+
+    case 0x46:
+    case 0x56:
+    case 0x66:
+    case 0x76:
+      {
+      u_int8_t *dest;
+  
+      switch(opcode)
+	{
+	case 0x46:
+	  dest = &(REG_A);
+	  break;
+      
+	case 0x56:
+	  dest = &(REG_B);
+	  break;
+
+	case 0x76:
+	  dest = REF_ADDR(ADDR_WORD(p1,p2));
+	  INC_PC;
+	  INC_PC;
+	  break;
+
+	case 0x66:
+	  dest = REF_ADDR(REG_X+p1);
+	  INC_PC;
+	  break;
+	}
+  
+      // Special flag test
+      int carry = FLG_C;
+  
+      FL_CSET((*dest) & 1);
+
+      if(pstate.memory)
+	{
+	  RD_REF(pstate.memory_addr);
+	}
+  
+      *dest >>= 1;
+      if( carry )
+	{
+	  *dest |= 0x80;
+	}
+      if( pstate.memory )
+	{
+	  WR_REF(pstate.memory_addr, *dest);
+	  pstate.memory = 0;
+	}					      
+
+      FL_ZT(*dest);
+      FL_N8T(*dest);
+      FL_V_NXORC;  
+      }
+      //op_ror();
+      break;
+
+    case 0x3B:
+      {
+      REG_FLAGS = RD_ADDR(++REG_SP);
+      REG_B     = RD_ADDR(++REG_SP);
+      REG_A     = RD_ADDR(++REG_SP);
+      REG_X     = ((u_int16_t)RD_ADDR(++REG_SP) << 8);
+      REG_X    |= RD_ADDR(++REG_SP);
+      REG_PC    = ((u_int16_t)RD_ADDR(++REG_SP) << 8);
+      REG_PC   |= RD_ADDR(++REG_SP);
+
+      // Compensate for the increment of PC we always do
+      REG_PC--;
+      }
+      
+      //op_rti();
+      break;
+
+    case 0x39:
+      {
+      REG_PC    = ((u_int16_t)RD_ADDR(++REG_SP) << 8);
+      REG_PC   |= RD_ADDR(++REG_SP);
+
+      // Compensate for the increment of PC we always do
+      REG_PC--;
+      }
+      //op_rts();
+      break;
+
+    case 0x10:
+      {
+      u_int8_t add;
+      u_int8_t *dest;
+      u_int8_t before;
+
+      dest = &(REG_A);
+      add = REG_B;
+
+      before = *dest;
+  
+      // Special flag test
+      *dest -= add;
+      FL_V8T(*dest,add,before);
+      FL_ZT(*dest);
+      FL_N8T(*dest);
+      FL_C8T(*dest,add,before);
+      }
+      //op_sba();
+      break;
+
+    case 0x82:
+    case 0x92:
+    case 0xA2:
+    case 0xB2:
+    case 0xC2:
+    case 0xD2:
+    case 0xE2:
+    case 0xF2:
+      {
+      u_int8_t add;
+      u_int8_t *dest;
+      u_int8_t before;
+  
+      switch(opcode)
+	{
+	case 0x82:
+	  dest = &(REG_A);
+	  add = p1;
+	  INC_PC;
+	  break;
+      
+	case 0x92:
+	  dest = &(REG_A);
+	  add = RD_ADDR(p1);
+	  INC_PC;
+	  break;
+
+	case 0xB2:
+	  dest = &(REG_A);
+	  add = RD_ADDR(ADDR_WORD(p1,p2));
+	  INC_PC;
+	  INC_PC;
+	  break;
+
+	case 0xA2:
+	  dest = &(REG_A);
+	  add = RD_ADDR(REG_X+p1);
+	  INC_PC;
+	  break;
+
+	case 0xC2:
+	  dest = &(REG_B);
+	  add = p1;
+	  INC_PC;
+	  break;
+      
+	case 0xD2:
+	  dest = &(REG_B);
+	  add = RD_ADDR(p1);
+	  INC_PC;
+	  break;
+
+	case 0xF2:
+	  dest = &(REG_B);
+	  add = RD_ADDR(ADDR_WORD(p1,p2));
+	  INC_PC;
+	  INC_PC;
+	  break;
+
+	case 0xE2:
+	  dest = &(REG_B);
+	  add = RD_ADDR(REG_X+p1);
+	  INC_PC;
+	  break;
+	}
+
+      before = *dest;
+  
+      // Special flag test
+      (*dest) -= add + FL_C_0OR1;
+      FL_V8T(*dest,add,before);
+      FL_ZT(*dest);
+      FL_N8T(*dest);
+      FL_C8T(*dest,add,before);
+      }
+      //op_sbc();
+      break;
+
+    case 0x0D:
+      {
+      FL_C1;
+      }
+      //op_sec();
+      break;
+
+    case 0x0F:
+      {
+      FL_I1;
+      }
+      //op_sei();
+      break;
+
+    case 0x1A:
+      //op_slp();
+      break;
+
+    case 0x97:
+    case 0xA7:
+    case 0xB7:
+    case 0xD7:
+    case 0xE7:
+    case 0xF7:
+      {
+      u_int16_t dest;
+      u_int8_t  value;
+  
+      switch(opcode)
+	{
+	case 0x97:
+	  dest = p1;
+	  value = REG_A;
+	  INC_PC;
+	  break;
+      
+	case 0xB7:
+	  dest = p1;
+	  dest <<= 8;
+	  dest |= p2;
+	  value = REG_A;
+	  INC_PC;
+	  INC_PC;
+	  break;
+      
+	case 0xA7:
+	  dest = REG_X + p1;
+	  value = REG_A;
+	  INC_PC;
+	  break;
+
+	case 0xD7:
+	  dest = p1;
+	  value = REG_B;
+	  INC_PC;
+	  break;
+      
+	case 0xF7:
+	  dest = p1;
+	  dest <<= 8;
+	  dest |= p2;
+	  value = REG_B;
+	  INC_PC;
+	  INC_PC;
+	  break;
+      
+	case 0xE7:
+	  dest = REG_X + p1;
+	  value = REG_B;
+	  INC_PC;
+	  break;
+	}
+
+      WR_ADDR(dest, value);
+  
+      FL_V0;
+      FL_ZT(value);
+      FL_N8T(value);
+      }
+      //op_sta();
+      break;
+
+    case 0xDD:
+    case 0xED:
+    case 0xFD:
+      {
+      u_int16_t dest;
+      u_int16_t  value;
+  
+      switch(opcode)
+	{
+	case 0xDD:
+	  dest = p1;
+	  value = REG_D;
+	  INC_PC;
+	  break;
+      
+	case 0xFD:
+	  dest = p1;
+	  dest <<= 8;
+	  dest |= p2;
+	  value = REG_D;
+	  INC_PC;
+	  INC_PC;
+	  break;
+      
+	case 0xED:
+	  dest = REG_X + p1;
+	  value = REG_D;
+	  INC_PC;
+	  break;
+	}
+
+      WRW_ADDR(dest, value);
+  
+      FL_V0;
+      FL_ZT(value);
+      FL_N16T(value);
+      }
+      //op_std();
+      break;
+
+    case 0x9F:
+    case 0xAF:
+    case 0xBF:
+      {
+      u_int16_t dest;
+      u_int16_t  value;
+  
+      switch(opcode)
+	{
+	case 0x9F:
+	  dest = p1;
+	  value = REG_SP;
+	  INC_PC;
+	  break;
+      
+	case 0xBF:
+	  dest = p1;
+	  dest <<= 8;
+	  dest |= p2;
+	  value = REG_SP;
+	  INC_PC;
+	  INC_PC;
+	  break;
+      
+	case 0xAF:
+	  dest = REG_X + p1;
+	  value = REG_SP;
+	  INC_PC;
+	  break;
+	}
+
+      WRW_ADDR(dest, value);
+  
+      FL_V0;
+      FL_ZT(value);
+      FL_N16T(value);
+      }
+      
+      //op_sts();
+      break;
+
+    case 0xDF:
+    case 0xEF:
+    case 0xFF:
+      {
+      u_int16_t dest;
+      u_int16_t  value;
+  
+      switch(opcode)
+	{
+	case 0xDF:
+	  dest = p1;
+	  value = REG_X;
+	  INC_PC;
+	  break;
+      
+	case 0xFF:
+	  dest = p1;
+	  dest <<= 8;
+	  dest |= p2;
+	  value = REG_X;
+	  INC_PC;
+	  INC_PC;
+	  break;
+      
+	case 0xEF:
+	  dest = REG_X + p1;
+	  value = REG_X;
+	  INC_PC;
+	  break;
+	}
+
+      WRW_ADDR(dest, value);
+  
+      FL_V0;
+      FL_ZT(value);
+      FL_N16T(value);
+      }
+      //op_stx();
+      break;
+
+    case 0x80:
+    case 0x90:
+    case 0xA0:
+    case 0xB0:
+    case 0xC0:
+    case 0xD0:
+    case 0xE0:
+    case 0xF0:
+      {
+      u_int8_t add;
+      u_int8_t *dest;
+      u_int8_t before;
+  
+      switch(opcode)
+	{
+	case 0x80:
+	  dest = &(REG_A);
+	  add = p1;
+	  INC_PC;
+	  break;
+      
+	case 0x90:
+	  dest = &(REG_A);
+	  add = RD_ADDR(p1);
+	  INC_PC;
+	  break;
+
+	case 0xB0:
+	  dest = &(REG_A);
+	  add = RD_ADDR(ADDR_WORD(p1,p2));
+	  INC_PC;
+	  INC_PC;
+	  break;
+
+	case 0xA0:
+	  dest = &(REG_A);
+	  add = RD_ADDR(REG_X+p1);
+	  INC_PC;
+	  break;
+
+	case 0xC0:
+	  dest = &(REG_B);
+	  add = p1;
+	  INC_PC;
+	  break;
+      
+	case 0xD0:
+	  dest = &(REG_B);
+	  add = RD_ADDR(p1);
+	  INC_PC;
+	  break;
+
+	case 0xF0:
+	  dest = &(REG_B);
+	  add = RD_ADDR(ADDR_WORD(p1,p2));
+	  INC_PC;
+	  INC_PC;
+	  break;
+
+	case 0xE0:
+	  dest = &(REG_B);
+	  add = RD_ADDR(REG_X+p1);
+	  INC_PC;
+	  break;
+	}
+
+      before = *dest;
+  
+      // Special flag test
+      (*dest) -= add;
+      FL_V8T(*dest,add,before);
+      FL_ZT(*dest);
+      FL_N8T(*dest);
+      FL_C8T(*dest,add,before);
+      }
+      //op_sub();
+      break;
+      
+    case 0x83:
+    case 0x93:
+    case 0xA3:
+    case 0xB3:
+      {
+      u_int16_t  value;
+      u_int8_t   mh, ml;
+  
+      switch(opcode)
+	{
+	case 0x83:
+	  value = ADDR_WORD(p1,p2);
+	  INC_PC;
+	  INC_PC;
+	  break;
+      
+	case 0x93:
+	  value = ADDR_WORD(0,p1);
+	  mh = RD_ADDR(value+0);
+	  ml = RD_ADDR(value+1);
+	  value = ADDR_WORD(mh,ml);
+	  INC_PC;
+	  break;
+      
+	case 0xB3:
+	  value = ADDR_WORD(p1,p2);
+	  mh = RD_ADDR(value+0);
+	  ml = RD_ADDR(value+1);
+	  value = ADDR_WORD(mh,ml);
+	  INC_PC;
+	  INC_PC;
+	  break;
+
+	case 0xA3:
+	  value = REG_X + p1;
+	  mh = RD_ADDR(value+0);
+	  ml = RD_ADDR(value+1);
+	  value = ADDR_WORD(mh,ml);
+	  INC_PC;
+	  break;
+	}
+
+      // get the result
+      u_int16_t mval = value;
+  
+      value = REG_D - value;
+
+      FL_V16ST(value,mval,REG_D);
+      FL_C16ST(value,mval,REG_D);
+      FL_ZT(value);
+      FL_N16T(value);
+
+      // Write result to D
+      WRITE_REG_D(value);
+      }
+      
+      //op_subd();
+      break;
+
+    case 0x3F:
+      {
+      u_int8_t *dest;
+
+      // Push everything on to stack
+      WR_ADDR(REG_SP--, (REG_PC+1) & 0xFF);
+      WR_ADDR(REG_SP--, (REG_PC+1) >> 8);
+      WR_ADDR(REG_SP--, REG_X & 0xFF);
+      WR_ADDR(REG_SP--, REG_X >> 8);
+      WR_ADDR(REG_SP--, REG_A);
+      WR_ADDR(REG_SP--, REG_B);
+      WR_ADDR(REG_SP--, REG_FLAGS);
+
+      FL_I1;
+      u_int8_t h = RD_ADDR(0xFFFA);
+      u_int8_t l = RD_ADDR(0xFFFB);
+      u_int16_t hl = h;
+      hl <<= 8;
+      hl += l;
+      REG_PC = hl;
+  
+      // Decrement as there is an automatic increment by one
+      // for opcode skipping
+      REG_PC--;
+
+      // Display the SWi code
+      inst_length++;
+      }
+      
+      //op_swi();
+      break;
+
+    case 0x16:
+      {
+      REG_B = REG_A;
+      FL_V0;
+      FL_ZT(REG_B);
+      FL_N8T(REG_B);
+      }
+      //op_tab();
+      break;
+
+    case 0x06:
+      {
+      REG_FLAGS &= 0xC0;
+      REG_FLAGS |= (REG_A & 0x3F);
+      }
+      //op_tap();
+      break;
+
+    case 0x17:
+      {
+      REG_A = REG_B;
+      FL_V0;
+      FL_ZT(REG_A);
+      FL_N8T(REG_A);
+      }
+      //op_tba();
+      break;
+
+    case 0x6B:
+    case 0x7B:
+      {
+      u_int8_t result;
+  
+      switch(opcode)
+	{
+	case 0x6B:
+	  result = RD_ADDR(p2 + REG_X) & p1;
+	  break;
+
+	case 0x7B:
+	  result = RD_ADDR(p2) & p1;
+	  break;
+	}
+  
+      INC_PC;
+      INC_PC;
+
+      FL_V0;
+      FL_N8T(result);
+      FL_ZT(result);
+      }
+      //op_tim();
+      break;
+
+    case 0x07:
+      {
+      REG_A = REG_FLAGS;
+      }
+      //op_tpa();
+      break;
+
+    case 0x00:
+      {
+      u_int8_t *dest;
+
+#if TRACE_TO_TRAP
+      tracing_to = 0;
+#endif
+  
+      // Push everything on to stack
+      WR_ADDR(REG_SP--, (REG_PC+1) & 0xFF);
+      WR_ADDR(REG_SP--, (REG_PC+1) >> 8);
+      WR_ADDR(REG_SP--, REG_X & 0xFF);
+      WR_ADDR(REG_SP--, REG_X >> 8);
+      WR_ADDR(REG_SP--, REG_A);
+      WR_ADDR(REG_SP--, REG_B);
+      WR_ADDR(REG_SP--, REG_FLAGS);
+
+      FL_I1;
+      u_int8_t h = RD_ADDR(0xFFEE);
+      u_int8_t l = RD_ADDR(0xFFEF);
+      u_int16_t hl = h;
+      hl <<= 8;
+      hl += l;
+      REG_PC = hl;
+  
+      // Decrement as there is an automatic increment by one
+      // for opcode skipping
+      REG_PC--;
+      }
+
+      //op_trap();
+      break;
+
+    case 0x4D:
+    case 0x5D:
+    case 0x6D:
+    case 0x7D:
+      {
+      u_int8_t *dest;
+  
+      switch(opcode)
+	{
+	case 0x4D:
+	  dest = &(REG_A);
+	  break;
+      
+	case 0x5D:
+	  dest = &(REG_B);
+	  break;
+
+	case 0x7D:
+	  dest = REF_ADDR(ADDR_WORD(p1,p2));
+	  INC_PC;
+	  INC_PC;
+	  break;
+
+	case 0x6D:
+	  dest = REF_ADDR(REG_X+p1);
+	  INC_PC;
+	  break;
+	}
+  
+      // Special flag test
+      FL_V0;
+      FL_C0;
+
+      if(pstate.memory)
+	{
+	  int byte = RD_REF(pstate.memory_addr);
+	  pstate.memory = 0;
+	  FL_ZT(byte);
+	  FL_N8T(byte);
+	}
+      else
+	{
+	  FL_ZT(*dest);
+	  FL_N8T(*dest);
+	}
+      }
+      
+      //op_tst();
+      break;
+
+    case 0x30:
+      {
+      REG_X = REG_SP + 1;
+      }
+      //op_tsx();
+      break;
+
+    case 0x35:
+      {
+      REG_SP = REG_X - 1;
+      }
+
+      //op_txs();
+      break;
+
+    case 0x18:
+      {
+      u_int16_t temp;
+  
+      temp = REG_X;
+      REG_X = REG_D;
+      WRITE_REG_D(temp);
+      }
+      //op_xgdx();
+      break;
+    }
+
+#undef p1
+#undef p2
+
   
   // Skip past the opcode, longer instruction skip whatever they need to
   // in the opcode functions

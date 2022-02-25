@@ -198,4 +198,5 @@ void handle_cursor(void);
 void display_restore(void);
 void display_save(void);
 void handle_power_off(void);
-inline void loop_emulator(void);
+void loop_emulator(void);
+void WR_ADDR(u_int16_t addr, u_int8_t value);
