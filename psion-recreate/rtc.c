@@ -155,6 +155,8 @@ int read_seconds = 0;
 int read_minutes = 0;
 int read_hours = 0;
 int rtc_set_st = 0;
+int rtc_set_variables = 0;
+int rtc_set_registers = 0;
 
 int rtc_seconds = 0;
 int rtc_minutes = 0;
@@ -193,5 +195,23 @@ void rtc_tasks(void)
     {
       rtc_hours = read_mcp7940( MCP_RTCHOUR_REG);
       read_hours = 0;
+    }
+
+  // Update the Psion organiser time variables with the time from the RTC
+  if( rtc_set_variables )
+    {
+      ramdata[TMB_SECS] = read_mcp7940( MCP_RTCSEC_REG) & 0x7f;
+      ramdata[TMB_MINS] = read_mcp7940( MCP_RTCMIN_REG);
+      ramdata[TMB_HOUR] = read_mcp7940( MCP_RTCHOUR_REG);
+      rtc_set_variables = 0;
+    }
+
+  // Set the RTC registers to the current time variables
+  if( rtc_set_registers )
+    {
+      write_mcp7940( MCP_RTCSEC_REG, ramdata[TMB_SECS]);
+      write_mcp7940( MCP_RTCMIN_REG, ramdata[TMB_MINS]);
+      write_mcp7940( MCP_RTCHOUR_REG, ramdata[TMB_HOUR]);
+      rtc_set_registers = 0;
     }
 }

@@ -5,6 +5,9 @@ extern int read_seconds;
 extern int read_minutes;
 extern int read_hours;
 
+extern int rtc_set_variables;
+extern int rtc_set_registers;
+
 extern int rtc_seconds;
 extern int rtc_minutes;
 extern int rtc_hours;
