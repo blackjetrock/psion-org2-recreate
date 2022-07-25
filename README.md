@@ -42,7 +42,7 @@ Other Repositories
 
 PCB artwork is in other repositories. The 6303 emulatior is also in another repository.
 
-Unsupported Hardwre List
+Unsupported Hardware List
 ========================
 128K EPROM datapacks. No reading or writing.
 Flash datapacks. Not tested, but probably don't work for the same reason as the 128K EPROM datapacks.
