@@ -10,6 +10,7 @@
 #include "hardware/uart.h"
 
 #include "psion_recreate.h"
+#include "emulator.h"
 
 #include "rtc.h"
 
@@ -59,6 +60,7 @@ void write_mcp7940(int r, BYTE value)
 {
 #if NEW_I2C
   BYTE data[2] = {r, value};
+  data[1] = value;
   i2c_send_bytes(MCP_WRITE_ADDR, 2, data);
 #else
   Start();

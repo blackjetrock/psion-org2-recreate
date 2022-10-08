@@ -178,6 +178,13 @@ extern PROC6303_STATE pstate;
 //
 
 #define RTT_NUMB        0x20FF
+#define TMB_YEAR        0x20C5    // Current year, 0 - 99 (0 - 255 on LZ)
+#define TMB_MONS	0x20C6    // Current month, 0 - 11.
+#define TMB_DAYS	0x20C7    //Current date of month, 0 - 30.
+#define TMB_HOUR	0x20C8    //Current hour, 0 - 23.
+#define TMB_MINS	0x20C9    //Current minutes, 0 - 59.
+#define TMB_SECS	0x20CA    //Current seconds, 0 - 59.
+
 
 ////////////////////////////////////////////////////////////////////////////////
 

@@ -181,6 +181,174 @@ bs2_default/fast:
 	$(MAKE) $(MAKESILENT) -f pico-sdk/src/rp2_common/boot_stage2/CMakeFiles/bs2_default.dir/build.make pico-sdk/src/rp2_common/boot_stage2/CMakeFiles/bs2_default.dir/build
 .PHONY : bs2_default/fast
 
+display.obj: display.c.obj
+.PHONY : display.obj
+
+# target to build an object file
+display.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/display.c.obj
+.PHONY : display.c.obj
+
+display.i: display.c.i
+.PHONY : display.i
+
+# target to preprocess a source file
+display.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/display.c.i
+.PHONY : display.c.i
+
+display.s: display.c.s
+.PHONY : display.s
+
+# target to generate assembly for a file
+display.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/display.c.s
+.PHONY : display.c.s
+
+eeprom.obj: eeprom.c.obj
+.PHONY : eeprom.obj
+
+# target to build an object file
+eeprom.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/eeprom.c.obj
+.PHONY : eeprom.c.obj
+
+eeprom.i: eeprom.c.i
+.PHONY : eeprom.i
+
+# target to preprocess a source file
+eeprom.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/eeprom.c.i
+.PHONY : eeprom.c.i
+
+eeprom.s: eeprom.c.s
+.PHONY : eeprom.s
+
+# target to generate assembly for a file
+eeprom.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/eeprom.c.s
+.PHONY : eeprom.c.s
+
+emulator.obj: emulator.c.obj
+.PHONY : emulator.obj
+
+# target to build an object file
+emulator.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/emulator.c.obj
+.PHONY : emulator.c.obj
+
+emulator.i: emulator.c.i
+.PHONY : emulator.i
+
+# target to preprocess a source file
+emulator.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/emulator.c.i
+.PHONY : emulator.c.i
+
+emulator.s: emulator.c.s
+.PHONY : emulator.s
+
+# target to generate assembly for a file
+emulator.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/emulator.c.s
+.PHONY : emulator.c.s
+
+font.obj: font.c.obj
+.PHONY : font.obj
+
+# target to build an object file
+font.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/font.c.obj
+.PHONY : font.c.obj
+
+font.i: font.c.i
+.PHONY : font.i
+
+# target to preprocess a source file
+font.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/font.c.i
+.PHONY : font.c.i
+
+font.s: font.c.s
+.PHONY : font.s
+
+# target to generate assembly for a file
+font.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/font.c.s
+.PHONY : font.c.s
+
+i2c.obj: i2c.c.obj
+.PHONY : i2c.obj
+
+# target to build an object file
+i2c.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/i2c.c.obj
+.PHONY : i2c.c.obj
+
+i2c.i: i2c.c.i
+.PHONY : i2c.i
+
+# target to preprocess a source file
+i2c.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/i2c.c.i
+.PHONY : i2c.c.i
+
+i2c.s: i2c.c.s
+.PHONY : i2c.s
+
+# target to generate assembly for a file
+i2c.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/i2c.c.s
+.PHONY : i2c.c.s
+
+match.obj: match.c.obj
+.PHONY : match.obj
+
+# target to build an object file
+match.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/match.c.obj
+.PHONY : match.c.obj
+
+match.i: match.c.i
+.PHONY : match.i
+
+# target to preprocess a source file
+match.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/match.c.i
+.PHONY : match.c.i
+
+match.s: match.c.s
+.PHONY : match.s
+
+# target to generate assembly for a file
+match.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/match.c.s
+.PHONY : match.c.s
+
+menu.obj: menu.c.obj
+.PHONY : menu.obj
+
+# target to build an object file
+menu.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/menu.c.obj
+.PHONY : menu.c.obj
+
+menu.i: menu.c.i
+.PHONY : menu.i
+
+# target to preprocess a source file
+menu.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/menu.c.i
+.PHONY : menu.c.i
+
+menu.s: menu.c.s
+.PHONY : menu.s
+
+# target to generate assembly for a file
+menu.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/menu.c.s
+.PHONY : menu.c.s
+
 psion_recreate.obj: psion_recreate.c.obj
 .PHONY : psion_recreate.obj
 
@@ -204,6 +372,30 @@ psion_recreate.s: psion_recreate.c.s
 psion_recreate.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/psion_recreate.c.s
 .PHONY : psion_recreate.c.s
+
+rtc.obj: rtc.c.obj
+.PHONY : rtc.obj
+
+# target to build an object file
+rtc.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/rtc.c.obj
+.PHONY : rtc.c.obj
+
+rtc.i: rtc.c.i
+.PHONY : rtc.i
+
+# target to preprocess a source file
+rtc.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/rtc.c.i
+.PHONY : rtc.c.i
+
+rtc.s: rtc.c.s
+.PHONY : rtc.s
+
+# target to generate assembly for a file
+rtc.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/rtc.c.s
+.PHONY : rtc.c.s
 
 tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.obj: tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.obj
 .PHONY : tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.obj
@@ -1341,6 +1533,30 @@ tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_mem_ops/mem_ops_aeabi.S.
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_mem_ops/mem_ops_aeabi.S.obj
 .PHONY : tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_mem_ops/mem_ops_aeabi.S.obj
 
+tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.obj: tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.obj
+.PHONY : tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.obj
+
+# target to build an object file
+tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.obj
+.PHONY : tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.obj
+
+tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.i: tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.i
+.PHONY : tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.i
+
+# target to preprocess a source file
+tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.i
+.PHONY : tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.i
+
+tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.s: tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.s
+.PHONY : tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.s
+
+# target to generate assembly for a file
+tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.s
+.PHONY : tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.s
+
 tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_platform/platform.obj: tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_platform/platform.c.obj
 .PHONY : tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_platform/platform.obj
 
@@ -1637,6 +1853,30 @@ tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.s
 .PHONY : tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.s
 
+wireless.obj: wireless.c.obj
+.PHONY : wireless.obj
+
+# target to build an object file
+wireless.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/wireless.c.obj
+.PHONY : wireless.c.obj
+
+wireless.i: wireless.c.i
+.PHONY : wireless.i
+
+# target to preprocess a source file
+wireless.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/wireless.c.i
+.PHONY : wireless.c.i
+
+wireless.s: wireless.c.s
+.PHONY : wireless.s
+
+# target to generate assembly for a file
+wireless.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/wireless.c.s
+.PHONY : wireless.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -1650,9 +1890,33 @@ help:
 	@echo "... bs2_default_padded_checksummed_asm"
 	@echo "... bs2_default"
 	@echo "... psion_recreate"
+	@echo "... display.obj"
+	@echo "... display.i"
+	@echo "... display.s"
+	@echo "... eeprom.obj"
+	@echo "... eeprom.i"
+	@echo "... eeprom.s"
+	@echo "... emulator.obj"
+	@echo "... emulator.i"
+	@echo "... emulator.s"
+	@echo "... font.obj"
+	@echo "... font.i"
+	@echo "... font.s"
+	@echo "... i2c.obj"
+	@echo "... i2c.i"
+	@echo "... i2c.s"
+	@echo "... match.obj"
+	@echo "... match.i"
+	@echo "... match.s"
+	@echo "... menu.obj"
+	@echo "... menu.i"
+	@echo "... menu.s"
 	@echo "... psion_recreate.obj"
 	@echo "... psion_recreate.i"
 	@echo "... psion_recreate.s"
+	@echo "... rtc.obj"
+	@echo "... rtc.i"
+	@echo "... rtc.s"
 	@echo "... tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.obj"
 	@echo "... tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.i"
 	@echo "... tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.s"
@@ -1795,6 +2059,9 @@ help:
 	@echo "... tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_malloc/pico_malloc.i"
 	@echo "... tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_malloc/pico_malloc.s"
 	@echo "... tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_mem_ops/mem_ops_aeabi.obj"
+	@echo "... tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.obj"
+	@echo "... tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.i"
+	@echo "... tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.s"
 	@echo "... tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_platform/platform.obj"
 	@echo "... tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_platform/platform.i"
 	@echo "... tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_platform/platform.s"
@@ -1832,6 +2099,9 @@ help:
 	@echo "... tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.obj"
 	@echo "... tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.i"
 	@echo "... tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.s"
+	@echo "... wireless.obj"
+	@echo "... wireless.i"
+	@echo "... wireless.s"
 .PHONY : help
 
 

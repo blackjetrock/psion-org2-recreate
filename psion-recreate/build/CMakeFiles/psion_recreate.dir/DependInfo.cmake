@@ -41,6 +41,7 @@ set(CMAKE_TARGET_DEFINITIONS_ASM
   "LIB_PICO_MALLOC=1"
   "LIB_PICO_MEM_OPS=1"
   "LIB_PICO_MEM_OPS_PICO=1"
+  "LIB_PICO_MULTICORE=1"
   "LIB_PICO_PLATFORM=1"
   "LIB_PICO_PRINTF=1"
   "LIB_PICO_PRINTF_PICO=1"
@@ -116,11 +117,20 @@ set(CMAKE_ASM_TARGET_INCLUDE_PATH
   "/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_fix/rp2040_usb_device_enumeration/include"
   "/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_unique_id/include"
   "/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_flash/include"
+  "/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/include"
   )
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/tree/downloaded_tools/pico/psion-recreate/display.c" "CMakeFiles/psion_recreate.dir/display.c.obj" "gcc" "CMakeFiles/psion_recreate.dir/display.c.obj.d"
+  "/tree/downloaded_tools/pico/psion-recreate/eeprom.c" "CMakeFiles/psion_recreate.dir/eeprom.c.obj" "gcc" "CMakeFiles/psion_recreate.dir/eeprom.c.obj.d"
+  "/tree/downloaded_tools/pico/psion-recreate/emulator.c" "CMakeFiles/psion_recreate.dir/emulator.c.obj" "gcc" "CMakeFiles/psion_recreate.dir/emulator.c.obj.d"
+  "/tree/downloaded_tools/pico/psion-recreate/font.c" "CMakeFiles/psion_recreate.dir/font.c.obj" "gcc" "CMakeFiles/psion_recreate.dir/font.c.obj.d"
+  "/tree/downloaded_tools/pico/psion-recreate/i2c.c" "CMakeFiles/psion_recreate.dir/i2c.c.obj" "gcc" "CMakeFiles/psion_recreate.dir/i2c.c.obj.d"
+  "/tree/downloaded_tools/pico/psion-recreate/match.c" "CMakeFiles/psion_recreate.dir/match.c.obj" "gcc" "CMakeFiles/psion_recreate.dir/match.c.obj.d"
+  "/tree/downloaded_tools/pico/psion-recreate/menu.c" "CMakeFiles/psion_recreate.dir/menu.c.obj" "gcc" "CMakeFiles/psion_recreate.dir/menu.c.obj.d"
   "/tree/downloaded_tools/pico/psion-recreate/psion_recreate.c" "CMakeFiles/psion_recreate.dir/psion_recreate.c.obj" "gcc" "CMakeFiles/psion_recreate.dir/psion_recreate.c.obj.d"
+  "/tree/downloaded_tools/pico/psion-recreate/rtc.c" "CMakeFiles/psion_recreate.dir/rtc.c.obj" "gcc" "CMakeFiles/psion_recreate.dir/rtc.c.obj.d"
   "/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c" "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.obj" "gcc" "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.obj.d"
   "/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c" "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj" "gcc" "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj.d"
   "/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_device.c" "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_device.c.obj" "gcc" "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_device.c.obj.d"
@@ -165,6 +175,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_init_rom.c" "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_init_rom.c.obj" "gcc" "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_init_rom.c.obj.d"
   "/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_math.c" "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_math.c.obj" "gcc" "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_math.c.obj.d"
   "/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_malloc/pico_malloc.c" "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_malloc/pico_malloc.c.obj" "gcc" "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_malloc/pico_malloc.c.obj.d"
+  "/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c" "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.obj" "gcc" "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.obj.d"
   "/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_platform/platform.c" "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_platform/platform.c.obj" "gcc" "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_platform/platform.c.obj.d"
   "/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_printf/printf.c" "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_printf/printf.c.obj" "gcc" "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_printf/printf.c.obj.d"
   "/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_runtime/runtime.c" "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj" "gcc" "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj.d"
@@ -176,6 +187,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c" "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj" "gcc" "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj.d"
   "/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c" "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c.obj" "gcc" "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c.obj.d"
   "/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c" "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.obj" "gcc" "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.obj.d"
+  "/tree/downloaded_tools/pico/psion-recreate/wireless.c" "CMakeFiles/psion_recreate.dir/wireless.c.obj" "gcc" "CMakeFiles/psion_recreate.dir/wireless.c.obj.d"
   "/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_standard_link/new_delete.cpp" "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_standard_link/new_delete.cpp.obj" "gcc" "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_standard_link/new_delete.cpp.obj.d"
   )
 

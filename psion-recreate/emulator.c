@@ -21,7 +21,22 @@
 #include "eeprom.h"
 #include "menu.h"
 #include "i2c.h"
+#include "rtc.h"
 
+////////////////////////////////////////////////////////////////////////////////
+//
+// The SVPP rail can be in one of three states :-
+//
+//      -  OV if the PACON_B is high and the slots are switched off
+//
+//      -  4.5 volts when PACON_B is low, fed by the forward  diode  D2  from
+//         the SVCC rail
+//
+//      -  21 volts when the SVPP regulator is switched on.
+//
+// PACON_B    is bit 7, port 6
+// POB_PORT6  is bit 3, port 6
+//
 ////////////////////////////////////////////////////////////////////////////////
 
 FLAG_DATA  flag_data[] =
@@ -206,6 +221,12 @@ u_int8_t ramdata[RAM_SIZE];
 void handle_power_off(void)
 {
 #if ALLOW_POWER_OFF
+
+  // Store time in RC
+  rtc_set_registers = 1;
+
+  // Wait for RTC to update
+  sleep_ms(500);
   
   // Turn power off
   gpio_put(PIN_VBAT_SW_ON, 0);
@@ -5129,7 +5150,7 @@ uint p6pin[] =
    PIN_SS2,       // Out of order due to PCB layout
    PIN_SS1,
    PIN_SS3,
-   PIN_5V_ON,     // HIGH=5V on slots
+   PIN_5V_ON,     // HIGH=5V on slots (PACON)
   };
 
 u_int8_t port6_shadow = 0;
@@ -5139,7 +5160,17 @@ u_int8_t read_port6(void)
   return(port6_shadow);
 }
 
-void write_port6(u_int8_t value)
+////////////////////////////////////////////////////////////////////////////////
+//
+// Port 6. Bits 7 to 0 are labelled PACON, CS3, CS2, CS1, OE, PGM, MR, CLK.
+//
+// Some bits of port 6 are implemented as GPIOs on the Pico. Some are
+// 'pseudo' pins and are on a latch that is accessed using a serial data
+// stream.
+//
+////////////////////////////////////////////////////////////////////////////////
+
+  void write_port6(u_int8_t value)
 {
   port6_shadow = value;
   
@@ -5165,7 +5196,9 @@ void write_port6(u_int8_t value)
 	  switch(p6pin[i] )
 	    {
 	    case PIN_5V_ON:
-	      // Invert signal
+	      // Invert signal, as there is an inversion in the
+	      // hardware that supplies power to the slot.
+	      
 	      //latchout2_shadow &= ~LAT2PIN_MASK_5V_ON;
 	      if( !(value & 1) )
 		{
@@ -5242,6 +5275,7 @@ void write_port6(u_int8_t value)
 }
 
 // When port 6 is set to inputs, we have to take the SSn lines high
+// No need to disable the latch that the SS lines come from, though
 
 void port6_ddr(int value)
 {
@@ -5320,7 +5354,7 @@ void port6_ddr(int value)
 // Memory reference read
 //
 
-inline u_int8_t RD_REF(u_int16_t addr)
+u_int8_t RD_REF(u_int16_t addr)
 {
   int p5reg;
   
@@ -6873,6 +6907,9 @@ void initialise_emulator(void)
   // Top two bits of flags are 1
   // I is set and H may be
   REG_FLAGS = 0xf1;
+
+  // Temporary, maybe. Force latch to be enabled.
+  latch2_clear_mask(LAT2PIN_MASK_SD_OE);
   
   // No key pressed
 
@@ -6915,6 +6952,9 @@ void after_ram_restore_init(void)
   
   RAMDATA_FIX(P5_DATA) &= ~0x02;
   sca_counter = 0;
+
+  // We now read the RTC and set up the time variables
+  rtc_set_variables = 1;
 }
 
 u_int8_t opcode;

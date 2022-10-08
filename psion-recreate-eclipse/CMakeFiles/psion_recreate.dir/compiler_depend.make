@@ -242,7 +242,8 @@ CMakeFiles/psion_recreate.dir/emulator.c.obj: /tree/downloaded_tools/pico/psion-
   /tree/downloaded_tools/pico/psion-recreate/wireless.h \
   /tree/downloaded_tools/pico/psion-recreate/eeprom.h \
   /tree/downloaded_tools/pico/psion-recreate/menu.h \
-  /tree/downloaded_tools/pico/psion-recreate/i2c.h
+  /tree/downloaded_tools/pico/psion-recreate/i2c.h \
+  /tree/downloaded_tools/pico/psion-recreate/rtc.h
 
 CMakeFiles/psion_recreate.dir/font.c.obj: /tree/downloaded_tools/pico/psion-recreate/font.c \
   /usr/include/newlib/ctype.h \
@@ -487,7 +488,8 @@ CMakeFiles/psion_recreate.dir/menu.c.obj: /tree/downloaded_tools/pico/psion-recr
   /tree/downloaded_tools/pico/psion-recreate/font.h \
   /tree/downloaded_tools/pico/psion-recreate/menu.h \
   /tree/downloaded_tools/pico/psion-recreate/emulator.h \
-  /tree/downloaded_tools/pico/psion-recreate/eeprom.h
+  /tree/downloaded_tools/pico/psion-recreate/eeprom.h \
+  /tree/downloaded_tools/pico/psion-recreate/rtc.h
 
 CMakeFiles/psion_recreate.dir/psion_recreate.c.obj: /tree/downloaded_tools/pico/psion-recreate/psion_recreate.c \
   /usr/include/newlib/stdio.h \
@@ -653,6 +655,7 @@ CMakeFiles/psion_recreate.dir/rtc.c.obj: /tree/downloaded_tools/pico/psion-recre
   /tree/downloaded_tools/pico/psion-recreate/psion_recreate.h \
   /tree/downloaded_tools/pico/psion-recreate/match.h \
   /tree/downloaded_tools/pico/psion-recreate/font.h \
+  /tree/downloaded_tools/pico/psion-recreate/emulator.h \
   /tree/downloaded_tools/pico/psion-recreate/rtc.h
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.obj: /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c \
@@ -3781,6 +3784,12 @@ generated/pico_base/pico/version.h:
 
 /tree/downloaded_tools/pico/psion-recreate/menu.h:
 
+/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_resets/include/hardware/resets.h:
+
+/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_rt_device.c:
+
+/tree/downloaded_tools/pico/psion-recreate/rtc.h:
+
 /tree/downloaded_tools/pico/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/timer.h:
 
 /tree/downloaded_tools/pico/psion-recreate/font.c:
@@ -3794,12 +3803,6 @@ generated/pico_base/pico/version.h:
 /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/common/tusb_common.h:
 
 /tree/downloaded_tools/pico/psion-recreate/menu.c:
-
-/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_resets/include/hardware/resets.h:
-
-/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_rt_device.c:
-
-/tree/downloaded_tools/pico/psion-recreate/rtc.h:
 
 /tree/downloaded_tools/pico/pico-sdk/src/common/pico_base/include/pico/config.h:
 

@@ -53,4 +53,22 @@ CMakeFiles/psion_recreate.dir/psion_recreate.c.obj: \
  /tree/downloaded_tools/pico/pico-sdk/src/common/pico_binary_info/include/pico/binary_info.h \
  /tree/downloaded_tools/pico/pico-sdk/src/common/pico_binary_info/include/pico/binary_info/defs.h \
  /tree/downloaded_tools/pico/pico-sdk/src/common/pico_binary_info/include/pico/binary_info/structure.h \
- /tree/downloaded_tools/pico/pico-sdk/src/common/pico_binary_info/include/pico/binary_info/code.h
+ /tree/downloaded_tools/pico/pico-sdk/src/common/pico_binary_info/include/pico/binary_info/code.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/include/pico/multicore.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/include/pico/sync.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/include/pico/sem.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/include/pico/lock_core.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_sync/include/hardware/sync.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/include/pico/mutex.h \
+ /tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/include/pico/critical_section.h \
+ /tree/downloaded_tools/pico/psion-recreate/psion_recreate.h \
+ /tree/downloaded_tools/pico/psion-recreate/match.h \
+ /usr/include/newlib/ctype.h /usr/include/newlib/sys/_locale.h \
+ /usr/include/newlib/stdlib.h /usr/include/newlib/machine/stdlib.h \
+ /usr/include/newlib/alloca.h \
+ /tree/downloaded_tools/pico/psion-recreate/font.h \
+ /tree/downloaded_tools/pico/psion-recreate/emulator.h \
+ /tree/downloaded_tools/pico/psion-recreate/wireless.h \
+ /tree/downloaded_tools/pico/psion-recreate/eeprom.h \
+ /tree/downloaded_tools/pico/psion-recreate/menu.h \
+ /tree/downloaded_tools/pico/psion-recreate/rtc.h

@@ -685,7 +685,7 @@ int main() {
 	  {
 	  }
       }
-    
+
     // Main loop
     while(1)
       {

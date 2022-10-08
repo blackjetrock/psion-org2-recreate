@@ -37,6 +37,7 @@ extern int gotkey;        // We have a key
 
 extern MENU menu_top;
 extern MENU menu_eeprom;
+extern MENU menu_rtc;
 
 void check_menu_launch(void);
 void scan_keys(void);

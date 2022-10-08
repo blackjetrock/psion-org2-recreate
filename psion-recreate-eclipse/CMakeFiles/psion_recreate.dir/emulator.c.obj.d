@@ -68,4 +68,5 @@ CMakeFiles/psion_recreate.dir/emulator.c.obj: \
  /tree/downloaded_tools/pico/psion-recreate/wireless.h \
  /tree/downloaded_tools/pico/psion-recreate/eeprom.h \
  /tree/downloaded_tools/pico/psion-recreate/menu.h \
- /tree/downloaded_tools/pico/psion-recreate/i2c.h
+ /tree/downloaded_tools/pico/psion-recreate/i2c.h \
+ /tree/downloaded_tools/pico/psion-recreate/rtc.h

@@ -53,8 +53,8 @@ extern int model;
                                    // If 0 then sit in a loop on power off so
                                    // we can debug where the request to turn
                                    // off came from
-#define WIFI                 0
-#define BLUETOOTH            1     // Enable bluetooth comms
+#define WIFI                 1
+#define BLUETOOTH            0     // Enable bluetooth comms
 #define BLUETOOTH_M          0     // Operate BT in master mode
 #define BLUETOOTH_S          1     // Operate BT in slave mode
 

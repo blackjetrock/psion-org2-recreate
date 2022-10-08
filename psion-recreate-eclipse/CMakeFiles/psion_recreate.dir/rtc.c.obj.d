@@ -57,4 +57,5 @@ CMakeFiles/psion_recreate.dir/rtc.c.obj: \
  /tree/downloaded_tools/pico/psion-recreate/psion_recreate.h \
  /tree/downloaded_tools/pico/psion-recreate/match.h \
  /tree/downloaded_tools/pico/psion-recreate/font.h \
+ /tree/downloaded_tools/pico/psion-recreate/emulator.h \
  /tree/downloaded_tools/pico/psion-recreate/rtc.h

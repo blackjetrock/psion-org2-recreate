@@ -27,6 +27,7 @@
 #include "menu.h"
 #include "emulator.h"
 #include "eeprom.h"
+#include "rtc.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -244,6 +245,12 @@ void init_menu_eeprom(void)
   //printxy_str(0, 0, "EEPROM");
 }
 
+void init_menu_rtc(void)
+{
+  //display_clear();
+  //printxy_str(0, 0, "EEPROM");
+}
+
 void init_menu_mems(void)
 {
   //display_clear();
@@ -280,6 +287,11 @@ void menu_goto_eeprom(void)
 void menu_goto_mems(void)
 {
   goto_menu(&menu_mems);
+}
+
+void menu_goto_rtc(void)
+{
+  goto_menu(&menu_rtc);
 }
 
 
@@ -389,6 +401,22 @@ void menu_eeprom_extract_mems(void)
 
   // Write it to saved memory slot 0
   write_eeprom(EEPROM_1_ADDR_WR,  EEPROM_OFF_SAVED_MEMS_0_START, EEPROM_LEN_COPY_MEMS, mems);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// RTC
+//
+//
+
+void menu_rtc_varset(void)
+{
+  rtc_set_variables = 1;
+}
+
+void menu_rtc_regset(void)
+{
+  rtc_set_registers = 1;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -533,6 +561,7 @@ MENU menu_top =
     {'K', "Keytest",    menu_scan_test},
     {'I', "Instantoff", menu_instant_off},
     {'E', "Eeprom",     menu_goto_eeprom},
+    {'R', "RTC",        menu_goto_rtc},
     {'&', "",           menu_null},
    }
   };
@@ -546,6 +575,19 @@ MENU menu_eeprom =
     {'o', "",           menu_back},
     {'I', "Invalidate", menu_eeprom_invalidate},
     {'M', "Mem",        menu_goto_mems},
+    {'&', "",           menu_null},
+   }
+  };
+
+MENU menu_rtc =
+  {
+   &menu_top,
+   "RTC",
+   init_menu_rtc,   
+   {
+    {'o', "",           menu_back},
+    {'V', "VarSet",     menu_rtc_varset},
+    {'R', "RegSet",     menu_rtc_regset},
     {'&', "",           menu_null},
    }
   };

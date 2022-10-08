@@ -61,6 +61,22 @@ uint16_t csum_calc_on_restore = 0;
 uint16_t csum_in_eeprom       = 0;
 uint16_t csum_calc_on_dump    = 0;
 
+#if TRACE_ADDR
+    // Trace a number of execution addresses
+    int tracing            = 0;
+    u_int16_t trigger_addr = 0x7ed3;
+    int addr_trace_i       = 0;
+
+    // Trace from a trigger address until trace full
+    volatile u_int16_t addr_trace_from[NUM_ADDR_TRACE];
+
+    // Trace continuously until trigger address seen
+    u_int16_t trace_stop_addr = 0xffee;
+    volatile u_int16_t addr_trace_to[NUM_ADDR_TRACE];
+    int addr_trace_to_i       = 0;
+    int tracing_to            = 1;
+#endif
+
 void latch2_set_mask(int value)
 {
     if( latch2_shadow == 0x2009 )
@@ -647,21 +663,6 @@ int main() {
     
 #endif
 
-#if TRACE_ADDR
-    // Trace a number of execution addresses
-    int tracing            = 0;
-    u_int16_t trigger_addr = 0x7ed3;
-    int addr_trace_i       = 0;
-
-    // Trace from a trigger address until trace full
-    volatile u_int16_t addr_trace_from[NUM_ADDR_TRACE];
-
-    // Trace continuously until trigger address seen
-    u_int16_t trace_stop_addr = 0x7ed3;
-    volatile u_int16_t addr_trace_to[NUM_ADDR_TRACE];
-    int addr_trace_to_i       = 0;
-    int tracing_to            = 1;
-#endif
 
     // Before we start the emulator and sit in the emulation loop we
     // scan the keyboard for a while. This allows entry into the
@@ -684,6 +685,9 @@ int main() {
 	  {
 	  }
       }
+
+    // Set up clock from RTC ic
+    rtc_set_variables = 1;
     
     // Main loop
     while(1)
@@ -705,7 +709,8 @@ int main() {
 	  {
 	    tracing_to = 0;
 	  }
-	
+
+
 	if( tracing_to )
 	  {
 	    addr_trace_to[addr_trace_to_i++] = REG_PC;
