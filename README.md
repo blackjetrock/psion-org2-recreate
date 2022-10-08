@@ -11,7 +11,7 @@ The PCBs fit into the original organiser 2 case.
 EPROM datapack programming
 ==========================
 
-The original power PCB does not have a VPP supply as I didn't want to support programming of the EPROM datapacks. To do that would require the emulated code to run at a speed that exactly matched that of the original organiser, at least during the time that the programming pulses are being generated. Because of this I subsequently found that some datapacks have a regulator that takes the 21V VPP signal and turns it into a 5V signal. This is used, it appears, for the control of the page register on 128K EPROM datapacks. (At least the 27011 based packs). So the first pair of PCBs will not support the 128K EPROM datapacks. They will also not support any other datapacks that have a regulator on board, which seems ot include flash datapacks. I don't have any flash datapacks so can't test that.
+The original power PCB does not have a VPP supply as I didn't want to support programming of the EPROM datapacks. To do that would require the emulated code to run at a speed that exactly matched that of the original organiser, at least during the time that the programming pulses are being generated. Because of this I subsequently found that some datapacks have a regulator that takes the 21V VPP signal and turns it into a 5V signal. This is used, it appears, for the control of the page register on 128K EPROM datapacks. (At least the 27011 based packs). So the first pair of PCBs will not support the 128K EPROM datapacks. They will also not support any other datapacks that have a regulator on board, which includes flash datapacks.
 
 Datapacks that Use Vpp
 ======================
@@ -42,7 +42,7 @@ Other Repositories
 
 PCB artwork is in other repositories. The 6303 emulatior is also in another repository.
 
-Unsupported Hardwre List
+Unsupported Hardware List
 ========================
 128K EPROM datapacks. No reading or writing.
 Flash datapacks. Not tested, but probably don't work for the same reason as the 128K EPROM datapacks.
