@@ -3,7 +3,7 @@
 
 # Relative path conversion top directories.
 set(CMAKE_RELATIVE_PATH_TOP_SOURCE "/tree/downloaded_tools/pico/pico-sdk")
-set(CMAKE_RELATIVE_PATH_TOP_BINARY "/tree/downloaded_tools/pico/psion-recreate/build")
+set(CMAKE_RELATIVE_PATH_TOP_BINARY "/tree/projects/github/psion-org2-recreate/psion-recreate/build")
 
 # Force unix paths in dependencies.
 set(CMAKE_FORCE_UNIX_PATHS 1)

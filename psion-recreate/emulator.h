@@ -122,8 +122,10 @@ extern PROC6303_STATE pstate;
 
 #define SWITCH_OFF     0x01c0
 
-#define BUZZER_ON      0x0280
-#define BUZZER_OFF     0x02c0
+#define SCA_PULSE_ENABLE  0x0200
+#define SCA_PULSE_DISABLE 0x0240
+#define SCA_ALARM_HIGH    0x0280
+#define SCA_ALARM_LOW     0x02c0
 
 #define TURN_BUZZER_ON  latch2_set_mask( LAT2PIN_MASK_BUZZER)
 #define TURN_BUZZER_OFF latch2_clear_mask( LAT2PIN_MASK_BUZZER)

@@ -140,18 +140,20 @@ void write_595(const uint latchpin, int value, int n);
 #define LAT1PIN_MASK_K7        0x40
 #define LAT1PIN_MASK_OLED_RES  0x80
 
-#define LAT2PIN_MASK_DRV_HV    0x0001
-#define LAT2PIN_MASK_ESP_ON    0x0002
-#define LAT2PIN_MASK_BUZZER    0x0004
-#define LAT2PIN_MASK_5V_ON     0x0008
-#define LAT2PIN_MASK_P_SPGM    0x0010
-#define LAT2PIN_MASK_VBSW_ON   0x0020
-#define LAT2PIN_MASK_SD_OE     0x0040
-#define LAT2PIN_MASK_SC_OE     0x0080
+#define LAT2PIN_MASK_DRV_HV             0x0001
+#define LAT2PIN_MASK_ESP_ON             0x0002
+#define LAT2PIN_MASK_BUZZER             0x0004
+#define LAT2PIN_MASK_5V_ON              0x0008
+#define LAT2PIN_MASK_P_SPGM             0x0010
+#define LAT2PIN_MASK_VBSW_ON            0x0020
+#define LAT2PIN_MASK_SD_OE              0x0040
+#define LAT2PIN_MASK_SC_OE              0x0080
 
-#define LAT2PIN_MASK_SS1       0x0800
-#define LAT2PIN_MASK_SS2       0x1000
-#define LAT2PIN_MASK_SS3       0x2000
+#define LAT2PIN_MASK_VPP_ON             0x0100
+#define LAT2PIN_MASK_VPP_VOLT_SELECT    0x0200
+#define LAT2PIN_MASK_SS1                0x0800
+#define LAT2PIN_MASK_SS2                0x1000
+#define LAT2PIN_MASK_SS3                0x2000
 
 #define MAX_DDRAM 0xFF
 #define MAX_CGRAM (5*16)

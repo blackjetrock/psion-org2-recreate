@@ -179,7 +179,7 @@ void on_uart_rx()
   int np = 0;
   
   irq_count++;
-  
+
   if( !uart_is_readable(UART_ID) )
     {
       irq_no_char++;
@@ -197,6 +197,7 @@ void on_uart_rx()
 	  irq_text_in_ptr = (np % INTERRUPT_TEXT_SIZE);
 	}
     }
+  
 
   if( uart_is_readable(UART_ID) )
     {

@@ -7,7 +7,7 @@
 set ::EMBED_COMMENT_START "// ASSEMBLER_EMBEDDED_CODE_START"
 set ::EMBED_COMMENT_END   "// ASSEMBLER_EMBEDDED_CODE_END"
 
-# The name of the rom file is th eonly argument.
+# The name of the rom file is the only argument.
 #
 
 set rom_filename       [lindex $argv 0]

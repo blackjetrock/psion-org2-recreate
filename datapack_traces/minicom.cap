@@ -1,0 +1,147 @@
+þüCURRENT SETUP
+
+Clock selected : INTERNAL               Internal clock : 2us  (500KHz)
+External clocks :
+                Clock 1 : POSITIVE      Qualifier :   OFF   
+                Clock 2 :   OFF         Qualifier :   OFF   
+                Clock 3 :   OFF         Qualifier :   OFF   
+TRIGGER SETUP 
+               Trigger type   : SIMPLE 
+               Trigger filter : 0FF
+               Pre trig delay : OFF
+
+TRIGGER CONDITIONS
+          CLK PGM SS  SMR SOE VCCSDATA     
+          BIN BIN BIN BIN BIN BIN HEX
+Trig wrd: X   X   0   X   X   X   XX       
+Trace   : X   X   X   X   X   X   XX       
+Trigger position is ( START ) of store
+
+CURRENT SETUP
+
+Clock selected : INTERNAL               Internal clock : 2us  (500KHz)
+External clocks :
+                Clock 1 : POSITIVE      Qualifier :   OFF   
+                Clock 2 :   OFF         Qualifier :   OFF   
+                Clock 3 :   OFF         Qualifier :   OFF   
+TRIGGER SETUP 
+               Trigger type   : SIMPLE 
+               Trigger filter : 0FF
+               Pre trig delay : OFF
+
+TRIGGER CONDITIONS
+          CLK PGM SS  SMR SOE VCCSDATA     
+          BIN BIN BIN BIN BIN BIN HEX
+Trig wrd: X   X   0   X   X   X   XX       
+Trace   : X   X   X   X   X   X   XX       
+Trigger position is ( START ) of store
+
+ STATE LISTING OF AQU MEM  
+  POS     CLK PGM SS  SMR SOE VCCSDATA     
+ 0000 T   0   1   0   0   0   1   7A                                          
+ 0001     0   1   0   0   0   1   7A                                          
+ 0002     0   1   0   0   0   1   7A                                          
+ 0003     0   1   0   0   0   1   7A                                          
+ 0004     0   1   0   0   0   1   7A                                          
+ 0005     0   1   0   0   0   1   7A                                          
+ 0006     0   1   0   0   0   1   7A                                          
+ 0007     0   1   0   0   0   1   7A                                          
+ 0008     0   1   0   0   0   1   7A                                          
+ 0009     0   1   0   0   0   1   7A                                          
+ 0010     0   1   0   0   0   1   7A                                          
+ 0011     0   1   0   0   0   1   7A                                          
+ 0012     0   1   0   0   0   1   7A                                          
+ 0013     0   1   0   0   0   1   7A                                          
+ 0014     0   1   0   0   0   1   7A                                          
+ 0015     0   1   0   0   0   1   7A                                          
+ 0016     0   1   0   0   0   1   7A                                          
+ 0017     0   1   0   0   0   1   7A                                          
+ 0018     0   1   0   0   0   1   7A                                          
+ 0019     0   1   0   0   0   1   7A                                          
+ 0020     0   1   0   0   0   1   7A                                          
+ 0021     0   1   0   0   0   1   7A                                          
+ 0022     0   1   0   0   0   1   7A                                          
+ 0023     0   1   0   0   0   1   7A                                          
+ 0024     0   1   0   0   0   1   7A                                          
+ 0025     0   1   0   0   0   1   7A                                          
+ 0026     0   1   0   0   0   1   7A                                          
+ 0027     0   1   0   0   0   1   7A                                          
+ 0028     0   1   0   0   0   1   7A                                          
+ 0029     0   1   0   0   0   1   7A                                          
+ 0030     0   1   0   0   0   1   7A                                          
+ 0031     0   1   1   0   0   1   7A                                          
+ 0032     0   1   1   0   0   1   7A                                          
+ 0033     0   1   1   0   0   1   4A                                          
+ 0034     0   1   1   0   0   1   00                                          
+ 0035     0   1   1   1   1   1   00                                          
+ 0036     0   1   1   1   1   1   00                                          
+ 0037     0   1   1   1   1   1   00                                          
+ 0038     0   1   1   1   1   1   00                                          
+ 0039     0   1   1   1   1   1   00                                          
+ 0040     0   1   1   1   1   1   00                                          
+ 0041     0   1   1   1   1   1   00                                          
+ 0042     0   1   1   1   1   1   00                                          
+ 0043     0   1   1   1   1   1   00                                          
+ 0044     0   1   1   1   1   1   00                                          
+ 0045     0   1   1   1   1   1   00                                          
+ 0046     0   1   1   1   1   1   00                                          
+ 0047     0   1   0   1   1   1   00                                          
+ 0048     0   1   0   1   1   1   00                                          
+ 0049     0   1   0   1   1   1   00                                          
+ 0050     0   1   0   1   1   1   00                                          
+ 0051     0   1   0   1   1   1   00                                          
+ 0052     0   1   0   1   1   1   00                                          
+ 0053     0   1   0   1   1   1   00                                          
+ 0054     0   1   1   1   1   1   00                                          
+ 0055     0   1   1   1   1   1   00                                          
+ 0056     0   1   1   1   1   1   00                                          
+ 0057     0   1   1   1   1   1   00                                          
+ 0058     0   1   1   1   1   1   00                                          
+ 0059     0   1   1   1   1   1   00                                          
+ 0060     0   1   1   1   0   1   00                                          
+ 0061     0   1   1   1   0   1   00                                          
+ 0062     0   1   1   1   0   1   00                                          
+ 0063     0   1   1   1   0   1   00                                          
+ 0064     0   1   1   1   0   1   00                                          
+ 0065     0   1   0   1   0   1   7A                                          
+ 0066     0   1   0   1   0   1   7A                                          
+ 0067     0   1   0   1   0   1   7A                                          
+ 0068     0   1   0   1   0   1   7A                                          
+ 0069     0   1   0   1   0   1   7A                                          
+ 0070     0   1   1   1   0   1   7A                                          
+ 0071     0   1   1   1   0   1   5A                                          
+ 0072     0   1   1   1   0   1   02                                          
+ 0073     0   1   1   1   0   1   00                                          
+ 0074     0   1   1   1   0   1   00                                          
+ 0075     0   1   1   0   0   1   00                                          
+ 0076     0   1   1   0   0   1   00                                          
+ 0077     0   1   1   0   0   1   00                                          
+ 0078     0   1   0   0   0   1   7A                                          
+ 0079     0   1   0   0   0   1   7A                                          
+ 0080     0   1   0   0   0   1   7A                                          
+ 0081     0   1   0   0   0   1   7A                                          
+ 0082     0   1   0   0   0   1   7A                                          
+ 0083     0   1   0   0   0   1   7A                                          
+ 0084     0   1   0   0   0   1   7A                                          
+ 0085     0   1   0   0   0   1   7A                                          
+ 0086     0   1   0   0   0   1   7A                                          
+ 0087     0   1   0   0   0   1   7A                                          
+ 0088     0   1   0   0   0   1   7A                                          
+ 0089     0   1   0   0   0   1   7A                                          
+ 0090     0   1   0   0   0   1   7A                                          
+ 0091     0   1   0   0   0   1   7A                                          
+ 0092     0   1   0   0   0   1   7A                                          
+ 0093     0   1   0   0   0   1   7A                                          
+ 0094     0   1   0   0   0   1   7A                                          
+ 0095     0   1   0   0   0   1   7A                                          
+ 0096     0   1   0   0   0   1   7A                                          
+ 0097     0   1   0   0   0   1   7A                                          
+ 0098     0   1   0   0   0   1   7A                                          
+ 0099     0   1   0   0   0   1   7A                                          
+ 0100     0   1   0   0   0   1   7A                                          
+ 0101     0   1   0   0   0   1   7A                                          
+ 0102     0   1   0   0   0   1   7A                                          
+ 0103     0   1   0   0   0   1   7A                                          
+ 0104     0   1   0   0   0   1   7A                                          
+ 0105     0   1   0   0   0   1   7A                                          
+ 0106     0   1   0   0   0   1   7A                    

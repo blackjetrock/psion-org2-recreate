@@ -53,10 +53,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /tree/downloaded_tools/pico/psion-recreate
+CMAKE_SOURCE_DIR = /tree/projects/github/psion-org2-recreate/psion-recreate
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /tree/downloaded_tools/pico/psion-recreate/build
+CMAKE_BINARY_DIR = /tree/projects/github/psion-org2-recreate/psion-recreate/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/psion_recreate.dir/depend.make
@@ -72,147 +72,161 @@ include CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/psion_recreate.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/psion_recreate.c.obj: ../psion_recreate.c
 CMakeFiles/psion_recreate.dir/psion_recreate.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/psion_recreate.dir/psion_recreate.c.obj"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/psion_recreate.c.obj -MF CMakeFiles/psion_recreate.dir/psion_recreate.c.obj.d -o CMakeFiles/psion_recreate.dir/psion_recreate.c.obj -c /tree/downloaded_tools/pico/psion-recreate/psion_recreate.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/psion_recreate.dir/psion_recreate.c.obj"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/psion_recreate.c.obj -MF CMakeFiles/psion_recreate.dir/psion_recreate.c.obj.d -o CMakeFiles/psion_recreate.dir/psion_recreate.c.obj -c /tree/projects/github/psion-org2-recreate/psion-recreate/psion_recreate.c
 
 CMakeFiles/psion_recreate.dir/psion_recreate.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/psion_recreate.dir/psion_recreate.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /tree/downloaded_tools/pico/psion-recreate/psion_recreate.c > CMakeFiles/psion_recreate.dir/psion_recreate.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /tree/projects/github/psion-org2-recreate/psion-recreate/psion_recreate.c > CMakeFiles/psion_recreate.dir/psion_recreate.c.i
 
 CMakeFiles/psion_recreate.dir/psion_recreate.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/psion_recreate.dir/psion_recreate.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/downloaded_tools/pico/psion-recreate/psion_recreate.c -o CMakeFiles/psion_recreate.dir/psion_recreate.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/projects/github/psion-org2-recreate/psion-recreate/psion_recreate.c -o CMakeFiles/psion_recreate.dir/psion_recreate.c.s
 
 CMakeFiles/psion_recreate.dir/display.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/display.c.obj: ../display.c
 CMakeFiles/psion_recreate.dir/display.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/psion_recreate.dir/display.c.obj"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/display.c.obj -MF CMakeFiles/psion_recreate.dir/display.c.obj.d -o CMakeFiles/psion_recreate.dir/display.c.obj -c /tree/downloaded_tools/pico/psion-recreate/display.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/psion_recreate.dir/display.c.obj"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/display.c.obj -MF CMakeFiles/psion_recreate.dir/display.c.obj.d -o CMakeFiles/psion_recreate.dir/display.c.obj -c /tree/projects/github/psion-org2-recreate/psion-recreate/display.c
 
 CMakeFiles/psion_recreate.dir/display.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/psion_recreate.dir/display.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /tree/downloaded_tools/pico/psion-recreate/display.c > CMakeFiles/psion_recreate.dir/display.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /tree/projects/github/psion-org2-recreate/psion-recreate/display.c > CMakeFiles/psion_recreate.dir/display.c.i
 
 CMakeFiles/psion_recreate.dir/display.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/psion_recreate.dir/display.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/downloaded_tools/pico/psion-recreate/display.c -o CMakeFiles/psion_recreate.dir/display.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/projects/github/psion-org2-recreate/psion-recreate/display.c -o CMakeFiles/psion_recreate.dir/display.c.s
 
 CMakeFiles/psion_recreate.dir/font.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/font.c.obj: ../font.c
 CMakeFiles/psion_recreate.dir/font.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/psion_recreate.dir/font.c.obj"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/font.c.obj -MF CMakeFiles/psion_recreate.dir/font.c.obj.d -o CMakeFiles/psion_recreate.dir/font.c.obj -c /tree/downloaded_tools/pico/psion-recreate/font.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/psion_recreate.dir/font.c.obj"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/font.c.obj -MF CMakeFiles/psion_recreate.dir/font.c.obj.d -o CMakeFiles/psion_recreate.dir/font.c.obj -c /tree/projects/github/psion-org2-recreate/psion-recreate/font.c
 
 CMakeFiles/psion_recreate.dir/font.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/psion_recreate.dir/font.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /tree/downloaded_tools/pico/psion-recreate/font.c > CMakeFiles/psion_recreate.dir/font.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /tree/projects/github/psion-org2-recreate/psion-recreate/font.c > CMakeFiles/psion_recreate.dir/font.c.i
 
 CMakeFiles/psion_recreate.dir/font.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/psion_recreate.dir/font.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/downloaded_tools/pico/psion-recreate/font.c -o CMakeFiles/psion_recreate.dir/font.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/projects/github/psion-org2-recreate/psion-recreate/font.c -o CMakeFiles/psion_recreate.dir/font.c.s
 
 CMakeFiles/psion_recreate.dir/emulator.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/emulator.c.obj: ../emulator.c
 CMakeFiles/psion_recreate.dir/emulator.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/psion_recreate.dir/emulator.c.obj"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/emulator.c.obj -MF CMakeFiles/psion_recreate.dir/emulator.c.obj.d -o CMakeFiles/psion_recreate.dir/emulator.c.obj -c /tree/downloaded_tools/pico/psion-recreate/emulator.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/psion_recreate.dir/emulator.c.obj"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/emulator.c.obj -MF CMakeFiles/psion_recreate.dir/emulator.c.obj.d -o CMakeFiles/psion_recreate.dir/emulator.c.obj -c /tree/projects/github/psion-org2-recreate/psion-recreate/emulator.c
 
 CMakeFiles/psion_recreate.dir/emulator.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/psion_recreate.dir/emulator.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /tree/downloaded_tools/pico/psion-recreate/emulator.c > CMakeFiles/psion_recreate.dir/emulator.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /tree/projects/github/psion-org2-recreate/psion-recreate/emulator.c > CMakeFiles/psion_recreate.dir/emulator.c.i
 
 CMakeFiles/psion_recreate.dir/emulator.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/psion_recreate.dir/emulator.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/downloaded_tools/pico/psion-recreate/emulator.c -o CMakeFiles/psion_recreate.dir/emulator.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/projects/github/psion-org2-recreate/psion-recreate/emulator.c -o CMakeFiles/psion_recreate.dir/emulator.c.s
 
 CMakeFiles/psion_recreate.dir/wireless.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/wireless.c.obj: ../wireless.c
 CMakeFiles/psion_recreate.dir/wireless.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/psion_recreate.dir/wireless.c.obj"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/wireless.c.obj -MF CMakeFiles/psion_recreate.dir/wireless.c.obj.d -o CMakeFiles/psion_recreate.dir/wireless.c.obj -c /tree/downloaded_tools/pico/psion-recreate/wireless.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/psion_recreate.dir/wireless.c.obj"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/wireless.c.obj -MF CMakeFiles/psion_recreate.dir/wireless.c.obj.d -o CMakeFiles/psion_recreate.dir/wireless.c.obj -c /tree/projects/github/psion-org2-recreate/psion-recreate/wireless.c
 
 CMakeFiles/psion_recreate.dir/wireless.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/psion_recreate.dir/wireless.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /tree/downloaded_tools/pico/psion-recreate/wireless.c > CMakeFiles/psion_recreate.dir/wireless.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /tree/projects/github/psion-org2-recreate/psion-recreate/wireless.c > CMakeFiles/psion_recreate.dir/wireless.c.i
 
 CMakeFiles/psion_recreate.dir/wireless.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/psion_recreate.dir/wireless.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/downloaded_tools/pico/psion-recreate/wireless.c -o CMakeFiles/psion_recreate.dir/wireless.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/projects/github/psion-org2-recreate/psion-recreate/wireless.c -o CMakeFiles/psion_recreate.dir/wireless.c.s
 
 CMakeFiles/psion_recreate.dir/rtc.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/rtc.c.obj: ../rtc.c
 CMakeFiles/psion_recreate.dir/rtc.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/psion_recreate.dir/rtc.c.obj"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/rtc.c.obj -MF CMakeFiles/psion_recreate.dir/rtc.c.obj.d -o CMakeFiles/psion_recreate.dir/rtc.c.obj -c /tree/downloaded_tools/pico/psion-recreate/rtc.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/psion_recreate.dir/rtc.c.obj"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/rtc.c.obj -MF CMakeFiles/psion_recreate.dir/rtc.c.obj.d -o CMakeFiles/psion_recreate.dir/rtc.c.obj -c /tree/projects/github/psion-org2-recreate/psion-recreate/rtc.c
 
 CMakeFiles/psion_recreate.dir/rtc.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/psion_recreate.dir/rtc.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /tree/downloaded_tools/pico/psion-recreate/rtc.c > CMakeFiles/psion_recreate.dir/rtc.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /tree/projects/github/psion-org2-recreate/psion-recreate/rtc.c > CMakeFiles/psion_recreate.dir/rtc.c.i
 
 CMakeFiles/psion_recreate.dir/rtc.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/psion_recreate.dir/rtc.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/downloaded_tools/pico/psion-recreate/rtc.c -o CMakeFiles/psion_recreate.dir/rtc.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/projects/github/psion-org2-recreate/psion-recreate/rtc.c -o CMakeFiles/psion_recreate.dir/rtc.c.s
 
 CMakeFiles/psion_recreate.dir/i2c.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/i2c.c.obj: ../i2c.c
 CMakeFiles/psion_recreate.dir/i2c.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/psion_recreate.dir/i2c.c.obj"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/i2c.c.obj -MF CMakeFiles/psion_recreate.dir/i2c.c.obj.d -o CMakeFiles/psion_recreate.dir/i2c.c.obj -c /tree/downloaded_tools/pico/psion-recreate/i2c.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/psion_recreate.dir/i2c.c.obj"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/i2c.c.obj -MF CMakeFiles/psion_recreate.dir/i2c.c.obj.d -o CMakeFiles/psion_recreate.dir/i2c.c.obj -c /tree/projects/github/psion-org2-recreate/psion-recreate/i2c.c
 
 CMakeFiles/psion_recreate.dir/i2c.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/psion_recreate.dir/i2c.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /tree/downloaded_tools/pico/psion-recreate/i2c.c > CMakeFiles/psion_recreate.dir/i2c.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /tree/projects/github/psion-org2-recreate/psion-recreate/i2c.c > CMakeFiles/psion_recreate.dir/i2c.c.i
 
 CMakeFiles/psion_recreate.dir/i2c.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/psion_recreate.dir/i2c.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/downloaded_tools/pico/psion-recreate/i2c.c -o CMakeFiles/psion_recreate.dir/i2c.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/projects/github/psion-org2-recreate/psion-recreate/i2c.c -o CMakeFiles/psion_recreate.dir/i2c.c.s
 
 CMakeFiles/psion_recreate.dir/match.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/match.c.obj: ../match.c
 CMakeFiles/psion_recreate.dir/match.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/psion_recreate.dir/match.c.obj"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/match.c.obj -MF CMakeFiles/psion_recreate.dir/match.c.obj.d -o CMakeFiles/psion_recreate.dir/match.c.obj -c /tree/downloaded_tools/pico/psion-recreate/match.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/psion_recreate.dir/match.c.obj"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/match.c.obj -MF CMakeFiles/psion_recreate.dir/match.c.obj.d -o CMakeFiles/psion_recreate.dir/match.c.obj -c /tree/projects/github/psion-org2-recreate/psion-recreate/match.c
 
 CMakeFiles/psion_recreate.dir/match.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/psion_recreate.dir/match.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /tree/downloaded_tools/pico/psion-recreate/match.c > CMakeFiles/psion_recreate.dir/match.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /tree/projects/github/psion-org2-recreate/psion-recreate/match.c > CMakeFiles/psion_recreate.dir/match.c.i
 
 CMakeFiles/psion_recreate.dir/match.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/psion_recreate.dir/match.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/downloaded_tools/pico/psion-recreate/match.c -o CMakeFiles/psion_recreate.dir/match.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/projects/github/psion-org2-recreate/psion-recreate/match.c -o CMakeFiles/psion_recreate.dir/match.c.s
 
 CMakeFiles/psion_recreate.dir/eeprom.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/eeprom.c.obj: ../eeprom.c
 CMakeFiles/psion_recreate.dir/eeprom.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/psion_recreate.dir/eeprom.c.obj"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/eeprom.c.obj -MF CMakeFiles/psion_recreate.dir/eeprom.c.obj.d -o CMakeFiles/psion_recreate.dir/eeprom.c.obj -c /tree/downloaded_tools/pico/psion-recreate/eeprom.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/psion_recreate.dir/eeprom.c.obj"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/eeprom.c.obj -MF CMakeFiles/psion_recreate.dir/eeprom.c.obj.d -o CMakeFiles/psion_recreate.dir/eeprom.c.obj -c /tree/projects/github/psion-org2-recreate/psion-recreate/eeprom.c
 
 CMakeFiles/psion_recreate.dir/eeprom.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/psion_recreate.dir/eeprom.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /tree/downloaded_tools/pico/psion-recreate/eeprom.c > CMakeFiles/psion_recreate.dir/eeprom.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /tree/projects/github/psion-org2-recreate/psion-recreate/eeprom.c > CMakeFiles/psion_recreate.dir/eeprom.c.i
 
 CMakeFiles/psion_recreate.dir/eeprom.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/psion_recreate.dir/eeprom.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/downloaded_tools/pico/psion-recreate/eeprom.c -o CMakeFiles/psion_recreate.dir/eeprom.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/projects/github/psion-org2-recreate/psion-recreate/eeprom.c -o CMakeFiles/psion_recreate.dir/eeprom.c.s
 
 CMakeFiles/psion_recreate.dir/menu.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/menu.c.obj: ../menu.c
 CMakeFiles/psion_recreate.dir/menu.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/psion_recreate.dir/menu.c.obj"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/menu.c.obj -MF CMakeFiles/psion_recreate.dir/menu.c.obj.d -o CMakeFiles/psion_recreate.dir/menu.c.obj -c /tree/downloaded_tools/pico/psion-recreate/menu.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/psion_recreate.dir/menu.c.obj"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/menu.c.obj -MF CMakeFiles/psion_recreate.dir/menu.c.obj.d -o CMakeFiles/psion_recreate.dir/menu.c.obj -c /tree/projects/github/psion-org2-recreate/psion-recreate/menu.c
 
 CMakeFiles/psion_recreate.dir/menu.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/psion_recreate.dir/menu.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /tree/downloaded_tools/pico/psion-recreate/menu.c > CMakeFiles/psion_recreate.dir/menu.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /tree/projects/github/psion-org2-recreate/psion-recreate/menu.c > CMakeFiles/psion_recreate.dir/menu.c.i
 
 CMakeFiles/psion_recreate.dir/menu.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/psion_recreate.dir/menu.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/downloaded_tools/pico/psion-recreate/menu.c -o CMakeFiles/psion_recreate.dir/menu.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/projects/github/psion-org2-recreate/psion-recreate/menu.c -o CMakeFiles/psion_recreate.dir/menu.c.s
+
+CMakeFiles/psion_recreate.dir/serial.c.obj: CMakeFiles/psion_recreate.dir/flags.make
+CMakeFiles/psion_recreate.dir/serial.c.obj: ../serial.c
+CMakeFiles/psion_recreate.dir/serial.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building C object CMakeFiles/psion_recreate.dir/serial.c.obj"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/serial.c.obj -MF CMakeFiles/psion_recreate.dir/serial.c.obj.d -o CMakeFiles/psion_recreate.dir/serial.c.obj -c /tree/projects/github/psion-org2-recreate/psion-recreate/serial.c
+
+CMakeFiles/psion_recreate.dir/serial.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/psion_recreate.dir/serial.c.i"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /tree/projects/github/psion-org2-recreate/psion-recreate/serial.c > CMakeFiles/psion_recreate.dir/serial.c.i
+
+CMakeFiles/psion_recreate.dir/serial.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/psion_recreate.dir/serial.c.s"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/projects/github/psion-org2-recreate/psion-recreate/serial.c -o CMakeFiles/psion_recreate.dir/serial.c.s
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c.i: cmake_force
@@ -226,7 +240,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_gpio/gpio.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_gpio/gpio.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.i: cmake_force
@@ -240,7 +254,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_claim/claim.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_claim/claim.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_claim/claim.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_claim/claim.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_claim/claim.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_claim/claim.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_claim/claim.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_claim/claim.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_claim/claim.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_claim/claim.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_claim/claim.c.i: cmake_force
@@ -254,7 +268,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_platform/platform.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_platform/platform.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_platform/platform.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_platform/platform.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_platform/platform.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_platform/platform.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_platform/platform.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_platform/platform.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_platform/platform.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_platform/platform.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_platform/platform.c.i: cmake_force
@@ -268,7 +282,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c.i: cmake_force
@@ -279,79 +293,37 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c.s"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c.s
 
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.obj: CMakeFiles/psion_recreate.dir/flags.make
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.obj"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj: CMakeFiles/psion_recreate.dir/flags.make
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c
 
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c > CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.i
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.i"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c > CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.i
 
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.s
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.s"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.s
 
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_divider/divider.S.obj: CMakeFiles/psion_recreate.dir/flags.make
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_divider/divider.S.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_divider/divider.S
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building ASM object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_divider/divider.S.obj"
-	/usr/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_divider/divider.S.obj   -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_divider/divider.S
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S.obj: CMakeFiles/psion_recreate.dir/flags.make
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building ASM object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S.obj"
+	/usr/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S.obj   -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S
 
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_divider/divider.S.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing ASM source to CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_divider/divider.S.i"
-	/usr/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -E /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_divider/divider.S > CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_divider/divider.S.i
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing ASM source to CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S.i"
+	/usr/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -E /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S > CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S.i
 
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_divider/divider.S.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling ASM source to assembly CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_divider/divider.S.s"
-	/usr/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -S /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_divider/divider.S -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_divider/divider.S.s
-
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/time.c.obj: CMakeFiles/psion_recreate.dir/flags.make
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/time.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/time.c
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/time.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/time.c.obj"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/time.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/time.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/time.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/time.c
-
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/time.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/time.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/time.c > CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/time.c.i
-
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/time.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/time.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/time.c -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/time.c.s
-
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/timeout_helper.c.obj: CMakeFiles/psion_recreate.dir/flags.make
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/timeout_helper.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/timeout_helper.c
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/timeout_helper.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/timeout_helper.c.obj"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/timeout_helper.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/timeout_helper.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/timeout_helper.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/timeout_helper.c
-
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/timeout_helper.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/timeout_helper.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/timeout_helper.c > CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/timeout_helper.c.i
-
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/timeout_helper.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/timeout_helper.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/timeout_helper.c -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/timeout_helper.c.s
-
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj: CMakeFiles/psion_recreate.dir/flags.make
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c
-
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c > CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.i
-
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.s
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling ASM source to assembly CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S.s"
+	/usr/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -S /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S.s
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/sem.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/sem.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/sem.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/sem.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/sem.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/sem.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/sem.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/sem.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/sem.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/sem.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/sem.c.i: cmake_force
@@ -365,7 +337,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pic
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/lock_core.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/lock_core.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/lock_core.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/lock_core.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/lock_core.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/lock_core.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/lock_core.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/lock_core.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/lock_core.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/lock_core.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/lock_core.c.i: cmake_force
@@ -376,38 +348,52 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pic
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/lock_core.c.s"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/lock_core.c -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/lock_core.c.s
 
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/mutex.c.obj: CMakeFiles/psion_recreate.dir/flags.make
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/mutex.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/mutex.c
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/mutex.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/mutex.c.obj"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/mutex.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/mutex.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/mutex.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/mutex.c
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/time.c.obj: CMakeFiles/psion_recreate.dir/flags.make
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/time.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/time.c
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/time.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/time.c.obj"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/time.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/time.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/time.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/time.c
 
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/mutex.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/mutex.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/mutex.c > CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/mutex.c.i
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/time.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/time.c.i"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/time.c > CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/time.c.i
 
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/mutex.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/mutex.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/mutex.c -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/mutex.c.s
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/time.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/time.c.s"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/time.c -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/time.c.s
 
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/critical_section.c.obj: CMakeFiles/psion_recreate.dir/flags.make
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/critical_section.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/critical_section.c
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/critical_section.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/critical_section.c.obj"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/critical_section.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/critical_section.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/critical_section.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/critical_section.c
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/timeout_helper.c.obj: CMakeFiles/psion_recreate.dir/flags.make
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/timeout_helper.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/timeout_helper.c
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/timeout_helper.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/timeout_helper.c.obj"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/timeout_helper.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/timeout_helper.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/timeout_helper.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/timeout_helper.c
 
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/critical_section.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/critical_section.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/critical_section.c > CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/critical_section.c.i
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/timeout_helper.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/timeout_helper.c.i"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/timeout_helper.c > CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/timeout_helper.c.i
 
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/critical_section.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/critical_section.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/critical_section.c -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/critical_section.c.s
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/timeout_helper.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/timeout_helper.c.s"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/timeout_helper.c -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/timeout_helper.c.s
+
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj: CMakeFiles/psion_recreate.dir/flags.make
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c
+
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.i"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c > CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.i
+
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.s"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.s
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/datetime.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/datetime.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/datetime.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/datetime.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/datetime.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/datetime.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/datetime.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/datetime.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/datetime.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/datetime.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/datetime.c.i: cmake_force
@@ -421,7 +407,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pic
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/pheap.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/pheap.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/pheap.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/pheap.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/pheap.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/pheap.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/pheap.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/pheap.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/pheap.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/pheap.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/pheap.c.i: cmake_force
@@ -435,7 +421,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pic
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/queue.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/queue.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/queue.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/queue.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/queue.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/queue.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/queue.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/queue.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/queue.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/queue.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/queue.c.i: cmake_force
@@ -446,10 +432,65 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pic
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/queue.c.s"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/queue.c -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/queue.c.s
 
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/mutex.c.obj: CMakeFiles/psion_recreate.dir/flags.make
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/mutex.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/mutex.c
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/mutex.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/mutex.c.obj"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/mutex.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/mutex.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/mutex.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/mutex.c
+
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/mutex.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/mutex.c.i"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/mutex.c > CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/mutex.c.i
+
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/mutex.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/mutex.c.s"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/mutex.c -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/mutex.c.s
+
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/critical_section.c.obj: CMakeFiles/psion_recreate.dir/flags.make
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/critical_section.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/critical_section.c
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/critical_section.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/critical_section.c.obj"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/critical_section.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/critical_section.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/critical_section.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/critical_section.c
+
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/critical_section.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/critical_section.c.i"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/critical_section.c > CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/critical_section.c.i
+
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/critical_section.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/critical_section.c.s"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/critical_section.c -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/critical_section.c.s
+
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.obj: CMakeFiles/psion_recreate.dir/flags.make
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.obj"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c
+
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.i"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c > CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.i
+
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.s"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.s
+
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_divider/divider.S.obj: CMakeFiles/psion_recreate.dir/flags.make
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_divider/divider.S.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_divider/divider.S
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building ASM object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_divider/divider.S.obj"
+	/usr/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_divider/divider.S.obj   -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_divider/divider.S
+
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_divider/divider.S.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing ASM source to CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_divider/divider.S.i"
+	/usr/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -E /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_divider/divider.S > CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_divider/divider.S.i
+
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_divider/divider.S.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling ASM source to assembly CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_divider/divider.S.s"
+	/usr/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -S /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_divider/divider.S -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_divider/divider.S.s
+
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_runtime/runtime.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_runtime/runtime.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_runtime/runtime.c.i: cmake_force
@@ -463,7 +504,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_clocks/clocks.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_clocks/clocks.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.i: cmake_force
@@ -474,37 +515,10 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.s"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_clocks/clocks.c -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.s
 
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj: CMakeFiles/psion_recreate.dir/flags.make
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c
-
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c > CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.i
-
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.s
-
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S.obj: CMakeFiles/psion_recreate.dir/flags.make
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building ASM object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S.obj"
-	/usr/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S.obj   -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S
-
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing ASM source to CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S.i"
-	/usr/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -E /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S > CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S.i
-
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling ASM source to assembly CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S.s"
-	/usr/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -S /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S.s
-
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_pll/pll.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_pll/pll.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_pll/pll.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_pll/pll.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_pll/pll.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_33) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_pll/pll.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_pll/pll.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_pll/pll.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_pll/pll.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_pll/pll.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_pll/pll.c.i: cmake_force
@@ -518,7 +532,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_vreg/vreg.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_vreg/vreg.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_vreg/vreg.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_vreg/vreg.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_33) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_vreg/vreg.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_vreg/vreg.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_vreg/vreg.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_vreg/vreg.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_vreg/vreg.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_vreg/vreg.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_vreg/vreg.c.i: cmake_force
@@ -532,7 +546,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_35) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c.i: cmake_force
@@ -546,7 +560,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_xosc/xosc.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_xosc/xosc.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_xosc/xosc.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_xosc/xosc.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_35) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_xosc/xosc.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_36) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_xosc/xosc.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_xosc/xosc.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_xosc/xosc.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_xosc/xosc.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_xosc/xosc.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_xosc/xosc.c.i: cmake_force
@@ -560,7 +574,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_printf/printf.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_printf/printf.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_printf/printf.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_printf/printf.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_36) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_printf/printf.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_37) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_printf/printf.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_printf/printf.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_printf/printf.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_printf/printf.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_printf/printf.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_printf/printf.c.i: cmake_force
@@ -573,7 +587,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_bit_ops/bit_ops_aeabi.S.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_bit_ops/bit_ops_aeabi.S.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_bit_ops/bit_ops_aeabi.S
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_37) "Building ASM object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_bit_ops/bit_ops_aeabi.S.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_38) "Building ASM object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_bit_ops/bit_ops_aeabi.S.obj"
 	/usr/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_bit_ops/bit_ops_aeabi.S.obj   -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_bit_ops/bit_ops_aeabi.S
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_bit_ops/bit_ops_aeabi.S.i: cmake_force
@@ -587,7 +601,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_38) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_39) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c.i: cmake_force
@@ -600,7 +614,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_divider/divider.S.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_divider/divider.S.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_divider/divider.S
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_39) "Building ASM object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_divider/divider.S.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_40) "Building ASM object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_divider/divider.S.obj"
 	/usr/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_divider/divider.S.obj   -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_divider/divider.S
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_divider/divider.S.i: cmake_force
@@ -613,7 +627,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_aeabi.S
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_40) "Building ASM object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_41) "Building ASM object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj"
 	/usr/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj   -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_aeabi.S
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.i: cmake_force
@@ -627,7 +641,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_init_rom.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_init_rom.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_init_rom.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_init_rom.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_41) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_init_rom.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_42) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_init_rom.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_init_rom.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_init_rom.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_init_rom.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_init_rom.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_init_rom.c.i: cmake_force
@@ -641,7 +655,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_math.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_math.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_math.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_math.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_42) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_math.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_43) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_math.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_math.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_math.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_math.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_math.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_math.c.i: cmake_force
@@ -654,7 +668,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_v1_rom_shim.S.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_v1_rom_shim.S.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_v1_rom_shim.S
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_43) "Building ASM object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_v1_rom_shim.S.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_44) "Building ASM object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_v1_rom_shim.S.obj"
 	/usr/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_v1_rom_shim.S.obj   -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_v1_rom_shim.S
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_double/double_v1_rom_shim.S.i: cmake_force
@@ -667,7 +681,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_int64_ops/pico_int64_ops_aeabi.S.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_int64_ops/pico_int64_ops_aeabi.S.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_int64_ops/pico_int64_ops_aeabi.S
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_44) "Building ASM object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_int64_ops/pico_int64_ops_aeabi.S.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_45) "Building ASM object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_int64_ops/pico_int64_ops_aeabi.S.obj"
 	/usr/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_int64_ops/pico_int64_ops_aeabi.S.obj   -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_int64_ops/pico_int64_ops_aeabi.S
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_int64_ops/pico_int64_ops_aeabi.S.i: cmake_force
@@ -680,7 +694,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_aeabi.S
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_45) "Building ASM object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_46) "Building ASM object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj"
 	/usr/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj   -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_aeabi.S
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.i: cmake_force
@@ -694,7 +708,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_init_rom.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_init_rom.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_init_rom.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_init_rom.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_46) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_init_rom.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_47) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_init_rom.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_init_rom.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_init_rom.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_init_rom.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_init_rom.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_init_rom.c.i: cmake_force
@@ -708,7 +722,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_math.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_math.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_math.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_math.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_47) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_math.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_48) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_math.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_math.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_math.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_math.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_math.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_math.c.i: cmake_force
@@ -721,7 +735,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_v1_rom_shim.S.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_v1_rom_shim.S.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_v1_rom_shim.S
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_48) "Building ASM object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_v1_rom_shim.S.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_49) "Building ASM object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_v1_rom_shim.S.obj"
 	/usr/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_v1_rom_shim.S.obj   -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_v1_rom_shim.S
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_float/float_v1_rom_shim.S.i: cmake_force
@@ -735,7 +749,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_malloc/pico_malloc.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_malloc/pico_malloc.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_malloc/pico_malloc.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_malloc/pico_malloc.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_49) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_malloc/pico_malloc.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_50) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_malloc/pico_malloc.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_malloc/pico_malloc.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_malloc/pico_malloc.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_malloc/pico_malloc.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_malloc/pico_malloc.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_malloc/pico_malloc.c.i: cmake_force
@@ -748,7 +762,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_mem_ops/mem_ops_aeabi.S.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_mem_ops/mem_ops_aeabi.S.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_mem_ops/mem_ops_aeabi.S
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_50) "Building ASM object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_mem_ops/mem_ops_aeabi.S.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_51) "Building ASM object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_mem_ops/mem_ops_aeabi.S.obj"
 	/usr/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_mem_ops/mem_ops_aeabi.S.obj   -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_mem_ops/mem_ops_aeabi.S
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_mem_ops/mem_ops_aeabi.S.i: cmake_force
@@ -761,7 +775,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_standard_link/crt0.S.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_standard_link/crt0.S.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_standard_link/crt0.S
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_51) "Building ASM object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_standard_link/crt0.S.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_52) "Building ASM object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_standard_link/crt0.S.obj"
 	/usr/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_standard_link/crt0.S.obj   -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_standard_link/crt0.S
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_standard_link/crt0.S.i: cmake_force
@@ -775,7 +789,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_standard_link/new_delete.cpp.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_standard_link/new_delete.cpp.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_standard_link/new_delete.cpp
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_standard_link/new_delete.cpp.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_52) "Building CXX object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_standard_link/new_delete.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_53) "Building CXX object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_standard_link/new_delete.cpp.obj"
 	/usr/bin/arm-none-eabi-g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_standard_link/new_delete.cpp.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_standard_link/new_delete.cpp.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_standard_link/new_delete.cpp.obj -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_standard_link/new_delete.cpp
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_standard_link/new_delete.cpp.i: cmake_force
@@ -789,7 +803,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_53) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_54) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.i: cmake_force
@@ -803,7 +817,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio/stdio.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_54) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_55) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio/stdio.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio/stdio.c.i: cmake_force
@@ -817,7 +831,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_uart/stdio_uart.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_uart/stdio_uart.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_uart/stdio_uart.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_uart/stdio_uart.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_55) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_uart/stdio_uart.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_56) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_uart/stdio_uart.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_uart/stdio_uart.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_uart/stdio_uart.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_uart/stdio_uart.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_uart/stdio_uart.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_uart/stdio_uart.c.i: cmake_force
@@ -831,7 +845,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_56) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_57) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.i: cmake_force
@@ -845,7 +859,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_57) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_58) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.i: cmake_force
@@ -859,7 +873,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_58) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_59) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.i: cmake_force
@@ -873,7 +887,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj: /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_59) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_60) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj -c /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.i: cmake_force
@@ -887,7 +901,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/sr
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.obj: /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_60) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_61) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.obj -c /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.i: cmake_force
@@ -901,7 +915,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/sr
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.obj: /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/device/usbd.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_61) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_62) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.obj -c /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/device/usbd.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.i: cmake_force
@@ -915,7 +929,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/sr
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj: /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/device/usbd_control.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_62) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_63) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj -c /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/device/usbd_control.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/device/usbd_control.c.i: cmake_force
@@ -929,7 +943,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/sr
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.obj: /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_63) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_64) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.obj -c /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.i: cmake_force
@@ -943,7 +957,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/sr
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj: /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_64) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_65) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj -c /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.i: cmake_force
@@ -957,7 +971,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/sr
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_device.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_device.c.obj: /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_device.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_device.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_65) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_device.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_66) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_device.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_device.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_device.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_device.c.obj -c /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_device.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_device.c.i: cmake_force
@@ -971,7 +985,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/sr
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_rt_device.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_rt_device.c.obj: /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_rt_device.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_rt_device.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_66) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_rt_device.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_67) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_rt_device.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_rt_device.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_rt_device.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_rt_device.c.obj -c /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_rt_device.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/dfu/dfu_rt_device.c.i: cmake_force
@@ -985,7 +999,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/sr
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/hid/hid_device.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/hid/hid_device.c.obj: /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/hid/hid_device.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/hid/hid_device.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_67) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/hid/hid_device.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_68) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/hid/hid_device.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/hid/hid_device.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/hid/hid_device.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/hid/hid_device.c.obj -c /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/hid/hid_device.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/hid/hid_device.c.i: cmake_force
@@ -999,7 +1013,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/sr
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/midi/midi_device.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/midi/midi_device.c.obj: /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/midi/midi_device.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/midi/midi_device.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_68) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/midi/midi_device.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_69) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/midi/midi_device.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/midi/midi_device.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/midi/midi_device.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/midi/midi_device.c.obj -c /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/midi/midi_device.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/midi/midi_device.c.i: cmake_force
@@ -1013,7 +1027,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/sr
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/msc/msc_device.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/msc/msc_device.c.obj: /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/msc/msc_device.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/msc/msc_device.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_69) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/msc/msc_device.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_70) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/msc/msc_device.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/msc/msc_device.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/msc/msc_device.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/msc/msc_device.c.obj -c /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/msc/msc_device.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/msc/msc_device.c.i: cmake_force
@@ -1024,24 +1038,38 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/sr
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/msc/msc_device.c.s"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/msc/msc_device.c -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/msc/msc_device.c.s
 
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/net_device.c.obj: CMakeFiles/psion_recreate.dir/flags.make
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/net_device.c.obj: /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/net_device.c
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/net_device.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_70) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/net_device.c.obj"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/net_device.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/net_device.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/net_device.c.obj -c /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/net_device.c
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c.obj: CMakeFiles/psion_recreate.dir/flags.make
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c.obj: /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_71) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c.obj"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c.obj -c /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c
 
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/net_device.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/net_device.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/net_device.c > CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/net_device.c.i
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c.i"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c > CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c.i
 
-CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/net_device.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/net_device.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/net_device.c -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/net_device.c.s
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c.s"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c.s
+
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c.obj: CMakeFiles/psion_recreate.dir/flags.make
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c.obj: /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_72) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c.obj"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c.obj -c /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c
+
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c.i"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c > CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c.i
+
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c.s"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c.s
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/usbtmc/usbtmc_device.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/usbtmc/usbtmc_device.c.obj: /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/usbtmc/usbtmc_device.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/usbtmc/usbtmc_device.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_71) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/usbtmc/usbtmc_device.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_73) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/usbtmc/usbtmc_device.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/usbtmc/usbtmc_device.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/usbtmc/usbtmc_device.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/usbtmc/usbtmc_device.c.obj -c /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/usbtmc/usbtmc_device.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/usbtmc/usbtmc_device.c.i: cmake_force
@@ -1055,7 +1083,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/sr
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.obj: /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_72) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_74) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.obj -c /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.i: cmake_force
@@ -1066,10 +1094,24 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/sr
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.s"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.s
 
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c.obj: CMakeFiles/psion_recreate.dir/flags.make
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c.obj: /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_75) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c.obj"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c.obj -c /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c
+
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c.i"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c > CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c.i
+
+CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c.s"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c.s
+
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/tusb.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/tusb.c.obj: /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/tusb.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/tusb.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_73) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/tusb.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_76) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/tusb.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/tusb.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/tusb.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/tusb.c.obj -c /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/tusb.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/tusb.c.i: cmake_force
@@ -1083,7 +1125,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/sr
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj: /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_74) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_77) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj -c /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.i: cmake_force
@@ -1097,7 +1139,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/sr
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_fix/rp2040_usb_device_enumeration/rp2040_usb_device_enumeration.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_fix/rp2040_usb_device_enumeration/rp2040_usb_device_enumeration.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_fix/rp2040_usb_device_enumeration/rp2040_usb_device_enumeration.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_fix/rp2040_usb_device_enumeration/rp2040_usb_device_enumeration.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_75) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_fix/rp2040_usb_device_enumeration/rp2040_usb_device_enumeration.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_78) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_fix/rp2040_usb_device_enumeration/rp2040_usb_device_enumeration.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_fix/rp2040_usb_device_enumeration/rp2040_usb_device_enumeration.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_fix/rp2040_usb_device_enumeration/rp2040_usb_device_enumeration.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_fix/rp2040_usb_device_enumeration/rp2040_usb_device_enumeration.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_fix/rp2040_usb_device_enumeration/rp2040_usb_device_enumeration.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_fix/rp2040_usb_device_enumeration/rp2040_usb_device_enumeration.c.i: cmake_force
@@ -1111,7 +1153,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_76) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_79) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.i: cmake_force
@@ -1125,7 +1167,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_flash/flash.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_flash/flash.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_flash/flash.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_flash/flash.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_77) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_flash/flash.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_80) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_flash/flash.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_flash/flash.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_flash/flash.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_flash/flash.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_flash/flash.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_flash/flash.c.i: cmake_force
@@ -1139,7 +1181,7 @@ CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.obj: CMakeFiles/psion_recreate.dir/flags.make
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.obj: /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.obj: CMakeFiles/psion_recreate.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_78) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_81) "Building C object CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.obj -MF CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.obj.d -o CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.obj -c /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.i: cmake_force
@@ -1162,27 +1204,28 @@ psion_recreate_OBJECTS = \
 "CMakeFiles/psion_recreate.dir/match.c.obj" \
 "CMakeFiles/psion_recreate.dir/eeprom.c.obj" \
 "CMakeFiles/psion_recreate.dir/menu.c.obj" \
+"CMakeFiles/psion_recreate.dir/serial.c.obj" \
 "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c.obj" \
 "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.obj" \
 "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_claim/claim.c.obj" \
 "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_platform/platform.c.obj" \
 "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c.obj" \
-"CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.obj" \
-"CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_divider/divider.S.obj" \
+"CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj" \
+"CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S.obj" \
+"CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/sem.c.obj" \
+"CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/lock_core.c.obj" \
 "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/time.c.obj" \
 "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/timeout_helper.c.obj" \
 "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj" \
-"CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/sem.c.obj" \
-"CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/lock_core.c.obj" \
-"CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/mutex.c.obj" \
-"CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/critical_section.c.obj" \
 "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/datetime.c.obj" \
 "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/pheap.c.obj" \
 "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/queue.c.obj" \
+"CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/mutex.c.obj" \
+"CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/critical_section.c.obj" \
+"CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.obj" \
+"CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_divider/divider.S.obj" \
 "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj" \
 "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.obj" \
-"CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj" \
-"CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S.obj" \
 "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_pll/pll.c.obj" \
 "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_vreg/vreg.c.obj" \
 "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c.obj" \
@@ -1221,9 +1264,11 @@ psion_recreate_OBJECTS = \
 "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/hid/hid_device.c.obj" \
 "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/midi/midi_device.c.obj" \
 "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/msc/msc_device.c.obj" \
-"CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/net_device.c.obj" \
+"CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c.obj" \
+"CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c.obj" \
 "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/usbtmc/usbtmc_device.c.obj" \
 "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.obj" \
+"CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c.obj" \
 "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/tusb.c.obj" \
 "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj" \
 "CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_fix/rp2040_usb_device_enumeration/rp2040_usb_device_enumeration.c.obj" \
@@ -1244,27 +1289,28 @@ psion_recreate.elf: CMakeFiles/psion_recreate.dir/i2c.c.obj
 psion_recreate.elf: CMakeFiles/psion_recreate.dir/match.c.obj
 psion_recreate.elf: CMakeFiles/psion_recreate.dir/eeprom.c.obj
 psion_recreate.elf: CMakeFiles/psion_recreate.dir/menu.c.obj
+psion_recreate.elf: CMakeFiles/psion_recreate.dir/serial.c.obj
 psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c.obj
 psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.obj
 psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_claim/claim.c.obj
 psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_platform/platform.c.obj
 psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c.obj
-psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.obj
-psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_divider/divider.S.obj
+psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
+psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S.obj
+psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/sem.c.obj
+psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/lock_core.c.obj
 psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/time.c.obj
 psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_time/timeout_helper.c.obj
 psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
-psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/sem.c.obj
-psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/lock_core.c.obj
-psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/mutex.c.obj
-psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/critical_section.c.obj
 psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/datetime.c.obj
 psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/pheap.c.obj
 psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_util/queue.c.obj
+psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/mutex.c.obj
+psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/common/pico_sync/critical_section.c.obj
+psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_uart/uart.c.obj
+psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_divider/divider.S.obj
 psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj
 psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.obj
-psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
-psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_irq/irq_handler_chain.S.obj
 psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_pll/pll.c.obj
 psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_vreg/vreg.c.obj
 psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c.obj
@@ -1303,9 +1349,11 @@ psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pic
 psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/hid/hid_device.c.obj
 psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/midi/midi_device.c.obj
 psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/msc/msc_device.c.obj
-psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/net_device.c.obj
+psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c.obj
+psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c.obj
 psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/usbtmc/usbtmc_device.c.obj
 psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.obj
+psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c.obj
 psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/tusb.c.obj
 psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
 psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_fix/rp2040_usb_device_enumeration/rp2040_usb_device_enumeration.c.obj
@@ -1315,13 +1363,13 @@ psion_recreate.elf: CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pic
 psion_recreate.elf: CMakeFiles/psion_recreate.dir/build.make
 psion_recreate.elf: pico-sdk/src/rp2_common/boot_stage2/bs2_default_padded_checksummed.S
 psion_recreate.elf: CMakeFiles/psion_recreate.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_79) "Linking CXX executable psion_recreate.elf"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_82) "Linking CXX executable psion_recreate.elf"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/psion_recreate.dir/link.txt --verbose=$(VERBOSE)
-	/usr/bin/arm-none-eabi-objcopy -Oihex psion_recreate.elf psion_recreate.hex
-	/usr/bin/arm-none-eabi-objcopy -Obinary psion_recreate.elf psion_recreate.bin
-	/usr/bin/arm-none-eabi-objdump -h psion_recreate.elf >psion_recreate.dis
-	/usr/bin/arm-none-eabi-objdump -d psion_recreate.elf >>psion_recreate.dis
-	elf2uf2/elf2uf2 psion_recreate.elf psion_recreate.uf2
+	/usr/bin/arm-none-eabi-objcopy -Oihex /tree/projects/github/psion-org2-recreate/psion-recreate/build/psion_recreate.elf psion_recreate.hex
+	/usr/bin/arm-none-eabi-objcopy -Obinary /tree/projects/github/psion-org2-recreate/psion-recreate/build/psion_recreate.elf psion_recreate.bin
+	/usr/bin/arm-none-eabi-objdump -h /tree/projects/github/psion-org2-recreate/psion-recreate/build/psion_recreate.elf >psion_recreate.dis
+	/usr/bin/arm-none-eabi-objdump -d /tree/projects/github/psion-org2-recreate/psion-recreate/build/psion_recreate.elf >>psion_recreate.dis
+	elf2uf2/elf2uf2 /tree/projects/github/psion-org2-recreate/psion-recreate/build/psion_recreate.elf psion_recreate.uf2
 
 # Rule to build all files generated by this target.
 CMakeFiles/psion_recreate.dir/build: psion_recreate.elf
@@ -1332,6 +1380,6 @@ CMakeFiles/psion_recreate.dir/clean:
 .PHONY : CMakeFiles/psion_recreate.dir/clean
 
 CMakeFiles/psion_recreate.dir/depend:
-	cd /tree/downloaded_tools/pico/psion-recreate/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /tree/downloaded_tools/pico/psion-recreate /tree/downloaded_tools/pico/psion-recreate /tree/downloaded_tools/pico/psion-recreate/build /tree/downloaded_tools/pico/psion-recreate/build /tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles/psion_recreate.dir/DependInfo.cmake --color=$(COLOR)
+	cd /tree/projects/github/psion-org2-recreate/psion-recreate/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /tree/projects/github/psion-org2-recreate/psion-recreate /tree/projects/github/psion-org2-recreate/psion-recreate /tree/projects/github/psion-org2-recreate/psion-recreate/build /tree/projects/github/psion-org2-recreate/psion-recreate/build /tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles/psion_recreate.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/psion_recreate.dir/depend
 

@@ -24,11 +24,16 @@ i2c.c
 match.c
 eeprom.c
 menu.c
+serial.c
 )
 
 pico_enable_stdio_usb(psion_recreate 1)
-pico_enable_stdio_uart(psion_recreate 1)
+#pico_enable_stdio_uart(psion_recreate 1)
 
-target_link_libraries(psion_recreate pico_stdlib pico_multicore)
+target_link_libraries(psion_recreate
+  pico_stdlib
+  pico_multicore
+  hardware_flash)
+
 pico_add_extra_outputs(psion_recreate)
 

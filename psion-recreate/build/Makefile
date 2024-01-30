@@ -57,10 +57,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /tree/downloaded_tools/pico/psion-recreate
+CMAKE_SOURCE_DIR = /tree/projects/github/psion-org2-recreate/psion-recreate
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /tree/downloaded_tools/pico/psion-recreate/build
+CMAKE_BINARY_DIR = /tree/projects/github/psion-org2-recreate/psion-recreate/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles /tree/downloaded_tools/pico/psion-recreate/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles /tree/projects/github/psion-org2-recreate/psion-recreate/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /tree/downloaded_tools/pico/psion-recreate/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /tree/projects/github/psion-org2-recreate/psion-recreate/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -180,6 +180,45 @@ bs2_default: cmake_check_build_system
 bs2_default/fast:
 	$(MAKE) $(MAKESILENT) -f pico-sdk/src/rp2_common/boot_stage2/CMakeFiles/bs2_default.dir/build.make pico-sdk/src/rp2_common/boot_stage2/CMakeFiles/bs2_default.dir/build
 .PHONY : bs2_default/fast
+
+#=============================================================================
+# Target rules for targets named PioasmBuild
+
+# Build rule for target.
+PioasmBuild: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 PioasmBuild
+.PHONY : PioasmBuild
+
+# fast build rule for target.
+PioasmBuild/fast:
+	$(MAKE) $(MAKESILENT) -f pico-sdk/src/rp2_common/cyw43_driver/CMakeFiles/PioasmBuild.dir/build.make pico-sdk/src/rp2_common/cyw43_driver/CMakeFiles/PioasmBuild.dir/build
+.PHONY : PioasmBuild/fast
+
+#=============================================================================
+# Target rules for targets named cyw43_firmware_package
+
+# Build rule for target.
+cyw43_firmware_package: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cyw43_firmware_package
+.PHONY : cyw43_firmware_package
+
+# fast build rule for target.
+cyw43_firmware_package/fast:
+	$(MAKE) $(MAKESILENT) -f pico-sdk/src/rp2_common/cyw43_driver/CMakeFiles/cyw43_firmware_package.dir/build.make pico-sdk/src/rp2_common/cyw43_driver/CMakeFiles/cyw43_firmware_package.dir/build
+.PHONY : cyw43_firmware_package/fast
+
+#=============================================================================
+# Target rules for targets named cyw43_driver_picow_cyw43_bus_pio_spi_pio_h
+
+# Build rule for target.
+cyw43_driver_picow_cyw43_bus_pio_spi_pio_h: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cyw43_driver_picow_cyw43_bus_pio_spi_pio_h
+.PHONY : cyw43_driver_picow_cyw43_bus_pio_spi_pio_h
+
+# fast build rule for target.
+cyw43_driver_picow_cyw43_bus_pio_spi_pio_h/fast:
+	$(MAKE) $(MAKESILENT) -f pico-sdk/src/rp2_common/cyw43_driver/CMakeFiles/cyw43_driver_picow_cyw43_bus_pio_spi_pio_h.dir/build.make pico-sdk/src/rp2_common/cyw43_driver/CMakeFiles/cyw43_driver_picow_cyw43_bus_pio_spi_pio_h.dir/build
+.PHONY : cyw43_driver_picow_cyw43_bus_pio_spi_pio_h/fast
 
 display.obj: display.c.obj
 .PHONY : display.obj
@@ -397,6 +436,30 @@ rtc.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/rtc.c.s
 .PHONY : rtc.c.s
 
+serial.obj: serial.c.obj
+.PHONY : serial.obj
+
+# target to build an object file
+serial.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/serial.c.obj
+.PHONY : serial.c.obj
+
+serial.i: serial.c.i
+.PHONY : serial.i
+
+# target to preprocess a source file
+serial.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/serial.c.i
+.PHONY : serial.c.i
+
+serial.s: serial.c.s
+.PHONY : serial.s
+
+# target to generate assembly for a file
+serial.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/serial.c.s
+.PHONY : serial.c.s
+
 tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.obj: tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.obj
 .PHONY : tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.obj
 
@@ -565,29 +628,53 @@ tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/msc/msc_device.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/msc/msc_device.c.s
 .PHONY : tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/msc/msc_device.c.s
 
-tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/net_device.obj: tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/net_device.c.obj
-.PHONY : tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/net_device.obj
+tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.obj: tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c.obj
+.PHONY : tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.obj
 
 # target to build an object file
-tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/net_device.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/net_device.c.obj
-.PHONY : tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/net_device.c.obj
+tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c.obj
+.PHONY : tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c.obj
 
-tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/net_device.i: tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/net_device.c.i
-.PHONY : tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/net_device.i
+tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.i: tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c.i
+.PHONY : tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.i
 
 # target to preprocess a source file
-tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/net_device.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/net_device.c.i
-.PHONY : tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/net_device.c.i
+tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c.i
+.PHONY : tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c.i
 
-tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/net_device.s: tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/net_device.c.s
-.PHONY : tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/net_device.s
+tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.s: tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c.s
+.PHONY : tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.s
 
 # target to generate assembly for a file
-tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/net_device.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/net_device.c.s
-.PHONY : tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/net_device.c.s
+tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c.s
+.PHONY : tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.c.s
+
+tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.obj: tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c.obj
+.PHONY : tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.obj
+
+# target to build an object file
+tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c.obj
+.PHONY : tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c.obj
+
+tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.i: tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c.i
+.PHONY : tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.i
+
+# target to preprocess a source file
+tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c.i
+.PHONY : tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c.i
+
+tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.s: tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c.s
+.PHONY : tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.s
+
+# target to generate assembly for a file
+tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c.s
+.PHONY : tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.c.s
 
 tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/usbtmc/usbtmc_device.obj: tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/usbtmc/usbtmc_device.c.obj
 .PHONY : tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/usbtmc/usbtmc_device.obj
@@ -636,6 +723,30 @@ tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.s
 tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.s
 .PHONY : tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.s
+
+tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.obj: tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c.obj
+.PHONY : tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.obj
+
+# target to build an object file
+tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c.obj
+.PHONY : tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c.obj
+
+tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.i: tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c.i
+.PHONY : tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.i
+
+# target to preprocess a source file
+tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c.i
+.PHONY : tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c.i
+
+tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.s: tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c.s
+.PHONY : tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.s
+
+# target to generate assembly for a file
+tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psion_recreate.dir/build.make CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c.s
+.PHONY : tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.c.s
 
 tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/common/tusb_fifo.obj: tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
 .PHONY : tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/common/tusb_fifo.obj
@@ -1886,8 +1997,11 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... ELF2UF2Build"
+	@echo "... PioasmBuild"
 	@echo "... bs2_default_bin"
 	@echo "... bs2_default_padded_checksummed_asm"
+	@echo "... cyw43_driver_picow_cyw43_bus_pio_spi_pio_h"
+	@echo "... cyw43_firmware_package"
 	@echo "... bs2_default"
 	@echo "... psion_recreate"
 	@echo "... display.obj"
@@ -1917,6 +2031,9 @@ help:
 	@echo "... rtc.obj"
 	@echo "... rtc.i"
 	@echo "... rtc.s"
+	@echo "... serial.obj"
+	@echo "... serial.i"
+	@echo "... serial.s"
 	@echo "... tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.obj"
 	@echo "... tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.i"
 	@echo "... tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.s"
@@ -1938,15 +2055,21 @@ help:
 	@echo "... tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/msc/msc_device.obj"
 	@echo "... tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/msc/msc_device.i"
 	@echo "... tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/msc/msc_device.s"
-	@echo "... tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/net_device.obj"
-	@echo "... tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/net_device.i"
-	@echo "... tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/net_device.s"
+	@echo "... tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.obj"
+	@echo "... tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.i"
+	@echo "... tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ecm_rndis_device.s"
+	@echo "... tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.obj"
+	@echo "... tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.i"
+	@echo "... tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/net/ncm_device.s"
 	@echo "... tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/usbtmc/usbtmc_device.obj"
 	@echo "... tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/usbtmc/usbtmc_device.i"
 	@echo "... tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/usbtmc/usbtmc_device.s"
 	@echo "... tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.obj"
 	@echo "... tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.i"
 	@echo "... tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.s"
+	@echo "... tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.obj"
+	@echo "... tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.i"
+	@echo "... tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/video/video_device.s"
 	@echo "... tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/common/tusb_fifo.obj"
 	@echo "... tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/common/tusb_fifo.i"
 	@echo "... tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/common/tusb_fifo.s"

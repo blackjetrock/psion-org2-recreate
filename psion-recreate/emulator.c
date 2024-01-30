@@ -25,6 +25,8 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 //
+// SVPP Information from various sources
+//
 // The SVPP rail can be in one of three states :-
 //
 //      -  OV if the PACON_B is high and the slots are switched off
@@ -37,6 +39,92 @@
 // PACON_B    is bit 7, port 6
 // POB_PORT6  is bit 3, port 6
 //
+////////////////////////////////////////////////////////////////////////////////
+// 9.3.2.6  Setting the Program Voltage (SVPP)
+// 
+// It is not recommended that users attempt to write their own code  to  write
+// to  datapacks.   The  following information is only given for completeness.
+// The 21V required for programming  EPROMs  is  generated  using  a  hardware
+// "pump"  similar to those found in electronic flash guns.  After the pump is
+// turned on you must wait for the voltage to reach the required  level  (like
+// waiting for the ready light to appear on a flash gun).
+// The following lines are used to control SVPP:
+// 
+//      1.  PORT 6 (POB_PORT6, address $17)-When Bit 3 of this port (SOE_B) is
+//          set  high  together  with  SCA_ALARMHIGH,  21V  (if  generated) is
+//          switched to SVPP.
+// 
+//      2.  Location $200 SCA_PULSEENABLE-Enables generation  of  21V  (starts
+//          hardware pump)
+// 
+//      3.  Location $240 SCA_PULSEDISABLE-Disables generation of  21V  (stops
+//          hardware pump)
+// 
+//      4.  Location $280 SCA_ALARMHIGH-Enables SVPP to  be  switched  to  21V
+//          with SOE_B
+// 
+//      5.  Location $2C0 SCA_ALARMLOW-Disables SVPP being switched to 21V
+// 
+//      6.  PORT 5 (POB_PORT5, address $15).  Only one bit  of  this  port  is
+//          associated with the datapack interface.
+//          1.  ACOUT- When this bit (bit 1) is high this indicates the 21V  is
+//              ready to be switched on to the packs.
+// 
+// 
+// SCA_PULSEENABLE, SCA_PULSEDISABLE  etc,  are  activated  by  accessing  the
+// relevant  memory  location  with either a read or write.  It is recommended
+// the TST instruction is used, i.e.
+// 
+//      TST        SCA_PULSEENABLE         ; starts hardware pump
+// 
+//      TST        SCA_PULSEDISABLE        ; stops hardware pump
+// 
+// NOTE.  The packs must be turned on (PACON_B  low)  when  switching  21V  to
+// SVPP.  Damage may result to the packs or Organiser if this is not done.
+// The following sequence will switch SVPP to 21V:
+// 
+//      1.  Set SOE_B low, TST SCA_ALARMLOW-make sure initially switched off.
+// 
+//      2.  TST SCA_PULSEENABLE-start pump.
+// 
+//      3.  Wait for ACOUT to come high-wait until voltage is high enough.
+// 
+//      4.  TST SCA_PULSEDISABLE-stop pump.
+// 
+//      5.  TST SCA_ALARMHIGH and set SOE_B high-21V is now switched to SVPP.
+// 
+//      6.  Wait 5ms to allow the voltage to settle.
+// 
+// 
+// TST SCA_ALARMLOW or setting SOE_B low will switch SVPP back to 5V.
+// 
+// _______
+// WARNING The 21V should not be switched to SVPP while the pump is on as this
+// can result in damage to the hardware.
+// 
+// After pumping, the voltage is stored in a capacitor.  This means  there  is
+// only  a  limited  amount  of  energy  available  for  blowing EPROMs before
+// repumping is required.  The operating system allows  for  24ms  of  blowing
+// time  for  each  pump  cycle.  This will only be available after ACOUT goes
+// high as the capacitor will discharge itself through leakage.
+// 
+// The pump charges a standard tolerance 100uF 40V electrolytic  capacitor  to
+// 35V which is then regulated to 21V before being switched to SVPP.
+// 
+// ___
+// NB.
+// 
+//      1.  If the 21V is switched to  SVPP  before  the  ready  condition  is
+//          detected,  or  it  is  left  switched  on and not repumped, then a
+//          voltage somewhere between 5V and 21V will  be  switched  to  SVPP.
+//          This can result in a variety of disastrous effects (e.g. destruction
+//          of data) depending on the conditions under which it occurs.
+// 
+//      2.  The  operating  system  keyboard   interrupt   routine   can   TST
+//          SCA_ALARMHIGH under certain circumstances, so it is important that
+//          in any  routine  where  SOE_B  may  be  high  interrupts  must  be
+//          disabled.
+// 
 ////////////////////////////////////////////////////////////////////////////////
 
 FLAG_DATA  flag_data[] =
@@ -4481,6 +4569,25 @@ void handle_sca(u_int16_t addr)
       
       handle_power_off();      
       break;
+
+      // VPP 21V control
+      // We turn on with pulse enable and off with alarm low, as the initial
+      // power PCB has no switch to connect VPP to the slots
+
+    case SCA_PULSE_ENABLE:
+
+      // Turn the 21V supply on
+      latch2_set_mask(LAT2PIN_MASK_VPP_ON);
+      latch2_set_mask(LAT2PIN_MASK_VPP_VOLT_SELECT);
+
+      // Wait while supply comes up
+      sleep_ms(100);
+      break;
+
+    case SCA_ALARM_LOW:
+      latch2_clear_mask(LAT2PIN_MASK_VPP_ON);
+      latch2_clear_mask(LAT2PIN_MASK_VPP_VOLT_SELECT);
+      break;
     }
 }
 
@@ -5170,7 +5277,7 @@ u_int8_t read_port6(void)
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-  void write_port6(u_int8_t value)
+void write_port6(u_int8_t value)
 {
   port6_shadow = value;
   
@@ -5180,7 +5287,7 @@ u_int8_t read_port6(void)
       trace_port[trace_port_i].value = value;
       trace_port_i++;
     }
-
+  
 #if 0
   if( value == 0x19 )
     {
@@ -5397,15 +5504,18 @@ u_int8_t RD_REF(u_int16_t addr)
     case NMI_TO_COUNTER:
       handle_nmi(addr);
       break;
-      
-    case BUZZER_ON:
+
+    case SCA_ALARM_HIGH:
       TURN_BUZZER_ON;
       break;
+
       
-    case BUZZER_OFF:
+    case SCA_ALARM_LOW:
       TURN_BUZZER_OFF;
       break;
       
+    case SCA_PULSE_ENABLE:
+
 
     case SCA_RESET:
     case SCA_CLOCK:
@@ -5441,6 +5551,9 @@ u_int8_t RD_REF(u_int16_t addr)
       // turn off ACOUT
       ramdata[PORT5] &= 0xFE;
 
+      // Turn on 21V 'ready' signal
+      ramdata[PORT5] |= 0x02;
+      
       // Display value
 #if XP_DEBUG
       printxy_hex(0,2,ramdata[PORT5]);
@@ -5527,14 +5640,13 @@ inline void WR_REF(u_int16_t addr, u_int8_t value)
       break;
 
       
-    case BUZZER_ON:
+    case SCA_ALARM_HIGH:
       TURN_BUZZER_ON;
       break;
       
-    case BUZZER_OFF:
+    case SCA_ALARM_LOW:
       TURN_BUZZER_OFF;
       break;
-      
 
     case TIM1_ICAP_H:
     case TIM1_ICAP_L:
@@ -5557,6 +5669,8 @@ inline void WR_REF(u_int16_t addr, u_int8_t value)
     case SERIAL_TDR:
       handle_serial_register_write(addr, value);
       break;
+
+    case SCA_PULSE_ENABLE:
       
     case SCA_RESET:
     case SCA_CLOCK:
@@ -5622,11 +5736,11 @@ inline u_int8_t RD_ADDR(u_int16_t addr)
       return(timer1_tcsr);
       break;
       
-    case BUZZER_ON:
+    case SCA_ALARM_HIGH:
       TURN_BUZZER_ON;
       break;
       
-    case BUZZER_OFF:
+    case SCA_ALARM_LOW:
       TURN_BUZZER_OFF;
       break;
       
@@ -5771,11 +5885,11 @@ void WR_ADDR(u_int16_t addr, u_int8_t value)
       break;
 
       
-    case BUZZER_ON:
+    case SCA_ALARM_HIGH:
       TURN_BUZZER_ON;
       break;
       
-    case BUZZER_OFF:
+    case SCA_ALARM_LOW:
       TURN_BUZZER_OFF;
       break;
 

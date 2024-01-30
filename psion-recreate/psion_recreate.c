@@ -295,7 +295,7 @@ void menu_tasks(void)
 
 //------------------------------------------------------------------------------
 
-// These are the tasks the menu function sneed to perform in order to
+// These are the tasks the menu functions need to perform in order to
 // keep the display, wireless and so on running.
 
 void menu_loop_tasks(void)
@@ -305,6 +305,7 @@ void menu_loop_tasks(void)
   rtc_tasks();
   eeprom_tasks();
   wireless_taskloop();
+  serial_loop();
 }
 
 
@@ -319,7 +320,7 @@ void core1_main(void)
       eeprom_tasks();
 
       menu_tasks();
-      
+      serial_loop();
 #if !WIFI_TEST      
       wireless_taskloop();
 #endif
@@ -353,7 +354,8 @@ int main() {
   while(1)
     {
     }
-  #endif
+#endif
+  
   // Set up the GPIOs
   gpio_init(PIN_VBAT_SW_ON);
   gpio_set_dir(PIN_VBAT_SW_ON, GPIO_OUT);
@@ -686,6 +688,8 @@ int main() {
 	  }
       }
 
+    printf("\nMain Loop");
+    
     // Main loop
     while(1)
       {
@@ -723,6 +727,8 @@ int main() {
 	  }
 #endif
 	loop_emulator();
+	//	serial_loop();
+	
 	//dump_lcd();
 	
 	//wireless_taskloop();
