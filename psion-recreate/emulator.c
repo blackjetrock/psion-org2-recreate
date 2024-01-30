@@ -251,13 +251,6 @@ char opcode_decode[100] = "";
 // See chapter 29, LZ64 RAM USAGE for details of the use of the "extra"
 // 32k of RAM.
 
-// How big ram and rom are
-
-#define BANK_RESET       0x0360
-#define BANK_NEXT_ROM    0x03e0
-#define BANK_NEXT_RAM    0x03a0
-
-#define BANK_START       0x4000
 
 //------------------------------------------------------------------------------
 //
@@ -281,22 +274,6 @@ int badrom(int addr)
   exit(-1);
 }
 
-#if PROT
-#define RAMDATA_FIX(AAA)  ramdata[(AAA>=0x8000)?badram():AAA]
-#define RAMDATA(AAA)      ramdata[((AAA>=0x8000)?badram():AAA)<BANK_START)?AAA:(AAA+ram_bank_off)]
-
-#define ROMDATA_FIX(AAA)  romdata[(AAA>=0x8000)?badrom():AAA]
-#define ROMDATA(AAA)      romdata[((AAA>=0x8000)?badrom():AAA)>BANK_START)?AAA:(AAA+rom_bank_off)]
-
-//#define ROMDATA_FIX(AAA)  romdata[AAA]
-//#define ROMDATA(AAA)      romdata[(AAA>BANK_START)?AAA:(AAA+rom_bank_off)]
-#else
-#define RAMDATA_FIX(AAA)  ramdata[AAA]
-#define RAMDATA(AAA)      ramdata[(AAA<BANK_START)?AAA:(AAA+ram_bank_off)]
-
-#define ROMDATA_FIX(AAA)  romdata[AAA]
-#define ROMDATA(AAA)      romdata[(AAA>BANK_START)?AAA:(AAA+rom_bank_off)]
-#endif
 
 // Offsets of current bank
 int ram_bank_off = 0x0000;

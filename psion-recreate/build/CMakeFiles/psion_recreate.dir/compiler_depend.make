@@ -783,7 +783,8 @@ CMakeFiles/psion_recreate.dir/serial.c.obj: ../serial.c \
   /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_bootrom/include/pico/bootrom.h \
   ../psion_recreate.h \
   ../match.h \
-  ../font.h
+  ../font.h \
+  ../emulator.h
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.obj: /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c \
   /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/tusb_option.h \

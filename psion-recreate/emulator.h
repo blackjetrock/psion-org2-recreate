@@ -209,3 +209,34 @@ void display_save(void);
 void handle_power_off(void);
 void loop_emulator(void);
 void WR_ADDR(u_int16_t addr, u_int8_t value);
+
+#if PROT
+#define RAMDATA_FIX(AAA)  ramdata[(AAA>=0x8000)?badram():AAA]
+#define RAMDATA(AAA)      ramdata[((AAA>=0x8000)?badram():AAA)<BANK_START)?AAA:(AAA+ram_bank_off)]
+
+#define ROMDATA_FIX(AAA)  romdata[(AAA>=0x8000)?badrom():AAA]
+#define ROMDATA(AAA)      romdata[((AAA>=0x8000)?badrom():AAA)>BANK_START)?AAA:(AAA+rom_bank_off)]
+
+//#define ROMDATA_FIX(AAA)  romdata[AAA]
+//#define ROMDATA(AAA)      romdata[(AAA>BANK_START)?AAA:(AAA+rom_bank_off)]
+#else
+#define RAMDATA_FIX(AAA)  ramdata[AAA]
+#define RAMDATA(AAA)      ramdata[(AAA<BANK_START)?AAA:(AAA+ram_bank_off)]
+
+#define ROMDATA_FIX(AAA)  romdata[AAA]
+#define ROMDATA(AAA)      romdata[(AAA>BANK_START)?AAA:(AAA+rom_bank_off)]
+#endif
+
+// How big ram and rom are
+
+#define BANK_RESET       0x0360
+#define BANK_NEXT_ROM    0x03e0
+#define BANK_NEXT_RAM    0x03a0
+
+#define BANK_START       0x4000
+
+extern u_int8_t romdata[];
+extern int ram_bank_off;
+extern int rom_bank_off;
+
+extern u_int8_t ramdata[RAM_SIZE];

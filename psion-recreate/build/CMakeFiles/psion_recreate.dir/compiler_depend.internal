@@ -794,6 +794,7 @@ CMakeFiles/psion_recreate.dir/serial.c.obj
  /tree/projects/github/psion-org2-recreate/psion-recreate/psion_recreate.h
  /tree/projects/github/psion-org2-recreate/psion-recreate/match.h
  /tree/projects/github/psion-org2-recreate/psion-recreate/font.h
+ /tree/projects/github/psion-org2-recreate/psion-recreate/emulator.h
 
 CMakeFiles/psion_recreate.dir/tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.obj
  /tree/downloaded_tools/pico/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c

@@ -65,4 +65,5 @@ CMakeFiles/psion_recreate.dir/serial.c.obj: \
  /tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_bootrom/include/pico/bootrom.h \
  /tree/projects/github/psion-org2-recreate/psion-recreate/psion_recreate.h \
  /tree/projects/github/psion-org2-recreate/psion-recreate/match.h \
- /tree/projects/github/psion-org2-recreate/psion-recreate/font.h
+ /tree/projects/github/psion-org2-recreate/psion-recreate/font.h \
+ /tree/projects/github/psion-org2-recreate/psion-recreate/emulator.h

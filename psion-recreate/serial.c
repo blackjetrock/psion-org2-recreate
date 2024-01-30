@@ -15,6 +15,7 @@
 #include "pico/bootrom.h"
 
 #include "psion_recreate.h"
+#include "emulator.h"
 
 int keypress = 0;
 int parameter = 0;
@@ -51,8 +52,15 @@ void cli_dump_memory(void)
 	{
 	  printf("\n%03X: ", z);
 	}
-      
-      printf("%02X ", ramdata[z]);
+
+      if( z >= ROM_START )
+	{
+	  printf("%02X ", ROMDATA(z-ROM_START));
+	}
+      else
+	{
+	  printf("%02X ", RAMDATA(z));
+	}
     }
   
   printf("\n");
