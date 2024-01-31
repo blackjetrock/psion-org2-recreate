@@ -67,6 +67,19 @@ void cli_dump_memory(void)
 
 }
 
+void cli_info(void)
+{
+  printf("\nBank RAM Offset:%08X", ram_bank_off);
+  printf("\nBank ROM Offset:%08X", rom_bank_off);
+
+  printf("\nProcessor State");
+  printf("\n===============");
+
+  printf("\nPC:%04X", REG_PC);
+  printf("\n%04X      A:%02X B:%02X X:%04X", REG_A, REG_B, REG_X);
+
+}
+
 
 // Another digit pressed, update the parameter variable
 void cli_digit(void)
@@ -89,6 +102,42 @@ void cli_digit(void)
   parameter |= n;
 }
 
+void cli_trace_dump_from(void)
+{
+  for(int i=0; i<addr_trace_i; i++)
+    {
+      printf("\n%04X:%04X      A:%02X B:%02X X:%04X SP:%04X",
+	     i,
+	     addr_trace_from[i],
+	     addr_trace_from_a[i],
+	     addr_trace_from_b[i],
+	     addr_trace_from_x[i],
+	     addr_trace_from_sp[i]
+	     );
+    }
+  
+  printf("\n");
+}
+
+void cli_trace_dump_to(void)
+{
+  int j = addr_trace_to_i;
+  
+  for(int i=0; i<NUM_ADDR_TRACE; i++)
+    {
+      printf("\n%04X:%04X      A:%02X B:%02X X:%04X SP:%04X",
+	     i,
+	     addr_trace_to[j],
+	     addr_trace_to_a[j],
+	     addr_trace_to_b[j],
+	     addr_trace_to_x[j],
+	     addr_trace_to_sp[j]
+	     );
+      j = ((j + 1) % NUM_ADDR_TRACE);
+    }
+  
+  printf("\n");
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -204,6 +253,21 @@ SERIAL_COMMAND serial_cmds[] =
     'z',
     "Zero Parameter",
     cli_zero_parameter,
+   },
+   {
+    'i',
+    "Information",
+    cli_info,
+   },
+   {
+    'T',
+    "Trace To Dump",
+    cli_trace_dump_to,
+   },
+   {
+    'F',
+    "Trace From Dump",
+    cli_trace_dump_from,
    },
   };
 

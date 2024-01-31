@@ -25,7 +25,8 @@ typedef uint8_t BYTE;
 extern int model;
 
 // The value t set model to
-#define MODEL_AT_START       MODEL_LZ
+//#define MODEL_AT_START       MODEL_LZ
+#define MODEL_AT_START       MODEL_XP
 
 #define FN_OLED_DEMO         0
 #define FN_KEYBOARD_TEST     0
@@ -61,12 +62,12 @@ extern int model;
 #define ENABLE_1S_TICK       1     // Needed by restore from EEPROM code,
                                    // otherwise hangs
 #define DISABLE_AUTO_OFF     0     // Disable auto off feature
-#define TRACE_ADDR           0     // Trace execution addresses
+#define TRACE_ADDR           1     // Trace execution addresses
 #define TRACE_TO_TRAP        0     // Trace until a TRAP
 #define NUM_ADDR_TRACE       300   // How many addresses to trace
 
 #define RAM_RESTORE          1    // Enable dump/restore RAM to/from EEPROM
-#define DISABLE_RESTORE_ONLY 0    // Disable the restore part, still dump
+#define DISABLE_RESTORE_ONLY 1    // Disable the restore part, still dump
 #define EEPROM_DUMP_CHECK    0    // Do we check the dumped contents?
 #define DISABLE_DMP_WR       0    // Run dump code but don't write anything
                                   // We can use one image over and over
@@ -270,6 +271,30 @@ extern volatile int core1_in_menu;
 //
 
 extern int tracing_to;
+
+#if TRACE_ADDR
+// Trace a number of execution addresses
+extern int tracing;
+extern u_int16_t trigger_addr;
+extern int addr_trace_i;
+
+// Trace from a trigger address until trace full
+extern volatile u_int16_t addr_trace_from[NUM_ADDR_TRACE];
+extern volatile u_int8_t  addr_trace_from_a[NUM_ADDR_TRACE];
+extern volatile u_int8_t  addr_trace_from_b[NUM_ADDR_TRACE];
+extern volatile u_int16_t addr_trace_from_x[NUM_ADDR_TRACE];
+extern volatile u_int16_t addr_trace_from_sp[NUM_ADDR_TRACE];
+
+// Trace continuously until trigger address seen
+extern u_int16_t trace_stop_addr;
+extern volatile u_int16_t addr_trace_to[NUM_ADDR_TRACE];
+extern volatile u_int8_t  addr_trace_to_a[NUM_ADDR_TRACE];
+extern volatile u_int8_t  addr_trace_to_b[NUM_ADDR_TRACE];
+extern volatile u_int16_t addr_trace_to_x[NUM_ADDR_TRACE];
+extern volatile u_int16_t addr_trace_to_sp[NUM_ADDR_TRACE];
+extern int addr_trace_to_i;
+
+#endif
 
 ////////////////////////////////////////////////////////////////////////////////
 //
