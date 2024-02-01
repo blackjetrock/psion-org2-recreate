@@ -47,3 +47,10 @@ Unsupported Hardware List
 128K EPROM datapacks. No reading or writing.
 Flash datapacks. Not tested, but probably don't work for the same reason as the 128K EPROM datapacks.
 
+ROM Versions
+============
+
+The emulator should be able to run any Organiser II ROM. There are two distinct hardware typoes, the XP and the LZ/LZ64. To run a ROM of either type, use the
+embed_rom script with an appropriate ROM file selected within the script. The MODEL_AT_START needs to be set up in the file 'psion_recreate.h'. Rebuild the code and the ROm should run.
+
+
