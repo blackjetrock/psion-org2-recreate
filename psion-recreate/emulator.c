@@ -2774,7 +2774,7 @@ void dump_lcd(void)
   if( display_changed || cursor_update)
     {
       display_changed = 0;
-      
+
       //      if( (memcmp(last_lcd_display_buffer, lcd_display_buffer, lcd_dispsize) != 0) || cursor_update)
 	{
 	  cursor_update = 0;
@@ -2782,8 +2782,15 @@ void dump_lcd(void)
 	  for(i=0; i<=lcd_dispsize; i++)
 	    {
 	      //wireless_taskloop();
-	      
-	      ch = lcd_display_buffer[model_mapping[i]];
+	      if( model_mapping[i] == -1 )
+		{
+		  break;
+		  ch = ' ';
+		}
+	      else
+		{
+		  ch = lcd_display_buffer[model_mapping[i]];
+		}
 	      
 	      if( (model_mapping[i] == lcd_address) && lcd_cursor )
 		{
@@ -4922,18 +4929,34 @@ void tick_1s(void)
 void initialise_emulator(void)
 {
   int i;
-    
+
+  // Clear display, so 2 line displays have spaces in unused areas
+#if 0
+  for(int i=0; i<LCD_DISPLAY_BUFFER_LEN; i++)
+    {
+      lcd_display_buffer[i] = '.';
+    }
+  for(int l=0; l<DISPLAY_NUM_LINES; l++)
+    {
+      for(int c=0; c<DISPLAY_NUM_CHARS; c++)
+	{
+	  display_line[l][c] = '.';
+	}
+    }
+  #endif
   switch(model)
     {
     case MODEL_XP:
       lcd_linelen = 16;
-      lcd_dispsize = largest_number_in(xp_mapping, sizeof(xp_mapping));
+      //      lcd_dispsize = largest_number_in(xp_mapping, sizeof(xp_mapping));
+      lcd_dispsize = sizeof(xp_mapping);
       model_mapping = xp_mapping;
       break;
       
     case MODEL_LZ:
       lcd_linelen = 20;
-      lcd_dispsize = largest_number_in(lz_mapping, sizeof(lz_mapping));
+      //lcd_dispsize = largest_number_in(lz_mapping, sizeof(lz_mapping));
+      lcd_dispsize = sizeof(lz_mapping);
       model_mapping = lz_mapping;
       break;
     }
