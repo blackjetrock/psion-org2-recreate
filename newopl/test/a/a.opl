@@ -1,0 +1,9 @@
+TEST:(P1,P2%,P3$)
+LOCAL L1,L2%,L3$(5)
+LOCAL L4(4),L5%(5),L6$(6,12),L7%
+GLOBAL G1,G2%,G3$(13)
+GLOBAL G4(4),G5%(5),G6$(6,14),G7%
+REM rest of code, including use of the following externals
+PRINT E1;E2%;E3$
+PRINT E4(4);E5%(5);E6$(6)
+
