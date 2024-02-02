@@ -1505,17 +1505,22 @@ void btfn_eeprom_rd(void)
 //
 
 char str_flags[7] = "______";
-char *decode_flags(void)
+char *decode_flag_value(int f)
 {
   strcpy(str_flags, "______");
   for(int i=0; flag_data[i].mask != FLAG_TERM_MASK; i++)
     {
-      if( pstate.FLAGS & flag_data[i].mask )
+      if( f & flag_data[i].mask )
 	{
 	  str_flags[i] = flag_data[i].name;
 	}
     }
-  
+  return(str_flags);
+}
+
+char *decode_flags(void)
+{
+  decode_flag_value(pstate.FLAGS);
   return(str_flags);
 }
 

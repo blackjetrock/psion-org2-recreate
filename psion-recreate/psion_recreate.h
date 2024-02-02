@@ -25,8 +25,8 @@ typedef uint8_t BYTE;
 extern int model;
 
 // The value t set model to
-//#define MODEL_AT_START       MODEL_LZ
-#define MODEL_AT_START       MODEL_XP
+#define MODEL_AT_START       MODEL_LZ
+//#define MODEL_AT_START       MODEL_XP
 
 #define FN_OLED_DEMO         0
 #define FN_KEYBOARD_TEST     0
@@ -280,6 +280,7 @@ extern int addr_trace_i;
 
 // Trace from a trigger address until trace full
 extern volatile u_int16_t addr_trace_from[NUM_ADDR_TRACE];
+extern volatile u_int8_t  addr_trace_from_flags[NUM_ADDR_TRACE];
 extern volatile u_int8_t  addr_trace_from_a[NUM_ADDR_TRACE];
 extern volatile u_int8_t  addr_trace_from_b[NUM_ADDR_TRACE];
 extern volatile u_int16_t addr_trace_from_x[NUM_ADDR_TRACE];
@@ -288,6 +289,7 @@ extern volatile u_int16_t addr_trace_from_sp[NUM_ADDR_TRACE];
 // Trace continuously until trigger address seen
 extern u_int16_t trace_stop_addr;
 extern volatile u_int16_t addr_trace_to[NUM_ADDR_TRACE];
+extern volatile u_int8_t  addr_trace_to_flags[NUM_ADDR_TRACE];
 extern volatile u_int8_t  addr_trace_to_a[NUM_ADDR_TRACE];
 extern volatile u_int8_t  addr_trace_to_b[NUM_ADDR_TRACE];
 extern volatile u_int16_t addr_trace_to_x[NUM_ADDR_TRACE];

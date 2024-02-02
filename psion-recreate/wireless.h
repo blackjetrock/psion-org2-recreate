@@ -16,6 +16,8 @@ typedef enum _BLUETOOTH_MODE
 void wireless_init(void);
 void wireless_loop(void);
 void wireless_taskloop(void);
+char *decode_flags(void);
+char *decode_flag_value(int f);
 
 extern int pending_tx;
 

@@ -1,0 +1,7 @@
+A%=1
+POKEB $180,64
+DO
+ POKEB $181,U%(A%)
+ A%=A%+1
+UNTIL A%>64
+

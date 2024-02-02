@@ -66,4 +66,5 @@ CMakeFiles/psion_recreate.dir/serial.c.obj: \
  /tree/projects/github/psion-org2-recreate/psion-recreate/psion_recreate.h \
  /tree/projects/github/psion-org2-recreate/psion-recreate/match.h \
  /tree/projects/github/psion-org2-recreate/psion-recreate/font.h \
- /tree/projects/github/psion-org2-recreate/psion-recreate/emulator.h
+ /tree/projects/github/psion-org2-recreate/psion-recreate/emulator.h \
+ /tree/projects/github/psion-org2-recreate/psion-recreate/wireless.h

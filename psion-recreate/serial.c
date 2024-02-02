@@ -16,6 +16,7 @@
 
 #include "psion_recreate.h"
 #include "emulator.h"
+#include "wireless.h"
 
 int keypress = 0;
 int parameter = 0;
@@ -106,13 +107,15 @@ void cli_trace_dump_from(void)
 {
   for(int i=0; i<addr_trace_i; i++)
     {
-      printf("\n%04X:%04X      A:%02X B:%02X X:%04X SP:%04X",
+      printf("\n%04X:%04X      A:%02X B:%02X X:%04X SP:%04X FLAGS:%02X (%s)",	     
 	     i,
 	     addr_trace_from[i],
 	     addr_trace_from_a[i],
 	     addr_trace_from_b[i],
 	     addr_trace_from_x[i],
-	     addr_trace_from_sp[i]
+	     addr_trace_from_sp[i],
+	     addr_trace_from_flags[i],
+	     decode_flag_value(addr_trace_from_flags[i])
 	     );
     }
   
@@ -125,13 +128,15 @@ void cli_trace_dump_to(void)
   
   for(int i=0; i<NUM_ADDR_TRACE; i++)
     {
-      printf("\n%04X:%04X      A:%02X B:%02X X:%04X SP:%04X",
+      printf("\n%04X:%04X      A:%02X B:%02X X:%04X SP:%04X FLAGS:%02X (%s)",
 	     i,
 	     addr_trace_to[j],
 	     addr_trace_to_a[j],
 	     addr_trace_to_b[j],
 	     addr_trace_to_x[j],
-	     addr_trace_to_sp[j]
+	     addr_trace_to_sp[j],
+	     addr_trace_to_flags[j],
+	     decode_flag_value(addr_trace_to_flags[j])
 	     );
       j = ((j + 1) % NUM_ADDR_TRACE);
     }

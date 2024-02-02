@@ -1,0 +1,2 @@
+cc newopl_tran.c -o newopl_tran
+cc newopl_exec.c -o newopl_exec

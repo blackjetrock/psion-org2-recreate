@@ -70,6 +70,7 @@ int addr_trace_i       = 0;
 
 // Trace from a trigger address until trace full
 volatile u_int16_t addr_trace_from[NUM_ADDR_TRACE];
+volatile u_int8_t  addr_trace_from_flags[NUM_ADDR_TRACE];
 volatile u_int8_t  addr_trace_from_a[NUM_ADDR_TRACE];
 volatile u_int8_t  addr_trace_from_b[NUM_ADDR_TRACE];
 volatile u_int16_t addr_trace_from_x[NUM_ADDR_TRACE];
@@ -78,6 +79,7 @@ volatile u_int16_t addr_trace_from_sp[NUM_ADDR_TRACE];
 // Trace continuously until trigger address seen
 u_int16_t trace_stop_addr = 0xc0f4;
 volatile u_int16_t addr_trace_to[NUM_ADDR_TRACE];
+volatile u_int8_t  addr_trace_to_flags[NUM_ADDR_TRACE];
 volatile u_int8_t  addr_trace_to_a[NUM_ADDR_TRACE];
 volatile u_int8_t  addr_trace_to_b[NUM_ADDR_TRACE];
 volatile u_int16_t addr_trace_to_x[NUM_ADDR_TRACE];
@@ -713,11 +715,12 @@ int main() {
 	
 	if( (addr_trace_i < NUM_ADDR_TRACE) && tracing )
 	  {
-	    addr_trace_from[addr_trace_i]     = REG_PC;
-	    addr_trace_from_a[addr_trace_i]   = REG_A;
-	    addr_trace_from_b[addr_trace_i]   = REG_B;
-	    addr_trace_from_sp[addr_trace_i]  = REG_SP;
-	    addr_trace_from_x[addr_trace_i++] = REG_X;
+	    addr_trace_from[addr_trace_i]       = REG_PC;
+	    addr_trace_from_flags[addr_trace_i] = REG_FLAGS;
+	    addr_trace_from_a[addr_trace_i]     = REG_A;
+	    addr_trace_from_b[addr_trace_i]     = REG_B;
+	    addr_trace_from_sp[addr_trace_i]    = REG_SP;
+	    addr_trace_from_x[addr_trace_i++]   = REG_X;
 	  }
 
 	// Trace continuously until we see the stop address
@@ -729,11 +732,12 @@ int main() {
 
 	if( tracing_to )
 	  {
-	    addr_trace_to[addr_trace_to_i]     = REG_PC;
-	    addr_trace_to_a[addr_trace_to_i]   = REG_A;
-	    addr_trace_to_b[addr_trace_to_i]   = REG_B;
-	    addr_trace_to_sp[addr_trace_to_i]  = REG_SP;
-	    addr_trace_to_x[addr_trace_to_i++] = REG_X;
+	    addr_trace_to[addr_trace_to_i]       = REG_PC;
+	    addr_trace_to_flags[addr_trace_to_i] = REG_FLAGS;
+	    addr_trace_to_a[addr_trace_to_i]     = REG_A;
+	    addr_trace_to_b[addr_trace_to_i]     = REG_B;
+	    addr_trace_to_sp[addr_trace_to_i]    = REG_SP;
+	    addr_trace_to_x[addr_trace_to_i++]   = REG_X;
 	    addr_trace_to_i %= NUM_ADDR_TRACE;
 	  }
 #endif
