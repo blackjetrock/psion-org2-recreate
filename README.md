@@ -1,3 +1,8 @@
+Work in progress
+================
+
+This project is still being worked on, the code and other designs are prototypes and may not work properly, or at all.
+
 Recreation of Psion Organiser 2 using RP Pico
 =============================================
 
